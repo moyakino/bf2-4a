@@ -139,17 +139,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="EnemyBird.cpp" />
+    <ClCompile Include="Fish.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PadInput.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="TitleScene.cpp" />
+    <ClCompile Include="Thunder.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractScene.h" />
+    <ClInclude Include="enemybird.h" />
+    <ClInclude Include="Fish.h" />
     <ClInclude Include="FPS.h" />
     <ClInclude Include="PadInput.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="TitleScene.h" />
+    <ClInclude Include="Thunder.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
