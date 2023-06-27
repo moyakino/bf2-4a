@@ -15,4 +15,5 @@ public:
 
 	//•`‰æ‚ÉŠÖ‚·‚é‚±‚Æ‚ðŽÀ‘•‚·‚é
 	virtual void Draw() const override;
+
 };

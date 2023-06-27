@@ -39,6 +39,7 @@ int WINAPI WinMain(_In_ HINSTANCE ih, _In_opt_ HINSTANCE ioh, _In_ LPSTR il, _In
 		ClearDrawScreen();		// 画面の初期化
 		PAD_INPUT::UpdateKey();
 		sceneMng.Draw();
+
 		//強制終了
 		if (PAD_INPUT::OnButton(XINPUT_BUTTON_BACK))
 		{
@@ -48,6 +49,7 @@ int WINAPI WinMain(_In_ HINSTANCE ih, _In_opt_ HINSTANCE ioh, _In_ LPSTR il, _In
 		//fps
 		fps.Update();	//更新
 
+		fps.Draw();
 		ScreenFlip();	// 裏画面の内容を表画面に反映
 
 		fps.Wait();		//待機

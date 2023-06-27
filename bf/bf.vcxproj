@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="EnemyBird.cpp" />
     <ClCompile Include="Fish.cpp" />
+    <ClCompile Include="GameMain.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PadInput.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -153,6 +154,7 @@
     <ClInclude Include="enemybird.h" />
     <ClInclude Include="Fish.h" />
     <ClInclude Include="FPS.h" />
+    <ClInclude Include="GameMain.h" />
     <ClInclude Include="PadInput.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="SceneManager.h" />

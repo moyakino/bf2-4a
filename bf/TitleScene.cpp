@@ -9,5 +9,5 @@ AbstractScene* Title::Update()
 
 void Title::Draw()const
 {
-	
+
 }
