@@ -79,6 +79,17 @@ public:
 		return l_stick;
 	}
 
+	//‰¼
+	static int GetLStickX()
+	{
+		return l_stick.x;
+	}
+
+	static int GetLStickY()
+	{
+		return l_stick.y;
+	}
+
 	static char GetOldKey(const int i)
 	{
 		return old_key[i];

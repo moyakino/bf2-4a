@@ -1,11 +1,17 @@
 #include"DxLib.h"
-#include"FPS.h"
 #include"GameMain.h"
 
+
+//コンストラクタ
+GameMain::GameMain()
+{
+	player = new Player();
+}
 
 AbstractScene* GameMain::Update()
 {
 
+	player->Update();
 
 	return this;
 }
@@ -13,5 +19,7 @@ AbstractScene* GameMain::Update()
 
 void GameMain::Draw()const
 {
+	player->Draw();
+
 	DrawFormatString(0, 50, GetColor(255, 0, 0), "GameMain");
 }
