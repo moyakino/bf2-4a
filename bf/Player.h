@@ -13,6 +13,7 @@ private:
 	//(仮)プレイヤー画像用変数
 	int D_PlayerImg;
 
+
 public:
 	Player();
 
