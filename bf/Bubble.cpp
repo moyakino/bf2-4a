@@ -4,8 +4,8 @@
 Bubble::Bubble()
 {
 	BubbleImg = LoadGraph("images/ball.jpg");
-X = 0;
-Y = 0;
+X = 128;
+Y = 225;
 BallFlg = 0;
 BallX = 0;
 BallY = 0;
@@ -16,12 +16,12 @@ MoveY = 60;
 void Bubble::Update()
 {
 	if(CheckHitKey(KEY_INPUT_Z)){
-		BallY = BallY + MoveY;
+		BallY = Y + MoveY;
 	}
 }
 
 void Bubble::Draw() const {
-	DrawGraph(200, 200, BubbleImg,TRUE);
+	DrawGraph(X, Y, BubbleImg,TRUE);
 }
 
 
