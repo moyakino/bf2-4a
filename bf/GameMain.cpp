@@ -35,7 +35,6 @@ AbstractScene* GameMain::Update()
 
 void GameMain::Draw()const
 {
-	DrawString(0, 20, "GameMain", 0xffffff);
 
 	//“–‚½‚è”»’è‚Ì‰¼•\Ž¦
 
