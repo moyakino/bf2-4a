@@ -22,6 +22,7 @@ private:
 	//(仮)プレイヤー左移動フラグ 移動無し:0 右移動:1
 	int P_MoveL_Flg;
 
+
 public:
 	Player();
 
