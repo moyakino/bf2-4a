@@ -1,13 +1,21 @@
 #include"DxLib.h"
 #include"GameMain.h"
-#include "Bubble.h"
 
+
+//コンストラクタ
 GameMain::GameMain()
 {
+	/*画像の読み込み*/
+	//空中の足場
 	if ((StageFoot[0] = LoadGraph("images/Stage/Stage_Footing01.png")) == -1);
+	//地面(左)
 	if ((StageLand_L = LoadGraph("images/Stage/Stage_Land_Left01.png")) == -1);
+	//地面(右)
 	if ((StageLand_R = LoadGraph("images/Stage/Stage_Land_Right01.png")) == -1);
+	//海
 	if ((StageSea = LoadGraph("images/Stage/Stage_Sea01.png")) == -1);
+
+	player = new Player();
 }
 
 GameMain::~GameMain()
@@ -15,11 +23,6 @@ GameMain::~GameMain()
 
 }
 
-//コンストラクタ
-GameMain::GameMain()
-{
-	player = new Player();
-}
 
 AbstractScene* GameMain::Update()
 {
@@ -57,6 +60,7 @@ void GameMain::Draw()const
 	//DrawGraph(0, 416, StageLand_L, TRUE);
 	//DrawGraph(480, 416, StageLand_R, TRUE);
 	//DrawGraph(160,444,StageSea,TRUE);
+
 	player->Draw();
 
 	DrawFormatString(0, 50, GetColor(255, 0, 0), "GameMain");
