@@ -1,5 +1,4 @@
 #include"DxLib.h"
-#include"FPS.h"
 #include"GameMain.h"
 
 GameMain::GameMain()
@@ -16,8 +15,17 @@ GameMain::~GameMain()
 
 }
 
+//コンストラクタ
+GameMain::GameMain()
+{
+	player = new Player();
+}
+
 AbstractScene* GameMain::Update()
 {
+
+	player->Update();
+
 	return this;
 }
 
@@ -49,5 +57,7 @@ void GameMain::Draw()const
 	//DrawGraph(0, 416, StageLand_L, TRUE);
 	//DrawGraph(480, 416, StageLand_R, TRUE);
 	//DrawGraph(160,444,StageSea,TRUE);
+	player->Draw();
 
+	DrawFormatString(0, 50, GetColor(255, 0, 0), "GameMain");
 }

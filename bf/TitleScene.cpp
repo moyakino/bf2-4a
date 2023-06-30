@@ -6,14 +6,14 @@
 //“ü—Í‘¤‚ğ‘‚­
 AbstractScene* Title::Update()
 {
-	if (PAD_INPUT::OnButton(XINPUT_BUTTON_A))
-	{
+	if (CheckHitKey(KEY_INPUT_0)) {
 		return new GameMain();
 	}
+
 	return this;
 }
 
 void Title::Draw()const
 {
-	DrawString(0, 20, "title",0xffffff);
+	DrawFormatString(0, 50, GetColor(255, 0, 0), "Title");
 }
