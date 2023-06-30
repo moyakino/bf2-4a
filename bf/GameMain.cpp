@@ -1,10 +1,10 @@
 #include"DxLib.h"
 #include"GameMain.h"
+#include "Bubble.h"
 
 GameMain::GameMain()
 {
 	if ((StageFoot[0] = LoadGraph("images/Stage/Stage_Footing01.png")) == -1);
-
 	if ((StageLand_L = LoadGraph("images/Stage/Stage_Land_Left01.png")) == -1);
 	if ((StageLand_R = LoadGraph("images/Stage/Stage_Land_Right01.png")) == -1);
 	if ((StageSea = LoadGraph("images/Stage/Stage_Sea01.png")) == -1);

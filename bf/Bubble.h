@@ -1,14 +1,17 @@
 #pragma once
 class Bubble{
-
-
-
 private:
+	//シャボン玉の画像（仮）
 	int BubbleImg;
-	int x;
-	int y;
-
-
+	int BallFlg;
+	//シャボン玉の初期位置
+	int X, Y;
+	//シャボン玉の座標更新
+	int BallX;
+	int BallY;
+	//シャボン玉の動く距離
+	int MoveX;
+	int MoveY;
 public:
 	Bubble();
 
