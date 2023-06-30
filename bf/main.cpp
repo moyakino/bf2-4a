@@ -38,6 +38,10 @@ int WINAPI WinMain(_In_ HINSTANCE ih, _In_opt_ HINSTANCE ioh, _In_ LPSTR il, _In
 
 		ClearDrawScreen();		// ‰æ–Ê‚Ì‰Šú‰»
 		PAD_INPUT::UpdateKey();
+
+		//
+		sceneMng.Update();
+
 		sceneMng.Draw();
 
 		//‹­§I—¹

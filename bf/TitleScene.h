@@ -7,8 +7,11 @@ private:
 
 public:
 
+	//コンストラクタ
+	Title() {};
+
 	//デストラクタ
-	virtual ~Title() {};
+	virtual ~Title() { };
 
 	//描画以外の更新を実装する
 	virtual AbstractScene* Update()override;
