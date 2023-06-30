@@ -37,6 +37,9 @@ public:
 	//アニメーション
 	int Animation(int Anim1, int Anim2);
 
+	//Playerの待機中
+	int Stand_by_Anim();
+
 	//Playerの X座標 Y座標 を戻り値として返す
 	int R_Player_MoveX()const;
 	int R_Player_MoveY()const;

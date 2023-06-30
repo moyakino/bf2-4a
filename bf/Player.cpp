@@ -73,6 +73,11 @@ int Player::Animation(int Anim1, int Anim2)
 	return AnimImg;
 }
 
+//int Stand_by_Anim()
+//{
+//
+//}
+
 int Player::R_Player_MoveX()const
 {
 	return P_Move_X;
