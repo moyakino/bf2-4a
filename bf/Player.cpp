@@ -29,7 +29,19 @@ void Player::Update()
 	if (PAD_INPUT::OnRelease(XINPUT_BUTTON_A) == 0 && P_Move_Y <= 400) {
 		P_Move_Y++;
 	}
+
+	if (P_Move_X < 0) {
+		P_Move_X = 640;
+	}
+	if(P_Move_X > 640) {
+		P_Move_X = 0;
+	}
+	if (P_Move_Y < -10) {
+		P_Move_Y = -10;
+	}
 }
+
+
 
 void Player::Draw()const
 {
