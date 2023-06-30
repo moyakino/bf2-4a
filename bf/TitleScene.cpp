@@ -1,4 +1,5 @@
 #include "DxLib.h"
+#include "PadInput.h"
 #include "TitleScene.h"
 #include "GameMain.h"
 
