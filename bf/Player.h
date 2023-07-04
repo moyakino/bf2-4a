@@ -58,6 +58,8 @@ private:
 
 	float P_Air_Multiply;
 
+	int a;
+
 public:
 	Player();
 
