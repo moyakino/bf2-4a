@@ -36,11 +36,6 @@ public:
 		DrawFormatString(0, 0, GetColor(255, 255, 255), "fps : %.1f", mFps);
 	}
 
-	float R_Fps() //Fps‚ð–ß‚è’l‚Æ‚µ‚Ä•Ô‚· Player‘¤‚ÅŽg—p
-	{
-		return mFps;
-	}
-
 	void Wait() {
 		int tookTime = GetNowCount() - mStartTime;	//‚©‚©‚Á‚½ŽžŠÔ
 		int waitTime = mCount * 1000 / FPS - tookTime;	//‘Ò‚Â‚×‚«ŽžŠÔ
