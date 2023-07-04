@@ -1,5 +1,8 @@
 #pragma once
 class EnemyBird {
+private:
+    bool Attack();
+
 public:
 
     //コンストラクタ
@@ -13,4 +16,8 @@ public:
 
     // 描画処理を実装する
     void Draw() const;
+
+    bool Attack();
+
+    bool Damage(int damage);
 };
