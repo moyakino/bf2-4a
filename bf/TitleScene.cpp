@@ -6,7 +6,7 @@
 //“ü—Í‘¤‚ğ‘‚­
 AbstractScene* Title::Update()
 {
-	if (CheckHitKey(KEY_INPUT_0)) {
+	if (CheckHitKey(KEY_INPUT_0) || PAD_INPUT::OnButton(XINPUT_BUTTON_A) == 1) {
 		return new GameMain();
 	}
 
