@@ -54,6 +54,20 @@ void Player::Update()
 	if (PAD_INPUT::OnRelease(XINPUT_BUTTON_A) == 0 && P_Move_Y <= 400) {
 		P_Move_Y++;
 	}
+
+	if (P_Move_X <= 0 || P_Move_X > 640) {
+		if (P_Move_X <= 0) {
+			P_Move_X = 640;
+		}
+		if (P_Move_X > 640) {
+			P_Move_X = 0;
+		}
+	}
+
+	if (P_Move_Y < 0) {
+		P_Move_Y = 0;
+	}
+
 }
 
 int Player::Animation(int Anim1, int Anim2)
@@ -96,8 +110,12 @@ void Player::Draw()const
 	DrawFormatString(0, 150, GetColor(255, 0, 0), " 左スティック：X座標 %d Y座標 %d", PAD_INPUT::GetLStickX(), PAD_INPUT::GetLStickY());
 
 	DrawFormatString(0, 200, GetColor(255, 0, 0), " 移動フラグ：左移動 %d 右移動 %d", P_MoveL_Flg, P_MoveR_Flg);
+	
+	DrawFormatString(0, 40, GetColor(255, 255, 255), "P_Move_X:%d", P_Move_X);
 
 	//DrawFormatString(300, 200, GetColor(255, 0, 0), " FPS：%.1f",fps.R_Fps());
 
 	DrawRotaGraph(P_Move_X, P_Move_Y, 1, 0, P_PlayerImg[0], TRUE);
+
+	DrawCircle(P_Move_X, P_Move_Y,2, GetColor(255, 255, 0), TRUE);
 }

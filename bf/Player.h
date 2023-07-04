@@ -1,5 +1,8 @@
 #pragma once
 
+#define e 0.800		//”½”­ŒW”
+#define g 0.900		//d—Í‰Á‘¬“x
+
 class Player
 {
 private:
