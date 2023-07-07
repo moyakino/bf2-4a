@@ -15,7 +15,7 @@ GameMain::GameMain()
 	//ŠC
 	if ((StageSea = LoadGraph("images/Stage/Stage_Sea01.png")) == -1){}
 
-	player = new Player();
+	player = new PLAYER();
 }
 
 GameMain::~GameMain()

@@ -67,25 +67,27 @@ public:
 		return ret;
 	}
 
-	//右スティックの取得
+	//右スティックの取得 X座標とY座標を同時に取得している
 	static Stick GetRStick()
 	{
 		return r_stick;
 	}
 
-	//左スティックの取得
+	//左スティックの取得 X座標とY座標を同時に取得している
 	static Stick GetLStick()
 	{
+		
 		return l_stick;
 	}
 
-	//仮
-	static int GetLStickX()
+	//左スティックの取得 横軸値
+	static short int GetLStickX()
 	{
 		return l_stick.x;
 	}
 
-	static int GetLStickY()
+	//左スティックの取得 縦軸値
+	static short int GetLStickY()
 	{
 		return l_stick.y;
 	}
