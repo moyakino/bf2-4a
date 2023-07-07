@@ -17,5 +17,5 @@ public:
 	void Draw()const;
 	virtual AbstractScene* Update()override;
 
-	Player* player;
+	PLAYER* player;
 };
