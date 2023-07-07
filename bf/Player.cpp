@@ -113,6 +113,25 @@ void Player::Update()
     else if (P_FPS_FLY > 2) {
         P_FPS_FLY = 0;
     }
+
+    if (P_Move_X <= 0 || P_Move_X > 640) {
+        if (P_Move_X <= -32) {
+            P_Move_X = 640;
+            //P_Left = TRUE;
+
+        }
+        if (P_Move_X > 640) {
+            P_Move_X = -32;
+        }
+        else{
+            //P_Left = FALSE;
+        }
+
+    }
+
+    if (P_Move_Y < -10) {
+        P_Move_Y = -10;
+    }
 }
 
 int Player::Stand_by_Anim()
@@ -155,24 +174,6 @@ int Player::Fly_To_The_Sky_Anim_1()
     else if (P_FPS > 47 && P_FPS <= 60) {
         F_AnimImg = P_PlayerImg[P_FLY_TO_THE_SKY_ANIM_4];
     }*/
-
-	// Aボタンが押されていない間 Y座標 400まで降下
-	if (PAD_INPUT::OnRelease(XINPUT_BUTTON_A) == 0 && P_Move_Y <= 400) {
-		P_Move_Y++;
-	}
-
-	if (P_Move_X <= 0 || P_Move_X > 640) {
-		if (P_Move_X <= 0) {
-			P_Move_X = 640;
-		}
-		if (P_Move_X > 640) {
-			P_Move_X = 0;
-		}
-	}
-
-	if (P_Move_Y < 0) {
-		P_Move_Y = 0;
-	}
 
     if (P_FPS_FLY >= 0 && P_FPS_FLY < 1) {
         F_AnimImg = P_PlayerImg[P_FLY_TO_THE_SKY_ANIM_1];
@@ -251,6 +252,8 @@ void Player::Draw()const
 
     DrawFormatString(300, 200, GetColor(255, 0, 0), " FPS：%d P_FPS_INC %d", P_FPS, P_FPS_INC);
 
+
+    DrawFormatString(0, 20, GetColor(255, 0, 0), "P_Move_X:%d", P_Move_X);
     //DrawRotaGraph(P_Move_X, P_Move_Y, 1, 0, P_PlayerImg[0], TRUE);
 
     //最初は右向きで描画される
@@ -261,7 +264,13 @@ void Player::Draw()const
         DrawGraph(P_Move_X, P_Move_Y, P_Img, TRUE);
     }
 
-	DrawRotaGraph(P_Move_X, P_Move_Y, 1, 0, P_PlayerImg[0], TRUE);
+
+    /*if (P_Left == TRUE) {
+        DrawRectExtendGraph(610, P_Move_Y, 610+ 32, P_Move_Y + 64, 0, 0, 32, 64, P_Img, TRUE);
+    }*/
+    //DrawRectExtendGraph(P_Move_X, P_Move_Y, P_Move_X + 32, P_Move_Y + 64, 32, 0, 32, 64, P_Img, TRUE);
+
+	//DrawRotaGraph(P_Move_X, P_Move_Y, 1, 0, P_PlayerImg[0], TRUE);
 
 	DrawCircle(P_Move_X, P_Move_Y,2, GetColor(255, 255, 0), TRUE);
     //DrawGraph(P_Move_X, P_Move_Y, P_Img, TRUE);

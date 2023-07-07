@@ -35,6 +35,12 @@ private:
 	//Player x y 座標用変数
 	int P_Move_X;
 	float P_Move_Y;
+
+	//プレイヤー画面端(仮)
+	/*int P_Left;
+	int P_Move_X_Left;*/
+
+
 	//(仮)プレイヤー画像用変数
 	int P_PlayerImg[33];
 	//(仮)プレイヤー出力用変数
