@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bubble.cpp" />
     <ClCompile Include="EnemyBird.cpp" />
     <ClCompile Include="Fish.cpp" />
     <ClCompile Include="GameMain.cpp" />
@@ -151,6 +152,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractScene.h" />
+    <ClInclude Include="Bubble.h" />
     <ClInclude Include="EnemyBird.h" />
     <ClInclude Include="Fish.h" />
     <ClInclude Include="FPS.h" />

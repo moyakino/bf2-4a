@@ -14,8 +14,10 @@ GameMain::GameMain()
 	if ((StageLand_R = LoadGraph("images/Stage/Stage_Land_Right01.png")) == -1);
 	//ŠC
 	if ((StageSea = LoadGraph("images/Stage/Stage_Sea01.png")) == -1);
-
+	//ƒXƒRƒA
+	if ((Score = LoadGraph("images/UI/UI_Score.png")) == -1);
 	player = new Player();
+	bubble = new Bubble();
 }
 
 GameMain::~GameMain()
@@ -28,6 +30,7 @@ AbstractScene* GameMain::Update()
 {
 
 	player->Update();
+	bubble->Update();
 
 	return this;
 }
@@ -48,6 +51,7 @@ void GameMain::Draw()const
 
 	//ŠC
 	DrawBox(160, 444, 480, 480, 0x0000ff, FALSE);
+	DrawGraph(100, 0, Score, TRUE);
 
 
 
@@ -62,6 +66,7 @@ void GameMain::Draw()const
 	//DrawGraph(160,444,StageSea,TRUE);
 
 	player->Draw();
+	bubble->Draw();
 
 	DrawFormatString(0, 50, GetColor(255, 0, 0), "GameMain");
 }
