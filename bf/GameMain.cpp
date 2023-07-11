@@ -7,20 +7,20 @@ GameMain::GameMain()
 {
 	/*画像の読み込み*/
 	//空中の足場
-	if ((StageFoot[0] = LoadGraph("images/Stage/Stage_Footing01.png")) == -1);
+	if ((StageFoot[0] = LoadGraph("images/Stage/Stage_Footing01.png")) == -1){}
 	//地面(左)
-	if ((StageLand_L = LoadGraph("images/Stage/Stage_Land_Left01.png")) == -1);
+	if ((StageLand_L = LoadGraph("images/Stage/Stage_Land_Left01.png")) == -1){}
 	//地面(右)
-	if ((StageLand_R = LoadGraph("images/Stage/Stage_Land_Right01.png")) == -1);
+	if ((StageLand_R = LoadGraph("images/Stage/Stage_Land_Right01.png")) == -1){}
 	//海
-	if ((StageSea = LoadGraph("images/Stage/Stage_Sea01.png")) == -1);
+	if ((StageSea = LoadGraph("images/Stage/Stage_Sea01.png")) == -1){}
 
-	player = new Player();
+	player = new PLAYER();
 }
 
 GameMain::~GameMain()
 {
-
+	delete player;
 }
 
 
@@ -35,7 +35,6 @@ AbstractScene* GameMain::Update()
 
 void GameMain::Draw()const
 {
-	DrawString(0, 20, "GameMain", 0xffffff);
 
 	//当たり判定の仮表示
 
