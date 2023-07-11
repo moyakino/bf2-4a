@@ -1,8 +1,11 @@
 #pragma once
 class EnemyBird {
 private:
+    int x, y;
+    int my;
+    int hp;
     bool Attack();
-
+    bool isAttack;
 public:
 
     //コンストラクタ
