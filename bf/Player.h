@@ -94,6 +94,16 @@ private:
 	//(仮)画像の左右反転用フラグ FALSE:普通に描画 TRUE:左右反転
 	int		P_TurnFlg;
 
+
+	//立っている状態のフラグ
+	int		P_Stand_Flg;
+	//海に落下する状態のフラグ
+	int		P_Foll_Flg;
+
+	float		sx1, sy1, sx2, sy2;
+
+	float		px1, py1, px2, py2, p_uc;
+
 	//FPSと秒数カウント
 	int		P_FPS;
 	int		P_Seconas1;
@@ -123,4 +133,9 @@ public:
 	//Playerが浮上している時のアニメーション 
 	int Levitation_Anim1();
 	int Levitation_Anim2();
+
+
+	void Air_Move();
+	void Air_Up_Move();
+	void Stand_Foot();
 };
