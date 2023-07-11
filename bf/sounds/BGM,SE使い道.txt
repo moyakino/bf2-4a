@@ -1,0 +1,35 @@
+ゲームオーバー時.BGM  = SE_GameOver.wav
+
+シャボン玉取得時.SE =  SE_Bubble.wav
+
+ステージクリア時.SE  =  SE_StageClear.wav
+
+プレイヤージャンプ時.SE =  SE_PlayerJump.wav
+
+プレイヤーが死んだあと落下中のSE = SE_Falling.wav
+
+プレイヤーが死んで落下後、海に着水した時SE = SE_Splash.wav
+
+プレイヤーが死んでリスポーンした時SE = SE_Restart.wav
+
+プレイヤーが歩いてる時SE = SE_PlayerWalk.wav
+
+魚に食われた時.SE(敵、プレイヤー、両方　= SE_Eatable.wav
+
+タイトルからメインに遷移した後1回だけなるBGM  =SE_Start.wav
+
+敵がパラシュート開いて落下時.SE = SE_parachute.wav
+
+敵が風船で飛んでるとき.SE = SE_EnemyMove.wav
+
+敵にとどめ刺したとき.SE = SE_DefeatTheEnemy.wav
+
+風船割れたとき.SE（敵、プレイヤー、両方）=  SE_crack.wav
+
+ボーナスステージBGM = BGM_Trip.wav
+
+（いつ使うか不明な奴）= SE_Perfect.wav
+
+
+
+
