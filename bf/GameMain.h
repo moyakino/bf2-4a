@@ -11,6 +11,8 @@ private:
 	int StageLand_R;
 	int StageLand_L;
 	int StageSea;
+
+	int StageSample;
 	
 public:
 	GameMain();
