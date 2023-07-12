@@ -16,6 +16,8 @@ GameMain::GameMain()
 	if ((StageSea = LoadGraph("images/Stage/Stage_Sea01.png")) == -1){}
 
 	player = new PLAYER();
+	
+
 }
 
 GameMain::~GameMain()
@@ -30,6 +32,8 @@ AbstractScene* GameMain::Update()
 	player->Update();
 
 	return this;
+
+	
 }
 
 
@@ -53,14 +57,15 @@ void GameMain::Draw()const
 	/*‰æ‘œ‚Ì•`‰æ*/
 	
 	//‹ó’†‚Ì‘«ê
-	//DrawGraph(180, 280, StageFoot[0],TRUE);
+	/*DrawGraph(180, 280, StageFoot[0],TRUE);*/
 
 	//’n–Ê‚ÆŠC
-	//DrawGraph(0, 416, StageLand_L, TRUE);
-	//DrawGraph(480, 416, StageLand_R, TRUE);
-	//DrawGraph(160,444,StageSea,TRUE);
+	/*DrawGraph(0, 416, StageLand_L, TRUE);
+	DrawGraph(480, 416, StageLand_R, TRUE);
+	DrawGraph(160,444,StageSea,TRUE);*/
 
 	player->Draw();
 
 	DrawFormatString(0, 50, GetColor(255, 0, 0), "GameMain");
+
 }
