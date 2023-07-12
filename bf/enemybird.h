@@ -20,7 +20,7 @@ public:
     // •`‰æˆ—‚ğÀ‘•‚·‚é
     void Draw() const;
 
-    bool Attack();
+    //bool Attack();
 
-    bool Damage(int damage);
+    //bool Damage(int damage);
 };
