@@ -5,7 +5,7 @@
 PLAYER::PLAYER()
 {
     //プレイヤー画像データの読み込み
-    if (LoadDivGraph("images/Player/Player_animation_d.png", 32, 8, 4, 64, 64, P_ArrayImg)){}
+    if (LoadDivGraph("images/Player/Player_Animation.png", 32, 8, 4, 64, 64, P_ArrayImg)){}
     P_Img = 0;
     P_L_Stick = 0;
     P_Right_Btn = 0;
@@ -33,10 +33,10 @@ PLAYER::PLAYER()
     MouseY = 0;
 
     //足場の座標
-    sx1, sx2, sy1, sy2 = 0;
+    sx1 = 0, sx2 = 0, sy1 = 0, sy2 = 0;
 
     //プレイヤーの座標
-    px1, px2, py1, py2, p_uc = 0;
+    px1 = 0, px2 = 0, py1 = 0, py2 = 0, p_uc = 0;
 
     //立ち状態フラグ
     P_Stand_Flg = TRUE;
@@ -207,7 +207,7 @@ void PLAYER::Update()
         if (P_Move_Y <= 350.0 || P_Foll_Flg == TRUE) {
             P_Air_Flg = TRUE;
             P_Move_Y += 0.3f;
-            P_Img = Levitation_Anim2();
+            //P_Img = Levitation_Anim2();
             //P_TurnFlg = P_Move_Flg();
         }
         else {
