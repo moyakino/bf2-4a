@@ -73,6 +73,10 @@ private:
 	int		P_A_Btn;
 	//(仮)Aボタン長押し
 	int		P_A_Pressed;
+	//(仮)
+	int		P_A_BtnFlg;
+	int		P_Air_R_Flg;
+	int		P_Air_L_Flg;
 
 	//Player  X座標用変数
 	float	P_Move_X;

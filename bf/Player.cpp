@@ -21,6 +21,9 @@ PLAYER::PLAYER()
     P_Air_Flg = 0;
     P_Balloon_Flg = 1;
     P_TurnFlg = TRUE;
+    P_A_BtnFlg = 0;
+    P_Air_R_Flg = 0;
+    P_Air_L_Flg = 0;
     P_FPS = 0;
     P_Seconas1 = 0;
     MouseX = 0;
@@ -42,18 +45,19 @@ void PLAYER::Update()
     P_A_Btn = PAD_INPUT::OnButton(XINPUT_BUTTON_A);
     P_A_Pressed = PAD_INPUT::OnPressed(XINPUT_BUTTON_A);
 
-    if (P_Move_X <= -30) {
-        P_Move_X = 630;
+    //左ワープ
+    if (P_Move_X <= -53) {
+        P_Move_X = 700;
     }
-    else if (P_Move_X >= 630) {
-        P_Move_X = -30;
+    //右ワープ
+    else if (P_Move_X >= 700) {
+        P_Move_X = -53;
     }
 
     //右移動
-    if (P_L_Stick > RIGHT_MOVE || P_Right_Btn == 1) {
+    if (P_Air_Flg == FALSE && P_L_Stick > RIGHT_MOVE || P_Air_Flg == FALSE && P_Right_Btn == 1) {
         P_MoveR_Flg = TRUE;
         P_TurnFlg = TRUE;
-        //P_Move_X += 2;
         P_Img = Run_Anim();
         //慣性
         if (P_Speed <= 2.0f) {
@@ -71,10 +75,29 @@ void PLAYER::Update()
 
     //右空中移動
     if (P_Air_Flg == TRUE && P_L_Stick > RIGHT_MOVE || P_Air_Flg == TRUE && P_Right_Btn == 1) {
+        P_Air_R_Flg = TRUE;
         P_TurnFlg = TRUE;
         //慣性
+        if (P_AirSpeed <= 1.0f) {
+            P_AirSpeed = P_AirSpeed + 0.1f;
+            P_Move_X = P_Move_X + P_AirSpeed;
+        }
+        else if (P_AirSpeed >= 1.0f) {
+            P_AirSpeed = 1.0f;
+            P_Move_X = P_Move_X + P_AirSpeed;
+        }
+    }
+    else {
+        P_Air_R_Flg = FALSE;
+    }
+
+    //右浮上移動
+    if (P_A_Pressed == 1 && P_L_Stick > RIGHT_MOVE || P_A_Pressed == 1 && P_Right_Btn == 1) {
+        P_TurnFlg = TRUE;
+        P_Move_Y -= 1.0f;
+        P_Img = Levitation_Anim2();
         if (P_AirSpeed <= 2.0f) {
-            P_AirSpeed = P_AirSpeed + 0.05f;
+            P_AirSpeed = P_AirSpeed + 0.5f;
             P_Move_X = P_Move_X + P_AirSpeed;
         }
         else if (P_AirSpeed >= 2.0f) {
@@ -83,26 +106,10 @@ void PLAYER::Update()
         }
     }
 
-    //右浮上移動
-    if (P_A_Pressed == 1 && P_L_Stick > RIGHT_MOVE || P_A_Pressed == 1 && P_Right_Btn == 1) {
-        P_TurnFlg = TRUE;
-        P_Move_Y -= 0.5;
-        P_Img = Levitation_Anim2();
-        if (P_AirSpeed <= 3.0f) {
-            P_AirSpeed = P_AirSpeed + 0.05f;
-            P_Move_X = P_Move_X + P_AirSpeed;
-        }
-        else if (P_AirSpeed >= 3.0f) {
-            P_AirSpeed = 3.0f;
-            P_Move_X = P_Move_X + P_AirSpeed;
-        }
-    }
-
     //左移動
-    if (P_L_Stick < LEFT_MOVE || P_Left_Btn == 1) {
+    if (P_Air_Flg == FALSE && P_L_Stick < LEFT_MOVE || P_Air_Flg == FALSE && P_Left_Btn == 1) {
         P_MoveL_Flg = TRUE;
         P_TurnFlg = FALSE;
-        //P_Move_X -= 2;
         P_Img = Run_Anim();
         //慣性
         if (P_Speed >= -2.0f) {
@@ -120,29 +127,33 @@ void PLAYER::Update()
 
     //左空中移動
     if (P_Air_Flg == TRUE && P_L_Stick < LEFT_MOVE || P_Air_Flg == TRUE && P_Left_Btn == 1) {
+        P_Air_L_Flg = TRUE;
         P_TurnFlg = FALSE;
         //慣性
+        if (P_AirSpeed >= -1.0f) {
+            P_AirSpeed = P_AirSpeed + -0.1f;
+            P_Move_X = P_Move_X + P_AirSpeed;
+        }
+        else if (P_AirSpeed <= -1.0f) {
+            P_AirSpeed = -1.0f;
+            P_Move_X = P_Move_X + P_AirSpeed;
+        }
+    }
+    else {
+        P_Air_L_Flg = FALSE;
+    }
+  
+    //左浮上移動
+    if (P_A_Pressed == 1 && P_L_Stick < LEFT_MOVE ||P_A_Pressed == 1 && P_Left_Btn == 1) {
+        P_TurnFlg = FALSE;
+        P_Move_Y -= 1.0f;
+        P_Img = Levitation_Anim2();
         if (P_AirSpeed >= -2.0f) {
-            P_AirSpeed = P_AirSpeed + -0.05f;
+            P_AirSpeed = P_AirSpeed + -0.5f;
             P_Move_X = P_Move_X + P_AirSpeed;
         }
         else if (P_AirSpeed <= -2.0f) {
             P_AirSpeed = -2.0f;
-            P_Move_X = P_Move_X + P_AirSpeed;
-        }
-    }
-
-    //左浮上移動
-    if (P_A_Pressed == 1 && P_L_Stick < LEFT_MOVE || P_A_Pressed == 1 && P_Left_Btn == 1) {
-        P_TurnFlg = FALSE;
-        P_Move_Y -= 0.5;
-        P_Img = Levitation_Anim2();
-        if (P_AirSpeed >= -3.0f) {
-            P_AirSpeed = P_AirSpeed + -0.05f;
-            P_Move_X = P_Move_X + P_AirSpeed;
-        }
-        else if (P_AirSpeed <= -3.0f) {
-            P_AirSpeed = -3.0f;
             P_Move_X = P_Move_X + P_AirSpeed;
         }
     }
@@ -152,31 +163,56 @@ void PLAYER::Update()
     if (P_MoveL_Flg == FALSE && P_MoveR_Flg == FALSE && P_Air_Flg == FALSE) {
         P_Img = Stand_by_Anim();
         //慣性
-        P_Speed = P_Speed * 0.97f;
+        //P_Speed = P_Speed * 0.98f;
+        P_Speed = P_Speed * 0.0f;
         P_Move_X = P_Move_X + P_Speed;
     }
 
+
+    if (P_Air_Flg == TRUE && P_Air_L_Flg == FALSE && P_Air_R_Flg == FALSE) {
+        int a = 1;
+        P_AirSpeed = P_AirSpeed * 0.99f;
+        P_Move_X = P_Move_X + P_AirSpeed;
+    }
+
     //浮上 ただ浮くだけ
+    //if (P_A_Btn == 1) {
+    //    //インターバルをとる
+    //    if (P_FPS % 5 == 0 || P_FPS % 5 == 1 || P_FPS % 5 == 2 || P_FPS % 5 == 3 || P_FPS % 5 == 4) {
+    //        P_Img = Levitation_Anim1();
+    //        P_Move_Y -= 10;
+    //    }
+    //}
+    //else {
+    //    //重力
+    //    if (P_A_Btn == 0 && P_Move_Y <= 350.0) {
+    //        P_Move_Y += 0.3f;
+    //        P_Speed = 0;
+    //        P_Img = Levitation_Anim2();
+    //        //P_TurnFlg = P_Move_Flg();
+    //        P_Air_Flg = TRUE;
+    //    }
+    //    else {
+    //        P_Air_Flg = FALSE;
+    //    }
+    //}
+
     if (P_A_Btn == 1) {
-        //インターバルをとる
-        if (P_FPS % 3 == 0 || P_FPS % 3 == 1 || P_FPS % 3 == 2 || P_FPS % 3 == 3) {
-            P_Img = Levitation_Anim1();
-            P_Move_Y -= 10;
-        }
+        //P_Air_Flg = TRUE;
+        P_Img = Levitation_Anim1();
+        P_Move_Y -= 10;
     }
     else {
-        //重力
-        if (P_A_Btn == 0 && P_Move_Y <= 350.0) {
-            P_Move_Y += 0.3;
-            P_Speed = 0;
-            P_Img = Levitation_Anim2();
-            //P_TurnFlg = P_Move_Flg();
+        if (P_Move_Y <= 350.0) {
             P_Air_Flg = TRUE;
+            P_Move_Y += 0.3f;
+            P_Img = Levitation_Anim2();
         }
         else {
             P_Air_Flg = FALSE;
-        }
+        } 
     }
+
 
     //60fps == 1秒　で超えたら fpsを 0 にする
     if (P_FPS > 60) {
