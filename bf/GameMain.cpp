@@ -16,11 +16,13 @@ GameMain::GameMain()
 	if ((StageSea = LoadGraph("images/Stage/Stage_Sea01.png")) == -1){}
 
 	player = new PLAYER();
+	bubble = new Bubble();
 }
 
 GameMain::~GameMain()
 {
 	delete player;
+	delete bubble;
 }
 
 
@@ -28,6 +30,7 @@ AbstractScene* GameMain::Update()
 {
 
 	player->Update();
+	bubble->Update();
 
 	return this;
 }
@@ -61,6 +64,8 @@ void GameMain::Draw()const
 	//DrawGraph(160,444,StageSea,TRUE);
 
 	player->Draw();
+
+	bubble->Draw();
 
 	DrawFormatString(0, 50, GetColor(255, 0, 0), "GameMain");
 }

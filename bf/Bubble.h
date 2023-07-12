@@ -12,6 +12,8 @@ private:
 	//ƒVƒƒƒ{ƒ“‹Ê‚Ì“®‚­‹——£
 	int MoveX;
 	int MoveY;
+	//d—Í
+	int Speed;
 public:
 	Bubble();
 
