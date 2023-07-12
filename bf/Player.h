@@ -139,7 +139,5 @@ public:
 	int Levitation_Anim2();
 
 
-	void Air_Move();
-	void Air_Up_Move();
 	void Stand_Foot();
 };
