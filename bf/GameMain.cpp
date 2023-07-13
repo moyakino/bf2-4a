@@ -5,15 +5,19 @@
 //コンストラクタ
 GameMain::GameMain()
 {
+
+
 	/*画像の読み込み*/
 	//空中の足場
-	if ((StageFoot[0] = LoadGraph("images/Stage/Stage_Footing01.png")) == -1){}
+	StageFoot[0] = LoadGraph("images/Stage/Stage_Footing01.png");
 	//地面(左)
-	if ((StageLand_L = LoadGraph("images/Stage/Stage_Land_Left01.png")) == -1){}
+	StageLand_L = LoadGraph("images/Stage/Stage_Land_Left01.png");
 	//地面(右)
-	if ((StageLand_R = LoadGraph("images/Stage/Stage_Land_Right01.png")) == -1){}
+	StageLand_R = LoadGraph("images/Stage/Stage_Land_Right01.png");
 	//海
-	if ((StageSea = LoadGraph("images/Stage/Stage_Sea01.png")) == -1){}
+	StageSea = LoadGraph("images/Stage/Stage_Sea01.png");
+
+	StageSample = LoadGraph("images/StageSample/Stage_1.png");
 
 	player = new PLAYER();
 }
@@ -36,10 +40,15 @@ AbstractScene* GameMain::Update()
 void GameMain::Draw()const
 {
 
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
+	DrawGraph(0, 0, StageSample, FALSE);
+	//元に戻す。しかし、ここで特定の画像が半透明になる。                
+	SetDrawBlendMode(DX_BLENDGRAPHTYPE_ALPHA, 255);
+
 	//当たり判定の仮表示
 
 	//空中の足場
-	DrawBox(180, 280, 460, 297, 0x00ff00,FALSE);
+	DrawBox(180, 285, 460, 305, 0x00ff00,FALSE);
 
 	//地面
 	DrawBox(0,416,160,480,0x00ff00,FALSE);	//左
@@ -63,4 +72,6 @@ void GameMain::Draw()const
 	player->Draw();
 
 	DrawFormatString(0, 50, GetColor(255, 0, 0), "GameMain");
+
+
 }
