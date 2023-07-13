@@ -4,9 +4,13 @@
 
 
 EnemyBird::EnemyBird()
-{}
+{
+	if (LoadDivGraph("images/Enemy/Enemy_P_Animation.png", 18, 6, 3, 64, 64,E_ArrayImg)) {}
+	if (LoadDivGraph("images/Enemy/Enemy_G_Animation.png", 18, 6, 3, 64, 64, E_ArrayImg)) {}
+	if (LoadDivGraph("images/Enemy/Enemy_R_Animation.png", 18, 6, 3, 64, 64, E_ArrayImg)) {}
+}
 
-			EnemyBird::~EnemyBird()
+EnemyBird::~EnemyBird()
 {
 
 }
@@ -20,23 +24,13 @@ void EnemyBird::Update()
 	
 }
 
-//bool EnemyBird::Damage(int damage) {
-//	//PlaySoundMem(HitSE, DX_PLAYTYPE_BACK);
-//	hp -= damage;
-//	return hp <= 0;
-//}
-//
-//bool EnemyBird::Attack() {
-//	if (y > 640 && !isAttack) {
-//		isAttack = true;
-//		return true;
-//	}
-//
-//	return false;
-//}
-
 void EnemyBird::Draw() const
 {
 	DrawFormatString(10, 10, 0xffffff, "●", TRUE);
+	//プレイヤーの当たり判定
+	DrawBox(P_Move_X + 20, P_Move_Y + 37, P_Move_X + 47, P_Move_Y + 65, GetColor(255, 255, 255), FALSE);
+
+	//風船の当たり判定
+	DrawBox(P_Move_X + 5, P_Move_Y + 10, P_Move_X + 59, P_Move_Y + 37, GetColor(255, 255, 255), FALSE);
 }
 
