@@ -13,12 +13,13 @@ PLAYER::PLAYER()
     P_A_Btn = 0;
     P_A_Pressed = 0;
 
-    P_Move_X = 100.0;
-    P_Move_Y = 350.0;
+    P_Move_X = 100.0f;
+    //P_Move_Y = 350.0f;
+    P_Move_Y = 200.0f;
 
     P_Speed = 0.0;
     P_AirSpeed = 0.0;
-    P_Air_Multiply = 1.0;
+    P_Air_Multiply = 1.0f;
 
     P_MoveR_Flg = 0;
     P_MoveL_Flg = 0;
@@ -40,9 +41,9 @@ PLAYER::PLAYER()
     px1 = 0, px2 = 0, py1 = 0, py2 = 0, p_uc = 0;
 
     //立ち状態フラグ
-    P_Stand_Flg = TRUE;
+    P_Stand_Flg = 0;
     //落下状態フラグ
-    P_Foll_Flg = FALSE;
+    P_Foll_Flg = 0;
 }
 
 void PLAYER::Update()
@@ -201,6 +202,7 @@ void PLAYER::Update()
     
     if (P_A_Btn == 1) {
         if (P_FPS % 2 == 0) {
+            P_Air_Flg = TRUE;
             P_Img = Levitation_Anim1();
             //P_Air_Flg = TRUE;
             P_Move_Y -= (5.0f * P_Air_Multiply);
@@ -209,10 +211,10 @@ void PLAYER::Update()
     }
     else {
         //y350まで落下する
-        if (P_Move_Y <= 350.0 || P_Foll_Flg == TRUE) {
-            P_Air_Flg = TRUE;
+        if (P_Stand_Flg == FALSE) {
+            //P_Air_Flg = TRUE;
             P_Move_Y += 0.3f;
-            //P_Img = Levitation_Anim2();
+            P_Img = Levitation_Anim2();
             //P_TurnFlg = P_Move_Flg();
         }
         else {
@@ -251,37 +253,14 @@ void PLAYER::Stand_Foot()
     //中心
     p_uc = (px1 + px2) / 2;
     
-    if (P_Air_Flg == FALSE || P_Foll_Flg == TRUE)
-    {
-        //左右の床の移動範囲
-        if (p_uc <= 160 || p_uc >= 480) {
-            P_Stand_Flg = TRUE;
-            P_Foll_Flg = FALSE;
-        }
-        //越えたら海に落ちる
-        else {
-            P_Stand_Flg = FALSE;
-            P_Foll_Flg = TRUE;
-        }
+    //空を飛んでいても飛んでいなくても着地させたい
+    if (-53 <= p_uc && p_uc < 160 && 415 >= py2 && py2 >= 413 || 180 <= p_uc && p_uc <= 460 && 287 >= py2 && py2 >= 283 || 480 < p_uc && p_uc <= 740 && 415 >= py2 && py2 >= 413) {
+
+        P_Stand_Flg = TRUE;
     }
-
-    //浮かぶ足場
-    else if (P_Air_Flg == TRUE) {
-        if (sx1 <= p_uc && sx2 >= p_uc) {
-
-            P_Stand_Flg = TRUE;
-
-        }
-        else {
-            P_Stand_Flg = FALSE;
-        }
+    else {
+        P_Stand_Flg = FALSE;
     }
-
-    if (P_Foll_Flg == TRUE && py2 >= 455) {
-        //サカナ出すときに使える？
-        P_Foll_Flg = FALSE;
-    }
-
  }
 
 int PLAYER::Stand_by_Anim()
@@ -376,7 +355,7 @@ void PLAYER::Draw()const
 
     DrawFormatString(0, 120, GetColor(255, 255, 255), " 左スティック：横軸値 %d 縦軸値 %d", PAD_INPUT::GetLStickX(), PAD_INPUT::GetLStickY());
 
-    DrawFormatString(0, 140, GetColor(255, 255, 255), " プレイヤー：X座標 %0.1f Y座標 %0.01f", P_Move_X, P_Move_Y);
+    DrawFormatString(0, 140, GetColor(255, 255, 255), " プレイ左上：X座標 %0.1f Y座標 %0.01f", P_Move_X, P_Move_Y);
 
     DrawFormatString(0, 160, GetColor(255, 255, 255), " 移動フラグ：左移動 %d 右移動 %d", P_MoveL_Flg, P_MoveR_Flg);
 
@@ -384,26 +363,30 @@ void PLAYER::Draw()const
 
     DrawFormatString(330, 120, GetColor(255, 255, 255), " FPS：%d", P_FPS);
 
-    DrawFormatString(0, 200, GetColor(255, 255, 255), " 立ち状態フラグ： %d ", P_Stand_Flg);
-    DrawFormatString(0, 220, GetColor(255, 255, 255), " 落下状態フラグ： %d ", P_Foll_Flg);
-    DrawFormatString(0, 240, GetColor(255, 255, 255), " 浮遊状態フラグ： %d ", P_Air_Flg);
-    DrawFormatString(0, 260, GetColor(255, 255, 255), " p_uc: %0.1f ", p_uc);
+    DrawFormatString(0, 200, GetColor(255, 255, 255), " 地上 Stand_Flg： %d ", P_Stand_Flg);
+    DrawFormatString(0, 220, GetColor(255, 255, 255), " 海   Foll_Flg ： %d ", P_Foll_Flg);
+    DrawFormatString(0, 240, GetColor(255, 255, 255), " 空   Air_Flg  ： %d ", P_Air_Flg);
+    DrawFormatString(0, 260, GetColor(255, 255, 255), " p_uc X: %0.1f ", p_uc);
+    DrawFormatString(0, 280, GetColor(255, 255, 255), " py2  Y:  %0.1f ", py2);
 
     DrawCircle(p_uc, py2, 2, 0xffff00, TRUE);
 
 
     //プレイヤーの当たり判定
-    DrawBox(P_Move_X + 20, P_Move_Y + 37, P_Move_X + 47, P_Move_Y + 65, GetColor(255, 255, 255), FALSE);
+    DrawBox(P_Move_X + 30, P_Move_Y + 37, P_Move_X + 35, P_Move_Y + 65, GetColor(255, 255, 255), FALSE);
 
     //風船の当たり判定
     DrawBox(P_Move_X + 5, P_Move_Y + 10, P_Move_X + 59, P_Move_Y + 37, GetColor(255, 255, 255), FALSE);
 
+    DrawBox(px1, py1, px2, py2, GetColor(255, 0, 0), FALSE);
 
+    //DrawBox(P_Move_X, P_Move_Y, P_Move_X + 64, P_Move_Y + 64, GetColor(255, 0, 0), FALSE);
 
-    DrawBox(P_Move_X, P_Move_Y, P_Move_X + 64, P_Move_Y + 64, GetColor(255, 0, 0), FALSE);
-
+    //縦線
     DrawLine(sx1, 0, sx1, 480, 0xff0000);
     DrawLine(sx2, 0, sx2, 480, 0xff0000);
+
+    //横線
     DrawLine(0, sy1, 640, sy1, 0xff0000);
 
 
