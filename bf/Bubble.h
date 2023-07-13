@@ -2,7 +2,7 @@
 class Bubble{
 private:
 	//シャボン玉の画像（仮）
-	int BubbleImg;
+	int BubbleImg[3];
 	int BallFlg;
 	//シャボン玉の初期位置
 	int X, Y;
@@ -25,4 +25,6 @@ public:
 
 	//描画処理
 	void Draw() const;
+
+	int BubbleControl(void);
 };

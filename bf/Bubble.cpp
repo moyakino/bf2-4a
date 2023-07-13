@@ -5,14 +5,14 @@
 
 Bubble::Bubble()
 {
-
+	if (LoadDivGraph("images/stage/Stage_BubbleAnimation.png", 4, 4, 1, 64, 64, BubbleImg));
 X = 20;
 Y = 20;
 BallFlg = 0;
 BallX = 0;
 BallY = 0;
-MoveX = 200;
-MoveY = 455;
+MoveX = 338;
+MoveY = 245;
 }
 
 void Bubble::Update()
@@ -30,8 +30,14 @@ void Bubble::Update()
 }
 
 void Bubble::Draw() const {
-	DrawCircle(MoveX, MoveY,10, GetColor(255, 255, 255), TRUE);
+	DrawRotaGraph(MoveX, MoveY,1.0f,1,BubbleImg[0],TRUE);
 	DrawBox(MoveX - 11, MoveY - 11, MoveX + 12, MoveY + 12, GetColor(255, 255, 255), FALSE);
+}
+
+int Bubble::BubbleControl(void)
+{/* for(int i = 0; i < )*/
+
+	return 0;
 }
 
 
