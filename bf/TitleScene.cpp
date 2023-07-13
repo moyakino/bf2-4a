@@ -15,9 +15,9 @@ AbstractScene* Title::Update()
 
 Title::Title()
 {
-	if ((g_TitleImage = LoadGraph("images/Title/Title_Logo.png")) == -1);
-	if ((g_TitleImage2 = LoadGraph("images/Title/Title_ModeSelect.png")) == -1);
-	if ((g_TitleImage3 = LoadGraph("images/Title/Title_Credit.png")) == -1);
+	if ((g_TitleImage = LoadGraph("images/Title/Title_Logo.png"))){}
+	if ((g_TitleImage2 = LoadGraph("images/Title/Title_ModeSelect.png"))){}
+	if ((g_TitleImage3 = LoadGraph("images/Title/Title_Credit.png"))){}
 }
 
 Title::~Title()

@@ -87,6 +87,8 @@ private:
 	//プレイヤーの空中スピード
 	float	P_AirSpeed;
 
+	float	P_Air_Multiply;
+
 	//(仮)プレイヤー右移動フラグ 移動無し:0 右移動:1
 	int		P_MoveR_Flg;
 	//(仮)プレイヤー左移動フラグ 移動無し:0 左移動:1

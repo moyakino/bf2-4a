@@ -18,6 +18,7 @@ PLAYER::PLAYER()
 
     P_Speed = 0.0;
     P_AirSpeed = 0.0;
+    P_Air_Multiply = 1.0;
 
     P_MoveR_Flg = 0;
     P_MoveL_Flg = 0;
@@ -196,11 +197,15 @@ void PLAYER::Update()
         P_Move_X = P_Move_X + P_AirSpeed;
     }
 
+    Stand_Foot();
     
     if (P_A_Btn == 1) {
-        //P_Air_Flg = TRUE;
-        P_Img = Levitation_Anim1();
-        P_Move_Y -= 10;
+        if (P_FPS % 2 == 0) {
+            P_Img = Levitation_Anim1();
+            //P_Air_Flg = TRUE;
+            P_Move_Y -= (5.0f * P_Air_Multiply);
+            P_Air_Multiply += 0.7f;
+        }
     }
     else {
         //y350まで落下する
@@ -215,9 +220,10 @@ void PLAYER::Update()
         } 
     }
 
-    Stand_Foot();
-
-
+    if (P_Seconas1 == 4) {
+        P_Air_Multiply = 1.0;
+    }
+   
     //60fps == 1秒　で超えたら fpsを 0 にする
     if (P_FPS > 60) {
         P_FPS = 0;
@@ -325,14 +331,17 @@ int PLAYER::Levitation_Anim1()
     int F1_AnimImg = 0;
 
     // 5フレーム
-    if (P_FPS % 15 == 0 || P_FPS % 15 == 1 || P_FPS % 15 == 2 || P_FPS % 15 == 3 || P_FPS % 15 == 4) {
+    if (P_FPS % 20 == 0 || P_FPS % 20 == 1 || P_FPS % 20 == 2 || P_FPS % 20 == 3 || P_FPS % 20 == 4) {
         F1_AnimImg = P_ArrayImg[LEVITATION_BALLOON2_0];
     }
-    else if (P_FPS % 15 == 5 || P_FPS % 15 == 6 || P_FPS % 15 == 7 || P_FPS % 15 == 8 || P_FPS % 15 == 9) {
+    else if (P_FPS % 20 == 5 || P_FPS % 20 == 6 || P_FPS % 20 == 7 || P_FPS % 20 == 8 || P_FPS % 20 == 9) {
         F1_AnimImg = P_ArrayImg[LEVITATION_BALLOON2_1];
     }
-    else if (P_FPS % 15 == 10 || P_FPS % 15 == 11 || P_FPS % 15 == 12 || P_FPS % 15 == 13 || P_FPS % 15 == 14) {
+    else if (P_FPS % 20 == 10 || P_FPS % 20 == 11 || P_FPS % 20 == 12 || P_FPS % 20 == 13 || P_FPS % 20 == 14) {
         F1_AnimImg = P_ArrayImg[LEVITATION_BALLOON2_2];
+    }
+    else if (P_FPS % 20 == 15 || P_FPS % 20 == 16 || P_FPS % 20 == 17 || P_FPS % 20 == 18 || P_FPS % 20 == 19) {
+        F1_AnimImg = P_ArrayImg[LEVITATION_BALLOON2_3];
     }
 
     return F1_AnimImg;
@@ -378,6 +387,7 @@ void PLAYER::Draw()const
     DrawFormatString(0, 200, GetColor(255, 255, 255), " 立ち状態フラグ： %d ", P_Stand_Flg);
     DrawFormatString(0, 220, GetColor(255, 255, 255), " 落下状態フラグ： %d ", P_Foll_Flg);
     DrawFormatString(0, 240, GetColor(255, 255, 255), " 浮遊状態フラグ： %d ", P_Air_Flg);
+    DrawFormatString(0, 260, GetColor(255, 255, 255), " p_uc: %0.1f ", p_uc);
 
     DrawCircle(p_uc, py2, 2, 0xffff00, TRUE);
 
