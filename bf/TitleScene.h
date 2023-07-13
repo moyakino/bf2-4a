@@ -4,14 +4,16 @@
 class Title :public AbstractScene
 {
 private:
-
+	int g_TitleImage = 0;
+	int g_TitleImage2 = 0;
+	int g_TitleImage3 = 0;
 public:
-
+	
 	//コンストラクタ
-	Title() {};
+	Title();
 
 	//デストラクタ
-	virtual ~Title() { };
+	virtual ~Title();
 
 	//描画以外の更新を実装する
 	virtual AbstractScene* Update()override;
