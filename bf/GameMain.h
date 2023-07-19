@@ -12,7 +12,7 @@ private:
 	int StageSea;
 
 	int StageSample;
-	
+	int Bgm;
 public:
 	GameMain();
 	~GameMain();

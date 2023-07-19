@@ -5,7 +5,8 @@
 //コンストラクタ
 GameMain::GameMain()
 {
-
+	Bgm = LoadSoundMem("sounds/SE_Start.wav");
+	PlaySoundMem(Bgm, DX_PLAYTYPE_BACK);
 
 	/*画像の読み込み*/
 	//空中の足場
@@ -39,7 +40,7 @@ AbstractScene* GameMain::Update()
 
 void GameMain::Draw()const
 {
-
+	
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
 	DrawGraph(0, 0, StageSample, FALSE);
 	//元に戻す。しかし、ここで特定の画像が半透明になる。                
@@ -72,6 +73,6 @@ void GameMain::Draw()const
 	player->Draw();
 
 	DrawFormatString(0, 50, GetColor(255, 0, 0), "GameMain");
-
-
+	
+	
 }
