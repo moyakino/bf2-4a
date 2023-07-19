@@ -101,15 +101,15 @@ void PLAYER::Update()
     if (P_Air_Flg == TRUE && P_L_Stick > RIGHT_MOVE || P_Air_Flg == TRUE && P_Right_Btn == 1) {
         P_Air_R_Flg = TRUE;
         P_TurnFlg = TRUE;
-        //äµê´
-        if (P_AirSpeed <= 1.0f) {
-            P_AirSpeed = P_AirSpeed + 0.1f;
-            P_Move_X = P_Move_X + P_AirSpeed;
-        }
-        else if (P_AirSpeed >= 1.0f) {
-            P_AirSpeed = 1.0f;
-            P_Move_X = P_Move_X + P_AirSpeed;
-        }
+        ////äµê´
+        //if (P_AirSpeed <= 1.0f) {
+        //    P_AirSpeed = P_AirSpeed + 0.1f;
+        //    P_Move_X = P_Move_X + P_AirSpeed;
+        //}
+        //else if (P_AirSpeed >= 1.0f) {
+        //    P_AirSpeed = 1.0f;
+        //    P_Move_X = P_Move_X + P_AirSpeed;
+        //}
     }
     else {
         P_Air_R_Flg = FALSE;
@@ -118,12 +118,13 @@ void PLAYER::Update()
     //âEïÇè„à⁄ìÆ
     if (P_A_Pressed == 1 && P_L_Stick > RIGHT_MOVE || P_A_Pressed == 1 && P_Right_Btn == 1) {
         P_TurnFlg = TRUE;
-        P_Move_Y -= 1.0f;
+        P_Move_Y -= 2.5f;
         P_Img = Levitation_Anim2();
+        //â¡ë¨
         if (P_AirSpeed <= 2.0f) {
-            P_AirSpeed = P_AirSpeed + 0.5f;
+            P_AirSpeed = P_AirSpeed + 0.18f;
             P_Move_X = P_Move_X + P_AirSpeed;
-        }
+        } 
         else if (P_AirSpeed >= 2.0f) {
             P_AirSpeed = 2.0f;
             P_Move_X = P_Move_X + P_AirSpeed;
@@ -153,15 +154,15 @@ void PLAYER::Update()
     if (P_Air_Flg == TRUE && P_L_Stick < LEFT_MOVE || P_Air_Flg == TRUE && P_Left_Btn == 1) {
         P_Air_L_Flg = TRUE;
         P_TurnFlg = FALSE;
-        //äµê´
-        if (P_AirSpeed >= -1.0f) {
-            P_AirSpeed = P_AirSpeed + -0.1f;
-            P_Move_X = P_Move_X + P_AirSpeed;
-        }
-        else if (P_AirSpeed <= -1.0f) {
-            P_AirSpeed = -1.0f;
-            P_Move_X = P_Move_X + P_AirSpeed;
-        }
+        ////äµê´
+        //if (P_AirSpeed >= -1.0f) {
+        //    P_AirSpeed = P_AirSpeed + -0.1f;
+        //    P_Move_X = P_Move_X + P_AirSpeed;
+        //}
+        //else if (P_AirSpeed <= -1.0f) {
+        //    P_AirSpeed = -1.0f;
+        //    P_Move_X = P_Move_X + P_AirSpeed;
+        //}
     }
     else {
         P_Air_L_Flg = FALSE;
@@ -170,10 +171,10 @@ void PLAYER::Update()
     //ç∂ïÇè„à⁄ìÆ
     if (P_A_Pressed == 1 && P_L_Stick < LEFT_MOVE ||P_A_Pressed == 1 && P_Left_Btn == 1) {
         P_TurnFlg = FALSE;
-        P_Move_Y -= 1.0f;
+        P_Move_Y -= 3.0f;
         P_Img = Levitation_Anim2();
         if (P_AirSpeed >= -2.0f) {
-            P_AirSpeed = P_AirSpeed + -0.5f;
+            P_AirSpeed = P_AirSpeed + -0.15f;
             P_Move_X = P_Move_X + P_AirSpeed;
         }
         else if (P_AirSpeed <= -2.0f) {
@@ -193,9 +194,16 @@ void PLAYER::Update()
     }
 
     //ãÛíÜÇÃäµê´
-    if (P_Air_Flg == TRUE && P_Air_L_Flg == FALSE && P_Air_R_Flg == FALSE) {
-        P_AirSpeed = P_AirSpeed * 0.98f;
+    if (P_Air_Flg == 1 && P_Air_L_Flg == TRUE || P_Air_R_Flg == TRUE) { 
+        P_AirSpeed = P_AirSpeed * 0.995f;
         P_Move_X = P_Move_X + P_AirSpeed;
+    }
+     else if (P_Air_Flg == 1 && P_Air_L_Flg == FALSE || P_Air_R_Flg == FALSE) {
+        P_AirSpeed = P_AirSpeed * 0.995f;
+        P_Move_X = P_Move_X + P_AirSpeed;
+    }
+    if (P_Stand_Flg == TRUE) {
+        P_AirSpeed = 0;
     }
 
     Stand_Foot();
@@ -213,7 +221,7 @@ void PLAYER::Update()
         //y350Ç‹Ç≈óéâ∫Ç∑ÇÈ
         if (P_Stand_Flg == FALSE) {
             //P_Air_Flg = TRUE;
-            P_Move_Y += 0.3f;
+            P_Move_Y += 0.8f;
             P_Img = Levitation_Anim2();
             //P_TurnFlg = P_Move_Flg();
         }

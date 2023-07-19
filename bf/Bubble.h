@@ -1,19 +1,24 @@
 #pragma once
-class Bubble{
+//シャボン玉のアニメーション
+#define Bubble_Anim_0 0
+#define Bubble_Anim_1 1
+#define Bubble_Anim_2 2
+#define Bubble_Anim_3 3
+
+class Bubble {
 private:
 	//シャボン玉の画像（仮）
 	int BubbleImg[3];
+	int B_Img;
 	int BallFlg;
 	//シャボン玉の初期位置
-	int X, Y;
-	//シャボン玉の座標更新
-	int BallX;
-	int BallY;
-	//シャボン玉の動く距離
-	int MoveX;
-	int MoveY;
-	//重力
-	int Speed;
+	float MoveX;
+	float MoveY;
+    //シャボン玉の動き
+	int SpeedY;
+	int SpeedX;
+	int B_FPS;
+	int seconds;
 public:
 	Bubble();
 
