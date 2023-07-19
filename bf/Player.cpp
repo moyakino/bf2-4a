@@ -181,7 +181,6 @@ void PLAYER::Update()
             P_Move_X = P_Move_X + P_AirSpeed;
         }
     }
-    
 
     //‘Ò‹@’†
     if (P_MoveL_Flg == FALSE && P_MoveR_Flg == FALSE && P_Air_Flg == FALSE) {
@@ -197,6 +196,15 @@ void PLAYER::Update()
         P_AirSpeed = P_AirSpeed * 0.98f;
         P_Move_X = P_Move_X + P_AirSpeed;
     }
+    else if(P_Air_Flg == TRUE && P_Air_L_Flg == FALSE && P_Air_R_Flg == FALSE) {
+        P_AirSpeed = P_AirSpeed * 0.1f;
+        P_Move_Y = P_Move_Y + P_AirSpeed;
+    }
+    ////ã•ûŒü‚Ö‚ÌŠµ«
+    //if (P_AirSpeed >= -1.0f) {
+    //    P_AirSpeed = P_AirSpeed + -0.1f;
+    //    P_Move_Y = P_Move_Y + P_AirSpeed;
+    //}
 
     Stand_Foot();
     
@@ -213,7 +221,7 @@ void PLAYER::Update()
         //y350‚Ü‚Å—Ž‰º‚·‚é
         if (P_Stand_Flg == FALSE) {
             //P_Air_Flg = TRUE;
-            P_Move_Y += 0.3f;
+            P_Move_Y += 0.5f;
             P_Img = Levitation_Anim2();
             //P_TurnFlg = P_Move_Flg();
         }
