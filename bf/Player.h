@@ -117,6 +117,12 @@ private:
 	int		MouseX;
 	int		MouseY;
 
+	//test
+	int Bound;
+	int py_c;
+
+	float fx1, fx2, fy1, fy2;
+
 public:
 	PLAYER();
 
