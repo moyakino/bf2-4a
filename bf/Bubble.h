@@ -11,6 +11,7 @@ private:
 	int BubbleImg[3];
 	int B_Img;
 	int Bubbleflg;
+	int B_flg;
 	//ƒVƒƒƒ{ƒ“‹Ê‚Ì‰ŠúˆÊ’u
 	float MoveX;
 	float MoveY;

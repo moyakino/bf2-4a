@@ -14,6 +14,7 @@ MoveX = 338;
 MoveY = 245;
 SpeedY = 30;
 B_FPS = 0;
+B_flg = 0;
 }
 
 
@@ -23,22 +24,26 @@ void Bubble::Update()
 	B_FPS++;
 	
 
+	if (CheckHitKey(KEY_INPUT_Z))
+	{
+		B_flg = TRUE;
+	}
 
-	if (MoveY != 0) {
-		//tick++;
-		//if (tick == 1) {
-		//	//óêêîÇÃê∂ê¨
-		//	srand(time(NULL));
-		//	i = rand() % 3;
+	if (MoveY <= -30) {
+		MoveY = 245;
+	}
+		
+	if (MoveY!= 0 && B_flg == TRUE) {
 			MoveY -= 0.4f;
 			B_Img = BubbleControl();
-			//tick--;
-		
+			/*if (MoveY == -10) {
+				B_flg = FALSE;
+			}*/
 	}
 	if (B_FPS > 60) {
 		B_FPS = 0;
 		seconds++;
-	}// P_FPS_INC ÇÕ ïbêîÇéÊÇ¡ÇƒÇ¢ÇÈ
+	}// B_FPS_INC ÇÕ ïbêîÇéÊÇ¡ÇƒÇ¢ÇÈ
 	else if (seconds > 3) {
 		seconds = 0;
 	}
