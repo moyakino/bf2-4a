@@ -149,7 +149,8 @@ public:
 	void Player_Air_A();
 	void Player_Air_B();
 
-
+	int Return_MoveX()const;
+	int Return_MoveY()const;
 
 	//Playerの待機状態中のアニメーション
 	int Stand_by_Anim();
