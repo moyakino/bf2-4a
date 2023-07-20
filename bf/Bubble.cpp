@@ -9,18 +9,30 @@ Bubble::Bubble()
 {
 	if (LoadDivGraph("images/stage/Stage_BubbleAnimation.png", 4, 4, 1, 64, 64, BubbleImg)){}
 B_Img = BubbleImg[0];
-BallFlg = 0;
+Bubbleflg = 0;
 MoveX = 338;
 MoveY = 245;
 SpeedY = 30;
 B_FPS = 0;
 }
 
-
-
 void Bubble::Update()
 {
 	B_FPS++;
+	
+
+
+	if (MoveY != 0) {
+		//tick++;
+		//if (tick == 1) {
+		//	//óêêîÇÃê∂ê¨
+		//	srand(time(NULL));
+		//	i = rand() % 3;
+			MoveY -= 0.4f;
+			B_Img = BubbleControl();
+			//tick--;
+		
+	}
 	if (B_FPS > 60) {
 		B_FPS = 0;
 		seconds++;
@@ -28,47 +40,50 @@ void Bubble::Update()
 	else if (seconds > 3) {
 		seconds = 0;
 	}
-	if (MoveY != 0) {
-		MoveY -= 0.4f;
-		BubbleControl();
-		}
-	/*while (MoveY == 0) {
-		
-	}*/
-   /* if (CheckHitKey(KEY_INPUT_A)) {
-        MoveX -= 0.4;
-		 B_Img = BubbleControl();
-	}
-	if (CheckHitKey(KEY_INPUT_D)) {
-		MoveX += 0.4;
-		B_Img = BubbleControl();
-	}
-	 if (CheckHitKey(KEY_INPUT_W)) {
-		MoveY -= 0.3;
-		B_Img = BubbleControl();
-	}*/
-
 }
 
 void Bubble::Draw() const {
 	DrawRotaGraph(MoveX, MoveY,1.0f,1,B_Img,TRUE);
 	DrawBox(MoveX - 15, MoveY - 15, MoveX + 15, MoveY + 15, GetColor(255, 255, 255), FALSE);
+	DrawFormatString(0, 300, GetColor(255, 255, 255), "MoveX:%0.1f MoveY:%0.1f", MoveX,MoveY);
+	DrawFormatString(0, 320, GetColor(255, 255, 255), "Bubbleflg:%d", Bubbleflg);
+
 }
 
 int Bubble::BubbleControl()
 {
-
-	int B_AnimImg = 0;
+	if (MoveX == 460) {
+		SpeedX = 0.7f;
+	}
+	if (SpeedX <= 0) {
+		Bubbleflg = 1;
+	}
+	if (SpeedX >= 10) {
+		Bubbleflg = 0;
+	}
+	if (Bubbleflg == 1) {
+		SpeedX++;
+		MoveX++;;
+	}
+	else {
+		SpeedX--;
+		MoveX--;
+	}
 	
-		if (B_FPS % 20 == 0 || B_FPS % 20 == 1 || B_FPS % 20 == 2 || B_FPS % 20 == 3 || B_FPS % 20 == 4) {
-			B_AnimImg = BubbleImg[0];
-		}
-		else if (B_FPS % 20 == 5 || B_FPS % 20 == 6 || B_FPS % 20 == 7 || B_FPS % 20 == 8 || B_FPS % 20 == 9) {
-			B_AnimImg = BubbleImg[1];
-		}
-		else if (B_FPS % 20 == 10 || B_FPS % 20 == 11 || B_FPS % 20 == 12 || B_FPS % 20 == 13 || B_FPS % 20 == 14) {
-			B_AnimImg = BubbleImg[2];
-		}
+			
+	int B_AnimImg = 0;
+
+	// 5ÉtÉåÅ[ÉÄ
+	if (B_FPS % 15 == 0 || B_FPS % 15 == 1 || B_FPS % 15 == 2 || B_FPS % 15 == 3 || B_FPS % 15 == 4) {
+		B_AnimImg = BubbleImg[0];
+	}
+	else if (B_FPS % 15 == 5 || B_FPS % 15 == 6 || B_FPS % 15 == 7 || B_FPS % 15 == 8 || B_FPS % 15 == 9) {
+		B_AnimImg = BubbleImg[1];
+	}
+	else if (B_FPS % 15 == 10 || B_FPS % 15 == 11 || B_FPS % 15 == 12 || B_FPS % 15 == 13 || B_FPS % 15 == 14) {
+		B_AnimImg = BubbleImg[2];
+	}
+
 	return B_AnimImg;
 }
 
