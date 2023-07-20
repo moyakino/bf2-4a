@@ -140,6 +140,9 @@ public:
 	int Levitation_Anim1();
 	int Levitation_Anim2();
 
-
 	void Stand_Foot();
+
+	int GetLocationX();
+
+	int GetLocationY();
 };

@@ -20,11 +20,13 @@ GameMain::GameMain()
 	StageSample = LoadGraph("images/StageSample/Stage_1.png");
 
 	player = new PLAYER();
+	enemybird = new EnemyBird();
 }
 
 GameMain::~GameMain()
 {
 	delete player;
+	delete enemybird;
 }
 
 
@@ -32,6 +34,7 @@ AbstractScene* GameMain::Update()
 {
 
 	player->Update();
+	enemybird->Update(player->GetLocationX(), player->GetLocationY());
 
 	return this;
 }
@@ -70,6 +73,7 @@ void GameMain::Draw()const
 	//DrawGraph(160,444,StageSea,TRUE);
 
 	player->Draw();
+	enemybird->Draw();
 
 	DrawFormatString(0, 50, GetColor(255, 0, 0), "GameMain");
 

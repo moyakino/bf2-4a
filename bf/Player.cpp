@@ -271,6 +271,16 @@ void PLAYER::Stand_Foot()
     }
  }
 
+int PLAYER::GetLocationX()
+{
+    return px1;
+}
+
+int PLAYER::GetLocationY()
+{
+    return py1;
+}
+
 int PLAYER::Stand_by_Anim()
 {
     int S_AnimImg = 0;

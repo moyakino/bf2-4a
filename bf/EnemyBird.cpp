@@ -5,10 +5,11 @@
 
 EnemyBird::EnemyBird()
 {
-	if (LoadDivGraph("images/Enemy/Enemy_P_Animation.png", 18, 6, 3, 64, 64,E_ArrayImg)) {}
-	if (LoadDivGraph("images/Enemy/Enemy_G_Animation.png", 18, 6, 3, 64, 64, E_ArrayImg)) {}
-	if (LoadDivGraph("images/Enemy/Enemy_R_Animation.png", 18, 6, 3, 64, 64, E_ArrayImg)) {}
-  
+	if (LoadDivGraph("images/Enemy/Enemy_P_Animation.png", 18, 6, 3, 64, 64, E_ArrayImg)) {}
+	/*if (LoadDivGraph("images/Enemy/Enemy_G_Animation.png", 18, 6, 3, 64, 64, E_ArrayImg1)) {}
+	if (LoadDivGraph("images/Enemy/Enemy_R_Animation.png", 18, 6, 3, 64, 64, E_ArrayImg2)) {}*/
+	x = 0;
+	y = 0;
 }
 
 EnemyBird::~EnemyBird()
@@ -16,22 +17,40 @@ EnemyBird::~EnemyBird()
 
 }
 
-void EnemyBird::Update()
+void EnemyBird::Update(int playerx,int playery)
 {
 	//Player  X座標用変数
 	float	E_Move_X;
 	//Player  Y座標用変数
 	float	E_Move_Y;
-	
+	x = playerx;
+	y = playery;
 }
 
 void EnemyBird::Draw() const
 {
-	//DrawFormatString(10, 10, 0xffffff, "●", TRUE);
-	////プレイヤーの当たり判定
-	//DrawBox(P_Move_X + 20, P_Move_Y + 37, P_Move_X + 47, P_Move_Y + 65, GetColor(255, 255, 255), FALSE);
-
-	////風船の当たり判定
-	//DrawBox(P_Move_X + 5, P_Move_Y + 10, P_Move_X + 59, P_Move_Y + 37, GetColor(255, 255, 255), FALSE);
+	DrawGraph(x,y, E_ArrayImg[0],TRUE);
+	
 }
+
+//int EnemyBird::Stand_by_Anim()
+//{
+//    int S_AnimImg = 0;
+//
+//    // 0 から 3 秒
+//    if (P_Seconas1 == 0) {
+//        S_AnimImg = E_ArrayImg[STAND_BY_BALLOON2_1];
+//    }
+//    else if (P_Seconas1 > 0 && P_Seconas1 < 2) {
+//        S_AnimImg = E_ArrayImg[STAND_BY_BALLOON2_0];
+//    }
+//    else if (P_Seconas1 > 1 && P_Seconas1 < 3) {
+//        S_AnimImg = E_ArrayImg[STAND_BY_BALLOON2_1];
+//    }
+//    else if (P_Seconas1 > 2 && P_Seconas1 < 4) {
+//        S_AnimImg = E_ArrayImg[STAND_BY_BALLOON2_2];
+//    }
+//
+//    return S_AnimImg;
+//}
 
