@@ -24,6 +24,8 @@ PLAYER::PLAYER()
     //空中でのスピード
     P_AirSpeed = 0.0;
 
+    P_Speed = 0;
+
     P_Accele = 0.0f;
     P_Air_Multiply = 1.0f;
 
@@ -197,6 +199,7 @@ void PLAYER::Player_Gravity()
         P_AirSpeed = P_AirSpeed * 0.98f;
         P_Move_X = P_Move_X + P_AirSpeed;
     }
+}
 void PLAYER::Player_Air_A()
 {
     // Aボタン単押し
@@ -208,7 +211,6 @@ void PLAYER::Player_Air_A()
         if (P_YSpeed <= -10.0f) {
             P_YSpeed = -10.0f;
         }
-        } 
     }
 }
 

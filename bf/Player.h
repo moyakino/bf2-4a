@@ -93,6 +93,8 @@ private:
 	//プレイヤーの空中スピード
 	float	P_AirSpeed;
 
+	float P_Speed;
+
 	float	P_Accele;
 
 	float	P_Air_Multiply;

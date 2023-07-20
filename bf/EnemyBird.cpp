@@ -9,7 +9,10 @@ EnemyBird::EnemyBird()
 	/*if (LoadDivGraph("images/Enemy/Enemy_G_Animation.png", 18, 6, 3, 64, 64, E_ArrayImg_G)) {}
 	if (LoadDivGraph("images/Enemy/Enemy_R_Animation.png", 18, 6, 3, 64, 64, E_ArrayImg_R)) {}*/
 	x = 0;
-	y = 0;
+    y = 0;
+
+    E_Move_X = 300.0f;
+    E_Move_Y = 200.0f;
 }
 
 EnemyBird::~EnemyBird()
@@ -19,18 +22,45 @@ EnemyBird::~EnemyBird()
 
 void EnemyBird::Update(int playerx,int playery)
 {
-	//Player  X座標用変数
-	float	E_Move_X;
-	//Player  Y座標用変数
-	float	E_Move_Y;
-	x = playerx;
-	y = playery;
+
+	//x = playerx;
+	//y = playery;
+    E_FPS++;
+    if (E_FPS > 60) {
+        E_FPS = 0;
+        seconds++;
+    }// P_FPS_INC は 秒数を取っている
+    else if (seconds > 3) {
+        seconds = 0;
+    }
+    E_Move_X == playerx;
+    E_Move_Y == playery;
 }
 
 void EnemyBird::Draw() const
 {
-	DrawGraph(x,y, E_ArrayImg_P[0],TRUE);
+	DrawGraph(E_Move_X, E_Move_Y, E_ArrayImg_P[0],TRUE);
 	
+}
+void EnemyBird::Stand_Foot()
+{
+    //足場の座標
+    sx1 = 180;
+    sx2 = sx1 + 280;
+    sy1 = 285;
+    sy2 = sy1 + 20;
+
+    //中心
+    e_uc = (ex1 + ex2) / 2;
+
+    //空を飛んでいても飛んでいなくても着地させたい
+    if (-53 <= e_uc && e_uc < 160 && 415 >= ey2 && ey2 >= 413 || 180 <= e_uc && e_uc <= 460 && 287 >= ey2 && ey2 >= 283 || 480 < e_uc && e_uc <= 740 && 415 >= ey2 && ey2 >= 413) {
+
+        E_Stand_Flg = TRUE;
+    }
+    else {
+        E_Stand_Flg = FALSE;
+    }
 }
 
 //int EnemyBird::Stand_by_Anim()
