@@ -12,6 +12,7 @@ private:
     int E_FPS;
     int seconds;
 
+    int PlayerPos;
 
 public:
     int E_ArrayImg_P[18];
@@ -42,4 +43,8 @@ public:
     void Stand_Foot();
 
     int Stand_by_Anim();
+
+    int E_GetLocationX();
+
+    int E_GetLocationY();
 };

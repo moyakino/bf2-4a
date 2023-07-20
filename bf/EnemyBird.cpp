@@ -1,6 +1,6 @@
-#include "EnemyBird.h"
 #include"DxLib.h"
 #include"GameMain.h"
+#include "EnemyBird.h"
 
 
 EnemyBird::EnemyBird()
@@ -13,6 +13,9 @@ EnemyBird::EnemyBird()
 
     E_Move_X = 300.0f;
     E_Move_Y = 200.0f;
+
+    //“G‚ÌÀ•W
+    ex1 = 0, ex2 = 0, ey1 = 0,ey2 = 0, e_uc = 0;
 }
 
 EnemyBird::~EnemyBird()
@@ -22,10 +25,11 @@ EnemyBird::~EnemyBird()
 
 void EnemyBird::Update(int playerx,int playery)
 {
-
+    PlayerPos = playerx, playery;
 	//x = playerx;
 	//y = playery;
     E_FPS++;
+
     if (E_FPS > 60) {
         E_FPS = 0;
         seconds++;
@@ -33,8 +37,7 @@ void EnemyBird::Update(int playerx,int playery)
     else if (seconds > 3) {
         seconds = 0;
     }
-    E_Move_X == playerx;
-    E_Move_Y == playery;
+   
 }
 
 void EnemyBird::Draw() const
@@ -62,6 +65,17 @@ void EnemyBird::Stand_Foot()
         E_Stand_Flg = FALSE;
     }
 }
+//int EnemyBird::E_GetLocationX()
+//{
+//    return ex1;
+//}
+//
+//int EnemyBird::E_GetLocationX()
+//{
+//    return ey1;
+//}
+//
+
 
 //int EnemyBird::Stand_by_Anim()
 //{
@@ -83,4 +97,3 @@ void EnemyBird::Stand_Foot()
 //
 //    return S_AnimImg;
 //}
-
