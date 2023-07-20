@@ -231,7 +231,7 @@ void PLAYER::Player_Levitation_Move()
 void PLAYER::Player_Gravity()
 {
     P_Air_Flg = TRUE;
-    P_YSpeed = P_YSpeed + 0.08f;
+    P_YSpeed = P_YSpeed + 0.01f;
     P_Move_Y = P_Move_Y + P_YSpeed;
     if (P_YSpeed >= 1.0f) {//速度制限
         P_YSpeed = 1.0f;
@@ -242,11 +242,11 @@ void PLAYER::Player_Air_A()
 {
     // Aボタン単押し
     P_Air_Flg = TRUE;
-    P_YSpeed = P_YSpeed + -2.0f;
+    P_YSpeed = P_YSpeed + -0.2f;
     P_Move_Y = P_Move_Y + P_YSpeed;
     //P_Move_Y--;
-    if (P_YSpeed <= -10.0f) {
-        P_YSpeed = -10.0f;
+    if (P_YSpeed <= -1.0f) {
+        P_YSpeed = -1.0f;
     }
 }
 
@@ -254,11 +254,11 @@ void PLAYER::Player_Air_B()
 {
     // Bボタン長押し
     P_Air_Flg = TRUE;
-    P_YSpeed = P_YSpeed + -0.1f;
+    P_YSpeed = P_YSpeed + -0.06f;
     P_Move_Y = P_Move_Y + P_YSpeed;
     //P_Move_Y--;
-    if (P_YSpeed <= -1.7f) {
-        P_YSpeed = -1.7f;
+    if (P_YSpeed <= -1.0f) {
+        P_YSpeed = -1.0f;
     }
 }
 

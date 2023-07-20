@@ -164,7 +164,7 @@ public:
 
 	void Stand_Foot();
 
-	int GetLocationX();
+	/*int GetLocationX();
 
-	int GetLocationY();
+	int GetLocationY();*/
 };
