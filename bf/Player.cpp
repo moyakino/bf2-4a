@@ -11,11 +11,12 @@ PLAYER::PLAYER()
     P_Right_Btn = 0;
     P_Left_Btn = 0;
     P_A_Btn = 0;
+    P_B_Btn = 0;
     P_A_Pressed = 0;
 
     P_Move_X = 100.0f;
-    //P_Move_Y = 350.0f;
-    P_Move_Y = 200.0f;
+    P_Move_Y = 350.0f;
+    //P_Move_Y = 200.0f;
 
     //地上のスピード
     P_XSpeed = 0.0f;
@@ -100,6 +101,10 @@ void PLAYER::Update()
         Player_Air_B();
     }
 
+    if (P_Air_Flg == TRUE && P_Stand_Flg == FALSE) {
+        Player_Levitation_Move();
+    }
+
     if (P_Stand_Flg == FALSE && P_B_Btn == 0) {
         Player_Gravity();
     }
@@ -174,13 +179,54 @@ void PLAYER::Player_Move()
 
     //待機中
     if (P_MoveL_Flg == FALSE && P_MoveR_Flg == FALSE) {
+        P_XSpeed = 0.0f;
         P_Img = Stand_by_Anim();
     }
 }
 
 void PLAYER::Player_Levitation_Move()
 {
+    //空中右移動
+    if (P_B_Btn == 1 && P_L_Stick > RIGHT_MOVE) {
+        P_Air_R_Flg = TRUE;
+        /*P_XSpeed = 1.5f;
+        P_Move_X = P_Move_X + P_XSpeed;*/
+        if (P_XSpeed >= 1.3f) {
+            P_XSpeed = P_XSpeed + 0.05f;
+            P_Move_X = P_Move_X + P_XSpeed;
+        }
+        else if(P_XSpeed <= 1.3f){
+            P_XSpeed = 1.3f;
+            P_Move_X = P_Move_X + P_XSpeed;
+        }
+    }
+    else {
+        P_Air_R_Flg = FALSE;
+    }
 
+    //空中左移動
+    if (P_B_Btn == 1 && P_L_Stick < LEFT_MOVE) {
+        P_Air_L_Flg = TRUE;
+        /*P_XSpeed = -1.5f;
+        P_Move_X = P_Move_X + P_XSpeed;*/
+        if (P_XSpeed <= -1.3f) {
+            P_XSpeed = P_XSpeed + -0.05f;
+            P_Move_X = P_Move_X + P_XSpeed;
+        }
+        else if (P_XSpeed >= -1.3f) {
+            P_XSpeed = -1.3f;
+            P_Move_X = P_Move_X + P_XSpeed;
+        }
+    }
+    else {
+        P_Air_L_Flg = FALSE;
+    }
+
+    //空中の慣性
+    if (P_Air_Flg == TRUE && P_Air_L_Flg == FALSE && P_Air_R_Flg == FALSE) {
+        P_XSpeed = P_XSpeed;
+        P_Move_X = P_Move_X + P_XSpeed;
+    }
 }
 
 
@@ -189,28 +235,19 @@ void PLAYER::Player_Gravity()
     P_Air_Flg = TRUE;
     P_YSpeed = P_YSpeed + 0.05f;
     P_Move_Y = P_Move_Y + P_YSpeed;
-    if (P_YSpeed >= 1.5f) {//速度制限
-        P_YSpeed = 1.5f;
-        P_Move_X = P_Move_X + P_Speed;
-    }
-
-    //空中の慣性
-    if (P_Air_Flg == TRUE && P_Air_L_Flg == FALSE && P_Air_R_Flg == FALSE) {
-        P_AirSpeed = P_AirSpeed * 0.98f;
-        P_Move_X = P_Move_X + P_AirSpeed;
+    if (P_YSpeed >= 1.0f) {//速度制限
+        P_YSpeed = 1.0f;
     }
 }
 void PLAYER::Player_Air_A()
 {
     // Aボタン単押し
-    if (P_FPS % 4 == 0) {
-        P_Air_Flg = TRUE;
-        P_YSpeed = P_YSpeed + -2.0f;
-        P_Move_Y = P_Move_Y + P_YSpeed;
-        //P_Move_Y--;
-        if (P_YSpeed <= -10.0f) {
-            P_YSpeed = -10.0f;
-        }
+    P_Air_Flg = TRUE;
+    P_YSpeed = P_YSpeed + -2.0f;
+    P_Move_Y = P_Move_Y + P_YSpeed;
+    //P_Move_Y--;
+    if (P_YSpeed <= -10.0f) {
+        P_YSpeed = -10.0f;
     }
 }
 
@@ -218,11 +255,11 @@ void PLAYER::Player_Air_B()
 {
     // Bボタン長押し
     P_Air_Flg = TRUE;
-    P_YSpeed = P_YSpeed + -0.05f;
+    P_YSpeed = P_YSpeed + -0.1f;
     P_Move_Y = P_Move_Y + P_YSpeed;
     //P_Move_Y--;
-    if (P_YSpeed <= -2.0f) {
-        P_YSpeed = -2.0f;
+    if (P_YSpeed <= -1.7f) {
+        P_YSpeed = -1.7f;
     }
 }
 
@@ -253,6 +290,16 @@ void PLAYER::Stand_Foot()
         P_Stand_Flg = FALSE;
     }
  }
+
+int PLAYER::Return_MoveX()const
+{
+    return P_Move_X;
+}
+
+int PLAYER::Return_MoveY()const
+{
+    return P_Move_Y;
+}
 
 int PLAYER::GetLocationX()
 {
@@ -351,24 +398,27 @@ PLAYER::~PLAYER()
 
 void PLAYER::Draw()const
 {
+    DrawFormatString(0, 20, GetColor(255, 255, 255), " FPS：%d", P_FPS);
+
     //Aボタン描画
-    DrawFormatString(0, 100, GetColor(255, 255, 255), " 押された瞬間：%d 離された瞬間：%d", PAD_INPUT::OnButton(XINPUT_BUTTON_A), PAD_INPUT::OnRelease(XINPUT_BUTTON_A));
+    DrawFormatString(0, 40, GetColor(255, 255, 255), " 押された瞬間：%d 離された瞬間：%d", PAD_INPUT::OnButton(XINPUT_BUTTON_A), PAD_INPUT::OnRelease(XINPUT_BUTTON_A));
 
-    DrawFormatString(0, 120, GetColor(255, 255, 255), " 左スティック：横軸値 %d 縦軸値 %d", PAD_INPUT::GetLStickX(), PAD_INPUT::GetLStickY());
+    DrawFormatString(0, 60, GetColor(255, 255, 255), " 左スティック：横軸値 %d 縦軸値 %d", PAD_INPUT::GetLStickX(), PAD_INPUT::GetLStickY());
 
-    DrawFormatString(0, 140, GetColor(255, 255, 255), " プレイ左上：X座標 %0.1f Y座標 %0.01f", P_Move_X, P_Move_Y);
+    DrawFormatString(0, 80, GetColor(255, 255, 255), " プレイ左上：X座標 %0.1f Y座標 %0.01f", P_Move_X, P_Move_Y);
 
-    DrawFormatString(0, 160, GetColor(255, 255, 255), " 移動フラグ：左移動 %d 右移動 %d", P_MoveL_Flg, P_MoveR_Flg);
+    DrawFormatString(0, 100, GetColor(255, 255, 255), " 移動フラグ：左移動 %d 右移動 %d", P_MoveL_Flg, P_MoveR_Flg);
 
-    DrawFormatString(0, 180, GetColor(255, 255, 255), " マウス座標：X座標 %d Y座標 %d", MouseX, MouseY);
+    DrawFormatString(0, 120, GetColor(255, 255, 255), " マウス座標：X座標 %d Y座標 %d", MouseX, MouseY);
 
-    DrawFormatString(330, 120, GetColor(255, 255, 255), " FPS：%d", P_FPS);
+    
 
-    DrawFormatString(0, 200, GetColor(255, 255, 255), " 地上 Stand_Flg： %d ", P_Stand_Flg);
-    DrawFormatString(0, 220, GetColor(255, 255, 255), " 海   Foll_Flg ： %d ", P_Foll_Flg);
-    DrawFormatString(0, 240, GetColor(255, 255, 255), " 空   Air_Flg  ： %d ", P_Air_Flg);
-    DrawFormatString(0, 260, GetColor(255, 255, 255), " p_uc X: %0.1f ", p_uc);
-    DrawFormatString(0, 280, GetColor(255, 255, 255), " py2  Y:  %0.1f ", py2);
+    DrawFormatString(0, 140, GetColor(255, 255, 255), " 地上 Stand_Flg： %d ", P_Stand_Flg);
+    DrawFormatString(0, 160, GetColor(255, 255, 255), " 海   Foll_Flg ： %d ", P_Foll_Flg);
+    DrawFormatString(0, 180, GetColor(255, 255, 255), " 空   Air_Flg  ： %d ", P_Air_Flg);
+    DrawFormatString(0, 200, GetColor(255, 255, 255), " p_uc X: %0.1f ", p_uc);
+    DrawFormatString(0, 220, GetColor(255, 255, 255), " py2  Y: %0.1f ", py2);
+    DrawFormatString(0, 240, GetColor(255, 255, 255), " P_YSpeed :%0.1f ", P_YSpeed);
 
     DrawCircle(p_uc, py2, 2, 0xffff00, TRUE);
 
