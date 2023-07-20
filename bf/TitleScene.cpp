@@ -6,7 +6,7 @@
 Title::Title()
 {
 	//メニューカーソル画像データの読み込み
-	if (LoadDivGraph("images/Title/Title_CursorAnimation.png", 4, 4, 1, 64, 64, T_CursorImg)) {}
+	if (LoadDivGraph("images/Title/Title_CursorAnimation.png", 4, 4, 1, 32, 64, T_CursorImg)) {}
 
 	if ((g_TitleImage1 = LoadGraph("images/Title/Title_Logo.png"))){}
 	if ((g_TitleImage2 = LoadGraph("images/Title/Title_ModeSelect.png"))){}
