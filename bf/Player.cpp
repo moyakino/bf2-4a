@@ -72,7 +72,7 @@ void PLAYER::Update()
 
     //“Vˆä
     if (P_Move_Y <= -25) {
-        P_Move_Y = 250;
+        P_Move_Y = -25;
     }
 
     ////¶‰EˆÚ“®
