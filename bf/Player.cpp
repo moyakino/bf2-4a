@@ -133,8 +133,8 @@ void PLAYER::Player_Warp()
     }
 
     //“Vˆä
-    if (P_Move_Y <= -25) {
-        P_Move_Y = 250;
+    if (P_Move_Y <= 0.0f) {
+        P_Move_Y += 50.0f;
     }
 }
 
@@ -191,11 +191,11 @@ void PLAYER::Player_Levitation_Move()
         P_Air_R_Flg = TRUE;
         /*P_XSpeed = 1.5f;
         P_Move_X = P_Move_X + P_XSpeed;*/
-        if (P_XSpeed >= 1.3f) {
+        if (P_XSpeed <= 1.3f) {
             P_XSpeed = P_XSpeed + 0.05f;
             P_Move_X = P_Move_X + P_XSpeed;
         }
-        else if(P_XSpeed <= 1.3f){
+        else if(P_XSpeed >= 1.3f){
             P_XSpeed = 1.3f;
             P_Move_X = P_Move_X + P_XSpeed;
         }
@@ -209,11 +209,11 @@ void PLAYER::Player_Levitation_Move()
         P_Air_L_Flg = TRUE;
         /*P_XSpeed = -1.5f;
         P_Move_X = P_Move_X + P_XSpeed;*/
-        if (P_XSpeed <= -1.3f) {
+        if (P_XSpeed >= -1.3f) {
             P_XSpeed = P_XSpeed + -0.05f;
             P_Move_X = P_Move_X + P_XSpeed;
         }
-        else if (P_XSpeed >= -1.3f) {
+        else if (P_XSpeed <= -1.3f) {
             P_XSpeed = -1.3f;
             P_Move_X = P_Move_X + P_XSpeed;
         }
