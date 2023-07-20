@@ -1,6 +1,7 @@
 #pragma once
 #include "AbstractScene.h"
 #include "Player.h"
+#include "Fish.h"
 
 class GameMain:
 	public AbstractScene
@@ -20,4 +21,5 @@ public:
 	virtual AbstractScene* Update()override;
 
 	PLAYER* player;
+	Fish* fish;
 };

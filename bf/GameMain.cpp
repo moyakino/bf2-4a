@@ -71,6 +71,7 @@ void GameMain::Draw()const
 	//DrawGraph(160,444,StageSea,TRUE);
 
 	player->Draw();
+	fish->Draw();
 
 	DrawFormatString(0, 50, GetColor(255, 0, 0), "GameMain");
 	
