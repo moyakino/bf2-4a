@@ -13,8 +13,11 @@ private:
 
 	//風船カーソル画像 分割読み込み用変数
 	int	T_CursorImg[4];
+	int T_BalloonImg;
 	int i;
-	int x, y;
+
+	int	g_MenuNumber;		// メニューカーソル位置
+	int g_MenuY;				// メニューカーソルのＹ座標
 
 	int g_TitleImage1;
 	int g_TitleImage2;
@@ -23,6 +26,8 @@ private:
 	//FPSと秒数カウント
 	int	T_FPS;
 	int	T_Seconas1;
+
+	int Select;
 
 public:
 	
