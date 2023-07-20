@@ -5,19 +5,19 @@
 
 Title::Title()
 {
+	//メニューカーソル画像データの読み込み
+	if (LoadDivGraph("images/Title/Title_CursorAnimation.png", 4, 4, 1, 64, 64, T_CursorImg)) {}
+
 	if ((g_TitleImage1 = LoadGraph("images/Title/Title_Logo.png"))){}
 	if ((g_TitleImage2 = LoadGraph("images/Title/Title_ModeSelect.png"))){}
 	if ((g_TitleImage3 = LoadGraph("images/Title/Title_Credit.png"))){}
 
-	/*if ((g_TitleImage4 = LoadGraph("images/Title/Title_CursorAnimation.png"))){}*/
-	//プレイヤー画像データの読み込み
-	if (LoadDivGraph("images/Title/Title_CursorAnimation.png", 3, 4, 1, 64, 64, T_Img)){}
-
 	T_FPS = 0;
 	T_Seconas1 = 0;
-	g_MenuNumber = 0;
-	g_MenuY = 0;
+
 	i = 0;
+	x = 0;
+    y = 0;
 
 }
 
@@ -33,41 +33,40 @@ AbstractScene* Title::Update()
 		return new GameMain();
 	}
 
-	//60fps == 1秒　で超えたら fpsを 0 にする
-	if (T_FPS > 60) {
-		T_FPS = 0;
-		T_Seconas1++;
-	}// P_FPS_INC は 秒数を取っている
-	else if (T_Seconas1 > 3) {
-		T_Seconas1 = 0;
-	}
+	////60fps == 1秒　で超えたら fpsを 0 にする
+	//if (T_FPS > 60) {
+	//	T_FPS = 0;
+	//	T_Seconas1++;
+	//}// P_FPS_INC は 秒数を取っている
+	//else if (T_Seconas1 > 3) {
+	//	T_Seconas1 = 0;
+	//}
 
-	//メニューカーソル（三角形）の表示
-	g_MenuY = g_MenuNumber * 52;
+
 
 	return this;
 }
 
-int Title::Cursor_Anim()
-{
-	int C_AnimImg = 0;
-
-	// 0 から 3 秒
-	if (T_Seconas1 == 0) {
-		C_AnimImg = T_Img[STAND_BY_BALLOON2_0];
-	}
-	else if (T_Seconas1 > 0 && T_Seconas1 < 2) {
-		C_AnimImg = T_Img[STAND_BY_BALLOON2_1];
-	}
-	else if (T_Seconas1 > 1 && T_Seconas1 < 3) {
-		C_AnimImg = T_Img[STAND_BY_BALLOON2_2];
-	}
-	else if (T_Seconas1 > 2 && T_Seconas1 < 4) {
-		C_AnimImg = T_Img[STAND_BY_BALLOON2_3];
-	}
-
-	return C_AnimImg;
-}
+//int Title::Cursor_Anim()
+//{
+//	//int C_AnimImg = 0;
+//
+//	//// 0 から 3 秒
+//	//if (T_Seconas1 == 0) {
+//	//	C_AnimImg = T_CursorImg[STAND_BY_BALLOON2_0];
+//	//}
+//	//else if (T_Seconas1 > 0 && T_Seconas1 < 2) {
+//	//	C_AnimImg = T_CursorImg[STAND_BY_BALLOON2_1];
+//	//}
+//	//else if (T_Seconas1 > 1 && T_Seconas1 < 3) {
+//	//	C_AnimImg = T_CursorImg[STAND_BY_BALLOON2_2];
+//	//}
+//	//else if (T_Seconas1 > 2 && T_Seconas1 < 4) {
+//	//	C_AnimImg = T_CursorImg[STAND_BY_BALLOON2_3];
+//	//}
+//
+//	//return C_AnimImg;
+//}
 
 void Title::Draw()const
 {
@@ -76,6 +75,6 @@ void Title::Draw()const
 	DrawGraph(150, 300, g_TitleImage2, TRUE);
 	DrawGraph(150, 450, g_TitleImage3, TRUE);
 
-	//メニューカーソル（三角形）の表示
-	DrawGraph(100, g_MenuY, T_Img[i], TRUE);
+	//メニューカーソル（風船）の表示
+	DrawGraph(100, 200, T_CursorImg[i], TRUE);
 }
