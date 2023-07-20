@@ -9,9 +9,9 @@ private:
 
 
 public:
-    int E_ArrayImg[18];
-    int E_ArrayImg1[18];
-    int E_ArrayImg2[18];
+    int E_ArrayImg_P[18];
+    int E_ArrayImg_G[18];
+    int E_ArrayImg_R[18];
 
     //—§‚Á‚Ä‚¢‚éó‘Ô‚Ìƒtƒ‰ƒO
     int		E_Stand_Flg;

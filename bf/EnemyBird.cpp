@@ -5,9 +5,9 @@
 
 EnemyBird::EnemyBird()
 {
-	if (LoadDivGraph("images/Enemy/Enemy_P_Animation.png", 18, 6, 3, 64, 64, E_ArrayImg)) {}
-	/*if (LoadDivGraph("images/Enemy/Enemy_G_Animation.png", 18, 6, 3, 64, 64, E_ArrayImg1)) {}
-	if (LoadDivGraph("images/Enemy/Enemy_R_Animation.png", 18, 6, 3, 64, 64, E_ArrayImg2)) {}*/
+	if (LoadDivGraph("images/Enemy/Enemy_P_Animation.png", 18, 6, 3, 64, 64, E_ArrayImg_P)) {}
+	/*if (LoadDivGraph("images/Enemy/Enemy_G_Animation.png", 18, 6, 3, 64, 64, E_ArrayImg_G)) {}
+	if (LoadDivGraph("images/Enemy/Enemy_R_Animation.png", 18, 6, 3, 64, 64, E_ArrayImg_R)) {}*/
 	x = 0;
 	y = 0;
 }
@@ -29,7 +29,7 @@ void EnemyBird::Update(int playerx,int playery)
 
 void EnemyBird::Draw() const
 {
-	DrawGraph(x,y, E_ArrayImg[0],TRUE);
+	DrawGraph(x,y, E_ArrayImg_P[0],TRUE);
 	
 }
 
