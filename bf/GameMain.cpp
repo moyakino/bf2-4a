@@ -77,7 +77,7 @@ void GameMain::Draw()const
 
 	bubble->Draw();
 
-	DrawFormatString(0, 50, GetColor(255, 0, 0), "GameMain");
+	//DrawFormatString(0, 50, GetColor(255, 0, 0), "GameMain");
 	
 	
 }
