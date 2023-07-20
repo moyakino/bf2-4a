@@ -399,12 +399,11 @@ void PLAYER::Draw()const
 
     //DrawBox(P_Move_X, P_Move_Y, P_Move_X + 64, P_Move_Y + 64, GetColor(255, 0, 0), FALSE);
 
-    ////ècê¸
-    //DrawLine(sx1, 0, sx1, 480, 0xff0000);
-    //DrawLine(sx2, 0, sx2, 480, 0xff0000);
+    //ècê¸
+    DrawLine(sx1, 0, sx1, 480, 0xff0000);
+    DrawLine(sx2, 0, sx2, 480, 0xff0000);
 
-    ////â°ê¸
-    //DrawLine(0, sy1, 640, sy1, 0xff0000);
+
     //â°ê¸
     DrawLine(0, sy1, 640, sy1, 0xff0000);
     DrawLine(0, sy2, 640, sy2, 0xff0000);
