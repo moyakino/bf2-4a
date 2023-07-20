@@ -71,6 +71,10 @@ private:
 	int		P_Left_Btn;
 	//(仮)Aボタン
 	int		P_A_Btn;
+
+	//(仮)Bボタン長押し
+	int		P_B_Btn;
+
 	//(仮)Aボタン長押し
 	int		P_A_Pressed;
 	//(仮)
@@ -82,10 +86,14 @@ private:
 	float	P_Move_X;
 	//Player  Y座標用変数
 	float	P_Move_Y;
-	//プレイヤーの地上スピード
-	float	P_Speed;
+	//プレイヤーの地上スピード X座標
+	float	P_XSpeed;
+	//プレイヤーの地上スピード Y座標
+	float	P_YSpeed;
 	//プレイヤーの空中スピード
 	float	P_AirSpeed;
+
+	float	P_Accele;
 
 	float	P_Air_Multiply;
 
@@ -131,6 +139,17 @@ public:
 	
 	//プレイヤーの右移動処理
 	//int P_Move_Flg();
+
+		//関数化
+	void Player_Warp();
+	void Player_Img();
+	void Player_Move();
+	void Player_Gravity();
+	void Player_Levitation_Move();
+	void Player_Air_A();
+	void Player_Air_B();
+
+
 
 	//Playerの待機状態中のアニメーション
 	int Stand_by_Anim();

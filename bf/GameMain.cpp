@@ -5,7 +5,8 @@
 //コンストラクタ
 GameMain::GameMain()
 {
-
+	Bgm = LoadSoundMem("sounds/SE_Start.wav");
+	PlaySoundMem(Bgm, DX_PLAYTYPE_BACK);
 
 	/*画像の読み込み*/
 	//空中の足場
@@ -21,12 +22,14 @@ GameMain::GameMain()
 
 	player = new PLAYER();
 	enemybird = new EnemyBird();
+	bubble = new Bubble();
 }
 
 GameMain::~GameMain()
 {
 	delete player;
 	delete enemybird;
+	delete bubble;
 }
 
 
@@ -35,6 +38,7 @@ AbstractScene* GameMain::Update()
 
 	player->Update();
 	enemybird->Update(player->GetLocationX(), player->GetLocationY());
+	bubble->Update();
 
 	return this;
 }
@@ -42,7 +46,7 @@ AbstractScene* GameMain::Update()
 
 void GameMain::Draw()const
 {
-
+	
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
 	DrawGraph(0, 0, StageSample, FALSE);
 	//元に戻す。しかし、ここで特定の画像が半透明になる。                
@@ -75,7 +79,9 @@ void GameMain::Draw()const
 	player->Draw();
 	enemybird->Draw();
 
+	bubble->Draw();
+
 	DrawFormatString(0, 50, GetColor(255, 0, 0), "GameMain");
-
-
+	
+	
 }

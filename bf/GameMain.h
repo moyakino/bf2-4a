@@ -2,6 +2,7 @@
 #include "AbstractScene.h"
 #include "Player.h"
 #include "EnemyBird.h"
+#include"Bubble.h"
 
 class GameMain:
 	public AbstractScene
@@ -13,7 +14,7 @@ private:
 	int StageSea;
 
 	int StageSample;
-	
+	int Bgm;
 public:
 	GameMain();
 	~GameMain();
@@ -22,4 +23,5 @@ public:
 
 	PLAYER* player;
 	EnemyBird* enemybird;
+	Bubble* bubble;
 };
