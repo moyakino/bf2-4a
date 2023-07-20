@@ -16,8 +16,6 @@ SpeedY = 30;
 B_FPS = 0;
 }
 
-
-
 void Bubble::Update()
 {
 	B_FPS++;
