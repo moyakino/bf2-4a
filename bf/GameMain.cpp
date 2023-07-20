@@ -21,11 +21,13 @@ GameMain::GameMain()
 	StageSample = LoadGraph("images/StageSample/Stage_1.png");
 
 	player = new PLAYER();
+	bubble = new Bubble();
 }
 
 GameMain::~GameMain()
 {
 	delete player;
+	delete bubble;
 }
 
 
@@ -33,6 +35,7 @@ AbstractScene* GameMain::Update()
 {
 
 	player->Update();
+	bubble->Update();
 
 	return this;
 }
@@ -72,6 +75,8 @@ void GameMain::Draw()const
 
 	player->Draw();
 	fish->Draw();
+
+	bubble->Draw();
 
 	DrawFormatString(0, 50, GetColor(255, 0, 0), "GameMain");
 	
