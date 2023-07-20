@@ -93,6 +93,8 @@ private:
 	//プレイヤーの空中スピード
 	float	P_AirSpeed;
 
+	float P_Speed;
+
 	float	P_Accele;
 
 	float	P_Air_Multiply;
@@ -160,6 +162,9 @@ public:
 	int Levitation_Anim1();
 	int Levitation_Anim2();
 
-
 	void Stand_Foot();
+
+	int GetLocationX();
+
+	int GetLocationY();
 };

@@ -11,7 +11,7 @@
 int WINAPI WinMain(_In_ HINSTANCE ih, _In_opt_ HINSTANCE ioh, _In_ LPSTR il, _In_ int ii)
 {
 	//タイトル名
-	SetMainWindowText("BAROON FIGHT");
+	SetMainWindowText("BALLOON FIGHT");
 
 	//ウインドウモードで起動
 	ChangeWindowMode(TRUE);
