@@ -17,8 +17,6 @@ B_FPS = 0;
 B_flg = 0;
 }
 
-
-
 void Bubble::Update()
 {
 	B_FPS++;
