@@ -25,8 +25,6 @@ PLAYER::PLAYER()
     //空中でのスピード
     P_AirSpeed = 0.0;
 
-    P_Speed = 0;
-
     P_Accele = 0.0f;
     P_Air_Multiply = 1.0f;
 
@@ -133,8 +131,8 @@ void PLAYER::Player_Warp()
     }
 
     //天井
-    if (P_Move_Y <= 0.0f) {
-        P_Move_Y += 50.0f;
+    if (P_Move_Y <= -25) {
+        P_Move_Y = 250;
     }
 }
 
@@ -191,12 +189,12 @@ void PLAYER::Player_Levitation_Move()
         P_Air_R_Flg = TRUE;
         /*P_XSpeed = 1.5f;
         P_Move_X = P_Move_X + P_XSpeed;*/
-        if (P_XSpeed <= 1.3f) {
+        if (P_XSpeed <= 1.9f) {
             P_XSpeed = P_XSpeed + 0.05f;
             P_Move_X = P_Move_X + P_XSpeed;
         }
-        else if(P_XSpeed >= 1.3f){
-            P_XSpeed = 1.3f;
+        else if(P_XSpeed >= 1.9f){
+            P_XSpeed = 1.9f;
             P_Move_X = P_Move_X + P_XSpeed;
         }
     }
@@ -209,12 +207,12 @@ void PLAYER::Player_Levitation_Move()
         P_Air_L_Flg = TRUE;
         /*P_XSpeed = -1.5f;
         P_Move_X = P_Move_X + P_XSpeed;*/
-        if (P_XSpeed >= -1.3f) {
+        if (P_XSpeed >= -1.9f) {
             P_XSpeed = P_XSpeed + -0.05f;
             P_Move_X = P_Move_X + P_XSpeed;
         }
-        else if (P_XSpeed <= -1.3f) {
-            P_XSpeed = -1.3f;
+        else if (P_XSpeed <= -1.9f) {
+            P_XSpeed = -1.9f;
             P_Move_X = P_Move_X + P_XSpeed;
         }
     }
@@ -233,21 +231,22 @@ void PLAYER::Player_Levitation_Move()
 void PLAYER::Player_Gravity()
 {
     P_Air_Flg = TRUE;
-    P_YSpeed = P_YSpeed + 0.05f;
+    P_YSpeed = P_YSpeed + 0.01f;
     P_Move_Y = P_Move_Y + P_YSpeed;
     if (P_YSpeed >= 1.0f) {//速度制限
         P_YSpeed = 1.0f;
     }
 }
+
 void PLAYER::Player_Air_A()
 {
     // Aボタン単押し
     P_Air_Flg = TRUE;
-    P_YSpeed = P_YSpeed + -2.0f;
+    P_YSpeed = P_YSpeed + -0.2f;
     P_Move_Y = P_Move_Y + P_YSpeed;
     //P_Move_Y--;
-    if (P_YSpeed <= -10.0f) {
-        P_YSpeed = -10.0f;
+    if (P_YSpeed <= -1.0f) {
+        P_YSpeed = -1.0f;
     }
 }
 
@@ -255,11 +254,11 @@ void PLAYER::Player_Air_B()
 {
     // Bボタン長押し
     P_Air_Flg = TRUE;
-    P_YSpeed = P_YSpeed + -0.1f;
+    P_YSpeed = P_YSpeed + -0.06f;
     P_Move_Y = P_Move_Y + P_YSpeed;
     //P_Move_Y--;
-    if (P_YSpeed <= -1.7f) {
-        P_YSpeed = -1.7f;
+    if (P_YSpeed <= -1.0f) {
+        P_YSpeed = -1.0f;
     }
 }
 
@@ -299,16 +298,6 @@ int PLAYER::Return_MoveX()const
 int PLAYER::Return_MoveY()const
 {
     return P_Move_Y;
-}
-
-int PLAYER::GetLocationX()
-{
-    return px1;
-}
-
-int PLAYER::GetLocationY()
-{
-    return py1;
 }
 
 int PLAYER::Stand_by_Anim()
