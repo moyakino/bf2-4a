@@ -18,7 +18,6 @@ Title::Title()
 	T_BalloonImg = 0;
 	g_MenuNumber = 0;
 	g_MenuY = 0;
-	Select = 0;
 }
 
 Title::~Title()
@@ -90,28 +89,28 @@ int Title::Cursor_Anim()
 
 	// 0 ‚©‚ç 3 •b
 	if (T_Seconas1 == 0) {
-		C_AnimImg = T_CursorImg[STAND_BY_BALLOON2_0];
+		C_AnimImg = T_CursorImg[CURSOR_BALLOON2_0];
 	}
 	else if (T_Seconas1 > 0 && T_Seconas1 < 2) {
-		C_AnimImg = T_CursorImg[STAND_BY_BALLOON2_1];
+		C_AnimImg = T_CursorImg[CURSOR_BALLOON2_1];
 	}
 	else if (T_Seconas1 > 1 && T_Seconas1 < 3) {
-		C_AnimImg = T_CursorImg[STAND_BY_BALLOON2_2];
+		C_AnimImg = T_CursorImg[CURSOR_BALLOON2_2];
 	}
 	else if (T_Seconas1 > 2 && T_Seconas1 < 4) {
-		C_AnimImg = T_CursorImg[STAND_BY_BALLOON2_3];
+		C_AnimImg = T_CursorImg[CURSOR_BALLOON2_3];
 	}
 	else if (T_Seconas1 > 3) {
-		C_AnimImg = T_CursorImg[STAND_BY_BALLOON2_3];
+		C_AnimImg = T_CursorImg[CURSOR_BALLOON2_3];
 	}
 	else if (T_Seconas1 > 4) {
-		C_AnimImg = T_CursorImg[STAND_BY_BALLOON2_2];
+		C_AnimImg = T_CursorImg[CURSOR_BALLOON2_2];
 	}
 	else if (T_Seconas1 > 5) {
-		C_AnimImg = T_CursorImg[STAND_BY_BALLOON2_1];
+		C_AnimImg = T_CursorImg[CURSOR_BALLOON2_1];
 	}
 	else if (T_Seconas1 > 6) {
-		C_AnimImg = T_CursorImg[STAND_BY_BALLOON2_0];
+		C_AnimImg = T_CursorImg[CURSOR_BALLOON2_0];
 	}
 	/*else if (T_Seconas1 > 6 && T_Seconas1 < 8) {
 		C_AnimImg = T_CursorImg[STAND_BY_BALLOON2_0];

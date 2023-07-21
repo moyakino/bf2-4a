@@ -3,6 +3,7 @@
 #include "Player.h"
 #include"Bubble.h"
 #include "Stage.h"
+#include "Thunder.h"
 
 class GameMain:
 	public AbstractScene
@@ -20,4 +21,5 @@ public:
 	PLAYER* player;
 	Bubble* bubble;
 	Stage* stage;
+	Thunder* thunder;
 };
