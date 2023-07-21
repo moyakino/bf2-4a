@@ -22,12 +22,14 @@ GameMain::GameMain()
 
 	player = new PLAYER();
 	bubble = new Bubble();
+	fish = new Fish();
 }
 
 GameMain::~GameMain()
 {
 	delete player;
 	delete bubble;
+	delete fish;
 }
 
 
@@ -36,7 +38,7 @@ AbstractScene* GameMain::Update()
 
 	player->Update();
 	bubble->Update();
-
+	fish->Update();
 	return this;
 }
 

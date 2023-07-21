@@ -2,7 +2,7 @@
 class Fish {
 private:
   int  Fish_ArrayImg[9];
-  int Fish_Img = 0;
+  int Fish_Img;
   int i = 0;
 
 public:
