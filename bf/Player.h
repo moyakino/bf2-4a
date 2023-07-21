@@ -93,6 +93,8 @@ private:
 	//プレイヤーの空中スピード
 	float	P_AirSpeed;
 
+	float P_Speed;
+
 	float	P_Accele;
 
 	float	P_Air_Multiply;
@@ -149,7 +151,8 @@ public:
 	void Player_Air_A();
 	void Player_Air_B();
 
-
+	int Return_MoveX()const;
+	int Return_MoveY()const;
 
 	//Playerの待機状態中のアニメーション
 	int Stand_by_Anim();
@@ -159,6 +162,9 @@ public:
 	int Levitation_Anim1();
 	int Levitation_Anim2();
 
-
 	void Stand_Foot();
+
+	/*int GetLocationX();
+
+	int GetLocationY();*/
 };
