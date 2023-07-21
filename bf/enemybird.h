@@ -7,17 +7,15 @@ private:
     int hp;
     int cnt;
 
+    int E_ArrayImg_P[17];
+    int E_ArrayImg_G[17];
+    int E_ArrayImg_R[17];
 
     //フレーム取得
     int E_FPS;
     int seconds;
 
     int PlayerPos;
-
-public:
-    int E_ArrayImg_P[18];
-    int E_ArrayImg_G[18];
-    int E_ArrayImg_R[18];
 
     //立っている状態のフラグ
     int		E_Stand_Flg;
@@ -31,20 +29,29 @@ public:
     int E_Move_X;
     int E_Move_Y;
 
+
+public:
+
     //コンストラクタ
     EnemyBird();
     // デストラクタ
     ~EnemyBird();
     // 更新処理を実装する
-    void Update(int playerx,int playery);
+    void Update(/*int playerx,int playery*/);
     // 描画処理を実装する
     void Draw() const;
     //地面に立たせる
     void Stand_Foot();
+
+    int  Balloon_Anim(void);
 
     int Stand_by_Anim();
 
     int E_GetLocationX();
 
     int E_GetLocationY();
+
+    int Return_MoveX();
+
+    int Chase();
 };

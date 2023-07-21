@@ -1,6 +1,7 @@
 #include"DxLib.h"
 #include"GameMain.h"
 #include "EnemyBird.h"
+#include"Player.h"
 
 
 EnemyBird::EnemyBird()
@@ -11,11 +12,13 @@ EnemyBird::EnemyBird()
 	x = 0;
     y = 0;
 
-    E_Move_X = 300.0f;
+    E_Move_X = 500.0f;
     E_Move_Y = 200.0f;
 
     //“G‚ÌÀ•W
     ex1 = 0, ex2 = 0, ey1 = 0,ey2 = 0, e_uc = 0;
+
+    E_FPS = 0;
 }
 
 EnemyBird::~EnemyBird()
@@ -23,20 +26,26 @@ EnemyBird::~EnemyBird()
 
 }
 
-void EnemyBird::Update(int playerx,int playery)
+void EnemyBird::Update(/*int playerx,int playery*/)
 {
-    PlayerPos = playerx, playery;
+  /*  PlayerPos = playerx, playery;*/
 	//x = playerx;
 	//y = playery;
     E_FPS++;
 
-    if (E_FPS > 60) {
+    if (E_FPS > 479) {
         E_FPS = 0;
-        seconds++;
+        if (E_FPS > 59) {
+            seconds++;
+        }
     }// P_FPS_INC ‚Í •b”‚ðŽæ‚Á‚Ä‚¢‚é
     else if (seconds > 3) {
         seconds = 0;
     }
+
+   /* Stand_by_Anim();*/
+
+
    
 }
 
@@ -74,26 +83,31 @@ void EnemyBird::Stand_Foot()
 //{
 //    return ey1;
 //}
-//
+
 
 
 //int EnemyBird::Stand_by_Anim()
 //{
-//    int S_AnimImg = 0;
+//    int E_AnimImg = 0;
 //
-//    // 0 ‚©‚ç 3 •b
-//    if (P_Seconas1 == 0) {
-//        S_AnimImg = E_ArrayImg[STAND_BY_BALLOON2_1];
+//     0 ‚©‚ç 3 •b
+//    if (seconds == 0) {
+//        E_AnimImg = E_ArrayImg_P[1];
 //    }
-//    else if (P_Seconas1 > 0 && P_Seconas1 < 2) {
-//        S_AnimImg = E_ArrayImg[STAND_BY_BALLOON2_0];
+//    else if (seconds > 0 && seconds < 2) {
+//        E_AnimImg = E_ArrayImg_P[6];
 //    }
-//    else if (P_Seconas1 > 1 && P_Seconas1 < 3) {
-//        S_AnimImg = E_ArrayImg[STAND_BY_BALLOON2_1];
+//    else if (seconds > 1 && seconds < 3) {
+//        E_AnimImg = E_ArrayImg_P[10];
 //    }
-//    else if (P_Seconas1 > 2 && P_Seconas1 < 4) {
-//        S_AnimImg = E_ArrayImg[STAND_BY_BALLOON2_2];
+//    else if (seconds > 2 && seconds < 4) {
+//        E_AnimImg = E_ArrayImg_P[18];
 //    }
 //
-//    return S_AnimImg;
+//    return E_AnimImg;
+//}
+
+//int EnemyBird::Chase()
+//{
+//
 //}

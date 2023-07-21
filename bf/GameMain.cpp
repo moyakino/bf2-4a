@@ -30,9 +30,8 @@ AbstractScene* GameMain::Update()
 {
 	stage->Update();
 	player->Update();
-	enemybird->Update(player->GetLocationX(), player->GetLocationY());
+	enemybird->Update(/*player->GetLocationX(), player->GetLocationY()*/);
 	bubble->Update();
-
 
 	return this;
 }
