@@ -43,7 +43,7 @@ void GameMain::Draw()const
 	stage->Draw();
 
 	player->Draw();
-	//enemybird->Draw();
+	enemybird->Draw();
 
 	bubble->Draw();
 

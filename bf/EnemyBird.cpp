@@ -28,7 +28,7 @@ EnemyBird::~EnemyBird()
 
 void EnemyBird::Update(/*int playerx,int playery*/)
 {
-  /*  PlayerPos = playerx, playery;*/
+    PlayerPos = E_Move_Y, E_Move_X;
 	//x = playerx;
 	//y = playery;
     E_FPS++;
@@ -43,10 +43,9 @@ void EnemyBird::Update(/*int playerx,int playery*/)
         seconds = 0;
     }
 
-   /* Stand_by_Anim();*/
+    Return_MoveX();
+    Return_MoveY();
 
-
-   
 }
 
 void EnemyBird::Draw() const
@@ -74,6 +73,21 @@ void EnemyBird::Stand_Foot()
         E_Stand_Flg = FALSE;
     }
 }
+int EnemyBird::Return_MoveX()
+{
+    return E_Move_X;
+}
+int EnemyBird::Return_MoveY()
+{
+    return E_Move_Y;
+}
+int EnemyBird::Chase()
+{
+    if (PlayerPos) {
+
+    }
+}
+
 //int EnemyBird::E_GetLocationX()
 //{
 //    return ex1;
@@ -83,8 +97,6 @@ void EnemyBird::Stand_Foot()
 //{
 //    return ey1;
 //}
-
-
 
 //int EnemyBird::Stand_by_Anim()
 //{

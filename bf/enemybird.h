@@ -53,5 +53,7 @@ public:
 
     int Return_MoveX();
 
+    int Return_MoveY();
+
     int Chase();
 };
