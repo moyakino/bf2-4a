@@ -274,7 +274,7 @@ void PLAYER::Stand_Foot()
     sy1 = 285;
     sy2 = sy1 + 20;
 
-       
+
     //プレイヤーの座標
     px1 = P_Move_X + 17;    //左
     px2 = P_Move_X + 48;    //右
@@ -284,7 +284,7 @@ void PLAYER::Stand_Foot()
     //中心
     p_uc = (px1 + px2) / 2;
     py_c = (py1 + py2) / 2;
-    
+
     //
     fx1 = 160;
     fx2 = 480;
@@ -302,16 +302,23 @@ void PLAYER::Stand_Foot()
         P_Stand_Flg = FALSE;
     }
 
-    if (sx1 <= px2 && sx2 >= px1 &&   //足場の左右にプレイヤーのが接触したら
-        sy1 <= py2 && sy2 >= py1)   //足場の上下にプレイヤーが接触したら
-    {
-        Bound = TRUE;
-        P_Move_X *= 0.8;
-    } 
-    else {
-        Bound = FALSE;
-    }
+    //if (sx1 <= px2 && sx2 >= px1 &&   //足場の左右にプレイヤーのが接触したら
+    //    sy1 <= py2 && sy2 >= py1)   //足場の上下にプレイヤーが接触したら
+    //{
+    //    Bound = TRUE;
+    //    P_Move_X *= 0.8;
+    //}
+    //else {
+    //    Bound = FALSE;
+    //}
 
+    //if (fx1 <= px2 && fx2 >= px1 && fy1 <= py2 && fy2 >= py1)  //足場にプレイヤーが接触したら
+    //{
+    //    Bound = TRUE;
+    //    P_Move_X = -P_Move_X;
+    //}
+
+}
 int PLAYER::Return_MoveX()const
 {
     return P_Move_X;
@@ -324,13 +331,6 @@ int PLAYER::Return_MoveY()const
 
 
 
-    //if (fx1 <= px2 && fx2 >= px1 && fy1 <= py2 && fy2 >= py1)  //足場にプレイヤーが接触したら
-    //{
-    //    Bound = TRUE;
-    //    P_Move_X = -P_Move_X;
-    //}
-
- }
 
 int PLAYER::Stand_by_Anim()
 {
@@ -453,14 +453,14 @@ void PLAYER::Draw()const
 
     //DrawBox(P_Move_X, P_Move_Y, P_Move_X + 64, P_Move_Y + 64, GetColor(255, 0, 0), FALSE);
 
-    //縦線
-    DrawLine(sx1, 0, sx1, 480, 0xff0000);
-    DrawLine(sx2, 0, sx2, 480, 0xff0000);
+    ////縦線
+    //DrawLine(sx1, 0, sx1, 480, 0xff0000);
+    //DrawLine(sx2, 0, sx2, 480, 0xff0000);
 
 
-    //横線
-    DrawLine(0, sy1, 640, sy1, 0xff0000);
-    DrawLine(0, sy2, 640, sy2, 0xff0000);
+    ////横線
+    //DrawLine(0, sy1, 640, sy1, 0xff0000);
+    //DrawLine(0, sy2, 640, sy2, 0xff0000);
 
 
     // プレイヤー左
