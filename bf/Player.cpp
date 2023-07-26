@@ -19,9 +19,6 @@ PLAYER::PLAYER()
 
     P_Move_X = 100.0f;
     P_Move_Y = 350.0f;
-
-    X = 0;
-    Y = 0;
     //P_Move_Y = 200.0f;
 
     //地上のスピード
@@ -123,16 +120,6 @@ void PLAYER::Update()
     }
 
     
-}
-
-int PLAYER::GetLocationX()
-{
-    return px1;
-}
-
-int PLAYER::GetLocationY()
-{
-    return py1;
 }
 
 void PLAYER::Player_Warp()

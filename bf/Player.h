@@ -81,9 +81,6 @@ private:
 	int		P_A_BtnFlg;
 	int		P_Air_R_Flg;
 	int		P_Air_L_Flg;
-
-	float X;
-	float Y;
 	
 	//プレイヤーの地上スピード X座標
 	float	P_XSpeed;
@@ -155,16 +152,6 @@ public:
 	void Player_Air_A();
 	void Player_Air_B();
 
-	/*static int Return_MoveX()
-	{
-		return P_Move_X;
-	}
-
-	static int Return_MoveY()
-	{
-		return P_Move_Y;
-	}*/
-
 	//Playerの待機状態中のアニメーション
 	int Stand_by_Anim();
 	//Playerが走っている時のアニメーション
@@ -174,8 +161,4 @@ public:
 	int Levitation_Anim2();
 
 	void Stand_Foot();
-
-	int GetLocationX();
-
-	int GetLocationY();
 };
