@@ -24,5 +24,7 @@ public:
 	Location GetLocation();
 	Erea GetErea();
 
+	void SetLocation(Location location);
+
 };
 

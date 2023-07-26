@@ -37,6 +37,21 @@ void testPlayer::Update()
 
 	fps++;
 
+	switch (PlayerFlg)
+	{
+	case PLAYER_FLG::STAND:
+		StandAnim();
+		break;
+	case PLAYER_FLG::WALK:
+		WalkAnim();
+		break;
+
+	case PLAYER_FLG::FLY:
+		break;
+
+	}
+
+
 	Player_StandMove();
 	Player_Fly();
 
@@ -45,8 +60,6 @@ void testPlayer::Update()
 void testPlayer::Player_StandMove() 
 {
 
-	//アニメーション
-	StandAnim();
 
 	if (PlayerFlg == PLAYER_FLG::WALK||PlayerFlg==PLAYER_FLG::STAND) 
 	{
@@ -54,8 +67,6 @@ void testPlayer::Player_StandMove()
 		if (PAD_INPUT::GetLStick().x < LEFT_MOVE || PAD_INPUT::OnPressed(XINPUT_BUTTON_DPAD_LEFT)) {
 			PlayerFlg = PLAYER_FLG::WALK;
 
-			//アニメーション
-			WalkAnim();
 
 			//左を向いてるか
 			pLeft = TRUE;
@@ -63,13 +74,11 @@ void testPlayer::Player_StandMove()
 			Speed = RUN_SPEED;
 
 			location.x = location.x - Speed * (VelX / 10);
+
 		}
 		//右移動
 		else if (PAD_INPUT::GetLStick().x > RIGHT_MOVE || PAD_INPUT::OnPressed(XINPUT_BUTTON_DPAD_RIGHT)) {
 			PlayerFlg = PLAYER_FLG::WALK;
-
-			//アニメーション
-			WalkAnim();
 
 			//左を向いてるか
 			pLeft = FALSE;
@@ -98,7 +107,7 @@ void testPlayer::Player_Fly()
 		if (fps % 2 == 0) {
 
 			PlayerFlg = PLAYER_FLG::FLY;
-			VelY += Gravity;
+			VelY *= Gravity;
 			location.y -= VelY;
 		}
 
