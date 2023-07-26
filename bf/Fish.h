@@ -13,8 +13,9 @@ private:
   int i = 0;
   int	F_Seconas1;
   int F_AnimImg = 0;
-  int Fish_Img;
+  int Fish_Img = 0;
   int f_fps;
+ 
 
 public:
 
