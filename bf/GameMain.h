@@ -4,6 +4,8 @@
 #include"Bubble.h"
 #include "Stage.h"
 
+#include "testPlayer.h"
+
 class GameMain:
 	public AbstractScene
 {
@@ -17,7 +19,10 @@ public:
 	void Draw()const;
 	virtual AbstractScene* Update()override;
 
-	PLAYER* player;
+	//PLAYER* player;
 	Bubble* bubble;
 	Stage* stage;
+
+	//
+	testPlayer* testP;
 };

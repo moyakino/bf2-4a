@@ -22,7 +22,7 @@ Stage::Stage()
 	if (StageSample5 = LoadGraph("images/StageSample/Stage_5.png")) {}
 
 
-	Snum = 4;
+	Snum = 0;
 	X_Btn = 0;
 	sFps = 0;
 }
@@ -46,7 +46,6 @@ void Stage::Update()
 			}
 		}
 	}
-
 
 
 }
