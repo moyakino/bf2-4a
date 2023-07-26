@@ -30,7 +30,7 @@ AbstractScene* GameMain::Update()
 {
 	stage->Update();
 	player->Update();
-	//enemybird->Update(player->GetLocationX(), player->GetLocationY());
+	enemybird->Update(player->Return_MoveX(), player->Return_MoveY());
 	bubble->Update();
 
 	return this;
@@ -47,7 +47,6 @@ void GameMain::Draw()const
 
 	bubble->Draw();
 
-	//DrawFormatString(0, 50, GetColor(255, 0, 0), "GameMain");
-	
+	//DrawFormatString(0, 50, GetColor(255, 0, 0), "GameMain");	
 	
 }

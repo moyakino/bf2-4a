@@ -2,7 +2,7 @@
 #include"GameMain.h"
 #include "EnemyBird.h"
 #include"Player.h"
-
+#include<math.h>
 
 EnemyBird::EnemyBird()
 {
@@ -12,13 +12,16 @@ EnemyBird::EnemyBird()
 	x = 0;
     y = 0;
 
-    E_Move_X = 500.0f;
+    E_Move_X = 200.0f;
     E_Move_Y = 200.0f;
 
     //敵の座標
     ex1 = 0, ex2 = 0, ey1 = 0,ey2 = 0, e_uc = 0;
 
     E_FPS = 0;
+
+    //空中でのスピード
+    E_AirSpeed = 0.0;
 }
 
 EnemyBird::~EnemyBird()
@@ -26,9 +29,9 @@ EnemyBird::~EnemyBird()
 
 }
 
-void EnemyBird::Update(/*int playerx,int playery*/)
+void EnemyBird::Update(int Return_MoveX, int Return_MoveY)
 {
-    PlayerPos = E_Move_Y, E_Move_X;
+     PlayerPos= Return_MoveX, Return_MoveY;
 	//x = playerx;
 	//y = playery;
     E_FPS++;
@@ -43,16 +46,12 @@ void EnemyBird::Update(/*int playerx,int playery*/)
         seconds = 0;
     }
 
-    Return_MoveX();
-    Return_MoveY();
+    //プレイヤーに追尾する
+    Chase();
 
 }
 
-void EnemyBird::Draw() const
-{
-	DrawGraph(E_Move_X, E_Move_Y, E_ArrayImg_P[0],TRUE);
-	
-}
+
 void EnemyBird::Stand_Foot()
 {
     //足場の座標
@@ -73,6 +72,30 @@ void EnemyBird::Stand_Foot()
         E_Stand_Flg = FALSE;
     }
 }
+void EnemyBird::Chase()
+{
+    float E_Speed = 0.2f;
+    EnemyPos = E_Move_X, E_Move_Y;
+
+    // プレイヤーと敵の距離を計算
+    int distance = static_cast<int>(sqrt(ex1 * ex2 + ey1 * ey2));
+
+    if (PlayerPos == EnemyPos) {
+        E_Air_Flg = TRUE;
+        E_Move_X = E_Move_X +0.2f;
+    }
+    else if (PlayerPos>=EnemyPos) {
+        E_Air_Flg = FALSE;
+        EnemyPos + 0.5f;
+    }
+
+    // 移動
+    enemy.x += E_Move_X;
+    enemy.y += E_Move_Y;
+
+
+}
+
 int EnemyBird::Return_MoveX()
 {
     return E_Move_X;
@@ -81,12 +104,29 @@ int EnemyBird::Return_MoveY()
 {
     return E_Move_Y;
 }
-int EnemyBird::Chase()
-{
-    if (PlayerPos) {
 
-    }
+void EnemyBird::Draw() const
+{
+    DrawGraph(E_Move_X, E_Move_Y, E_ArrayImg_P[0], TRUE);
+
+    //敵の当たり判定
+    DrawBox(E_Move_X + 30, E_Move_Y + 37, E_Move_X + 35, E_Move_Y + 65, GetColor(255, 255, 255), FALSE);
+
+    ////風船の当たり判定
+    //DrawBox(E_Move_X + 15, E_Move_Y + 5, E_Move_X + 59, E_Move_Y + 37, GetColor(255, 255, 255), FALSE);
+
+    //DrawBox(ex1, ey1, ex2, ey2, GetColor(255, 0, 0), FALSE);
+
 }
+//int PLAYER::Return_MoveX()const
+//{
+//    return P_Move_X;
+//}
+//
+//int PLAYER::Return_MoveY()const
+//{
+//    return P_Move_Y;
+//}
 
 //int EnemyBird::E_GetLocationX()
 //{
@@ -117,9 +157,4 @@ int EnemyBird::Chase()
 //    }
 //
 //    return E_AnimImg;
-//}
-
-//int EnemyBird::Chase()
-//{
-//
 //}

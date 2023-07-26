@@ -290,12 +290,12 @@ void PLAYER::Stand_Foot()
     }
  }
 
-int PLAYER::Return_MoveX()const
+int PLAYER::Return_MoveX()
 {
     return P_Move_X;
 }
 
-int PLAYER::Return_MoveY()const
+int PLAYER::Return_MoveY()
 {
     return P_Move_Y;
 }
