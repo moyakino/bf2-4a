@@ -2,6 +2,9 @@
 #include "Player.h"
 #include "PadInput.h"
 
+float PLAYER::P_Move_X;
+float PLAYER::P_Move_Y;
+
 PLAYER::PLAYER()
 {
     //プレイヤー画像データの読み込み
@@ -40,9 +43,6 @@ PLAYER::PLAYER()
     P_Seconas1 = 0;
     MouseX = 0;
     MouseY = 0;
-    
-    //test
-    Bound = FALSE;
 
     //足場の座標
     sx1 = 0, sx2 = 0, sy1 = 0, sy2 = 0;
@@ -192,12 +192,12 @@ void PLAYER::Player_Levitation_Move()
         P_Air_R_Flg = TRUE;
         /*P_XSpeed = 1.5f;
         P_Move_X = P_Move_X + P_XSpeed;*/
-        if (P_XSpeed >= 1.3f) {
+        if (P_XSpeed <= 1.9f) {
             P_XSpeed = P_XSpeed + 0.05f;
             P_Move_X = P_Move_X + P_XSpeed;
         }
-        else if(P_XSpeed <= 1.3f){
-            P_XSpeed = 1.3f;
+        else if(P_XSpeed >= 1.9f){
+            P_XSpeed = 1.9f;
             P_Move_X = P_Move_X + P_XSpeed;
         }
     }
@@ -210,12 +210,12 @@ void PLAYER::Player_Levitation_Move()
         P_Air_L_Flg = TRUE;
         /*P_XSpeed = -1.5f;
         P_Move_X = P_Move_X + P_XSpeed;*/
-        if (P_XSpeed <= -1.3f) {
+        if (P_XSpeed >= -1.9f) {
             P_XSpeed = P_XSpeed + -0.05f;
             P_Move_X = P_Move_X + P_XSpeed;
         }
-        else if (P_XSpeed >= -1.3f) {
-            P_XSpeed = -1.3f;
+        else if (P_XSpeed <= -1.9f) {
+            P_XSpeed = -1.9f;
             P_Move_X = P_Move_X + P_XSpeed;
         }
     }
@@ -234,7 +234,7 @@ void PLAYER::Player_Levitation_Move()
 void PLAYER::Player_Gravity()
 {
     P_Air_Flg = TRUE;
-    P_YSpeed = P_YSpeed + 0.05f;
+    P_YSpeed = P_YSpeed + 0.01f;
     P_Move_Y = P_Move_Y + P_YSpeed;
     if (P_YSpeed >= 1.0f) {//速度制限
         P_YSpeed = 1.0f;
@@ -245,11 +245,11 @@ void PLAYER::Player_Air_A()
 {
     // Aボタン単押し
     P_Air_Flg = TRUE;
-    P_YSpeed = P_YSpeed + -2.0f;
+    P_YSpeed = P_YSpeed + -0.2f;
     P_Move_Y = P_Move_Y + P_YSpeed;
     //P_Move_Y--;
-    if (P_YSpeed <= -10.0f) {
-        P_YSpeed = -10.0f;
+    if (P_YSpeed <= -1.0f) {
+        P_YSpeed = -1.0f;
     }
 }
 
@@ -257,11 +257,11 @@ void PLAYER::Player_Air_B()
 {
     // Bボタン長押し
     P_Air_Flg = TRUE;
-    P_YSpeed = P_YSpeed + -0.1f;
+    P_YSpeed = P_YSpeed + -0.06f;
     P_Move_Y = P_Move_Y + P_YSpeed;
     //P_Move_Y--;
-    if (P_YSpeed <= -1.7f) {
-        P_YSpeed = -1.7f;
+    if (P_YSpeed <= -1.0f) {
+        P_YSpeed = -1.0f;
     }
 }
 
@@ -274,63 +274,24 @@ void PLAYER::Stand_Foot()
     sy1 = 285;
     sy2 = sy1 + 20;
 
-
     //プレイヤーの座標
-    px1 = P_Move_X + 17;    //左
-    px2 = P_Move_X + 48;    //右
-    py1 = P_Move_Y + 37;    //上
-    py2 = P_Move_Y + 65;    //下
+    px1 = P_Move_X;
+    px2 = P_Move_X + 64;
+    py1 = P_Move_Y;
+    py2 = P_Move_Y + 64;
 
     //中心
     p_uc = (px1 + px2) / 2;
-    py_c = (py1 + py2) / 2;
-
-    //
-    fx1 = 160;
-    fx2 = 480;
-    fy1 = 416;
-    fy2 = 640;
-
+    
     //空を飛んでいても飛んでいなくても着地させたい
-    if (-53 <= p_uc && p_uc < 160 && 415 >= py2 && py2 >= 413 ||    //地上左足場
-        180 <= p_uc && p_uc <= 460 && 287 >= py2 && py2 >= 283 ||   //空中足場
-        480 < p_uc && p_uc <= 740 && 415 >= py2 && py2 >= 413) {    //地上右足場
+    if (-53 <= p_uc && p_uc < 160 && 415 >= py2 && py2 >= 413 || 180 <= p_uc && p_uc <= 460 && 287 >= py2 && py2 >= 283 || 480 < p_uc && p_uc <= 740 && 415 >= py2 && py2 >= 413) {
 
         P_Stand_Flg = TRUE;
     }
     else {
         P_Stand_Flg = FALSE;
     }
-
-    //if (sx1 <= px2 && sx2 >= px1 &&   //足場の左右にプレイヤーのが接触したら
-    //    sy1 <= py2 && sy2 >= py1)   //足場の上下にプレイヤーが接触したら
-    //{
-    //    Bound = TRUE;
-    //    P_Move_X *= 0.8;
-    //}
-    //else {
-    //    Bound = FALSE;
-    //}
-
-    //if (fx1 <= px2 && fx2 >= px1 && fy1 <= py2 && fy2 >= py1)  //足場にプレイヤーが接触したら
-    //{
-    //    Bound = TRUE;
-    //    P_Move_X = -P_Move_X;
-    //}
-
-}
-int PLAYER::Return_MoveX()const
-{
-    return P_Move_X;
-}
-
-int PLAYER::Return_MoveY()const
-{
-    return P_Move_Y;
-}
-
-
-
+ }
 
 int PLAYER::Stand_by_Anim()
 {
@@ -422,9 +383,9 @@ void PLAYER::Draw()const
     DrawFormatString(0, 20, GetColor(255, 255, 255), " FPS：%d", P_FPS);
 
     //Aボタン描画
-    DrawFormatString(0, 40, GetColor(255, 255, 255), " 押された瞬間：%d 離された瞬間：%d", PAD_INPUT::OnButton(XINPUT_BUTTON_A), PAD_INPUT::OnRelease(XINPUT_BUTTON_A));
+    //DrawFormatString(0, 40, GetColor(255, 255, 255), " 押された瞬間：%d 離された瞬間：%d", PAD_INPUT::OnButton(XINPUT_BUTTON_A), PAD_INPUT::OnRelease(XINPUT_BUTTON_A));
 
-    DrawFormatString(0, 60, GetColor(255, 255, 255), " 左スティック：横軸値 %d 縦軸値 %d", PAD_INPUT::GetLStickX(), PAD_INPUT::GetLStickY());
+    //DrawFormatString(0, 60, GetColor(255, 255, 255), " 左スティック：横軸値 %d 縦軸値 %d", PAD_INPUT::GetLStickX(), PAD_INPUT::GetLStickY());
 
     DrawFormatString(0, 80, GetColor(255, 255, 255), " プレイ左上：X座標 %0.1f Y座標 %0.01f", P_Move_X, P_Move_Y);
 
@@ -435,16 +396,17 @@ void PLAYER::Draw()const
     
 
     DrawFormatString(0, 140, GetColor(255, 255, 255), " 地上 Stand_Flg： %d ", P_Stand_Flg);
-    DrawFormatString(0, 160, GetColor(255, 255, 255), " 海   Foll_Flg ： %d ", P_Foll_Flg);
-    DrawFormatString(0, 180, GetColor(255, 255, 255), " 空   Air_Flg  ： %d ", P_Air_Flg);
+    //DrawFormatString(0, 160, GetColor(255, 255, 255), " 海   Foll_Flg ： %d ", P_Foll_Flg);
+    //DrawFormatString(0, 180, GetColor(255, 255, 255), " 空   Air_Flg  ： %d ", P_Air_Flg);
     DrawFormatString(0, 200, GetColor(255, 255, 255), " p_uc X: %0.1f ", p_uc);
     DrawFormatString(0, 220, GetColor(255, 255, 255), " py2  Y: %0.1f ", py2);
     DrawFormatString(0, 240, GetColor(255, 255, 255), " P_YSpeed :%0.1f ", P_YSpeed);
 
     DrawCircle(p_uc, py2, 2, 0xffff00, TRUE);
 
+
     //プレイヤーの当たり判定
-    DrawBox(P_Move_X + 17, P_Move_Y + 37, P_Move_X + 48, P_Move_Y + 65, GetColor(255, 255, 255), FALSE);
+    DrawBox(P_Move_X + 30, P_Move_Y + 37, P_Move_X + 35, P_Move_Y + 65, GetColor(255, 255, 255), FALSE);
 
     //風船の当たり判定
     DrawBox(P_Move_X + 5, P_Move_Y + 10, P_Move_X + 59, P_Move_Y + 37, GetColor(255, 255, 255), FALSE);
@@ -457,17 +419,8 @@ void PLAYER::Draw()const
     //DrawLine(sx1, 0, sx1, 480, 0xff0000);
     //DrawLine(sx2, 0, sx2, 480, 0xff0000);
 
-
     ////横線
     //DrawLine(0, sy1, 640, sy1, 0xff0000);
-    //DrawLine(0, sy2, 640, sy2, 0xff0000);
-
-
-    // プレイヤー左
-    DrawLine(px1-2, py1, px1-2, py2, 0xff00f0);
-    // プレイヤー右
-    DrawLine(px2+2, py1, px2+2, py2, 0x00f0f0);
-
 
 
     // TurnFlag: 画像の左右反転を行うかのフラグ

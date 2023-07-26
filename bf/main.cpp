@@ -7,17 +7,21 @@
 
 #define FRAMERATE 60.0 //フレームレート
 
+#define HEIGHT 640
+#define WIDTH 480
+#define REFRESHRATE 32
+
 // プログラムは WinMain から始まります
 int WINAPI WinMain(_In_ HINSTANCE ih, _In_opt_ HINSTANCE ioh, _In_ LPSTR il, _In_ int ii)
 {
 	//タイトル名
-	SetMainWindowText("BAROON FIGHT");
+	SetMainWindowText("BALLOON FIGHT");
 
 	//ウインドウモードで起動
 	ChangeWindowMode(TRUE);
 
 	//画面サイズ指定
-	if(SetGraphMode(640, 480, 32) != DX_CHANGESCREEN_OK)
+	if(SetGraphMode(HEIGHT, WIDTH, REFRESHRATE) != DX_CHANGESCREEN_OK)
 	{
 		return -1;
 	}
