@@ -10,15 +10,18 @@ private:
 	//シャボン玉の画像（仮）
 	int BubbleImg[3];
 	int B_Img;
-	int BallFlg;
+	int Bubbleflg;
+	int B_flg;
 	//シャボン玉の初期位置
 	float MoveX;
 	float MoveY;
     //シャボン玉の動き
-	int SpeedY;
-	int SpeedX;
+	float SpeedY;
+    float SpeedX;
 	int B_FPS;
 	int seconds;
+	int tick;
+	int i;
 public:
 	Bubble();
 

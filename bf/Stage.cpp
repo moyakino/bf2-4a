@@ -1,5 +1,6 @@
 #include "DxLib.h"
 #include "Stage.h"
+#include "Stage1.h"
 #include "PadInput.h"
 
 Stage::Stage()
@@ -25,6 +26,8 @@ Stage::Stage()
 	Snum = 0;
 	X_Btn = 0;
 	sFps = 0;
+
+	s1 = new Stage1();
 }
 
 Stage::~Stage()
@@ -58,28 +61,8 @@ void Stage::Draw() const
 	switch (Snum)
 	{
 	case 0:
-
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
-		DrawGraph(0, 0, StageSample1, FALSE);
-		SetDrawBlendMode(DX_BLENDGRAPHTYPE_ALPHA, 255);
-
-		//ãÛíÜÇÃë´èÍ
-		DrawBox(180, 285, 460, 305, 0x00ff00, FALSE);
-
-		//ínñ 
-		DrawBox(0, 418, 160, 480, 0x00ff00, FALSE);	//ç∂
-		DrawBox(480, 418, 640, 480, 0x00ff00, FALSE);	//âE
-
-		//äC
-		DrawBox(160, 444, 480, 480, 0x0000ff, FALSE);
-
-		//ãÛíÜÇÃë´èÍ
-		//DrawGraph(180, 280, StageFoot[0],TRUE);
-
-		//ínñ Ç∆äC
-		//DrawGraph(0, 418, StageLand_L, TRUE);
-		//DrawGraph(480, 418, StageLand_R, TRUE);
-		//DrawGraph(160,444,StageSea,TRUE);
+		s1->Draw();
+	
 
 		break;
 
@@ -95,12 +78,6 @@ void Stage::Draw() const
 		DrawBox(100, 165, 220, 182, 0x00ff00, FALSE);
 		DrawBox(460, 150, 580, 165, 0x00ff00, FALSE);
 
-		//ínñ 
-		DrawBox(0, 418, 160, 480, 0x00ff00, FALSE);	//ç∂
-		DrawBox(480, 418, 640, 480, 0x00ff00, FALSE);	//âE
-
-		//äC
-		DrawBox(160, 444, 480, 480, 0x0000ff, FALSE);
 		break;
 	case 2:
 
@@ -123,13 +100,6 @@ void Stage::Draw() const
 		DrawBox(500, 99, 558, 116, 0x00ff00, FALSE);
 		DrawBox(522, 116, 540, 165, 0x00ff00, FALSE);
 
-
-		//ínñ 
-		DrawBox(0, 418, 160, 480, 0x00ff00, FALSE);	//ç∂
-		DrawBox(480, 418, 640, 480, 0x00ff00, FALSE);	//âE
-
-		//äC
-		DrawBox(160, 444, 480, 480, 0x0000ff, FALSE);
 		break;
 
 	case 3:
@@ -145,13 +115,6 @@ void Stage::Draw() const
 		DrawBox(460, 284, 522, 302, 0xff8c00, FALSE);
 		DrawBox(320, 183, 382, 201, 0xff8c00, FALSE);
 
-
-		//ínñ 
-		DrawBox(0, 418, 160, 480, 0xff8c00, FALSE);	//ç∂
-		DrawBox(480, 418, 640, 480, 0xff8c00, FALSE);	//âE
-
-		//äC
-		DrawBox(160, 444, 480, 480, 0x0000ff, FALSE);
 		break;
 
 	case 4:
@@ -167,18 +130,17 @@ void Stage::Draw() const
 		DrawBox(260, 165, 281, 216, 0xff8c00, FALSE);
 		DrawBox(100, 200, 121, 251, 0xff8c00, FALSE);
 
-
-		//ínñ 
-		DrawBox(0, 418, 160, 480, 0xff8c00, FALSE);	//ç∂
-		DrawBox(480, 418, 640, 480, 0xff8c00, FALSE);	//âE
-
-		//äC
-		DrawBox(160, 444, 480, 480, 0x0000ff, FALSE);
 		break;
 	}
 
 	/*âÊëúÇÃï`âÊ*/
 
+	//ínñ 
+	DrawBox(0, 418, 160, 480, 0x00ff00, FALSE);	//ç∂
+	DrawBox(480, 418, 640, 480, 0x00ff00, FALSE);	//âE
+
+	//äC
+	DrawBox(160, 444, 480, 480, 0x0000ff, FALSE);
 
 
 }
