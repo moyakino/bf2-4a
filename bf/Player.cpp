@@ -2,6 +2,9 @@
 #include "Player.h"
 #include "PadInput.h"
 
+float PLAYER::P_Move_X;
+float PLAYER::P_Move_Y;
+
 PLAYER::PLAYER()
 {
     //プレイヤー画像データの読み込み
@@ -16,6 +19,9 @@ PLAYER::PLAYER()
 
     P_Move_X = 100.0f;
     P_Move_Y = 350.0f;
+
+    X = 0;
+    Y = 0;
     //P_Move_Y = 200.0f;
 
     //地上のスピード
@@ -117,6 +123,16 @@ void PLAYER::Update()
     }
 
     
+}
+
+int PLAYER::GetLocationX()
+{
+    return px1;
+}
+
+int PLAYER::GetLocationY()
+{
+    return py1;
 }
 
 void PLAYER::Player_Warp()
@@ -290,16 +306,6 @@ void PLAYER::Stand_Foot()
     }
  }
 
-int PLAYER::Return_MoveX()const
-{
-    return P_Move_X;
-}
-
-int PLAYER::Return_MoveY()const
-{
-    return P_Move_Y;
-}
-
 int PLAYER::Stand_by_Anim()
 {
     int S_AnimImg = 0;
@@ -390,9 +396,9 @@ void PLAYER::Draw()const
     DrawFormatString(0, 20, GetColor(255, 255, 255), " FPS：%d", P_FPS);
 
     //Aボタン描画
-    DrawFormatString(0, 40, GetColor(255, 255, 255), " 押された瞬間：%d 離された瞬間：%d", PAD_INPUT::OnButton(XINPUT_BUTTON_A), PAD_INPUT::OnRelease(XINPUT_BUTTON_A));
+    //DrawFormatString(0, 40, GetColor(255, 255, 255), " 押された瞬間：%d 離された瞬間：%d", PAD_INPUT::OnButton(XINPUT_BUTTON_A), PAD_INPUT::OnRelease(XINPUT_BUTTON_A));
 
-    DrawFormatString(0, 60, GetColor(255, 255, 255), " 左スティック：横軸値 %d 縦軸値 %d", PAD_INPUT::GetLStickX(), PAD_INPUT::GetLStickY());
+    //DrawFormatString(0, 60, GetColor(255, 255, 255), " 左スティック：横軸値 %d 縦軸値 %d", PAD_INPUT::GetLStickX(), PAD_INPUT::GetLStickY());
 
     DrawFormatString(0, 80, GetColor(255, 255, 255), " プレイ左上：X座標 %0.1f Y座標 %0.01f", P_Move_X, P_Move_Y);
 
@@ -403,8 +409,8 @@ void PLAYER::Draw()const
     
 
     DrawFormatString(0, 140, GetColor(255, 255, 255), " 地上 Stand_Flg： %d ", P_Stand_Flg);
-    DrawFormatString(0, 160, GetColor(255, 255, 255), " 海   Foll_Flg ： %d ", P_Foll_Flg);
-    DrawFormatString(0, 180, GetColor(255, 255, 255), " 空   Air_Flg  ： %d ", P_Air_Flg);
+    //DrawFormatString(0, 160, GetColor(255, 255, 255), " 海   Foll_Flg ： %d ", P_Foll_Flg);
+    //DrawFormatString(0, 180, GetColor(255, 255, 255), " 空   Air_Flg  ： %d ", P_Air_Flg);
     DrawFormatString(0, 200, GetColor(255, 255, 255), " p_uc X: %0.1f ", p_uc);
     DrawFormatString(0, 220, GetColor(255, 255, 255), " py2  Y: %0.1f ", py2);
     DrawFormatString(0, 240, GetColor(255, 255, 255), " P_YSpeed :%0.1f ", P_YSpeed);

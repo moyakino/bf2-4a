@@ -82,10 +82,9 @@ private:
 	int		P_Air_R_Flg;
 	int		P_Air_L_Flg;
 
-	//Player  X座標用変数
-	float	P_Move_X;
-	//Player  Y座標用変数
-	float	P_Move_Y;
+	float X;
+	float Y;
+	
 	//プレイヤーの地上スピード X座標
 	float	P_XSpeed;
 	//プレイヤーの地上スピード Y座標
@@ -93,7 +92,7 @@ private:
 	//プレイヤーの空中スピード
 	float	P_AirSpeed;
 
-	float P_Speed;
+	float   P_Speed;
 
 	float	P_Accele;
 
@@ -128,6 +127,11 @@ private:
 	int		MouseY;
 
 public:
+	//Player  X座標用変数
+	static float	P_Move_X;
+	//Player  Y座標用変数
+	static float	P_Move_Y;
+
 	PLAYER();
 
 	//デストラクタ
@@ -141,7 +145,7 @@ public:
 	
 	//プレイヤーの右移動処理
 	//int P_Move_Flg();
-
+	
 		//関数化
 	void Player_Warp();
 	void Player_Img();
@@ -151,8 +155,15 @@ public:
 	void Player_Air_A();
 	void Player_Air_B();
 
-	int Return_MoveX()const;
-	int Return_MoveY()const;
+	/*static int Return_MoveX()
+	{
+		return P_Move_X;
+	}
+
+	static int Return_MoveY()
+	{
+		return P_Move_Y;
+	}*/
 
 	//Playerの待機状態中のアニメーション
 	int Stand_by_Anim();
@@ -164,7 +175,7 @@ public:
 
 	void Stand_Foot();
 
-	/*int GetLocationX();
+	int GetLocationX();
 
-	int GetLocationY();*/
+	int GetLocationY();
 };
