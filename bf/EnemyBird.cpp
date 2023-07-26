@@ -12,8 +12,9 @@ EnemyBird::EnemyBird()
 	x = 0;
     y = 0;
 
-    E_Move_X = 200.0f;
-    E_Move_Y = 200.0f;
+    E_location_X = 200.0f;
+    E_location_Y = 200.0f;
+    speed = 0;
 
     //敵の座標
     ex1 = 0, ex2 = 0, ey1 = 0,ey2 = 0, e_uc = 0;
@@ -29,11 +30,11 @@ EnemyBird::~EnemyBird()
 
 }
 
-void EnemyBird::Update(int Return_MoveX, int Return_MoveY)
+void EnemyBird::Update(int playerx, int playery)
 {
-     PlayerPos= Return_MoveX, Return_MoveY;
-	//x = playerx;
-	//y = playery;
+   /*  PlayerPos= Return_MoveX, Return_MoveY;*/
+	x = playerx;
+	y = playery;
     E_FPS++;
 
     if (E_FPS > 479) {
@@ -46,8 +47,8 @@ void EnemyBird::Update(int Return_MoveX, int Return_MoveY)
         seconds = 0;
     }
 
-    //プレイヤーに追尾する
-    Chase();
+    ////プレイヤーに追尾する
+    //Chase();
 
 }
 
@@ -72,45 +73,50 @@ void EnemyBird::Stand_Foot()
         E_Stand_Flg = FALSE;
     }
 }
-void EnemyBird::Chase()
-{
-    float E_Speed = 0.2f;
-    EnemyPos = E_Move_X, E_Move_Y;
-
-    // プレイヤーと敵の距離を計算
-    int distance = static_cast<int>(sqrt(ex1 * ex2 + ey1 * ey2));
-
-    if (PlayerPos == EnemyPos) {
-        E_Air_Flg = TRUE;
-        E_Move_X = E_Move_X +0.2f;
-    }
-    else if (PlayerPos>=EnemyPos) {
-        E_Air_Flg = FALSE;
-        EnemyPos + 0.5f;
-    }
-
-    // 移動
-    enemy.x += E_Move_X;
-    enemy.y += E_Move_Y;
-
-
-}
+//void EnemyBird::Chase()
+//{
+//    float E_Speed = 0.2f;
+//   /* EnemyPos = E_Move_X, E_Move_Y;*/
+//
+//    // プレイヤーと敵の距離を計算
+//    int distance = static_cast<int>(sqrt(ex1 * ex2 + ey1 * ey2));
+//
+//    int dx=
+//    if (distance > 0) {
+//        E_Move_X = dx * enemy.speed / distance;
+//        E_Move_Y = dy * enemy.speed / distance;
+//    }
+//
+//    // 移動
+//    enemy.x += E_Move_X;
+//    enemy.y += E_Move_Y;
+//
+//    if (PlayerPos == EnemyPos) {
+//      E_Air_Flg = TRUE;
+//      E_Move_X = E_Move_X +0.2f;
+//  }
+//  else if (PlayerPos>=EnemyPos) {
+//      E_Air_Flg = FALSE;
+//      EnemyPos + 0.5f;
+//  }
+//
+//}
 
 int EnemyBird::Return_MoveX()
 {
-    return E_Move_X;
+    return E_location_X;
 }
 int EnemyBird::Return_MoveY()
 {
-    return E_Move_Y;
+    return E_location_Y;
 }
 
 void EnemyBird::Draw() const
 {
-    DrawGraph(E_Move_X, E_Move_Y, E_ArrayImg_P[0], TRUE);
+    DrawGraph(E_location_X, E_location_Y, E_ArrayImg_P[0], TRUE);
 
     //敵の当たり判定
-    DrawBox(E_Move_X + 30, E_Move_Y + 37, E_Move_X + 35, E_Move_Y + 65, GetColor(255, 255, 255), FALSE);
+    DrawBox(E_location_X + 30, E_location_Y + 37, E_location_X + 35, E_location_Y + 65, GetColor(255, 255, 255), FALSE);
 
     ////風船の当たり判定
     //DrawBox(E_Move_X + 15, E_Move_Y + 5, E_Move_X + 59, E_Move_Y + 37, GetColor(255, 255, 255), FALSE);
