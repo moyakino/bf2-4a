@@ -48,11 +48,6 @@
 #define LEFT_MOVE -2000
 #define RIGHT_MOVE 2000
 
-//プレイヤーの走るスピード
-#define RUN_SPEED 1
-#define SPEED_UP  0.2
-#define SPEED_UP1 0.2
-
 class PLAYER
 {
 private:
@@ -64,6 +59,8 @@ private:
 
 	//(仮)左スティック
 	int		P_L_Stick;
+	//(仮)左スティックが倒されているか
+	int		P_L_Stick_Flg;
 
 	//(仮)デジタル方向ボタン右
 	int		P_Right_Btn;
@@ -93,7 +90,7 @@ private:
 	//プレイヤーの空中スピード
 	float	P_AirSpeed;
 
-	float P_Speed;
+	//float P_Speed;
 
 	float	P_Accele;
 

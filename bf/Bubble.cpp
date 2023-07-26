@@ -50,8 +50,8 @@ void Bubble::Update()
 void Bubble::Draw() const {
 	DrawRotaGraph(MoveX, MoveY,1.0f,1,B_Img,TRUE);
 	DrawBox(MoveX - 15, MoveY - 15, MoveX + 15, MoveY + 15, GetColor(255, 255, 255), FALSE);
-	DrawFormatString(0, 300, GetColor(255, 255, 255), "MoveX:%0.1f MoveY:%0.1f", MoveX,MoveY);
-	DrawFormatString(0, 320, GetColor(255, 255, 255), "Bubbleflg:%d", Bubbleflg);
+	/*DrawFormatString(0, 320, GetColor(255, 255, 255), "MoveX:%0.1f MoveY:%0.1f", MoveX,MoveY);
+	DrawFormatString(0, 340, GetColor(255, 255, 255), "Bubbleflg:%d", Bubbleflg);*/
 
 }
 
