@@ -108,7 +108,6 @@ private:
 	//(仮)画像の左右反転用フラグ FALSE:普通に描画 TRUE:左右反転
 	int		P_TurnFlg;
 
-
 	//立っている状態のフラグ
 	int		P_Stand_Flg;
 	//海に落下する状態のフラグ
@@ -116,7 +115,7 @@ private:
 
 	float	sx1, sy1, sx2, sy2;
 
-	float	px1, py1, px2, py2, p_uc;
+	float	px1, py1, px2, py2, p_uc,py_u;
 
 	//FPSと秒数カウント
 	int		P_FPS;
@@ -124,6 +123,8 @@ private:
 	
 	int		MouseX;
 	int		MouseY;
+
+	int rand;
 
 public:
 	PLAYER();
@@ -161,4 +162,7 @@ public:
 
 
 	void Stand_Foot();
+
+
+	static int FishFlg;
 };

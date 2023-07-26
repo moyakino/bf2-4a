@@ -15,6 +15,7 @@ private:
   int F_AnimImg = 0;
   int Fish_Img = 0;
   int f_fps;
+  int ChengeImg;
  
 
 public:

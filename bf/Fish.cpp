@@ -1,6 +1,7 @@
 #include "Fish.h"
 #include"DxLib.h"
 #include"GameMain.h"
+#include "Player.h"
 
 Fish::Fish()
 {
@@ -8,35 +9,51 @@ Fish::Fish()
     F_Seconas1 = 0;
 
 	if (LoadDivGraph("images/Enemy/Enemy_FishAnimation.png", 10, 5, 2, 64, 64, Fish_ArrayImg)) {}
-
+    ChengeImg = 0;
 }
 
 Fish::~Fish()
 {
-
+    
 }
 
 void Fish::Update()
 {
     f_fps++;
-    Fish_Img = Fish_Anim();
-}
-
-int Fish::Fish_Anim()
-{ 
-  
-
-    if (f_fps % 20 == 0) {
-
-        F_Seconas1++;
-
-        if (F_Seconas1 > 5) {
-            F_Seconas1 = 0;
+        if (PLAYER::FishFlg == TRUE) {
+            if (f_fps % 50 == 0) {
+                ChengeImg++;
+                if (ChengeImg > 5) {
+                    ChengeImg = 0;
+                    PLAYER::FishFlg = FALSE;
+                }
+            }
         }
-    }
+}
+    
+    
+
+    //if (PLAYER::FishFlg == TRUE)
+    //{
+    //    //Fish_Img = Fish_Anim();
+
+    //   
+    //}
 
 
-    switch (F_Seconas1)
+//int Fish::Fish_Anim()
+//{ 
+    /*if (f_fps % 20 == 0) {
+
+        F_Seconas1++;*/
+
+        /*if (F_Seconas1 > 5) {
+            F_Seconas1 = 0;
+        }*/
+    //}
+
+
+   /* switch (F_Seconas1)
     {
     case 0:
         F_AnimImg = Fish_ArrayImg[0];
@@ -55,13 +72,13 @@ int Fish::Fish_Anim()
         break;
     case 5:
         F_AnimImg = Fish_ArrayImg[5];
-        break;
-    
-    }
-
-    return F_AnimImg;
-
-}
+//        break;
+//    
+//    }*/
+//
+//    return F_AnimImg;
+//
+//}
 void Fish::Draw() const
 {
     DrawFormatString(0, 20, 0xffffff, "Second:%d", F_Seconas1);
@@ -69,7 +86,10 @@ void Fish::Draw() const
     /*DrawRotaGraph(300,410, 1.0f, 0, F_AnimImg, TRUE);*/
     /*DrawGraph(300, 410, Fish_Img, TRUE410);*/
    /* DrawGraph(300, 410, Fish_Img, TRUE);*/
-    DrawRotaGraph(300, 410, 1.0f, 0, Fish_Img, TRUE);
+    if (PLAYER::FishFlg == TRUE) {
+
+        DrawRotaGraph(300, 410, 1.0f, 0, Fish_ArrayImg[ChengeImg], TRUE);
+    }
 }
 
     //// 0 ‚©‚ç 3 •b
