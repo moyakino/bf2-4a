@@ -48,6 +48,7 @@ private:
 
 public:
 
+	static int Bound;
 	static int Stand;
 
 	//コンストラクタ

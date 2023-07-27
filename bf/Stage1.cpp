@@ -39,21 +39,33 @@ void Stage1::Update()
 	//空中足場
 	if ((sx1 < px2) && (sx2 > px1) &&(sy1 < py2) && (sy2 > py1))  
 	{
-		Stage::Stand = TRUE;
-
+		if ((sx1 < px2) && (sx2 > px1) && (sy1 < py2) && (sy1 - 20 > py1))
+		{
+			Stage::Stand = TRUE;
+		}
+		Stage::Bound = TRUE;
 	}
 	//左足場
 	else if ((-55 < px2) && (RAND_WIDTH > px1) && (480 - RAND_HEIGHT < py2) && (480 > py1))
 	{
-		Stage::Stand = TRUE;
+		if ((-55 < px2) && (RAND_WIDTH > px1) && (480 - RAND_HEIGHT < py2) && ((480 - RAND_HEIGHT) - 20 > py1))
+		{
+			Stage::Stand = TRUE;
+		}
+		Stage::Bound = TRUE;
 	}
 	//右足場
 	else if ((640 - RAND_WIDTH < px1) && (740 > px2) && (480 - RAND_HEIGHT < py2) && (480 > py1))  //足場の上下にプレイヤーが接触したら
 	{
-		Stage::Stand = TRUE;
+		if ((640 - RAND_WIDTH < px1) && (740 > px2) && (480 - RAND_HEIGHT < py2) && ((480 - RAND_HEIGHT) - 20 > py1))
+		{
+			Stage::Stand = TRUE;
+		}
+		Stage::Bound = TRUE;
 	}
 	else {
-		Stage:: Stand = FALSE;
+		Stage::Stand = FALSE;
+		Stage::Bound = FALSE;
 	}
 
 
