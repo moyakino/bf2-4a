@@ -4,6 +4,7 @@
 #include"Bubble.h"
 #include "Stage.h"
 #include "Fish.h"
+#include "enemybird.h"
 
 #include "testPlayer.h"
 
@@ -19,6 +20,8 @@ public:
 	~GameMain();
 	void Draw()const;
 	virtual AbstractScene* Update()override;
+	
+	EnemyBird* enemybird;
 
 	PLAYER* player;
 	Bubble* bubble;

@@ -50,7 +50,7 @@ void GameMain::Draw()const
 {
 	
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
-	DrawGraph(0, 0, StageSample, FALSE);
+	//DrawGraph(0, 0, StageSample, FALSE);
 	//Œ³‚É–ß‚·B‚µ‚©‚µA‚±‚±‚Å“Á’è‚Ì‰æ‘œ‚ª”¼“§–¾‚É‚È‚éB                
 	SetDrawBlendMode(DX_BLENDGRAPHTYPE_ALPHA, 255);
 

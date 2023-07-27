@@ -146,12 +146,12 @@ void PLAYER::Update()
 void PLAYER::Player_Warp()
 {
     //左ワープ
-    if (P_Move_X <= -53) {
+    if (P_Move_X <= -30) {
         P_Move_X = 700;
     }
     //右ワープ
     else if (P_Move_X >= 700) {
-        P_Move_X = -53;
+        P_Move_X = -30;
     }
 
     //天井
