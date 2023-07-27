@@ -159,7 +159,7 @@ public:
 
 	void Stand_Foot();
 
-
+	static int F_TurnFlg;
 	static int FishFlg;
 	//(仮)画像の左右反転用フラグ FALSE:普通に描画 TRUE:左右反転
 	static	int	P_TurnFlg;

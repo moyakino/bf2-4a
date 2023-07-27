@@ -5,7 +5,7 @@
 
 int PLAYER::FishFlg;
 int PLAYER::P_TurnFlg;
-
+int PLAYER::F_TurnFlg;
 
 float PLAYER::P_Move_X;
 float PLAYER::P_Move_Y;
@@ -367,6 +367,8 @@ void PLAYER::Player_Air_B()
 
 void PLAYER::Stand_Foot()
 {
+    int i = 0;
+
     //足場の座標
     sx1 = 180;
     sx2 = sx1 + 280;
@@ -395,16 +397,29 @@ void PLAYER::Stand_Foot()
     int fpscount = 0;
 
     //魚の出現
-    if (py_u > 420)
+    if (py_u > 410&&py_u<430)
     {
-        rand = GetRand(100);
+        if (P_Seconas1 == 3) {
+            rand = GetRand(99);
 
-        if (rand <= 30) 
-        {
-            FishFlg = TRUE;
+            if (rand < 30)
+            {
+                FishFlg = TRUE;
 
+            }
         }
+        //rand = GetRand(i);
     }
+    //魚の向き
+    if (P_TurnFlg == TRUE) 
+    {
+        F_TurnFlg = TRUE;
+    }
+    else {
+        F_TurnFlg = FALSE;
+    }
+
+    
    /* else {
         FishFlg = FALSE;
     }*/
@@ -497,8 +512,8 @@ PLAYER::~PLAYER()
 
 void PLAYER::Draw()const
 {
-    DrawFormatString(0, 20, GetColor(255, 255, 255), " FPS：%d", P_FPS);
-
+    DrawFormatString(0, 20, GetColor(255, 255, 255), " FPS：%d", P_FPS); 
+        DrawFormatString(0, 400, GetColor(255, 255, 255), " P_Seconas1：%d", P_FPS);
     //Aボタン描画
     //DrawFormatString(0, 40, GetColor(255, 255, 255), " 押された瞬間：%d 離された瞬間：%d", PAD_INPUT::OnButton(XINPUT_BUTTON_A), PAD_INPUT::OnRelease(XINPUT_BUTTON_A));
 
@@ -523,7 +538,9 @@ void PLAYER::Draw()const
     DrawFormatString(0, 260, GetColor(255, 255, 255), " P_XSpeed :%0.1f ", P_XSpeed);
     DrawFormatString(0, 280, GetColor(255, 255, 255), " P_Air_L_Flg :%d", P_Air_L_Flg);
     DrawFormatString(0, 300, GetColor(255, 255, 255), " P_Air_R_Flg :%d", P_Air_R_Flg);
-    DrawFormatString(0, 320, GetColor(255, 255, 255), " L_Stick :%d", P_L_Stick_Flg);
+    DrawFormatString(0, 320, GetColor(255, 255, 255), " Fish :%d", FishFlg);
+
+    DrawLine(160, 417, 480, 417, 0xffffff, TRUE);
 
     DrawCircleAA(p_uc, py2, 2.0f, 0xffff00, TRUE);
 

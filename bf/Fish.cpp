@@ -44,10 +44,23 @@ void Fish::Draw() const
 {
     DrawFormatString(0, 20, 0xffffff, "Second:%d", F_Seconas1);
     DrawFormatString(100, 400, 0xffffff, "f_fps:%d", f_fps);
-    if (PLAYER::FishFlg == TRUE) {
-       
-            DrawRotaGraph(PlayerX + 30, 420, 1.0f, 0, Fish_ArrayImg[ChengeImg], TRUE);
-       
+    if (PLAYER::FishFlg == TRUE) 
+    {
+        if (PLAYER::F_TurnFlg == TRUE)
+        {
+            /*DrawRotaGraph(PlayerX + 30, PlayerY+30, 1.0f, 0, Fish_ArrayImg[ChengeImg], TRUE);*/
+            DrawGraph(PlayerX , PlayerY + 25, Fish_ArrayImg[ChengeImg], TRUE);
+        }
+        else {
+            if (PLAYER::F_TurnFlg == FALSE) {
+                DrawTurnGraph(PlayerX , PlayerY + 25, Fish_ArrayImg[ChengeImg], TRUE);
+            }
+        }
+       /* if (PLAYER::F_TurnFlg == FALSE)
+        {
+            DrawTurnGraph(PlayerX - 30, PlayerY + 30, Fish_ArrayImg[ChengeImg], TRUE);*/
+            /*DrawTurnGraph(PlayerX - 30, 420, Fish_ArrayImg[ChengeImg], TRUE);*/
+       /* }*/
     }
     /*DrawRotaGraph(300,410, 1.0f, 0, F_AnimImg, TRUE);*/
     /*DrawGraph(300, 410, Fish_Img, TRUE410);*/
