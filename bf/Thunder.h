@@ -7,9 +7,13 @@
 #define THUNDER_ANIM1_4 5
 #define THUNDER_ANIM1_5 6
 
-#define THUNDER_EFFECT_ANIM1_0 0
-#define THUNDER_EFFECT_ANIM1_1 1
-#define THUNDER_EFFECT_ANIM1_2 2
+#define EFFECT_ANIM1_0 0
+#define EFFECT_ANIM1_1 1
+#define EFFECT_ANIM1_2 2
+
+#define CLOUD_ANIM1_0 0
+#define CLOUD_ANIM1_1 1
+#define CLOUD_ANIM1_2 2
 
 class Thunder {
 
@@ -21,10 +25,18 @@ private:
 
     int	EffectImg[3];
     int E_Img;
+    
+    //雲画像　分割読込耀変数
+    int	CloudImg;
+
+    int	Cloud_AnimImg[3];
+    int C_Img;
 
     //FPSと秒数カウント
-    int	S_FPS;
+    int	S_FPS1;
+    int	S_FPS2;
     int	S_Seconas1;
+    int	S_Seconas2;
 
 public:
 
@@ -42,4 +54,6 @@ public:
 
     int Thunder_Anim();
     int Effect_Anim();
+
+    int Cloud_Anim();
 };
