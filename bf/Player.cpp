@@ -3,6 +3,8 @@
 #include "PadInput.h"
 
 int PLAYER::FishFlg;
+int PLAYER::P_TurnFlg;
+
 
 float PLAYER::P_Move_X;
 float PLAYER::P_Move_Y;

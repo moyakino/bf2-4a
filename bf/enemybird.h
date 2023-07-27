@@ -114,6 +114,8 @@ private:
     float E_MoveL_Flg;
     float E_Balloon_Flg;
 
+    int  E_Img;
+
     
 public:
 
@@ -150,4 +152,5 @@ public:
 
     void Enemy_Gravity();
     void Enemy_Warp();
+    void Enemy_Img();
 };

@@ -6,6 +6,7 @@
 #include<math.h>
 
 EnemyBird::EnemyBird()
+
 {
 	if (LoadDivGraph("images/Enemy/Enemy_P_Animation.png", 18, 6, 3, 64, 64, E_ArrayImg_P)) {}
 	/*if (LoadDivGraph("images/Enemy/Enemy_G_Animation.png", 18, 6, 3, 64, 64, E_ArrayImg_G)) {}
@@ -54,6 +55,7 @@ EnemyBird::EnemyBird()
     E_B_Btn = 0;
     E_A_Pressed = 0;
     E_Second = 0;
+    E_Img = 0;
 }
 
 EnemyBird::~EnemyBird()
@@ -114,7 +116,19 @@ void EnemyBird::Draw() const
     //DrawBox(E_Move_X + 15, E_Move_Y + 5, E_Move_X + 59, E_Move_Y + 37, GetColor(255, 255, 255), FALSE);
 
     //DrawBox(ex1, ey1, ex2, ey2, GetColor(255, 0, 0), FALSE);
+
 }
+//void EnemyBird::Enemy_Img()
+//{
+//    //‰EˆÚ“®‚Å”½“]•`‰æ
+//    if (PLAYER::P_Move_X<E_Move_X) {
+//        P_TurnFlg = TRUE;
+//    }
+//    //¶ˆÚ“®‚Å’Êí•`‰æ
+//    else if (P_L_Stick < LEFT_MOVE || P_Left_Btn == 1) {
+//        P_TurnFlg = FALSE;
+//    }
+//}
 
 void EnemyBird::Stand_Foot()
 {
@@ -186,10 +200,10 @@ void EnemyBird::Enemy_Levitation_Move_Y()
 {
     if (E_Stand_Flg == FALSE) {
         if (E_Move_Y >= PLAYER::P_Move_Y) {
-            SpeedY -= 0.1f;
+            SpeedY -= 0.05f;
         }
         if (E_Move_Y <= PLAYER::P_Move_Y) {
-            SpeedY += 0.5f;
+            SpeedY += 0.05f;
         }
         if (SpeedY <= -1.0f) {
             SpeedY = -0.05f;
@@ -251,9 +265,6 @@ int EnemyBird::Start_Anim()
     return E_AnimImg;
 
 }
-
-
-
 
 //int EnemyBird::Stand_by_Anim()
 //{
