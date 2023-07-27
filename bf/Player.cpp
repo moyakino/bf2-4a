@@ -160,7 +160,7 @@ void PLAYER::Player_Warp()
     if (P_Move_Y <= -25) {
         P_Move_Y = -20;
         if (P_YSpeed < 0) {
-            P_YSpeed = P_YSpeed * -0.85;
+            P_YSpeed = P_YSpeed * -0.8f;
         }
     }
     
@@ -240,8 +240,8 @@ void PLAYER::Player_Levitation_Move()
         //}
         P_XSpeed = P_XSpeed + 0.08f;    //速度加算
         P_Move_X = P_Move_X + P_XSpeed;
-        if (P_XSpeed >= 1.5f) {          //速度制限
-            P_XSpeed = 1.5f;                //速度上限値
+        if (P_XSpeed >= 3.5f) {          //速度制限
+            P_XSpeed = 3.5f;                //速度上限値
             //P_Move_X = P_Move_X + P_XSpeed;
         }
     }
@@ -309,8 +309,8 @@ void PLAYER::Player_Levitation_Move()
 
         P_XSpeed = P_XSpeed + -0.08f;
         P_Move_X = P_Move_X + P_XSpeed;
-        if (P_XSpeed <= -1.5f) {
-            P_XSpeed = -1.5f;
+        if (P_XSpeed <= -3.5f) {
+            P_XSpeed = -3.5f;
         }
     }
     else {
@@ -321,7 +321,7 @@ void PLAYER::Player_Levitation_Move()
     ここで上手く処理をかければ成功するはず*/
 
     if (P_Stand_Flg == FALSE && P_Air_L_Flg == FALSE && P_Air_R_Flg == FALSE) {
-        P_XSpeed = P_XSpeed * 0.99;
+        P_XSpeed = P_XSpeed * 0.99f;
         P_Move_X = P_Move_X + P_XSpeed;
     }
 }
@@ -332,9 +332,9 @@ void PLAYER::Player_Gravity()
     P_Stand_Flg = FALSE;
     P_YSpeed = P_YSpeed + 0.02f;
     P_Move_Y = P_Move_Y + P_YSpeed;
-    if (P_YSpeed >= 0.8f) {         //速度制限
-        P_YSpeed = 0.8f;
-    }
+    //if (P_YSpeed >= 0.8f) {         //速度制限
+    //    P_YSpeed = 0.8f;
+    //}
 }
 
 void PLAYER::Player_Air_A()
@@ -356,9 +356,9 @@ void PLAYER::Player_Air_B()
     P_YSpeed = P_YSpeed + -0.07f;
     P_Move_Y = P_Move_Y + P_YSpeed;
     //P_Move_Y--;
-    if (P_YSpeed <= -0.9f) {
+    /*if (P_YSpeed <= -0.9f) {
         P_YSpeed = -0.9f;
-    }
+    }*/
 }
 
 
@@ -522,17 +522,17 @@ void PLAYER::Draw()const
     DrawFormatString(0, 300, GetColor(255, 255, 255), " P_Air_R_Flg :%d", P_Air_R_Flg);
     DrawFormatString(0, 320, GetColor(255, 255, 255), " L_Stick :%d", P_L_Stick_Flg);
 
-    DrawCircle(p_uc, py2, 2, 0xffff00, TRUE);
+    DrawCircleAA(p_uc, py2, 2.0f, 0xffff00, TRUE);
 
-    DrawCircle(p_uc, py2 - 54, 2, 0xfffff0, TRUE);
+    DrawCircleAA(p_uc, py2 - 54.0f, 2.0f, 0xfffff0, TRUE);
 
     //プレイヤーの当たり判定
-    DrawBox(P_Move_X + 30, P_Move_Y + 37, P_Move_X + 35, P_Move_Y + 65, GetColor(255, 255, 255), FALSE);
+    DrawBoxAA(P_Move_X + 30, P_Move_Y + 37, P_Move_X + 35, P_Move_Y + 65, GetColor(255, 255, 255), FALSE);
 
     //風船の当たり判定
-    DrawBox(P_Move_X + 5, P_Move_Y + 10, P_Move_X + 59, P_Move_Y + 37, GetColor(255, 255, 255), FALSE);
+    DrawBoxAA(P_Move_X + 5, P_Move_Y + 10, P_Move_X + 59, P_Move_Y + 37, GetColor(255, 255, 255), FALSE);
 
-    DrawBox(px1, py1, px2, py2, GetColor(255, 0, 0), FALSE);
+    DrawBoxAA(px1, py1, px2, py2, GetColor(255, 0, 0), FALSE);
 
     //DrawBox(P_Move_X, P_Move_Y, P_Move_X + 64, P_Move_Y + 64, GetColor(255, 0, 0), FALSE);
 
@@ -549,11 +549,11 @@ void PLAYER::Draw()const
 
     //最初は右向きで描画される
     if (P_TurnFlg == TRUE) {
-        DrawTurnGraph(P_Move_X, P_Move_Y, P_Img, TRUE);
+        DrawTurnGraphF(P_Move_X, P_Move_Y, P_Img, TRUE);
     }
     else {
         if (P_TurnFlg == FALSE) {
-            DrawGraph(P_Move_X, P_Move_Y, P_Img, TRUE);
+            DrawGraphF(P_Move_X, P_Move_Y, P_Img, TRUE);
         }
     }
 }

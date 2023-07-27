@@ -140,7 +140,7 @@ public:
 	
 	//プレイヤーの右移動処理
 	//int P_Move_Flg();
-	
+
 		//関数化
 	void Player_Warp();
 	void Player_Img();
