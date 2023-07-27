@@ -48,11 +48,6 @@
 #define LEFT_MOVE -2000
 #define RIGHT_MOVE 2000
 
-//プレイヤーの走るスピード
-#define RUN_SPEED 1
-#define SPEED_UP  0.2
-#define SPEED_UP1 0.2
-
 class PLAYER
 {
 private:
@@ -64,6 +59,8 @@ private:
 
 	//(仮)左スティック
 	int		P_L_Stick;
+	//(仮)左スティックが倒されているか
+	int		P_L_Stick_Flg;
 
 	//(仮)デジタル方向ボタン右
 	int		P_Right_Btn;
@@ -81,11 +78,7 @@ private:
 	int		P_A_BtnFlg;
 	int		P_Air_R_Flg;
 	int		P_Air_L_Flg;
-
-	//Player  X座標用変数
-	float	P_Move_X;
-	//Player  Y座標用変数
-	float	P_Move_Y;
+	
 	//プレイヤーの地上スピード X座標
 	float	P_XSpeed;
 	//プレイヤーの地上スピード Y座標
@@ -93,7 +86,7 @@ private:
 	//プレイヤーの空中スピード
 	float	P_AirSpeed;
 
-	float P_Speed;
+	//float P_Speed;
 
 	float	P_Accele;
 
@@ -110,7 +103,6 @@ private:
 	//(仮)画像の左右反転用フラグ FALSE:普通に描画 TRUE:左右反転
 	int		P_TurnFlg;
 
-
 	//立っている状態のフラグ
 	int		P_Stand_Flg;
 	//海に落下する状態のフラグ
@@ -118,7 +110,7 @@ private:
 
 	float	sx1, sy1, sx2, sy2;
 
-	float	px1, py1, px2, py2, p_uc;
+	float	px1, py1, px2, py2, p_uc,py_u;
 
 	//FPSと秒数カウント
 	int		P_FPS;
@@ -127,7 +119,14 @@ private:
 	int		MouseX;
 	int		MouseY;
 
+	int rand;
+
 public:
+	//Player  X座標用変数
+	static float	P_Move_X;
+	//Player  Y座標用変数
+	static float	P_Move_Y;
+
 	PLAYER();
 
 	//デストラクタ
@@ -151,9 +150,6 @@ public:
 	void Player_Air_A();
 	void Player_Air_B();
 
-	int Return_MoveX()const;
-	int Return_MoveY()const;
-
 	//Playerの待機状態中のアニメーション
 	int Stand_by_Anim();
 	//Playerが走っている時のアニメーション
@@ -164,7 +160,6 @@ public:
 
 	void Stand_Foot();
 
-	/*int GetLocationX();
 
-	int GetLocationY();*/
+	static int FishFlg;
 };

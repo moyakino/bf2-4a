@@ -10,9 +10,10 @@ EnemyBird::EnemyBird()
 	if (LoadDivGraph("images/Enemy/Enemy_R_Animation.png", 18, 6, 3, 64, 64, E_ArrayImg_R)) {}*/
 	x = 0;
     y = 0;
+    cnt = 0;
 
-    E_Move_X = 300.0f;
-    E_Move_Y = 200.0f;
+    E_Move_X = 300;
+    E_Move_Y = 200;
 
     //ìGÇÃç¿ïW
     ex1 = 0, ex2 = 0, ey1 = 0,ey2 = 0, e_uc = 0;
