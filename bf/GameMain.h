@@ -11,7 +11,7 @@ class GameMain:
 {
 private:
 	
-
+	int StageSample;
 	int Bgm;
 public:
 	GameMain();

@@ -393,8 +393,8 @@ void PLAYER::Stand_Foot()
 
     int fpscount = 0;
 
-
-    if (py_u > 444)
+    //‹›‚ÌoŒ»
+    if (py_u > 420)
     {
         rand = GetRand(100);
 
