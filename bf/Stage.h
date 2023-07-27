@@ -34,7 +34,6 @@ private:
 	int StageLand_L;
 	int StageSea;
 
-
 	int StageSample1;
 	int StageSample2;
 	int StageSample3;

@@ -16,7 +16,9 @@ private:
   int Fish_Img = 0;
   int f_fps;
   int ChengeImg;
- 
+  //プレイヤー座標
+  float PlayerX;
+  float PlayerY;
 
 public:
 
