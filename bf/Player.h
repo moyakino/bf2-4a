@@ -6,7 +6,7 @@
 #define STAND_BY_BALLOON2_3 3
 
 //プレイヤー 待機中アニメーション (風船が一つの場合)
-#define STAND_BY_BALLOON1_0 4
+#define STAND_BY_ENEMY_0 4
 #define STAND_BY_BALLOON1_1 5
 #define STAND_BY_BALLOON1_2 6
 #define STAND_BY_BALLOON1_3 7
@@ -48,11 +48,6 @@
 #define LEFT_MOVE -2000
 #define RIGHT_MOVE 2000
 
-//プレイヤーの走るスピード
-#define RUN_SPEED 1
-#define SPEED_UP  0.2
-#define SPEED_UP1 0.2
-
 class PLAYER
 {
 private:
@@ -64,6 +59,8 @@ private:
 
 	//(仮)左スティック
 	int		P_L_Stick;
+	//(仮)左スティックが倒されているか
+	int		P_L_Stick_Flg;
 
 	//(仮)デジタル方向ボタン右
 	int		P_Right_Btn;
@@ -89,7 +86,7 @@ private:
 	//プレイヤーの空中スピード
 	float	P_AirSpeed;
 
-	float   P_Speed;
+	//float P_Speed;
 
 	float	P_Accele;
 
@@ -103,10 +100,7 @@ private:
 	int		P_Air_Flg;
 	//(仮)風船情報 1:2個 0:1個
 	int		P_Balloon_Flg;
-	//(仮)画像の左右反転用フラグ FALSE:普通に描画 TRUE:左右反転
-	int		P_TurnFlg;
-	//Player  X座標用変数
-	float	P_Move_X;
+	
 
 	//立っている状態のフラグ
 	int		P_Stand_Flg;
@@ -115,6 +109,8 @@ private:
 
 	float	sx1, sy1, sx2, sy2;
 
+	float	px1, py1, px2, py2, p_uc,py_u;
+
 	//FPSと秒数カウント
 	int		P_FPS;
 	int		P_Seconas1;
@@ -122,15 +118,13 @@ private:
 	int		MouseX;
 	int		MouseY;
 
+	int rand;
+
 public:
-	
+	//Player  X座標用変数
+	static float	P_Move_X;
 	//Player  Y座標用変数
 	static float	P_Move_Y;
-	static float    p_uc;
-	static float	px1;
-	static float	py1;
-	static float	px2;
-	static float	py2;
 
 	PLAYER();
 
@@ -145,7 +139,7 @@ public:
 	
 	//プレイヤーの右移動処理
 	//int P_Move_Flg();
-	
+
 		//関数化
 	void Player_Warp();
 	void Player_Img();
@@ -164,4 +158,9 @@ public:
 	int Levitation_Anim2();
 
 	void Stand_Foot();
+
+
+	static int FishFlg;
+	//(仮)画像の左右反転用フラグ FALSE:普通に描画 TRUE:左右反転
+	static	int	P_TurnFlg;
 };

@@ -9,48 +9,53 @@ Bubble::Bubble()
 	if (LoadDivGraph("images/stage/Stage_BubbleAnimation.png", 4, 4, 1, 64, 64, BubbleImg)) {}
 	B_Img = BubbleImg[0];
 	Bubbleflg = 0;
-	MoveX = 338;
-	MoveY = 245;
+	MoveX = 338.0f;
+	MoveY = 245.0f;
 	PlayerX = 0;
 	PlayerY = 0;
 	SpeedY = 30;
 	B_FPS = 0;
 	B_flg = 0;
 	H_flg = 0;
-	D_flg = TRUE;
-	F_flg = FALSE;
-	Img = 0;
-
+	SpeedX = 0.0f;
+	seconds = 0;
+	HitBox = DrawBoxAA(MoveX - 15.0f, MoveY - 15.0f, MoveX + 15.0f, MoveY + 15.0f, GetColor(255, 255, 255),FALSE);
+	//player = new PLAYER;
 }
 
 void Bubble::Update() 
 {
 
-	Player = PLAYER::p_uc;
-	PlayerY = PLAYER::py2 + PLAYER::py1;
-
+	
 	B_FPS++;
-	
-	
+
+	PlayerX = PLAYER::P_Move_X;
+	PlayerY = PLAYER::P_Move_Y;
+
 	if (CheckHitKey(KEY_INPUT_Z))
 	{
 		B_flg = TRUE;
-		BubbleMove();
 	}
-
-	if (MoveY <= -30) {
+	/*if (MoveY <= -30) {
 		MoveY = 245;
-	}
-	Hit();
-	F_flg = FALSE;
+	}*/
 
+	//DrawBox(P_Move_X + 5, P_Move_Y + 10, P_Move_X + 59, P_Move_Y + 37, GetColor(255, 255, 255), FALSE);
+
+	if (MoveX == PlayerX && MoveY == PlayerY) {
+		H_flg = 1;
+		if (H_flg == 1) {
+			//B_Img = Hit();
+
+		}
+	}
+		
 	if (MoveY!= 0 && B_flg == TRUE) {
 			MoveY -= 0.4f;
 			B_Img = BubbleControl();
-			Hit();
 			
 	}
-	if (B_FPS > 59) {
+	if (B_FPS > 60) {
 		B_FPS = 0;
 		seconds++;
 	}// B_FPS_INC は 秒数を取っている
@@ -60,55 +65,17 @@ void Bubble::Update()
 }
 
 void Bubble::Draw() const {
-	SetFontSize(14);
-	DrawRotaGraph(MoveX, MoveY, 1.0f, 1, B_Img, TRUE);
-	//DrawBox(MoveX -15, MoveY-15, MoveX + 15, MoveY + 15, GetColor(255, 255, 255), FALSE);
-	DrawLine(MoveX - 15, MoveY - 15, MoveX - 15, MoveY + 15, GetColor(255, 0, 0), 1);
-	DrawFormatString(0, 40, GetColor(255, 255, 255), "Player X座標 : %0.1f Y座標 : %0.1f", Player, PlayerY);
+	DrawRotaGraphF(MoveX, MoveY,1.0f,1,B_Img,TRUE);
+	DrawFormatString(0, 40, GetColor(255, 255, 255), "Player X座標 : %0.1f Y座標 : %0.1f", PlayerX, PlayerY);
+	DrawBoxAA(MoveX - 15.0f, MoveY - 15.0f, MoveX + 15.0f, MoveY + 15.0f, GetColor(255, 255, 255), FALSE);
 	DrawFormatString(0, 300, GetColor(255, 255, 255), "MoveX:%0.1f MoveY:%0.1f", MoveX,MoveY);
 	DrawFormatString(0, 320, GetColor(255, 255, 255), "Bubbleflg:%d", Bubbleflg);
 	DrawFormatString(0, 340, GetColor(255, 255, 255), "H_flg:%d", H_flg);
+
 }
  int  Bubble::BubbleControl()
 {
-	 int B_AnimImg = 0;
-	// 5フレーム
-	if (B_FPS % 15 == 0 || B_FPS % 15 == 1 || B_FPS % 15 == 2 || B_FPS % 15 == 3 || B_FPS % 15 == 4) {
-		B_AnimImg = BubbleImg[0];
-	}
-	else if (B_FPS % 15 == 5 || B_FPS % 15 == 6 || B_FPS % 15 == 7 || B_FPS % 15 == 8 || B_FPS % 15 == 9) {
-		B_AnimImg = BubbleImg[1];
-	}
-	else if (B_FPS % 15 == 10 || B_FPS % 15 == 11 || B_FPS % 15 == 12 || B_FPS % 15 == 13 || B_FPS % 15 == 14) {
-		B_AnimImg = BubbleImg[2];
-	}
-	return B_AnimImg;
-}
- void Bubble::Hit()
- { 
-	 int Delete = 0;
-
-	 DrawFormatString(0, 360, GetColor(255, 255, 255), "Delete:%d", Delete);
-	 if (PLAYER::px1 < MoveX - 15 && PLAYER::py1 < MoveY - 15 && MoveX - 15 < PLAYER::px2 && MoveY + 15 < PLAYER::py2 && Delete == 0){
-		 H_flg = 1;
-		 Delete++;
-		 if (H_flg == 1) {
-			 Score();
-			 H_flg = 0;
-		 }
-		 if (H_flg == 0 && Delete != 0) {
-			 DeleteGraph(B_Img);
-			 DrawFormatString(MoveX, MoveY, GetColor(255, 0, 0), "750");
-			
-		 }
-	 }
-	 else {
-		 H_flg = 0;
-	 }
- }
-void Bubble::BubbleMove()
- {
-	 if (MoveX == 400) {
+	/*if (MoveX == 400) {
 		SpeedX = 0.7f;
 	}
 	if (SpeedX <= 0) {
@@ -124,33 +91,27 @@ void Bubble::BubbleMove()
 	else {
 		SpeedX--;
 		MoveX--;
-	}
-
- }
-
-int  Bubble::BubbleAnim()
-{
+	}*/
 	
+	int B_AnimImg = 0;
 
-	// 0 から 3 秒
-	if (seconds >= 0 && seconds < 3) {
-		B_AnimImg = BubbleImg[3];
+	// 5フレーム
+	if (B_FPS % 15 == 0 || B_FPS % 15 == 1 || B_FPS % 15 == 2 || B_FPS % 15 == 3 || B_FPS % 15 == 4) {
+		B_AnimImg = BubbleImg[0];
+	}
+	else if (B_FPS % 15 == 5 || B_FPS % 15 == 6 || B_FPS % 15 == 7 || B_FPS % 15 == 8 || B_FPS % 15 == 9) {
+		B_AnimImg = BubbleImg[1];
+	}
+	else if (B_FPS % 15 == 10 || B_FPS % 15 == 11 || B_FPS % 15 == 12 || B_FPS % 15 == 13 || B_FPS % 15 == 14) {
+		B_AnimImg = BubbleImg[2];
 	}
 	return B_AnimImg;
 }
-
-void Bubble::Score()
-{
-	 //5フレーム
-	if (B_FPS % 15 == 0 || B_FPS % 15 == 1 || B_FPS % 15 == 2 || B_FPS % 15 == 3 || B_FPS % 15 == 4  && D_flg == TRUE) {
-		B_Img = BubbleImg[3];
-	}
-	else if (B_FPS % 15 == 5 || B_FPS % 15 == 6 || B_FPS % 15 == 7 || B_FPS % 15 == 8 || B_FPS % 15 == 9 && D_flg == TRUE) {
-		B_Img = BubbleImg[3];
-	}
-	else if (B_FPS % 15 == 10 || B_FPS % 15 == 11 || B_FPS % 15 == 12 || B_FPS % 15 == 13 || B_FPS % 15 == 14 && D_flg == TRUE) {
-		B_Img = BubbleImg[3];
-		D_flg = FALSE;
-		}
-	}
-
+//int  Bubble::Hit()
+// {
+//	//int BreakAnimImg = 0;
+//	 if (H_flg == 1) {
+//		 B_Img = BubbleImg[3];
+//	 }
+//	 //return BreakAnimImg;
+// }

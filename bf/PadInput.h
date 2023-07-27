@@ -31,6 +31,8 @@ public:
 		// 入力キー取得
 		GetJoypadXInputState(DX_INPUT_KEY_PAD1, &input);
 
+		//GetJoypadAnalogInput(*XBuf, *YBuf, DX_INPUT_KEY_PAD1);
+
 		for (int i = 0; i < BUTTONS; i++)
 		{
 			old_key[i] = now_key[i];
@@ -76,8 +78,24 @@ public:
 	//左スティックの取得 X座標とY座標を同時に取得している
 	static Stick GetLStick()
 	{
-		
 		return l_stick;
+	}
+
+	//(仮)スティックが倒されているかの判定を取る
+	static short int GetStickOn()
+	{
+		int ret = 0; 
+		if (l_stick.x == 128 || l_stick.x > 128 && l_stick.x < 2000 || l_stick.x < 128 && l_stick.x > -2000) {
+			ret = FALSE;
+		}
+		else if (l_stick.x > 2000 && l_stick.x > 128) {
+			ret = TRUE;
+		}
+		else if (-2000 > l_stick.x && l_stick.x < 128){
+			ret = TRUE;
+		}
+
+		return ret;
 	}
 
 	//左スティックの取得 横軸値
