@@ -30,7 +30,7 @@ AbstractScene* GameMain::Update()
 {
 	stage->Update();
 	player->Update();
-	enemybird->Update(player->Return_MoveX(), player->Return_MoveY());
+	enemybird->Update(PLAYER::P_Move_X, PLAYER::P_Move_Y);
 	bubble->Update();
 
 	return this;

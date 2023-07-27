@@ -134,8 +134,8 @@ void PLAYER::Player_Warp()
     }
 
     //“Vˆä
-    if (P_Move_Y <= -25) {
-        P_Move_Y = 250;
+    if (P_Move_Y <= -10) {
+        P_Move_Y =0;
     }
 }
 

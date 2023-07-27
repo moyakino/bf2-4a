@@ -123,6 +123,8 @@ private:
 	int		MouseX;
 	int		MouseY;
 
+
+
 public:
 	//Player  XÀ•W—p•Ï”
 	static float	P_Move_X;
