@@ -1,6 +1,7 @@
 #include "DxLib.h"
 #include "Player.h"
 #include "PadInput.h"
+#include "Stage.h"
 
 float PLAYER::P_Move_X;
 float PLAYER::P_Move_Y;
@@ -17,7 +18,7 @@ PLAYER::PLAYER()
     P_B_Btn = 0;
     P_A_Pressed = 0;
 
-    P_Move_X = 100.0f;
+    P_Move_X = 200.0f;
     P_Move_Y = 350.0f;
     //P_Move_Y = 200.0f;
 
@@ -284,7 +285,7 @@ void PLAYER::Stand_Foot()
     p_uc = (px1 + px2) / 2;
     
     //‹ó‚ð”ò‚ñ‚Å‚¢‚Ä‚à”ò‚ñ‚Å‚¢‚È‚­‚Ä‚à’…’n‚³‚¹‚½‚¢
-    if (-53 <= p_uc && p_uc < 160 && 415 >= py2 && py2 >= 413 || 180 <= p_uc && p_uc <= 460 && 287 >= py2 && py2 >= 283 || 480 < p_uc && p_uc <= 740 && 415 >= py2 && py2 >= 413) {
+    if (Stage::Bound==TRUE) {
 
         P_Stand_Flg = TRUE;
     }

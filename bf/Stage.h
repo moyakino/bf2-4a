@@ -22,6 +22,10 @@
 #define RED_FOOT_WIDTH_3 21
 #define RED_FOOT_HEIGHT_3 67
 
+#define RAND_WIDTH 160
+#define RAND_HEIGHT 64
+
+
 class Stage
 {
 private:
@@ -37,9 +41,6 @@ private:
 	int StageSample4;
 	int StageSample5;
 
-
-	int X_Btn;
-
 	int Snum;
 
 	int sFps;
@@ -47,6 +48,9 @@ private:
 	Stage1* s1;
 
 public:
+
+	static int Bound;
+
 	//コンストラクタ
 	Stage();
 
@@ -58,5 +62,7 @@ public:
 
 	//描画処理
 	void Draw() const;
+
+	void StandRand();
 
 };

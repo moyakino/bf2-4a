@@ -1,7 +1,10 @@
 #include "DxLib.h"
+#include "Player.h"
 #include "Stage.h"
 #include "Stage1.h"
 #include "PadInput.h"
+
+int Stage::Bound;
 
 Stage::Stage()
 {
@@ -23,8 +26,9 @@ Stage::Stage()
 	if (StageSample5 = LoadGraph("images/StageSample/Stage_5.png")) {}
 
 
+	Bound = TRUE;
+
 	Snum = 0;
-	X_Btn = 0;
 	sFps = 0;
 
 	s1 = new Stage1();
@@ -32,16 +36,16 @@ Stage::Stage()
 
 Stage::~Stage()
 {
-
+	
 }
 
 void Stage::Update()
 {
-	// Aボタン単押し
-	X_Btn = PAD_INPUT::OnButton(XINPUT_BUTTON_X);
 
 	sFps++;
 
+	// Xボタン単押し
+	int X_Btn = PAD_INPUT::OnButton(XINPUT_BUTTON_X);
 	if (X_Btn == 1) {
 		if (sFps % 2 == 0) {
 			if (++Snum > 4) {
@@ -50,20 +54,36 @@ void Stage::Update()
 		}
 	}
 
+	
+	//左右の陸の判定を作りたい
+
+
+	/*-53 <= p_uc && p_uc < 160 && 415 >= py2 && py2 >= 413 ||
+	180 <= p_uc && p_uc <= 460 && 287 >= py2 && py2 >= 283 ||
+	480 < p_uc && p_uc <= 740 && 415 >= py2 && py2 >= 413*/
+
+
+	//当たり判定の仮表示
+	switch (Snum)
+	{
+	case 0:
+		s1->Update();
+		break;
+	}
+
 
 }
 
 void Stage::Draw() const
 {
 	DrawFormatString(0, 20, GetColor(255, 255, 255), " Stage:  %d ", Snum);
+	DrawFormatString(400, 0, 0xffffff, "Bound :%d", Bound);
 
 	//当たり判定の仮表示
 	switch (Snum)
 	{
 	case 0:
 		s1->Draw();
-	
-
 		break;
 
 	case 1:

@@ -12,30 +12,32 @@ GameMain::GameMain()
 	Bgm = LoadSoundMem("sounds/SE_Start.wav");
 	PlaySoundMem(Bgm, DX_PLAYTYPE_BACK);
 
-	//player = new PLAYER();
+	player = new PLAYER();
 	bubble = new Bubble();
 	stage = new Stage();
 
-	testP = new testPlayer();
+	//testP = new testPlayer();
 }
 
 GameMain::~GameMain()
 {
 	delete stage;
-	//delete player;
+	delete player;
 	delete bubble;
 
-	delete testP;
+	//delete testP;
+
+
 }
 
 
 AbstractScene* GameMain::Update()
 {
 	stage->Update();
-	//player->Update();
+	player->Update();
 	bubble->Update();
 
-	testP->Update();
+	//testP->Update();
 
 	return this;
 }
@@ -46,11 +48,11 @@ void GameMain::Draw()const
 
 	stage->Draw();
 
-	//player->Draw();
+	player->Draw();
 
 	bubble->Draw();
 
-	testP->Draw();
+	//testP->Draw();
 
 	//DrawFormatString(0, 50, GetColor(255, 0, 0), "GameMain");
 	

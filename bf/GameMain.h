@@ -19,7 +19,7 @@ public:
 	void Draw()const;
 	virtual AbstractScene* Update()override;
 
-	//PLAYER* player;
+	PLAYER* player;
 	Bubble* bubble;
 	Stage* stage;
 

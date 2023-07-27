@@ -18,7 +18,6 @@ enum class PLAYER_FLG
 	STAND,
 	WALK,
 	FLY,
-	FOLL,
 };
 
 class testPlayer :public BoxCollider 
@@ -50,6 +49,7 @@ private:
 
 	int sCnt;	//待機中アニメ カウント用変数
 	int wCnt;	//歩行アニメ カウント用変数
+	int fCnt;	//歩行アニメ カウント用変数
 
 	int P_Img;	//画像
 
@@ -87,6 +87,9 @@ public:
 
 	//歩行アニメーション
 	int WalkAnim();
+
+	//飛行アニメーション
+	int FlyAnim();
 
 };
 
