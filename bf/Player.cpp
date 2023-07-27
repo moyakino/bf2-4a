@@ -21,7 +21,7 @@ PLAYER::PLAYER()
     P_B_Btn = 0;
     P_A_Pressed = 0;
 
-    P_Move_X = 200.0f;
+    P_Move_X = 100.0f;
     P_Move_Y = 350.0f;
     //P_Move_Y = 200.0f;
 
@@ -146,12 +146,12 @@ void PLAYER::Update()
 void PLAYER::Player_Warp()
 {
     //左ワープ
-    if (P_Move_X <= -30) {
-        P_Move_X = 700;
+    if (P_Move_X <= -52) {
+        P_Move_X = 640;
     }
     //右ワープ
-    else if (P_Move_X >= 700) {
-        P_Move_X = -30;
+    else if (P_Move_X >= 680) {
+        P_Move_X = -50;
     }
 
     //天井
@@ -384,7 +384,7 @@ void PLAYER::Stand_Foot()
     py_u = (py1 + py2) / 2;
     
     //空を飛んでいても飛んでいなくても着地させたい
-    if (Stage::Bound==TRUE) {
+    if (Stage::Stand == TRUE) {
 
         P_Stand_Flg = TRUE;
     }

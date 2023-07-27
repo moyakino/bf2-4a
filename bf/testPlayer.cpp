@@ -72,11 +72,9 @@ void testPlayer::Update()
 	case PLAYER_FLG::WALK:
 		WalkAnim();
 		break;
-
 	case PLAYER_FLG::FLY:
 		FlyAnim();
 		break;
-
 	}
 
 
