@@ -13,7 +13,7 @@ EnemyBird::EnemyBird()
 
    /* E_location_X = 200.0f;
     E_location_Y = 200.0f;*/
-    E_Img = 0;
+    E_AnimImg = 0;
     E_Move_X = 200.0f;
     E_Move_Y = 220.0f;
 
@@ -53,7 +53,7 @@ EnemyBird::EnemyBird()
     E_A_Btn = 0;
     E_B_Btn = 0;
     E_A_Pressed = 0;
-    E_Seconas1 = 0;
+    E_Second = 0;
 }
 
 EnemyBird::~EnemyBird()
@@ -77,15 +77,14 @@ void EnemyBird::Update(int playerx, int playery)
     //else if (seconds > 3) {
     //    seconds = 0;
     //}
-    // 
-    // 
+
     //60fps == 1秒　で超えたら fpsを 0 にする
     if (E_FPS > 59) {
         E_FPS = 0;
-        E_Seconas1++;
+        E_Second++;
     }// P_FPS_INC は 秒数を取っている
-    else if (E_Seconas1 > 3) {
-        E_Seconas1 = 0;
+    else if (E_Second > 3) {
+        E_Second = 0;
     }
    
     ////プレイヤーに追尾する
@@ -193,10 +192,10 @@ void EnemyBird::Enemy_Levitation_Move_Y()
             SpeedY += 0.5f;
         }
         if (SpeedY <= -1.0f) {
-            SpeedY = -0.1f;
+            SpeedY = -0.05f;
         }
         if (SpeedY >= 1.0f) {
-            SpeedY = 0.1f;
+            SpeedY = 0.05f;
         }
     }
    /* if (E_Stand_Flg == TRUE) {
@@ -218,125 +217,89 @@ void EnemyBird::Enemy_Gravity()
     }
 }
 
-
-int EnemyBird::Stand_by_Anim()
+int EnemyBird::Start_Anim()
 {
-    int S_AnimImg = 0;
+    if (E_FPS % 20 == 0) {
+        E_Second++;
 
-    // 0 から 3 秒
-    if (E_Seconas1 == 0) {
-        S_AnimImg = E_ArrayImg_P[STAND_BY_BALLOON1_1];
-    }
-    else if (E_Seconas1 > 0 && E_Seconas1 < 2) {
-        S_AnimImg = E_ArrayImg_P[STAND_BY_BALLOON1_1];
-    }
-    else if (E_Seconas1 > 0 && E_Seconas1 < 2) {
-        S_AnimImg = E_ArrayImg_P[STAND_BY_BALLOON1_2];
-    }
-    else if (E_Seconas1 > 1 && E_Seconas1 < 3) {
-        S_AnimImg = E_ArrayImg_P[STAND_BY_BALLOON1_3];
-    }
-    else if (E_Seconas1 > 1 && E_Seconas1 < 3) {
-        S_AnimImg = E_ArrayImg_P[STAND_BY_BALLOON1_4];
-    }
-    else if (E_Seconas1 > 2 && E_Seconas1 < 4) {
-        S_AnimImg = E_ArrayImg_P[STAND_BY_BALLOON1_5];
-    }
-    else if (E_Seconas1 > 2 && E_Seconas1 < 4) {
-        S_AnimImg = E_ArrayImg_P[STAND_BY_BALLOON1_6];
+        if (E_Second > 5) {
+            E_Second = 0;
+        }
     }
 
-    return S_AnimImg;
-}
-int EnemyBird::Levitation_Anim1()
-{
-    int F1_AnimImg = 0;
+    switch (E_Second)
+    {
+    case 0:
+        E_AnimImg = E_ArrayImg_P[0];
+        break;
+    case 1:
+        E_AnimImg = E_ArrayImg_P[1];
+        break;
+    case 2:
+        E_AnimImg = E_ArrayImg_P[2];
+        break;
+    case 3:
+        E_AnimImg = E_ArrayImg_P[3];
+        break;
+    case 4:
+        E_AnimImg = E_ArrayImg_P[4];
+        break;
+    case 5:
+        E_AnimImg = E_ArrayImg_P[5];
+        break;
+    }
+    return E_AnimImg;
 
-    // 5フレーム
-    if (E_FPS % 20 == 0 || E_FPS % 20 == 1 || E_FPS % 20 == 2 || E_FPS % 20 == 3 || E_FPS % 20 == 4) {
-        F1_AnimImg = E_ArrayImg_P[LEVITATION_BALLOON1_0];
-    }
-    else if (E_FPS % 20 == 5 || E_FPS % 20 == 6 || E_FPS % 20 == 7 || E_FPS % 20 == 8 || E_FPS % 20 == 9) {
-        F1_AnimImg = E_ArrayImg_P[LEVITATION_BALLOON1_1];
-    }
-    else if (E_FPS % 20 == 10 || E_FPS % 20 == 11 || E_FPS % 20 == 12 || E_FPS % 20 == 13 || E_FPS % 20 == 14) {
-        F1_AnimImg = E_ArrayImg_P[LEVITATION_BALLOON1_2];
-    }
-    else if (E_FPS % 20 == 15 || E_FPS % 20 == 16 || E_FPS % 20 == 17 || E_FPS % 20 == 18 || E_FPS % 20 == 19) {
-        F1_AnimImg = E_ArrayImg_P[LEVITATION_BALLOON1_3];
-    }
-    else if (E_FPS % 20 == 20 || E_FPS % 20 == 21 || E_FPS % 20 == 22 || E_FPS % 20 == 23 || E_FPS % 20 == 24) {
-        F1_AnimImg = E_ArrayImg_P[LEVITATION_BALLOON1_4];
-    }
-
-    return F1_AnimImg;
 }
 
-int EnemyBird::Return_MoveX()
-{
-    return E_location_X;
-}
-int EnemyBird::Return_MoveY()
-{
-    return E_location_Y;
-}
-//void EnemyBird::Chase()
+
+
+
+//int EnemyBird::Stand_by_Anim()
 //{
+//    int S_AnimImg = 0;
 //
-//   /* EnemyPos = E_Move_X, E_Move_Y;*/
-//
-//    // プレイヤーと敵の距離を計算
-//  
-//    int dx = PLAYER::P_Move_X - E_location_X;
-//    int dy = PLAYER::P_Move_Y - E_location_Y;
-//
-//    int distance = static_cast<int>(sqrt(ex1 * ex2 + ey1 * ey2));
-//
-//    if (distance > 0) {
-//        E_Move_X = dx * Speed / distance;
-//        E_Move_Y = dy * Speed / distance;
-//
-//        // 移動
-//        E_location_X += E_Move_X;
-//        E_location_Y += E_Move_Y;
+//    // 0 から 3 秒
+//    if (E_Seconas1 == 0) {
+//        S_AnimImg = E_ArrayImg_P[STAND_BY_ENEMY_0];
+//    }
+//    else if (E_Seconas1 > 0 && E_Seconas1 < 2) {
+//        S_AnimImg = E_ArrayImg_P[STAND_BY_ENEMY_1];
+//    }
+//    else if (E_Seconas1 > 1 && E_Seconas1 < 3) {
+//        S_AnimImg = E_ArrayImg_P[STAND_BY_ENEMY_2];
+//    }
+//    else if (E_Seconas1 > 2 && E_Seconas1 < 4) {
+//        S_AnimImg = E_ArrayImg_P[STAND_BY_ENEMY_3];
+//    }
+//    else if (E_Seconas1 > 3 && E_Seconas1 < 5) {
+//        S_AnimImg = E_ArrayImg_P[STAND_BY_ENEMY_4];
 //    }
 //
-//    WaitTimer(16);
-//
-//   /* if (PlayerPos == EnemyPos) {
-//      E_Air_Flg = TRUE;
-//      E_Move_X = E_Move_X +0.2f;
-//  }
-//  else if (PlayerPos>=EnemyPos) {
-//      E_Air_Flg = FALSE;
-//      EnemyPos + 0.5f;
-//  }*/
-//
+//    return S_AnimImg;
 //}
-////右移動
-//if (E_L_Stick > RIGHT_MOVE || E_Right_Btn == 1) {
-//    E_MoveR_Flg = TRUE;
-//    E_XSpeed = 1.0f;
-//    E_Move_X = E_Move_Y + E_XSpeed;
-//   
-//}
-//else {
-//    E_MoveR_Flg = FALSE;
+//
+//int EnemyBird::Levitation_Anim1()
+//{
+//    int F1_AnimImg = 0;
+//
+//    // 5フレーム
+//    if (E_FPS % 20 == 0 || E_FPS % 20 == 1 || E_FPS % 20 == 2 || E_FPS % 20 == 3 || E_FPS % 20 == 4) {
+//        F1_AnimImg = E_ArrayImg_P[LEVITATION_ENEMY_0];
+//    }
+//    else if (E_FPS % 20 == 5 || E_FPS % 20 == 6 || E_FPS % 20 == 7 || E_FPS % 20 == 8 || E_FPS % 20 == 9) {
+//        F1_AnimImg = E_ArrayImg_P[LEVITATION_ENEMY_1];
+//    }
+//    else if (E_FPS % 20 == 10 || E_FPS % 20 == 11 || E_FPS % 20 == 12 || E_FPS % 20 == 13 || E_FPS % 20 == 14) {
+//        F1_AnimImg = E_ArrayImg_P[LEVITATION_ENEMY_2];
+//    }
+//    else if (E_FPS % 20 == 15 || E_FPS % 20 == 16 || E_FPS % 20 == 17 || E_FPS % 20 == 18 || E_FPS % 20 == 19) {
+//        F1_AnimImg = E_ArrayImg_P[LEVITATION_ENEMY_3];
+//    }
+//    else if (E_FPS % 20 == 20 || E_FPS % 20 == 21 || E_FPS % 20 == 22 || E_FPS % 20 == 23 || E_FPS % 20 == 24) {
+//        F1_AnimImg = E_ArrayImg_P[LEVITATION_ENEMY_4];
+//    }
+//
+//    return F1_AnimImg;
 //}
 
-////左移動
-//if (E_L_Stick < LEFT_MOVE || E_Left_Btn == 1) {
-//    E_MoveL_Flg = TRUE;
-//    E_XSpeed = -1.0f;
-//    E_Move_X = E_Move_Y + E_XSpeed;
-//   
-//}
-//else {
-//    E_MoveL_Flg = FALSE;
-//}
-
-////待機中
-//if (E_MoveL_Flg == FALSE && E_MoveR_Flg == FALSE) {
-//    E_XSpeed = 0.0f;
-//  
-//}

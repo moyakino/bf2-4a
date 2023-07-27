@@ -2,30 +2,38 @@
 #include"Player.h"
 
 //エネミー  待機中アニメーション (空気を入れる)
-#define STAND_BY_BALLOON1_0 1
-#define STAND_BY_BALLOON1_1 2
-#define STAND_BY_BALLOON1_2 3
-#define STAND_BY_BALLOON1_3 4
-#define STAND_BY_BALLOON1_4 5
-#define STAND_BY_BALLOON1_5 6
-#define STAND_BY_BALLOON1_6 7
-#define STAND_BY_BALLOON1_7 8
+#define STAND_BY_ENEMY_0 1
+#define STAND_BY_ENEMY_1 2
+#define STAND_BY_ENEMY_2 3
+#define STAND_BY_ENEMY_3 4
+#define STAND_BY_ENEMY_4 5
+#define STAND_BY_ENEMY_5 6
+#define STAND_BY_ENEMY_6 7
+#define STAND_BY_ENEMY_7 8
 
 //エネミー  浮上アニメーション 
-#define LEVITATION_BALLOON1_0 9
-#define LEVITATION_BALLOON1_1 10
-#define LEVITATION_BALLOON1_2 11
-#define LEVITATION_BALLOON1_3 12
-#define LEVITATION_BALLOON1_4 13
+#define LEVITATION_ENEMY_0 9
+#define LEVITATION_ENEMY_1 10
+#define LEVITATION_ENEMY_2 11
+#define LEVITATION_ENEMY_3 12
+#define LEVITATION_ENEMY_4 13
 
 //エネミーやられアニメーション
-#define FALL_0 14
-#define FALL_1 15
+#define FALL_ENEMY_0 14
+#define FALL_ENEMY_1 15
 
 //エネミーパラシュートアニメーション
 #define parachute_0 16
 #define parachute_1 17
 #define parachute_2 18
+
+enum class ENEMY_STATE {
+    START,
+    FLY,
+    FALL,
+    WAIT,
+};
+
 
 class EnemyBird {
 private:
@@ -43,7 +51,7 @@ private:
 
     //フレーム取得
     int E_FPS;
-    int E_Seconas1;
+    int E_Second;
 
     int PlayerPos;
     int EnemyPos;
@@ -88,7 +96,7 @@ private:
     int		E_A_BtnFlg;
     int		E_Air_R_Flg;
     int		E_Air_L_Flg;
-    int     E_Img;
+    int     E_AnimImg;
 
     //プレイヤーの地上スピード X座標
     float	E_XSpeed;
@@ -128,8 +136,9 @@ public:
     int  Balloon_Anim(void);
     //空中で移動しているときのアニメーション
     int Levitation_Anim1();
-
     int Stand_by_Anim();
+
+    int Start_Anim();
 
     int E_GetLocationX();
     int E_GetLocationY();

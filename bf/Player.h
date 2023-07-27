@@ -6,7 +6,7 @@
 #define STAND_BY_BALLOON2_3 3
 
 //プレイヤー 待機中アニメーション (風船が一つの場合)
-#define STAND_BY_BALLOON1_0 4
+#define STAND_BY_ENEMY_0 4
 #define STAND_BY_BALLOON1_1 5
 #define STAND_BY_BALLOON1_2 6
 #define STAND_BY_BALLOON1_3 7

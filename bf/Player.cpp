@@ -138,8 +138,6 @@ void PLAYER::Update()
         P_Seconas1 = 0;
     }
 
-
-    
 }
 
 void PLAYER::Player_Warp()

@@ -10,9 +10,10 @@ class GameMain:
 	public AbstractScene
 {
 private:
-	
 
 	int Bgm;
+	int StageSample;
+
 public:
 	GameMain();
 	~GameMain();
