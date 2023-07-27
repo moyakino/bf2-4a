@@ -2,8 +2,12 @@
 #include "Player.h"
 #include "PadInput.h"
 
-float PLAYER::P_Move_X;
+float PLAYER::p_uc;
 float PLAYER::P_Move_Y;
+float PLAYER::px1;
+float PLAYER::py1;
+float PLAYER::px2;
+float PLAYER::py2;
 
 PLAYER::PLAYER()
 {
@@ -284,7 +288,9 @@ void PLAYER::Stand_Foot()
     p_uc = (px1 + px2) / 2;
     
     //空を飛んでいても飛んでいなくても着地させたい
-    if (-53 <= p_uc && p_uc < 160 && 415 >= py2 && py2 >= 413 || 180 <= p_uc && p_uc <= 460 && 287 >= py2 && py2 >= 283 || 480 < p_uc && p_uc <= 740 && 415 >= py2 && py2 >= 413) {
+    if (-53 <= p_uc && p_uc < 160 && 415 >= py2 && py2 >= 413 || 
+        180 <= p_uc && p_uc <= 460 && 287 >= py2 && py2 >= 283 || 
+        480 < p_uc && p_uc <= 740 && 415 >= py2 && py2 >= 413) {
 
         P_Stand_Flg = TRUE;
     }
@@ -404,6 +410,7 @@ void PLAYER::Draw()const
 
     DrawCircle(p_uc, py2, 2, 0xffff00, TRUE);
 
+    DrawCircle(p_uc, py2 - 30, 2, 0xff0000, TRUE);
 
     //プレイヤーの当たり判定
     DrawBox(P_Move_X + 30, P_Move_Y + 37, P_Move_X + 35, P_Move_Y + 65, GetColor(255, 255, 255), FALSE);

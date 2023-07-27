@@ -105,7 +105,8 @@ private:
 	int		P_Balloon_Flg;
 	//(仮)画像の左右反転用フラグ FALSE:普通に描画 TRUE:左右反転
 	int		P_TurnFlg;
-
+	//Player  X座標用変数
+	float	P_Move_X;
 
 	//立っている状態のフラグ
 	int		P_Stand_Flg;
@@ -113,8 +114,6 @@ private:
 	int		P_Foll_Flg;
 
 	float	sx1, sy1, sx2, sy2;
-
-	float	px1, py1, px2, py2, p_uc;
 
 	//FPSと秒数カウント
 	int		P_FPS;
@@ -124,10 +123,14 @@ private:
 	int		MouseY;
 
 public:
-	//Player  X座標用変数
-	static float	P_Move_X;
+	
 	//Player  Y座標用変数
 	static float	P_Move_Y;
+	static float    p_uc;
+	static float	px1;
+	static float	py1;
+	static float	px2;
+	static float	py2;
 
 	PLAYER();
 

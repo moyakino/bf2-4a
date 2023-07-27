@@ -8,6 +8,8 @@ private:
 	int Bubbleflg;
 	int B_flg;
 	int H_flg;
+	int Img;
+	int B_AnimImg;
 	//ƒVƒƒƒ{ƒ“‹Ê‚Ì‰ŠúˆÊ’u
 	float MoveX;
 	float MoveY;
@@ -20,6 +22,11 @@ private:
 	int B_FPS;
 	int seconds;
 	int HitBox;
+	float Player;
+	int D_flg;
+	int F_flg;
+	int FontHandle;
+	int Delete;
 public:
 	Bubble();
 
@@ -34,6 +41,9 @@ public:
 
 
 	int BubbleControl();
-	int  Hit();
-	//PLAYER* player;
+	void  Hit();
+	void BubbleMove();
+	int  BubbleAnim();
+	void Score();
+
 };
