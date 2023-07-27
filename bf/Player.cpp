@@ -4,6 +4,8 @@
 #include "Stage.h"
 
 int PLAYER::FishFlg;
+int PLAYER::P_TurnFlg;
+
 
 float PLAYER::P_Move_X;
 float PLAYER::P_Move_Y;
@@ -139,8 +141,6 @@ void PLAYER::Update()
         P_Seconas1 = 0;
     }
 
-
-    
 }
 
 void PLAYER::Player_Warp()

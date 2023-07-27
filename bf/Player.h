@@ -6,7 +6,7 @@
 #define STAND_BY_BALLOON2_3 3
 
 //プレイヤー 待機中アニメーション (風船が一つの場合)
-#define STAND_BY_BALLOON1_0 4
+#define STAND_BY_ENEMY_0 4
 #define STAND_BY_BALLOON1_1 5
 #define STAND_BY_BALLOON1_2 6
 #define STAND_BY_BALLOON1_3 7
@@ -100,8 +100,7 @@ private:
 	int		P_Air_Flg;
 	//(仮)風船情報 1:2個 0:1個
 	int		P_Balloon_Flg;
-	//(仮)画像の左右反転用フラグ FALSE:普通に描画 TRUE:左右反転
-	int		P_TurnFlg;
+	
 
 	//立っている状態のフラグ
 	int		P_Stand_Flg;
@@ -162,4 +161,6 @@ public:
 
 
 	static int FishFlg;
+	//(仮)画像の左右反転用フラグ FALSE:普通に描画 TRUE:左右反転
+	static	int	P_TurnFlg;
 };
