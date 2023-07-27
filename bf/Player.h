@@ -103,7 +103,6 @@ private:
 	//(仮)画像の左右反転用フラグ FALSE:普通に描画 TRUE:左右反転
 	int		P_TurnFlg;
 
-
 	//立っている状態のフラグ
 	int		P_Stand_Flg;
 	//海に落下する状態のフラグ
@@ -139,7 +138,7 @@ public:
 	
 	//プレイヤーの右移動処理
 	//int P_Move_Flg();
-	
+
 		//関数化
 	void Player_Warp();
 	void Player_Img();
