@@ -15,8 +15,6 @@ GameMain::GameMain()
 	player = new PLAYER();
 	bubble = new Bubble();
 	stage = new Stage();
-
-	//testP = new testPlayer();
 }
 
 GameMain::~GameMain()
@@ -24,8 +22,6 @@ GameMain::~GameMain()
 	delete stage;
 	delete player;
 	delete bubble;
-
-	//delete testP;
 
 
 }
@@ -36,8 +32,6 @@ AbstractScene* GameMain::Update()
 	stage->Update();
 	player->Update();
 	bubble->Update();
-
-	//testP->Update();
 
 	return this;
 }
@@ -52,7 +46,6 @@ void GameMain::Draw()const
 
 	bubble->Draw();
 
-	//testP->Draw();
 
 	//DrawFormatString(0, 50, GetColor(255, 0, 0), "GameMain");
 	

@@ -23,6 +23,4 @@ public:
 	Bubble* bubble;
 	Stage* stage;
 
-	//
-	testPlayer* testP;
 };
