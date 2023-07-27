@@ -21,7 +21,7 @@ void Fish::Update()
 {
     f_fps++;
         if (PLAYER::FishFlg == TRUE) {
-            if (f_fps % 50 == 0) {
+            if (f_fps % 20 == 0) {
                 ChengeImg++;
                 if (ChengeImg > 5) {
                     ChengeImg = 0;
