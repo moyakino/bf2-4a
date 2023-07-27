@@ -4,6 +4,7 @@
 #include "EnemyBird.h"
 #include"Bubble.h"
 #include "Stage.h"
+#include "Fish.h"
 
 class GameMain:
 	public AbstractScene
@@ -22,4 +23,5 @@ public:
 	EnemyBird* enemybird;
 	Bubble* bubble;
 	Stage* stage;
+	Fish* fish;
 };
