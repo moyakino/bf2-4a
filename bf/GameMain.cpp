@@ -1,5 +1,7 @@
 #include"DxLib.h"
 #include"GameMain.h"
+#include "Player.h"
+#include "testPlayer.h"
 
 
 //コンストラクタ
@@ -27,6 +29,7 @@ GameMain::~GameMain()
 	delete enemybird;
 	//delete bubble;
 
+
 }
 
 
@@ -38,7 +41,6 @@ AbstractScene* GameMain::Update()
 	fish->Update();
 	//enemybird->Update(player->GetLocationX(), player->GetLocationY());
 	//bubble->Update();
-
 
 	return this;
 }
@@ -81,6 +83,7 @@ void GameMain::Draw()const
 	//enemybird->Draw();
 
 	//bubble->Draw();
+
 
 	//DrawFormatString(0, 50, GetColor(255, 0, 0), "GameMain");
 	

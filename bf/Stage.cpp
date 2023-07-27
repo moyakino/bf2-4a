@@ -1,6 +1,10 @@
 #include "DxLib.h"
+#include "Player.h"
 #include "Stage.h"
+#include "Stage1.h"
 #include "PadInput.h"
+
+int Stage::Bound;
 
 Stage::Stage()
 {
@@ -22,23 +26,26 @@ Stage::Stage()
 	if (StageSample5 = LoadGraph("images/StageSample/Stage_5.png")) {}
 
 
+	Bound = TRUE;
+
 	Snum = 0;
-	X_Btn = 0;
 	sFps = 0;
+
+	s1 = new Stage1();
 }
 
 Stage::~Stage()
 {
-
+	
 }
 
 void Stage::Update()
 {
-	// Aボタン単押し
-	X_Btn = PAD_INPUT::OnButton(XINPUT_BUTTON_X);
 
 	sFps++;
 
+	// Xボタン単押し
+	int X_Btn = PAD_INPUT::OnButton(XINPUT_BUTTON_X);
 	if (X_Btn == 1) {
 		if (sFps % 2 == 0) {
 			if (++Snum > 4) {
@@ -47,6 +54,22 @@ void Stage::Update()
 		}
 	}
 
+	
+	//左右の陸の判定を作りたい
+
+
+	/*-53 <= p_uc && p_uc < 160 && 415 >= py2 && py2 >= 413 ||
+	180 <= p_uc && p_uc <= 460 && 287 >= py2 && py2 >= 283 ||
+	480 < p_uc && p_uc <= 740 && 415 >= py2 && py2 >= 413*/
+
+
+	//当たり判定の仮表示
+	switch (Snum)
+	{
+	case 0:
+		s1->Update();
+		break;
+	}
 
 
 }
@@ -54,34 +77,13 @@ void Stage::Update()
 void Stage::Draw() const
 {
 	DrawFormatString(0, 20, GetColor(255, 255, 255), " Stage:  %d ", Snum);
+	DrawFormatString(400, 0, 0xffffff, "Bound :%d", Bound);
 
 	//当たり判定の仮表示
 	switch (Snum)
 	{
 	case 0:
-
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
-		DrawGraph(0, 0, StageSample1, FALSE);
-		SetDrawBlendMode(DX_BLENDGRAPHTYPE_ALPHA, 255);
-
-		//空中の足場
-		DrawBox(180, 285, 460, 305, 0x00ff00, FALSE);
-
-		//地面
-		DrawBox(0, 418, 160, 480, 0x00ff00, FALSE);	//左
-		DrawBox(480, 418, 640, 480, 0x00ff00, FALSE);	//右
-
-		//海
-		DrawBox(160, 444, 480, 480, 0x0000ff, FALSE);
-
-		//空中の足場
-		//DrawGraph(180, 280, StageFoot[0],TRUE);
-
-		//地面と海
-		//DrawGraph(0, 418, StageLand_L, TRUE);
-		//DrawGraph(480, 418, StageLand_R, TRUE);
-		//DrawGraph(160,444,StageSea,TRUE);
-
+		s1->Draw();
 		break;
 
 	case 1:
@@ -96,12 +98,6 @@ void Stage::Draw() const
 		DrawBox(100, 165, 220, 182, 0x00ff00, FALSE);
 		DrawBox(460, 150, 580, 165, 0x00ff00, FALSE);
 
-		//地面
-		DrawBox(0, 418, 160, 480, 0x00ff00, FALSE);	//左
-		DrawBox(480, 418, 640, 480, 0x00ff00, FALSE);	//右
-
-		//海
-		DrawBox(160, 444, 480, 480, 0x0000ff, FALSE);
 		break;
 	case 2:
 
@@ -124,13 +120,6 @@ void Stage::Draw() const
 		DrawBox(500, 99, 558, 116, 0x00ff00, FALSE);
 		DrawBox(522, 116, 540, 165, 0x00ff00, FALSE);
 
-
-		//地面
-		DrawBox(0, 418, 160, 480, 0x00ff00, FALSE);	//左
-		DrawBox(480, 418, 640, 480, 0x00ff00, FALSE);	//右
-
-		//海
-		DrawBox(160, 444, 480, 480, 0x0000ff, FALSE);
 		break;
 
 	case 3:
@@ -146,13 +135,6 @@ void Stage::Draw() const
 		DrawBox(460, 284, 522, 302, 0xff8c00, FALSE);
 		DrawBox(320, 183, 382, 201, 0xff8c00, FALSE);
 
-
-		//地面
-		DrawBox(0, 418, 160, 480, 0xff8c00, FALSE);	//左
-		DrawBox(480, 418, 640, 480, 0xff8c00, FALSE);	//右
-
-		//海
-		DrawBox(160, 444, 480, 480, 0x0000ff, FALSE);
 		break;
 
 	case 4:
@@ -168,18 +150,17 @@ void Stage::Draw() const
 		DrawBox(260, 165, 281, 216, 0xff8c00, FALSE);
 		DrawBox(100, 200, 121, 251, 0xff8c00, FALSE);
 
-
-		//地面
-		DrawBox(0, 418, 160, 480, 0xff8c00, FALSE);	//左
-		DrawBox(480, 418, 640, 480, 0xff8c00, FALSE);	//右
-
-		//海
-		DrawBox(160, 444, 480, 480, 0x0000ff, FALSE);
 		break;
 	}
 
 	/*画像の描画*/
 
+	//地面
+	DrawBox(0, 418, 160, 480, 0x00ff00, FALSE);	//左
+	DrawBox(480, 418, 640, 480, 0x00ff00, FALSE);	//右
+
+	//海
+	DrawBox(160, 444, 480, 480, 0x0000ff, FALSE);
 
 
 }
