@@ -1,4 +1,5 @@
 #pragma once
+#define _USE_MATH_DEFINES
 //雷アニメーション
 #define THUNDER_ANIM1_0 0
 #define THUNDER_ANIM1_1 1
@@ -38,6 +39,16 @@ private:
     int	S_Seconas1;
     int	S_Seconas2;
 
+    int BallFlg;                //ボールの状態(0...移動中 1...バー接触2:スタート状態)
+    int RestBall;               //残りのボールの数
+
+    //ボールの変数
+    int BallX, BallY;
+    //ボールの移動量
+    int MoveX, MoveY;
+    int Speed;                  //ボールのスピード
+    float BallAngle;            //ボールの角度
+
 public:
 
     //コンストラクタ
@@ -56,4 +67,7 @@ public:
     int Effect_Anim();
 
     int Cloud_Anim();
+
+    void ChangeAngle();     //ボールの角度
+
 };
