@@ -2,6 +2,8 @@
 #include "Player.h"
 #include "PadInput.h"
 
+int PLAYER::FishFlg;
+
 float PLAYER::P_Move_X;
 float PLAYER::P_Move_Y;
 
@@ -55,6 +57,8 @@ PLAYER::PLAYER()
     P_Stand_Flg = 0;
     //落下状態フラグ
     P_Foll_Flg = 0;
+
+    FishFlg = FALSE;
 }
 
 void PLAYER::Update()
@@ -81,6 +85,9 @@ void PLAYER::Update()
 
     // Bボタン長押し
     P_B_Btn = PAD_INPUT::OnPressed(XINPUT_BUTTON_B);
+
+    //ワープ用
+    Player_Warp();
 
     //立っているかの判定
     Stand_Foot();
@@ -130,6 +137,7 @@ void PLAYER::Update()
     else if (P_Seconas1 > 3) {
         P_Seconas1 = 0;
     }
+
 
     
 }
@@ -372,6 +380,7 @@ void PLAYER::Stand_Foot()
 
     //中心
     p_uc = (px1 + px2) / 2;
+    py_u = (py1 + py2) / 2;
     
     //空を飛んでいても飛んでいなくても着地させたい
     if (-53 <= p_uc && p_uc < 160 && 415 >= py2 && py2 >= 413 || 180 <= p_uc && p_uc <= 460 && 287 >= py2 && py2 >= 283 || 480 < p_uc && p_uc <= 740 && 415 >= py2 && py2 >= 413) {
@@ -381,6 +390,23 @@ void PLAYER::Stand_Foot()
     else {
         P_Stand_Flg = FALSE;
     }
+
+    int fpscount = 0;
+
+
+    if (py_u > 444)
+    {
+        rand = GetRand(100);
+
+        if (rand <= 30) 
+        {
+            FishFlg = TRUE;
+
+        }
+    }
+   /* else {
+        FishFlg = FALSE;
+    }*/
  }
 
 int PLAYER::Stand_by_Anim()
@@ -483,7 +509,9 @@ void PLAYER::Draw()const
 
     DrawFormatString(0, 120, GetColor(255, 255, 255), " マウス座標：X座標 %d Y座標 %d", MouseX, MouseY);
 
-    
+    DrawFormatString(0, 180, GetColor(255, 255, 255), " マウス座標：X座標 %d Y座標 %d", MouseX, MouseY);
+
+    DrawFormatString(330, 120, GetColor(255, 255, 255), " rand：%d", rand);
 
     DrawFormatString(0, 140, GetColor(255, 255, 255), " 地上 Stand_Flg： %d ", P_Stand_Flg);
     //DrawFormatString(0, 160, GetColor(255, 255, 255), " 海   Foll_Flg ： %d ", P_Foll_Flg);

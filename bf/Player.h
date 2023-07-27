@@ -110,7 +110,7 @@ private:
 
 	float	sx1, sy1, sx2, sy2;
 
-	float	px1, py1, px2, py2, p_uc;
+	float	px1, py1, px2, py2, p_uc,py_u;
 
 	//FPSと秒数カウント
 	int		P_FPS;
@@ -118,6 +118,8 @@ private:
 	
 	int		MouseX;
 	int		MouseY;
+
+	int rand;
 
 public:
 	//Player  X座標用変数
@@ -157,4 +159,7 @@ public:
 	int Levitation_Anim2();
 
 	void Stand_Foot();
+
+
+	static int FishFlg;
 };
