@@ -34,7 +34,6 @@ private:
 	int StageLand_L;
 	int StageSea;
 
-
 	int StageSample1;
 	int StageSample2;
 	int StageSample3;
@@ -49,6 +48,7 @@ private:
 
 public:
 
+	static int Bound;
 	static int Stand;
 
 	//コンストラクタ

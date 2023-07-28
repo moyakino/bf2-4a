@@ -5,6 +5,7 @@
 #include "PadInput.h"
 
 int Stage::Stand;
+int Stage::Bound;
 
 Stage::Stage()
 {
