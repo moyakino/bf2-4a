@@ -12,13 +12,6 @@ Stage1::Stage1()
 	sy1 = 285.0;
 	sy2 = sy1 + GREEN_FOOT_HEIGHT_1;
 
-	px1 = PLAYER::P_Move_X + 17;
-	px2 = PLAYER::P_Move_X + 48;
-	py1 = PLAYER::P_Move_Y + 37;
-	py2 = PLAYER::P_Move_Y + 65;
-
-	p_uc = (px1 + px2) / 2;
-
 }
 
 Stage1::~Stage1()
@@ -29,12 +22,11 @@ Stage1::~Stage1()
 void Stage1::Update()
 {
 
-	px1 = PLAYER::P_Move_X + 17;
-	px2 = PLAYER::P_Move_X + 48;
-	py1 = PLAYER::P_Move_Y + 37;
-	py2 = PLAYER::P_Move_Y + 65;
+	float px1 = PLAYER::P_Move_X + 17;
+	float px2 = PLAYER::P_Move_X + 48;
+	float py1 = PLAYER::P_Move_Y + 17;
+	float py2 = PLAYER::P_Move_Y + 65;
 
-	p_uc = (px1 + px2) / 2;
 
 	//ãÛíÜë´èÍ
 	if ((sx1 < px2) && (sx2 > px1) &&(sy1 < py2) && (sy2 > py1))  
@@ -84,7 +76,6 @@ int Stage1::HitBox()
 
 void Stage1::Draw() const
 {
-	DrawFormatString(400, 20, 0xffffff, "px1 :%d", px1);
 
 
 	//SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);

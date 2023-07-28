@@ -1,4 +1,5 @@
 #pragma once
+
 //プレイヤー 待機中アニメーション (風船が二つの場合)
 #define STAND_BY_BALLOON2_0 0
 #define STAND_BY_BALLOON2_1 1

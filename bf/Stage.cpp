@@ -6,6 +6,7 @@
 
 int Stage::Stand;
 int Stage::Bound;
+int Stage::Death;
 
 Stage::Stage()
 {
@@ -29,10 +30,13 @@ Stage::Stage()
 
 	Stand = TRUE;
 
+	Death = FALSE;
+
 	Snum = 0;
 	sFps = 0;
 
 	s1 = new Stage1();
+	s2 = new Stage2();
 }
 
 Stage::~Stage()
@@ -55,6 +59,7 @@ void Stage::Update()
 		}
 	}
 
+
 	
 	//¶‰E‚Ì—¤‚Ì”»’è‚ðì‚è‚½‚¢
 
@@ -69,6 +74,9 @@ void Stage::Update()
 	{
 	case 0:
 		s1->Update();
+		break;
+	case 1:
+		s2->Update();
 		break;
 	}
 
@@ -89,16 +97,7 @@ void Stage::Draw() const
 
 	case 1:
 
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
-		DrawGraph(0, 0, StageSample2, FALSE);
-		SetDrawBlendMode(DX_BLENDGRAPHTYPE_ALPHA, 255);
-
-
-		//‹ó’†‚Ì‘«ê
-		DrawBox(180, 285, 460, 305, 0x00ff00, FALSE);
-		DrawBox(100, 165, 220, 182, 0x00ff00, FALSE);
-		DrawBox(460, 150, 580, 165, 0x00ff00, FALSE);
-
+		s2->Draw();
 		break;
 	case 2:
 

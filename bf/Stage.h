@@ -1,5 +1,12 @@
 #pragma once
 #include "Stage1.h"
+#include "Stage2.h"
+#include "Stage3.h"
+#include "Stage4.h"
+#include "Stage5.h"
+
+#define GREEN_FOOT_WIDTH_1 280.0
+#define GREEN_FOOT_HEIGHT_1 17.0
 
 #define GREEN_FOOT_WIDTH_2 112
 #define GREEN_FOOT_HEIGHT_2 17
@@ -46,11 +53,17 @@ private:
 	int sFps;
 
 	Stage1* s1;
+	Stage2* s2;
+	Stage3* s3;
+	Stage4* s4;
+	Stage5* s5;
 
 public:
 
 	static int Bound;
 	static int Stand;
+
+	static int Death;
 
 	//コンストラクタ
 	Stage();
