@@ -29,7 +29,6 @@ private:
     
     //‰_‰æ‘œ@•ªŠ„“Ç—s•Ï”
     int	CloudImg;
-
     int	Cloud_AnimImg[3];
     int C_Img;
 
@@ -68,6 +67,7 @@ public:
 
     int Cloud_Anim();
 
+    int MoveBall();
     void ChangeAngle();     //ƒ{[ƒ‹‚ÌŠp“x
 
 };

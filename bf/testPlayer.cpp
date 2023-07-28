@@ -344,6 +344,6 @@ void testPlayer::Draw() const
 		DrawTurnGraph(location.x, location.y, P_Img, TRUE);
 	}
 	else if(pLeft==TRUE) {
-		DrawGraph(location.x, location.y, P_Img, TRUE);
+		DrawGraphF(location.x, location.y, P_Img, TRUE);
 	}
 }
