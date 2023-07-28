@@ -23,7 +23,7 @@ EnemyBird::EnemyBird()
     E_Air_Flg = 0;
     E_Balloon_Flg = 1;
   /*  E_TurnFlg = TRUE;*/
-    E_A_BtnFlg = 0;
+ 
     E_Air_R_Flg = 0;
     E_Air_L_Flg = 0;
 
@@ -48,14 +48,11 @@ EnemyBird::EnemyBird()
     E_AirSpeed = 0.0;
 
    /* E_Img = 0;*/
-    E_L_Stick = 0;
-    E_Right_Btn = 0;
-    E_Left_Btn = 0;
-    E_A_Btn = 0;
-    E_B_Btn = 0;
-    E_A_Pressed = 0;
+  
     E_Second = 0;
     E_Img = 0;
+
+    EnemyState = ENEMY_STATE::START;
 }
 
 EnemyBird::~EnemyBird()
@@ -117,18 +114,24 @@ void EnemyBird::Draw() const
 
     //DrawBox(ex1, ey1, ex2, ey2, GetColor(255, 0, 0), FALSE);
 
+
+    switch (EnemyState)
+    {
+    case  ENEMY_STATE::START:
+        DrawGraph(E_Move_X, E_Move_Y, E_ArrayImg_P[Cnt], TRUE);
+        break;
+    case  ENEMY_STATE::FLY:
+       /* DrawRotaGraph(E_Move_X, E_Move_Y, E_ArrayImg_P[Cnt], TRUE);*/
+        break;
+    case  ENEMY_STATE::FALL:
+        DrawGraph(E_Move_X, E_Move_Y, E_ArrayImg_P[Cnt], TRUE);
+        break;
+    case  ENEMY_STATE::WAIT:
+        DrawGraph(E_Move_X, E_Move_Y, E_ArrayImg_P[Cnt], TRUE);
+        break;
+    }
 }
-//void EnemyBird::Enemy_Img()
-//{
-//    //‰EˆÚ“®‚Å”½“]•`‰æ
-//    if (PLAYER::P_Move_X<E_Move_X) {
-//        P_TurnFlg = TRUE;
-//    }
-//    //¶ˆÚ“®‚Å’Êí•`‰æ
-//    else if (P_L_Stick < LEFT_MOVE || P_Left_Btn == 1) {
-//        P_TurnFlg = FALSE;
-//    }
-//}
+
 
 void EnemyBird::Stand_Foot()
 {
@@ -234,14 +237,12 @@ void EnemyBird::Enemy_Gravity()
 int EnemyBird::Start_Anim()
 {
     if (E_FPS % 20 == 0) {
-        E_Second++;
-
-        if (E_Second > 5) {
-            E_Second = 0;
-        }
+        Cnt++;
+        if (Cnt >= 8) {
+            Cnt = 0;
     }
 
-    switch (E_Second)
+  /*  switch (E_Second)
     {
     case 0:
         E_AnimImg = E_ArrayImg_P[0];
@@ -261,8 +262,17 @@ int EnemyBird::Start_Anim()
     case 5:
         E_AnimImg = E_ArrayImg_P[5];
         break;
+    case 6:
+        E_AnimImg = E_ArrayImg_P[6];
+        break;
+    case 7:
+        E_AnimImg = E_ArrayImg_P[7];
+        break;
+    case 8:
+        E_AnimImg = E_ArrayImg_P[8];
+        break;
     }
-    return E_AnimImg;
+    return E_AnimImg;*/
 
 }
 

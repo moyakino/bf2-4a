@@ -40,7 +40,7 @@ private:
     int x, y;
     int my;
     int hp;
-    int cnt;
+    int Cnt;
     float SpeedX;
     float SpeedY;
 
@@ -75,25 +75,11 @@ private:
     float E_AirSpeed;
     float E_Air_Flg;
 
-    //(仮)左スティック
-    int		E_L_Stick;
+    //敵の移動
+    float E_MoveR_Flg;
+    float E_MoveL_Flg;
+    float E_Balloon_Flg;
 
-    int      E_R_Stick;
-
-    //(仮)デジタル方向ボタン右
-    int		E_Right_Btn;
-    //(仮)デジタル方向ボタン左
-    int		E_Left_Btn;
-    //(仮)Aボタン
-    int		E_A_Btn;
-
-    //(仮)Bボタン長押し
-    int		E_B_Btn;
-
-    //(仮)Aボタン長押し
-    int		E_A_Pressed;
-    //(仮)
-    int		E_A_BtnFlg;
     int		E_Air_R_Flg;
     int		E_Air_L_Flg;
     int     E_AnimImg;
@@ -109,13 +95,10 @@ private:
 
     float	E_Air_Multiply;
 
-
-    float E_MoveR_Flg;
-    float E_MoveL_Flg;
-    float E_Balloon_Flg;
-
     int  E_Img;
 
+    ENEMY_STATE EnemyState;
+    
     
 public:
 
