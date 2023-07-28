@@ -49,11 +49,11 @@ void Fish::Draw() const
         if (PLAYER::F_TurnFlg == TRUE)
         {
             /*DrawRotaGraph(PlayerX + 30, PlayerY+30, 1.0f, 0, Fish_ArrayImg[ChengeImg], TRUE);*/
-            DrawGraph(PlayerX , PlayerY + 25, Fish_ArrayImg[ChengeImg], TRUE);
+            DrawGraph(PlayerX , 390, Fish_ArrayImg[ChengeImg], TRUE);
         }
         else {
             if (PLAYER::F_TurnFlg == FALSE) {
-                DrawTurnGraph(PlayerX , PlayerY + 25, Fish_ArrayImg[ChengeImg], TRUE);
+                DrawTurnGraph(PlayerX , 390, Fish_ArrayImg[ChengeImg], TRUE);
             }
         }
        /* if (PLAYER::F_TurnFlg == FALSE)
