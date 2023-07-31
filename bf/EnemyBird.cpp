@@ -8,7 +8,7 @@
 EnemyBird::EnemyBird()
 
 {
-	if (LoadDivGraph("images/Enemy/Enemy_P_Animation.png", 18, 6, 3, 64, 64, E_ArrayImg_P)) {}
+	if (LoadDivGraph("images/Enemy/Enemy_P_Animation.png", 18, 6, 3, 64, 64, E_ArrayImg_P))
 	/*if (LoadDivGraph("images/Enemy/Enemy_G_Animation.png", 18, 6, 3, 64, 64, E_ArrayImg_G)) {}
 	if (LoadDivGraph("images/Enemy/Enemy_R_Animation.png", 18, 6, 3, 64, 64, E_ArrayImg_R)) {}*/
 
@@ -50,7 +50,6 @@ EnemyBird::EnemyBird()
    /* E_Img = 0;*/
   
     E_Second = 0;
-
     EnemyState = ENEMY_STATE::START;
 }
 
@@ -81,13 +80,6 @@ void EnemyBird::Update()
     }// P_FPS_INC ÇÕ ïbêîÇéÊÇ¡ÇƒÇ¢ÇÈ
     else if (E_Second > 3) {
         E_Second = 0;
-    }
-
-    if (E_FPS % 20 == 0) {
-        Cnt++;
-        if (Cnt >= 8) {
-            Cnt = 0;
-        }
     }
    
     ////ÉvÉåÉCÉÑÅ[Ç…í«îˆÇ∑ÇÈ
@@ -121,7 +113,7 @@ void EnemyBird::Draw() const
     switch (EnemyState)
     {
     case  ENEMY_STATE::START:
-      /*  DrawGraph(E_Move_X, E_Move_Y, E_ArrayImg_P[Cnt], TRUE);*/
+       /* DrawGraph(E_Move_X, E_Move_Y, E_ArrayImg_P[Cnt], TRUE);*/
         break;
     case  ENEMY_STATE::FLY:
        /* DrawRotaGraph(E_Move_X, E_Move_Y, E_ArrayImg_P[Cnt], TRUE);*/
@@ -212,10 +204,10 @@ void EnemyBird::Enemy_Levitation_Move_Y()
             SpeedY += 0.05f;
         }
         if (SpeedY <= -1.0f) {
-            SpeedY = -0.05f;
+            SpeedY = -0.1f;
         }
         if (SpeedY >= 1.0f) {
-            SpeedY = 0.05f;
+            SpeedY = 0.1f;
         }
     }
     if (E_Stand_Flg == TRUE) {
