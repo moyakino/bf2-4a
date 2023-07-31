@@ -3,6 +3,7 @@
 #include "Player.h"
 #include"Bubble.h"
 #include "Stage.h"
+#include "Thunder.h"
 #include "Fish.h"
 #include "enemybird.h"
 
@@ -12,9 +13,10 @@ class GameMain:
 	public AbstractScene
 {
 private:
-	
 
 	int Bgm;
+	int StageSample;
+
 public:
 	GameMain();
 	~GameMain();
@@ -26,5 +28,6 @@ public:
 	PLAYER* player;
 	Bubble* bubble;
 	Stage* stage;
+	Thunder* thunder;
 	Fish* fish;
 };

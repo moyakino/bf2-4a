@@ -3,8 +3,14 @@
 #include"GameMain.h"
 #include "Player.h"
 
+
 Fish::Fish()
 {
+    
+    PlayerX = 0;
+    PlayerY = 0;
+
+
     f_fps = 0;
     F_Seconas1 = 0;
 
@@ -19,9 +25,12 @@ Fish::~Fish()
 
 void Fish::Update()
 {
+    PlayerX = PLAYER::P_Move_X;
+    PlayerY = PLAYER::P_Move_Y;
+
     f_fps++;
         if (PLAYER::FishFlg == TRUE) {
-            if (f_fps % 50 == 0) {
+            if (f_fps % 20 == 0) {
                 ChengeImg++;
                 if (ChengeImg > 5) {
                     ChengeImg = 0;
@@ -30,9 +39,22 @@ void Fish::Update()
             }
         }
 }
-    
-    
+   
+void Fish::Draw() const
+{
+    DrawFormatString(0, 20, 0xffffff, "Second:%d", F_Seconas1);
+    DrawFormatString(100, 400, 0xffffff, "f_fps:%d", f_fps);
+    if (PLAYER::FishFlg == TRUE) {
+       
+            DrawRotaGraph(PlayerX + 30, 420, 1.0f, 0, Fish_ArrayImg[ChengeImg], TRUE);
+       
+    }
+    /*DrawRotaGraph(300,410, 1.0f, 0, F_AnimImg, TRUE);*/
+    /*DrawGraph(300, 410, Fish_Img, TRUE410);*/
+   /* DrawGraph(300, 410, Fish_Img, TRUE);*/
+   
 
+}
     //if (PLAYER::FishFlg == TRUE)
     //{
     //    //Fish_Img = Fish_Anim();
@@ -79,18 +101,8 @@ void Fish::Update()
 //    return F_AnimImg;
 //
 //}
-void Fish::Draw() const
-{
-    DrawFormatString(0, 20, 0xffffff, "Second:%d", F_Seconas1);
-    DrawFormatString(100, 400, 0xffffff, "f_fps:%d", f_fps);
-    /*DrawRotaGraph(300,410, 1.0f, 0, F_AnimImg, TRUE);*/
-    /*DrawGraph(300, 410, Fish_Img, TRUE410);*/
-   /* DrawGraph(300, 410, Fish_Img, TRUE);*/
-    if (PLAYER::FishFlg == TRUE) {
 
-        DrawRotaGraph(300, 410, 1.0f, 0, Fish_ArrayImg[ChengeImg], TRUE);
-    }
-}
+
 
     //// 0 ‚©‚ç 3 •b
     //if (F_Seconas1 == 0) {

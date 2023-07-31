@@ -4,10 +4,16 @@
 #include "Stage.h"
 
 int PLAYER::FishFlg;
+int PLAYER::P_TurnFlg;
 
+float PLAYER::p_uc;
 float PLAYER::P_Move_X;
 float PLAYER::P_Move_Y;
-
+float PLAYER::px1;
+float PLAYER::py1;
+float PLAYER::px2;
+float PLAYER::py2;
+float PLAYER::py_u;
 PLAYER::PLAYER()
 {
     //プレイヤー画像データの読み込み
@@ -21,7 +27,7 @@ PLAYER::PLAYER()
     P_B_Btn = 0;
     P_A_Pressed = 0;
 
-    P_Move_X = 100.0f;
+    P_Move_X = 20.0f;
     P_Move_Y = 350.0f;
     //P_Move_Y = 200.0f;
 
@@ -52,7 +58,9 @@ PLAYER::PLAYER()
     sx1 = 0, sx2 = 0, sy1 = 0, sy2 = 0;
 
     //プレイヤーの座標
-    px1 = 0, px2 = 0, py1 = 0, py2 = 0, p_uc = 0;
+    px1 = 0, px2 = 0, py1 = 0, py2 = 0, p_uc = 0, py_u = 0;
+
+    rand = 0;
 
     //立ち状態フラグ
     P_Stand_Flg = 0;
@@ -139,8 +147,6 @@ void PLAYER::Update()
         P_Seconas1 = 0;
     }
 
-
-    
 }
 
 void PLAYER::Player_Warp()
@@ -227,7 +233,7 @@ void PLAYER::Player_Levitation_Move()
     //加速が強すぎると速すぎてすごい動きになるため減速させたい
 
     //空中右移動
-    if (P_B_Btn == 1 && P_L_Stick > 128 && P_L_Stick > RIGHT_MOVE) {
+    if (P_B_Btn == 1 && P_L_Stick > 128 && P_L_Stick > RIGHT_MOVE || P_A_Btn == 1 && P_L_Stick > RIGHT_MOVE) {
         P_Air_R_Flg = TRUE;
         //P_XSpeed = P_XSpeed + 0.8f;
         /*P_XSpeed = 1.5f;
@@ -241,10 +247,10 @@ void PLAYER::Player_Levitation_Move()
         //    P_XSpeed = 2.0f;                //速度上限値
         //    P_Move_X = P_Move_X + P_XSpeed;
         //}
-        P_XSpeed = P_XSpeed + 0.08f;    //速度加算
+        P_XSpeed = P_XSpeed + 0.09f;    //速度加算
         P_Move_X = P_Move_X + P_XSpeed;
-        if (P_XSpeed >= 3.5f) {          //速度制限
-            P_XSpeed = 3.5f;                //速度上限値
+        if (P_XSpeed >= 1.5f) {          //速度制限
+            P_XSpeed = 1.5f;                //速度上限値
             //P_Move_X = P_Move_X + P_XSpeed;
         }
     }
@@ -296,7 +302,7 @@ void PLAYER::Player_Levitation_Move()
     }*/
 
     //空中左移動
-    if (P_B_Btn == 1 && P_L_Stick < LEFT_MOVE) {
+    if (P_B_Btn == 1 && P_L_Stick < LEFT_MOVE || P_A_Btn == 1&& P_L_Stick < LEFT_MOVE) {
         P_Air_L_Flg = TRUE;
         /*P_XSpeed = -1.5f;
         P_Move_X = P_Move_X + P_XSpeed;*/
@@ -310,10 +316,10 @@ void PLAYER::Player_Levitation_Move()
             P_Move_X = P_Move_X + P_XSpeed;
         }*/
 
-        P_XSpeed = P_XSpeed + -0.08f;
+        P_XSpeed = P_XSpeed + -0.09f;
         P_Move_X = P_Move_X + P_XSpeed;
-        if (P_XSpeed <= -3.5f) {
-            P_XSpeed = -3.5f;
+        if (P_XSpeed <= -1.5f) {
+            P_XSpeed = -1.5f;
         }
     }
     else {
@@ -324,7 +330,8 @@ void PLAYER::Player_Levitation_Move()
     ここで上手く処理をかければ成功するはず*/
 
     if (P_Stand_Flg == FALSE && P_Air_L_Flg == FALSE && P_Air_R_Flg == FALSE) {
-        P_XSpeed = P_XSpeed * 0.99f;
+        P_XSpeed = P_XSpeed;
+        //P_XSpeed = P_XSpeed * 0.98f;
         P_Move_X = P_Move_X + P_XSpeed;
     }
 }
@@ -333,23 +340,23 @@ void PLAYER::Player_Levitation_Move()
 void PLAYER::Player_Gravity()
 {
     P_Stand_Flg = FALSE;
-    P_YSpeed = P_YSpeed + 0.02f;
+    P_YSpeed = P_YSpeed + 0.009f;
     P_Move_Y = P_Move_Y + P_YSpeed;
-    //if (P_YSpeed >= 0.8f) {         //速度制限
-    //    P_YSpeed = 0.8f;
-    //}
+    if (P_YSpeed >= 1.3f) {         //速度制限
+        P_YSpeed = 1.3f;
+    }
 }
 
 void PLAYER::Player_Air_A()
 {
     // Aボタン単押し
-    //P_Stand_Flg = FALSE;
-    //P_YSpeed = P_YSpeed + -0.2f;
-    //P_Move_Y = P_Move_Y + P_YSpeed;
-    ////P_Move_Y--;
-    //if (P_YSpeed <= -1.0f) {        //速度制限
-    //    P_YSpeed = -1.0f;
-    //}
+    P_Stand_Flg = FALSE;
+    P_YSpeed = P_YSpeed + -0.2f;
+    P_Move_Y = P_Move_Y + P_YSpeed;
+    //P_Move_Y--;
+    if (P_YSpeed <= -1.0f) {        //速度制限
+        P_YSpeed = -1.0f;
+    }
 }
 
 void PLAYER::Player_Air_B()
@@ -359,9 +366,9 @@ void PLAYER::Player_Air_B()
     P_YSpeed = P_YSpeed + -0.07f;
     P_Move_Y = P_Move_Y + P_YSpeed;
     //P_Move_Y--;
-    /*if (P_YSpeed <= -0.9f) {
-        P_YSpeed = -0.9f;
-    }*/
+    if (P_YSpeed <= -1.1f) {
+        P_YSpeed = -1.1f;
+    }
 }
 
 
@@ -401,8 +408,8 @@ void PLAYER::Stand_Foot()
 
     int fpscount = 0;
 
-
-    if (py_u > 444)
+    //魚の出現
+    if (py_u > 420)
     {
         rand = GetRand(100);
 
@@ -509,7 +516,7 @@ void PLAYER::Draw()const
     //Aボタン描画
     //DrawFormatString(0, 40, GetColor(255, 255, 255), " 押された瞬間：%d 離された瞬間：%d", PAD_INPUT::OnButton(XINPUT_BUTTON_A), PAD_INPUT::OnRelease(XINPUT_BUTTON_A));
 
-    //DrawFormatString(0, 60, GetColor(255, 255, 255), " 左スティック：横軸値 %d 縦軸値 %d", PAD_INPUT::GetLStickX(), PAD_INPUT::GetLStickY());
+    DrawFormatString(0, 60, GetColor(255, 255, 255), " 左スティック：横軸値 %d 縦軸値 %d", PAD_INPUT::GetLStickX(), PAD_INPUT::GetLStickY());
 
     DrawFormatString(0, 80, GetColor(255, 255, 255), " プレイ左上：X座標 %0.1f Y座標 %0.01f", P_Move_X, P_Move_Y);
 
