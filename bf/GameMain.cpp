@@ -66,11 +66,10 @@ void GameMain::Draw()const
 
 	stage->Draw();
 	player->Draw();
-	fish->Draw();
 	//enemybird->Draw();
 	enemybird->Draw();
 
-	//bubble->Draw();
+	bubble->Draw();
 
 
 	thunder->Draw();

@@ -6,10 +6,14 @@
 int PLAYER::FishFlg;
 int PLAYER::P_TurnFlg;
 
-
+float PLAYER::p_uc;
 float PLAYER::P_Move_X;
 float PLAYER::P_Move_Y;
-
+float PLAYER::px1;
+float PLAYER::py1;
+float PLAYER::px2;
+float PLAYER::py2;
+float PLAYER::py_u;
 PLAYER::PLAYER()
 {
     //プレイヤー画像データの読み込み
