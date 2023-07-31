@@ -50,7 +50,6 @@ EnemyBird::EnemyBird()
    /* E_Img = 0;*/
   
     E_Second = 0;
-    E_Img = 0;
 
     EnemyState = ENEMY_STATE::START;
 }
@@ -60,11 +59,9 @@ EnemyBird::~EnemyBird()
 
 }
 
-void EnemyBird::Update(int playerx, int playery)
+void EnemyBird::Update()
 {
    /*  PlayerPos= Return_MoveX, Return_MoveY;*/
-	x = playerx;
-	y = playery;
     E_FPS++;
 
     //if (E_FPS > 479) {
@@ -85,6 +82,13 @@ void EnemyBird::Update(int playerx, int playery)
     else if (E_Second > 3) {
         E_Second = 0;
     }
+
+    if (E_FPS % 20 == 0) {
+        Cnt++;
+        if (Cnt >= 8) {
+            Cnt = 0;
+        }
+    }
    
     ////プレイヤーに追尾する
     //Chase();
@@ -93,6 +97,7 @@ void EnemyBird::Update(int playerx, int playery)
     Enemy_Gravity();
     Enemy_Warp();
     Stand_Foot();
+ /*   Start_Anim();*/
 
     if (E_Air_Flg == TRUE && E_Stand_Flg == FALSE) {
         Enemy_Levitation_Move_X();
@@ -106,19 +111,17 @@ void EnemyBird::Draw() const
 
     //敵の当たり判定
     DrawBox(E_Move_X + 30, E_Move_Y + 37, E_Move_X + 35, E_Move_Y + 65, GetColor(255, 255, 255), FALSE);
-
     DrawFormatString(0, 160, GetColor(255, 255, 255), " enemy座標：X座標 %0.1f Y座標 %0.1f", E_Move_X, E_Move_Y);
 
     ////風船の当たり判定
     //DrawBox(E_Move_X + 15, E_Move_Y + 5, E_Move_X + 59, E_Move_Y + 37, GetColor(255, 255, 255), FALSE);
-
     //DrawBox(ex1, ey1, ex2, ey2, GetColor(255, 0, 0), FALSE);
 
 
     switch (EnemyState)
     {
     case  ENEMY_STATE::START:
-        DrawGraph(E_Move_X, E_Move_Y, E_ArrayImg_P[Cnt], TRUE);
+      /*  DrawGraph(E_Move_X, E_Move_Y, E_ArrayImg_P[Cnt], TRUE);*/
         break;
     case  ENEMY_STATE::FLY:
        /* DrawRotaGraph(E_Move_X, E_Move_Y, E_ArrayImg_P[Cnt], TRUE);*/
@@ -131,7 +134,6 @@ void EnemyBird::Draw() const
         break;
     }
 }
-
 
 void EnemyBird::Stand_Foot()
 {
@@ -160,6 +162,7 @@ void EnemyBird::Stand_Foot()
         E_Stand_Flg = FALSE;
     }
 }
+
 void EnemyBird::Enemy_Warp()
 {
     //左ワープ
@@ -215,65 +218,33 @@ void EnemyBird::Enemy_Levitation_Move_Y()
             SpeedY = 0.05f;
         }
     }
-   /* if (E_Stand_Flg == TRUE) {
+    if (E_Stand_Flg == TRUE) {
         SpeedY = 0;
-        E_Img = Stand_by_Anim();
-    }*/
+        EnemyState= ENEMY_STATE::START;
+    }
     
     E_Move_Y += SpeedY;
 }
-
 
 void EnemyBird::Enemy_Gravity()
 {
     E_Air_Flg = TRUE;
     E_YSpeed = E_YSpeed + 0.01f;
-    E_location_Y = E_location_Y + E_YSpeed;
+    E_Move_Y = E_Move_Y + E_YSpeed;
     if (E_YSpeed >= 1.0f) {//速度制限
         E_YSpeed = 1.0f;
     }
 }
 
-int EnemyBird::Start_Anim()
+void EnemyBird::Start_Anim()
 {
+    EnemyState = ENEMY_STATE::START;
     if (E_FPS % 20 == 0) {
         Cnt++;
         if (Cnt >= 8) {
             Cnt = 0;
+        }
     }
-
-  /*  switch (E_Second)
-    {
-    case 0:
-        E_AnimImg = E_ArrayImg_P[0];
-        break;
-    case 1:
-        E_AnimImg = E_ArrayImg_P[1];
-        break;
-    case 2:
-        E_AnimImg = E_ArrayImg_P[2];
-        break;
-    case 3:
-        E_AnimImg = E_ArrayImg_P[3];
-        break;
-    case 4:
-        E_AnimImg = E_ArrayImg_P[4];
-        break;
-    case 5:
-        E_AnimImg = E_ArrayImg_P[5];
-        break;
-    case 6:
-        E_AnimImg = E_ArrayImg_P[6];
-        break;
-    case 7:
-        E_AnimImg = E_ArrayImg_P[7];
-        break;
-    case 8:
-        E_AnimImg = E_ArrayImg_P[8];
-        break;
-    }
-    return E_AnimImg;*/
-
 }
 
 //int EnemyBird::Stand_by_Anim()
@@ -281,46 +252,22 @@ int EnemyBird::Start_Anim()
 //    int S_AnimImg = 0;
 //
 //    // 0 から 3 秒
-//    if (E_Seconas1 == 0) {
+//    if (E_Second == 0) {
 //        S_AnimImg = E_ArrayImg_P[STAND_BY_ENEMY_0];
 //    }
-//    else if (E_Seconas1 > 0 && E_Seconas1 < 2) {
+//    else if (E_Second > 0 && E_Second < 2) {
 //        S_AnimImg = E_ArrayImg_P[STAND_BY_ENEMY_1];
 //    }
-//    else if (E_Seconas1 > 1 && E_Seconas1 < 3) {
+//    else if (E_Second > 1 && E_Second < 3) {
 //        S_AnimImg = E_ArrayImg_P[STAND_BY_ENEMY_2];
 //    }
-//    else if (E_Seconas1 > 2 && E_Seconas1 < 4) {
+//    else if (E_Second > 2 && E_Second < 4) {
 //        S_AnimImg = E_ArrayImg_P[STAND_BY_ENEMY_3];
 //    }
-//    else if (E_Seconas1 > 3 && E_Seconas1 < 5) {
+//    else if (E_Second > 3 && E_Second < 5) {
 //        S_AnimImg = E_ArrayImg_P[STAND_BY_ENEMY_4];
 //    }
 //
 //    return S_AnimImg;
-//}
-//
-//int EnemyBird::Levitation_Anim1()
-//{
-//    int F1_AnimImg = 0;
-//
-//    // 5フレーム
-//    if (E_FPS % 20 == 0 || E_FPS % 20 == 1 || E_FPS % 20 == 2 || E_FPS % 20 == 3 || E_FPS % 20 == 4) {
-//        F1_AnimImg = E_ArrayImg_P[LEVITATION_ENEMY_0];
-//    }
-//    else if (E_FPS % 20 == 5 || E_FPS % 20 == 6 || E_FPS % 20 == 7 || E_FPS % 20 == 8 || E_FPS % 20 == 9) {
-//        F1_AnimImg = E_ArrayImg_P[LEVITATION_ENEMY_1];
-//    }
-//    else if (E_FPS % 20 == 10 || E_FPS % 20 == 11 || E_FPS % 20 == 12 || E_FPS % 20 == 13 || E_FPS % 20 == 14) {
-//        F1_AnimImg = E_ArrayImg_P[LEVITATION_ENEMY_2];
-//    }
-//    else if (E_FPS % 20 == 15 || E_FPS % 20 == 16 || E_FPS % 20 == 17 || E_FPS % 20 == 18 || E_FPS % 20 == 19) {
-//        F1_AnimImg = E_ArrayImg_P[LEVITATION_ENEMY_3];
-//    }
-//    else if (E_FPS % 20 == 20 || E_FPS % 20 == 21 || E_FPS % 20 == 22 || E_FPS % 20 == 23 || E_FPS % 20 == 24) {
-//        F1_AnimImg = E_ArrayImg_P[LEVITATION_ENEMY_4];
-//    }
-//
-//    return F1_AnimImg;
 //}
 

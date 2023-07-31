@@ -65,8 +65,6 @@ private:
     float	ex1, ey1, ex2, ey2, e_uc;
 
     //敵の座標
-    float E_location_X;
-    float E_location_Y;
 
     float E_Move_X;
     float E_Move_Y;
@@ -88,14 +86,10 @@ private:
     float	E_XSpeed;
     //プレイヤーの地上スピード Y座標
     float	E_YSpeed;
-
     float   E_Speed;
-
     float	E_Accele;
 
     float	E_Air_Multiply;
-
-    int  E_Img;
 
     ENEMY_STATE EnemyState;
     
@@ -112,7 +106,7 @@ public:
     // デストラクタ
     ~EnemyBird();
     // 更新処理を実装する
-    void Update(int playerx, int playery);
+    void Update();
     // 描画処理を実装する
     void Draw() const;
     //地面に立たせる
@@ -120,20 +114,13 @@ public:
 
     int  Balloon_Anim(void);
     //空中で移動しているときのアニメーション
-    int Levitation_Anim1();
+
     int Stand_by_Anim();
-
-    int Start_Anim();
-
-    int E_GetLocationX();
-    int E_GetLocationY();
-    int Return_MoveX();
-    int Return_MoveY();
+    void Start_Anim();
 
     void Enemy_Levitation_Move_X();
     void Enemy_Levitation_Move_Y();
 
     void Enemy_Gravity();
     void Enemy_Warp();
-    void Enemy_Img();
 };
