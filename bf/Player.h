@@ -114,7 +114,7 @@ private:
 	//FPS‚Æ•b”ƒJƒEƒ“ƒg
 	int		P_FPS;
 	int		P_Seconas1;
-	
+	int		F_Seconas1;
 	int		MouseX;
 	int		MouseY;
 

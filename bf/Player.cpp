@@ -47,6 +47,7 @@ PLAYER::PLAYER()
     P_Air_L_Flg = 0;
     P_FPS = 0;
     P_Seconas1 = 0;
+    F_Seconas1 = 0;
     MouseX = 0;
     MouseY = 0;
 
@@ -141,6 +142,7 @@ void PLAYER::Update()
         P_Seconas1 = 0;
     }
 
+    
 }
 
 void PLAYER::Player_Warp()
@@ -397,16 +399,22 @@ void PLAYER::Stand_Foot()
     int fpscount = 0;
 
     //魚の出現
-    if (py_u > 400&&py_u<430)
+    if (py_u > 405&&py_u<430)
     {
-        if (P_Seconas1 == 3) {
+        //60fps == 1秒　で超えたら fpsを 0 にする
+        if (P_FPS > 59) {
+            P_FPS = 0;
+            F_Seconas1++;
+        }
+        if (F_Seconas1 == 3) {
             rand = GetRand(99);
-
+            F_Seconas1 = 0;
             if (rand < 30)
             {
                 FishFlg = TRUE;
-
+               
             }
+           
         }
         //rand = GetRand(i);
     }
@@ -509,7 +517,7 @@ PLAYER::~PLAYER()
 void PLAYER::Draw()const
 {
     DrawFormatString(0, 20, GetColor(255, 255, 255), " FPS：%d", P_FPS); 
-        DrawFormatString(0, 340, GetColor(255, 255, 255), " P_Seconas1：%d", P_Seconas1);
+        DrawFormatString(0, 340, GetColor(255, 255, 255), " F_Seconas1：%d", F_Seconas1);
     //Aボタン描画
     //DrawFormatString(0, 40, GetColor(255, 255, 255), " 押された瞬間：%d 離された瞬間：%d", PAD_INPUT::OnButton(XINPUT_BUTTON_A), PAD_INPUT::OnRelease(XINPUT_BUTTON_A));
 
