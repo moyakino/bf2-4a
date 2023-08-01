@@ -48,6 +48,9 @@ private:
     int Speed;                  //ボールのスピード
     float BallAngle;            //ボールの角度
 
+    int MouseX, MouseY;         // マウスの座標
+    int BarX, BarY;             // バーの座標
+
 public:
 
     //コンストラクタ
@@ -67,7 +70,7 @@ public:
 
     int Cloud_Anim();
 
-    int MoveBall();
+    void MoveBall();
     void ChangeAngle();     //ボールの角度
 
 };

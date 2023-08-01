@@ -25,8 +25,8 @@ Thunder::Thunder()
 	S_Seconas2 = 0;
 
 	// 変数の初期設定
-	BallX = 300;
-	BallY = 200;
+	BallX = 280;
+	BallY = 200 - 5;
 
 	BallFlg = 0;
 }
@@ -62,14 +62,24 @@ void Thunder::Update()
 	T_Img = Thunder_Anim();
 	E_Img = Effect_Anim();
 	C_Img = Cloud_Anim();
+
 }
 
 
- //ボールの移動処理
-int Thunder::MoveBall(void)
+// //ボールの移動処理
+void Thunder::MoveBall()
 {
-	int ThunderBall = 0;
+	// マウス左クリックでゲームスタート
+	if (((GetMouseInput() & MOUSE_INPUT_LEFT) != 0) && BallFlg == 2)
+	{
+		BallFlg = 0;
+		// スピードとアングルによる移動量計算
+		Speed = 5;
+		BallAngle = 0.625f;
+		ChangeAngle();
+	}
 
+	//ボールの移動処理
 	if (BallFlg != 2) {
 		BallX += MoveX;
 		BallY += MoveY;
@@ -91,8 +101,12 @@ int Thunder::MoveBall(void)
 		BallAngle = (1 - BallAngle);
 		ChangeAngle();
 	}
-	
-	return ThunderBall;
+	if (BallY > 480 + 4) {
+		//ボールをスタート状態にする
+		BallFlg = 2;
+	}
+
+	ChangeAngle();
 }
 
 void Thunder::ChangeAngle() 
@@ -166,13 +180,13 @@ int Thunder::Cloud_Anim()
 
 void Thunder::Draw() const
 {
-	//メニューカーソル（風船）の表示
-	DrawGraph(400, 100, T_Img, TRUE);
+	//雷（稲光）の表示
+	DrawGraph(280, 145, T_Img, TRUE);
 	
-	//メニューカーソル（風船）の表示
+	//雷（雷の弾）の表示
 	DrawGraph(BallX, BallY, E_Img, TRUE);
 
 	//
-	DrawGraph(320, 90, CloudImg, TRUE);
-	DrawGraph(500, 90, C_Img, TRUE);
+	DrawGraph(310, 90, CloudImg, TRUE);
+	DrawGraph(285, 90, C_Img, TRUE);
 }
