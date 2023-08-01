@@ -29,7 +29,8 @@
 
 enum class ENEMY_STATE {
     START,
-    FLY,
+    FLY_LEFT,
+    FLY_RIGHT,
     FALL,
     WAIT,
 };
@@ -41,6 +42,7 @@ private:
     int my;
     int hp;
     int Cnt;
+    int CntWait;
     float SpeedX;
     float SpeedY;
 
@@ -117,6 +119,7 @@ public:
 
     int Stand_by_Anim();
     void Start_Anim();
+    void Fly_Anim();
 
     void Enemy_Levitation_Move_X();
     void Enemy_Levitation_Move_Y();
