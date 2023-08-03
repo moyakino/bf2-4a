@@ -82,7 +82,7 @@ private:
 	int		P_A_BtnFlg;
 	int		P_Air_R_Flg;
 	int		P_Air_L_Flg;
-	
+
 	//プレイヤーの地上スピード X座標
 	float	P_XSpeed;
 	//プレイヤーの地上スピード Y座標
@@ -104,7 +104,7 @@ private:
 	int		P_Air_Flg;
 	//(仮)風船情報 1:2個 0:1個
 	int		P_Balloon_Flg;
-	
+
 
 	//立っている状態のフラグ
 	int		P_Stand_Flg;
@@ -113,12 +113,12 @@ private:
 
 	float	sx1, sy1, sx2, sy2;
 
-	float	px1, py1, px2, py2, p_uc,py_u;
+
 
 	//FPSと秒数カウント
 	int		P_FPS;
 	int		P_Seconas1;
-	
+
 	int		MouseX;
 	int		MouseY;
 

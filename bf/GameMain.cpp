@@ -72,7 +72,7 @@ void GameMain::Draw()const
 	//enemybird->Draw();
 	//enemybird->Draw();
 
-	//bubble->Draw();
+	bubble->Draw();
 
 
 	thunder->Draw();
