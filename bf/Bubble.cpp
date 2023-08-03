@@ -9,15 +9,26 @@ Bubble::Bubble()
 	if (LoadDivGraph("images/stage/Stage_BubbleAnimation.png", 4, 4, 1, 64, 64, BubbleImg)) {}
 	B_Img = BubbleImg[0];
 	Bubbleflg = 0;
-	MoveX = 338;
-	MoveY = 245;
-	SpeedY = 30;
-	B_FPS = 0;
 	B_flg = 0;
 	H_flg = 0;
+	Img = 0;
+	B_AnimImg = 0;
+	MoveX = 338;
+	MoveY = 245;
+	B_FPS = 0;
+	seconds = 0;
+	HitBox = 0;
+	Player = 0.0f;
+	PlayerY = 0.0f;
+	FontHandle = 0;
+	Delete = 0;
+	SpeedX = 0.0f;
+	SpeedY = 30.0f;
+	
+	
 	D_flg = TRUE;
 	F_flg = FALSE;
-	Img = 0;
+	
 }
 Bubble::~Bubble()
 {
@@ -62,12 +73,13 @@ void Bubble::Update()
 }
 
 void Bubble::Draw() const {
-	DrawRotaGraph(MoveX, MoveY, 1.0f, 1, B_Img, TRUE);
+
+	DrawRotaGraphF(MoveX, MoveY, 1.0f, 1.0, B_Img, TRUE);
 	DrawFormatString(0, 40, GetColor(255, 255, 255), "Player X???W : %0.1f Y???W : %0.1f", Player, PlayerY);
-	DrawBox(MoveX - 15, MoveY - 15, MoveX + 15, MoveY + 15, GetColor(255, 255, 255), FALSE);
+	DrawBoxAA(MoveX - 15, MoveY - 15, MoveX + 15, MoveY + 15, GetColor(255, 255, 255), FALSE);
 	SetFontSize(14);
-	DrawRotaGraph(MoveX, MoveY, 1.0f, 1, B_Img, TRUE);
-	DrawLine(MoveX - 15, MoveY - 15, MoveX - 15, MoveY + 15, GetColor(255, 0, 0), 1);
+	DrawRotaGraphF(MoveX, MoveY, 1.0f, 1, B_Img, TRUE);
+	DrawLineAA(MoveX - 15, MoveY - 15, MoveX - 15, MoveY + 15, GetColor(255, 0, 0), 1);
 	DrawFormatString(0, 40, GetColor(255, 255, 255), "Player X???W : %0.1f Y???W : %0.1f", Player, PlayerY);
 	DrawFormatString(0, 300, GetColor(255, 255, 255), "MoveX:%0.1f MoveY:%0.1f", MoveX, MoveY);
 	DrawFormatString(0, 320, GetColor(255, 255, 255), "Bubbleflg:%d", Bubbleflg);
@@ -98,7 +110,7 @@ void Bubble::Hit()
 		if (H_flg == 1) {
 			Score();
 			DeleteGraph(B_Img);
-			DrawFormatString(MoveX, MoveY, GetColor(255, 0, 0), "750");
+			DrawFormatStringF(MoveX, MoveY, GetColor(255, 0, 0), "750");
 			Delete++;
 		}
 	}

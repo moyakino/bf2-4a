@@ -94,7 +94,7 @@ void Stage1::Draw() const
 	//SetDrawBlendMode(DX_BLENDGRAPHTYPE_ALPHA, 255);
 
 	//‹ó’†‚Ì‘«ê
-	DrawBox(sx1, sy1, sx2, sy2, 0x00ff00, FALSE);
+	DrawBoxAA(sx1, sy1, sx2, sy2, 0x00ff00, FALSE);
 
 	//‹ó’†‚Ì‘«ê
 	//DrawGraph(180, 280, StageFoot[0],TRUE);

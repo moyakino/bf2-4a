@@ -129,9 +129,10 @@ public:
 	static float	P_Move_X;
 	//Player  Y座標用変数
 	static float	P_Move_Y;
-	static int FishFlg;
+	static int		FishFlg;
 	//(仮)画像の左右反転用フラグ FALSE:普通に描画 TRUE:左右反転
-	static	int	P_TurnFlg;
+	static	int		P_TurnFlg;
+	static float	px1, py1, px2, py2, p_uc, py_u;
 
 	//コンストラクタ
 	PLAYER();

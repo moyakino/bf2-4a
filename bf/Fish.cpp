@@ -50,7 +50,7 @@ void Fish::Draw() const
     DrawFormatString(100, 400, 0xffffff, "f_fps:%d", f_fps);
     if (PLAYER::FishFlg == TRUE) {
        
-            DrawRotaGraph(PlayerX + 30, 420, 1.0f, 0, Fish_ArrayImg[ChengeImg], TRUE);
+            DrawRotaGraphF(PlayerX + 30, 420, 1.0f, 0, Fish_ArrayImg[ChengeImg], TRUE);
        
     }
     /*DrawRotaGraph(300,410, 1.0f, 0, F_AnimImg, TRUE);*/
