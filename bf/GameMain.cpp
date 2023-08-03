@@ -17,7 +17,7 @@ GameMain::GameMain()
 	bubble = new Bubble();
 	fish = new Fish();
 	enemybird = new EnemyBird();
-	//bubble = new Bubble();
+	bubble = new Bubble();
 	stage = new Stage();
 	thunder = new Thunder();
 }
@@ -30,7 +30,7 @@ GameMain::~GameMain()
 	delete thunder;
 	delete fish;
 	delete enemybird;
-	//delete bubble;
+	delete bubble;
 
 
 }
@@ -47,7 +47,7 @@ AbstractScene* GameMain::Update()
 	bubble->Update();
 	thunder->Update();
 
-	//bubble->Update();
+	bubble->Update();
 
 	return this;
 }

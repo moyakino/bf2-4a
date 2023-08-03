@@ -108,7 +108,7 @@ void EnemyBird::Draw() const
     DrawGraphF(E_Move_X, E_Move_Y, E_ArrayImg_P[0], TRUE);
 
     //敵の当たり判定
-    DrawBox(E_Move_X + 30, E_Move_Y + 37, E_Move_X + 35, E_Move_Y + 65, GetColor(255, 255, 255), FALSE);
+    DrawBoxAA(E_Move_X + 30, E_Move_Y + 37, E_Move_X + 35, E_Move_Y + 65, GetColor(255, 255, 255), FALSE);
 
     DrawFormatString(0, 160, GetColor(255, 255, 255), " enemy座標：X座標 %0.1f Y座標 %0.1f", E_Move_X, E_Move_Y);
 

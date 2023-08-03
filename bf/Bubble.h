@@ -20,7 +20,7 @@ private:
 	int F_flg;
 	int FontHandle;
 	int Delete;
-	int SpeedX,SpeedY;
+	float SpeedX,SpeedY;
 public:
 	Bubble();
 	~Bubble();
