@@ -38,9 +38,6 @@ enum class ENEMY_STATE {
 
 class EnemyBird {
 private:
-    int x, y;
-    int my;
-    int hp;
     int Cnt;
     int CntWait;
     float SpeedX;
@@ -54,9 +51,6 @@ private:
     //フレーム取得
     int E_FPS;
     int E_Second;
-
-    int PlayerPos;
-    int EnemyPos;
 
     //立っている状態のフラグ
     int		E_Stand_Flg;
@@ -76,12 +70,7 @@ private:
     float E_Air_Flg;
 
     //敵の移動
-    float E_MoveR_Flg;
-    float E_MoveL_Flg;
     float E_Balloon_Flg;
-
-    int		E_Air_R_Flg;
-    int		E_Air_L_Flg;
     int     E_AnimImg;
 
     //プレイヤーの地上スピード X座標

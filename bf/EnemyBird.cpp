@@ -9,8 +9,8 @@ EnemyBird::EnemyBird()
 
 {
 	if (LoadDivGraph("images/Enemy/Enemy_P_Animation.png", 18, 6, 3, 64, 64, E_ArrayImg_P)){}
-	/*if (LoadDivGraph("images/Enemy/Enemy_G_Animation.png", 18, 6, 3, 64, 64, E_ArrayImg_G)) {}
-	if (LoadDivGraph("images/Enemy/Enemy_R_Animation.png", 18, 6, 3, 64, 64, E_ArrayImg_R)) {}*/
+	if (LoadDivGraph("images/Enemy/Enemy_G_Animation.png", 18, 6, 3, 64, 64, E_ArrayImg_G)) {}
+	if (LoadDivGraph("images/Enemy/Enemy_R_Animation.png", 18, 6, 3, 64, 64, E_ArrayImg_R)) {}
 
    /* E_location_X = 200.0f;
     E_location_Y = 200.0f;*/
@@ -36,9 +36,12 @@ EnemyBird::EnemyBird()
 
     E_FPS = 0;
     SpeedX = 2;
+    SpeedY = 0;
+    E_Speed = 0;
 
     //敵の座標
     ex1 = 0, ex2 = 0, ey1 = 0,ey2 = 0, e_uc = 0;
+    sx1 = 0, sy1 = 0, sx2 = 0, sy2 = 0;
     //地上のスピード
     E_XSpeed = 0.0f;
     E_YSpeed = 0.0f;
@@ -49,7 +52,12 @@ EnemyBird::EnemyBird()
    /* E_Img = 0;*/
   
     E_Second = 0;
+    CntWait = 0;
+    Cnt = 0;
+
+    E_Balloon_Flg = 0;
     EnemyState = ENEMY_STATE::START;
+
 }
 
 EnemyBird::~EnemyBird()
@@ -186,7 +194,7 @@ void EnemyBird::Enemy_Levitation_Move_Y()
         }
     }
     if (E_Stand_Flg == TRUE) {
-        //SpeedY = 0;
+        SpeedY = 0;
         EnemyState= ENEMY_STATE::START;
     }
     
@@ -251,11 +259,11 @@ int EnemyBird::Stand_by_Anim()
 }
 void EnemyBird::Draw() const
 {
-    DrawGraph(E_Move_X, E_Move_Y, E_ArrayImg_P[0], TRUE);
+    DrawGraphF(E_Move_X, E_Move_Y, E_ArrayImg_P[0], TRUE);
 
     //敵の当たり判定
     DrawBox(E_Move_X + 30, E_Move_Y + 37, E_Move_X + 35, E_Move_Y + 65, GetColor(255, 255, 255), FALSE);
-    DrawFormatString(0, 160, GetColor(255, 255, 255), " enemy座標：X座標 %0.1f Y座標 %0.1f", E_Move_X, E_Move_Y);
+    DrawFormatStringF(0, 160, GetColor(255, 255, 255), " enemy座標：X座標 %0.1f Y座標 %0.1f", E_Move_X, E_Move_Y);
 
     ////風船の当たり判定
     //DrawBox(E_Move_X + 15, E_Move_Y + 5, E_Move_X + 59, E_Move_Y + 37, GetColor(255, 255, 255), FALSE);
@@ -265,19 +273,19 @@ void EnemyBird::Draw() const
     switch (EnemyState)
     {
     case  ENEMY_STATE::START:
-        DrawGraph(E_Move_X, E_Move_Y, E_ArrayImg_P[Cnt], TRUE);
+        DrawGraphF(E_Move_X, E_Move_Y, E_ArrayImg_P[Cnt], TRUE);
         break;
     case  ENEMY_STATE::FLY_LEFT:
-        DrawRotaGraph(E_Move_X, E_Move_Y, 1.0f, 0, E_ArrayImg_P[Cnt], TRUE);
+        DrawGraphF(E_Move_X, E_Move_Y, E_ArrayImg_P[Cnt], TRUE);
         break;
     case  ENEMY_STATE::FLY_RIGHT:
-        DrawRotaGraph(E_Move_X, E_Move_Y, 1.0f, 1, E_ArrayImg_P[Cnt], TRUE);
+        DrawGraphF(E_Move_X, E_Move_Y, E_ArrayImg_P[Cnt], TRUE);
         break;
     case  ENEMY_STATE::FALL:
-        DrawGraph(E_Move_X, E_Move_Y, E_ArrayImg_P[Cnt], TRUE);
+        DrawGraphF(E_Move_X, E_Move_Y, E_ArrayImg_P[Cnt], TRUE);
         break;
     case  ENEMY_STATE::WAIT:
-        DrawGraph(E_Move_X, E_Move_Y, E_ArrayImg_P[Cnt], TRUE);
+        DrawGraphF(E_Move_X, E_Move_Y, E_ArrayImg_P[Cnt], TRUE);
         break;
     }
 }

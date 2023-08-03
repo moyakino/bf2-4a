@@ -41,7 +41,7 @@ AbstractScene* GameMain::Update()
 	enemybird->Update();
 	bubble->Update();
 	fish->Update();
-	//enemybird->Update(player->GetLocationX(), player->GetLocationY());
+	enemybird->Update(/*player->GetLocationX(), player->GetLocationY()*/);
 	bubble->Update();
 	thunder->Update();
 
@@ -66,7 +66,6 @@ void GameMain::Draw()const
 
 	stage->Draw();
 	player->Draw();
-	//enemybird->Draw();
 	enemybird->Draw();
 
 	bubble->Draw();
