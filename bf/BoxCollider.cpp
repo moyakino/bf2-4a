@@ -11,10 +11,10 @@ int BoxCollider::HitCollider(BoxCollider* b_col)
 	float py2 = b_col->GetLocation().y + 65;
 
 	//“G
-	float ex1;
-	float ex2;
-	float ey1;
-	float ey2;
+	float ex1 = 0;
+	float ex2 = 0;
+	float ey1 = 0;
+	float ey2 = 0;
 
 	return re;
 }

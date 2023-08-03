@@ -21,7 +21,7 @@ PLAYER::PLAYER()
     P_Left_Btn = 0;
     P_A_Btn = 0;
     P_B_Btn = 0;
-    P_A_Pressed = 0;
+    P_Y_Btn = 0;
 
     P_Move_X = 20.0f;
     P_Move_Y = 350.0f;
@@ -40,7 +40,7 @@ PLAYER::PLAYER()
     P_MoveR_Flg = 0;
     P_MoveL_Flg = 0;
     P_Air_Flg = 0;
-    P_Balloon_Flg = 1;
+    P_Balloon_Flg = TRUE;
     P_TurnFlg = TRUE;
     P_A_BtnFlg = 0;
     P_Air_R_Flg = 0;
@@ -62,6 +62,9 @@ PLAYER::PLAYER()
     P_Stand_Flg = 0;
     //落下状態フラグ
     P_Foll_Flg = 0;
+    Beaten_Flg = FALSE;
+    AnimCnt = 0;
+    Respawn_Flg = TRUE;
 
     FishFlg = FALSE;
 }
@@ -76,8 +79,6 @@ void PLAYER::Update()
 
     //左スティック
     P_L_Stick = PAD_INPUT::GetLStickX();
-    //左スティックが倒されているか
-    P_L_Stick_Flg = PAD_INPUT::GetStickOn();
 
     //デジタル方向右ボタン
     P_Right_Btn = PAD_INPUT::OnPressed(XINPUT_BUTTON_DPAD_RIGHT);
@@ -88,11 +89,35 @@ void PLAYER::Update()
     // Aボタン単押し
     P_A_Btn = PAD_INPUT::OnButton(XINPUT_BUTTON_A);
 
+    //Yボタン単押し
+    P_Y_Btn = PAD_INPUT::OnButton(XINPUT_BUTTON_Y);
+
     // Bボタン長押し
     P_B_Btn = PAD_INPUT::OnPressed(XINPUT_BUTTON_B);
 
     //ワープ用
     Player_Warp();
+
+    if (Respawn_Flg == TRUE) {
+        Respawn_Anim();
+    }
+
+    if (P_Y_Btn == 1) {
+        if (P_FPS % 2 == 0) {
+            AnimCnt++;
+        }
+        if (AnimCnt > 2) {
+            AnimCnt = 2;
+        }
+    }
+
+    if (AnimCnt == 1) {
+        P_Balloon_Flg = FALSE;
+    }
+    if (AnimCnt == 2) {
+        Beaten_Flg = TRUE;
+        AnimCnt = 0;
+    }
 
     //立っているかの判定
     Stand_Foot();
@@ -100,39 +125,55 @@ void PLAYER::Update()
     //画像切り替え用
     Player_Img();
 
-    //ステージの足場に立っていたら地上の移動に入る
-    if (P_Stand_Flg == TRUE) {
-        //地上の移動
-        Player_Move();
-    }
-
-    if (P_A_Btn == 1) {
-        Player_Air_A();
-    }
-
-    if (P_B_Btn == 1) {
-        Player_Air_B();
-    }
-
-    if (P_Stand_Flg == FALSE) {
-        Player_Levitation_Move();
-    }
-
-    //Player_Levitation_Move();
-
-    /*if (P_Stand_Flg == FALSE && P_B_Btn == 0) {
-        P_XSpeed = P_XSpeed + -0.1f;
-        if (P_XSpeed <= 0.5f) {
-            P_XSpeed = 0.5f;
+    if (Beaten_Flg == FALSE) {
+        //ステージの足場に立っていたら地上の移動に入る
+        if (P_Stand_Flg == TRUE) {
+            //地上の移動
+            Player_Move();
         }
-    }*/
 
-    if (P_Stand_Flg == FALSE && P_B_Btn == 0) {
-        Player_Gravity();
+        if (P_A_Btn == 1) {
+            Respawn_Flg = FALSE;
+            Player_Air_A();
+
+        }
+
+        if (P_B_Btn == 1) {
+            Respawn_Flg = FALSE;
+            Player_Air_B();
+            //Gliding_Anim();
+        }
+
+        if (P_Stand_Flg == FALSE) {
+            Player_Levitation_Move();
+        }
+
+        //Player_Levitation_Move();
+
+        /*if (P_Stand_Flg == FALSE && P_B_Btn == 0) {
+            P_XSpeed = P_XSpeed + -0.1f;
+            if (P_XSpeed <= 0.5f) {
+                P_XSpeed = 0.5f;
+            }
+        }*/
+
+        if (P_Stand_Flg == FALSE && P_B_Btn == 0 || P_Stand_Flg == FALSE && P_A_Btn == 0 ) {
+            Player_Gravity();
+        }
     }
-
-    //ワープ用
-    Player_Warp();
+    else {
+        if (Beaten_Flg == TRUE) {
+            if (P_Move_Y < 500.0f) {
+                //P_YSpeed = P_YSpeed * 0.99;
+                P_Move_Y = P_Move_Y + 1.0f;
+                Beaten_Anim();
+            }
+            else {
+                Beaten_Flg = FALSE;
+                Player_Init();
+            }
+        }
+    }
 
     //60fps == 1秒　で超えたら fpsを 0 にする
     if (P_FPS > 59) {
@@ -143,6 +184,16 @@ void PLAYER::Update()
         P_Seconas1 = 0;
     }
 
+}
+
+void PLAYER::Player_Init()
+{
+    P_XSpeed = 0;
+    P_YSpeed = 0;
+    P_Move_X = 20.0f;
+    P_Move_Y = 350.0f;
+    Respawn_Flg = TRUE;
+    P_Balloon_Flg = TRUE;
 }
 
 void PLAYER::Player_Warp()
@@ -175,12 +226,14 @@ void PLAYER::Player_Img()
 {
     //右移動で反転描画
     if (P_L_Stick > RIGHT_MOVE || P_Right_Btn == 1) {
+        Respawn_Flg = FALSE;
         P_TurnFlg = TRUE;
     }
     //左移動で通常描画
     else if (P_L_Stick < LEFT_MOVE || P_Left_Btn == 1) {
+        Respawn_Flg = FALSE;
         P_TurnFlg = FALSE;
-    }
+    } 
 }
 
 void PLAYER::Player_Move()
@@ -196,10 +249,11 @@ void PLAYER::Player_Move()
         P_XSpeed = 1.0f;
 
         P_Move_X = P_Move_X + P_XSpeed;
-        P_Img = Run_Anim();
+        Run_Anim();
     }
     else {
         P_MoveR_Flg = FALSE;
+
     }
 
     //左移動
@@ -210,17 +264,17 @@ void PLAYER::Player_Move()
         P_XSpeed = -1.0f;
 
         P_Move_X = P_Move_X + P_XSpeed;
-        P_Img = Run_Anim();
+        Run_Anim();
     }
     else {
         P_MoveL_Flg = FALSE;
     }
 
     //待機中
-    if (P_MoveL_Flg == FALSE && P_MoveR_Flg == FALSE) {
+    if (Respawn_Flg == FALSE && P_MoveL_Flg == FALSE && P_MoveR_Flg == FALSE) {
         //初期値にもどす
         P_XSpeed = 0.0f;
-        P_Img = Stand_by_Anim();
+        Stand_by_Anim();
     }
 }
 
@@ -231,86 +285,21 @@ void PLAYER::Player_Levitation_Move()
     //空中右移動
     if (P_B_Btn == 1 && P_L_Stick > 128 && P_L_Stick > RIGHT_MOVE || P_A_Btn == 1 && P_L_Stick > RIGHT_MOVE) {
         P_Air_R_Flg = TRUE;
-        //P_XSpeed = P_XSpeed + 0.8f;
-        /*P_XSpeed = 1.5f;
-        P_Move_X = P_Move_X + P_XSpeed;*/
 
-        //if (P_XSpeed <= 2.0f) {
-        //    P_XSpeed = P_XSpeed + 0.01f;    //速度加算
-        //    P_Move_X = P_Move_X + P_XSpeed;
-        //}
-        //else if(P_XSpeed >= 2.0f){          //速度制限
-        //    P_XSpeed = 2.0f;                //速度上限値
-        //    P_Move_X = P_Move_X + P_XSpeed;
-        //}
         P_XSpeed = P_XSpeed + 0.09f;    //速度加算
         P_Move_X = P_Move_X + P_XSpeed;
         if (P_XSpeed >= 1.5f) {          //速度制限
             P_XSpeed = 1.5f;                //速度上限値
-            //P_Move_X = P_Move_X + P_XSpeed;
         }
     }
     else {
         // Bボタンが押されていない　スティックを倒されていない
         P_Air_R_Flg = FALSE;
-
-        //if (P_B_Btn == 0 && LEFT_MOVE < P_L_Stick && RIGHT_MOVE > P_L_Stick) {
-        //    //減速させる
-        //    P_XSpeed = P_XSpeed + 0.001;
-        //    P_Move_X = P_Move_X + P_XSpeed;
-        //    if (P_XSpeed >= 2.0f) {
-        //        P_XSpeed = 2.0f;
-        //    }
-        //}
-
-        /*if (P_Stand_Flg == FALSE && P_B_Btn == 0 && P_L_Stick_Flg == FALSE) {
-            P_XSpeed = P_XSpeed + 0.01f;
-            P_Move_X = P_Move_X + P_XSpeed;
-            if (P_XSpeed >= 0.1f) {
-                P_XSpeed = 0.1f;
-            }
-        }*/
-        
-        //vP_XSpeed = P_XSpeed + -0.01f;
-        /*if (P_XSpeed <= 0.3f) {
-            P_XSpeed = 0.3f;
-        }*/
-
-        /*if (P_B_Btn == 0 && ) {
-            P_XSpeed = P_XSpeed + 0.1f;
-            P_Move_X = P_Move_X + P_XSpeed;
-            if (P_XSpeed >= 2.0f) {
-                P_XSpeed = 2.0f;
-            }
-        }*/
-        /*if (P_Air_Flg == TRUE && P_Stand_Flg == FALSE && P_B_Btn == 0) {
-            P_XSpeed = P_XSpeed - 0.01f;
-            P_Move_X = P_Move_X + P_XSpeed;
-        }
-        else if(P_XSpeed <= 1.0f) {
-            P_XSpeed = 1.0f;
-            P_Move_X = P_Move_X + P_XSpeed;
-        }*/
     }
-
-    /*if (P_Stand_Flg == FALSE && P_Air_R_Flg == FALSE) {
-        P_XSpeed = P_XSpeed
-    }*/
 
     //空中左移動
     if (P_B_Btn == 1 && P_L_Stick < LEFT_MOVE || P_A_Btn == 1&& P_L_Stick < LEFT_MOVE) {
         P_Air_L_Flg = TRUE;
-        /*P_XSpeed = -1.5f;
-        P_Move_X = P_Move_X + P_XSpeed;*/
-
-        /*if (P_XSpeed >= -1.9f) {
-            P_XSpeed = P_XSpeed + -0.1f;
-            P_Move_X = P_Move_X + P_XSpeed;
-        }
-        else if (P_XSpeed <= -1.9f) {
-            P_XSpeed = -1.9f;
-            P_Move_X = P_Move_X + P_XSpeed;
-        }*/
 
         P_XSpeed = P_XSpeed + -0.09f;
         P_Move_X = P_Move_X + P_XSpeed;
@@ -336,10 +325,12 @@ void PLAYER::Player_Levitation_Move()
 void PLAYER::Player_Gravity()
 {
     P_Stand_Flg = FALSE;
-    P_YSpeed = P_YSpeed + 0.009f;
+    //P_YSpeed = P_YSpeed + 0.009f;
+    P_YSpeed = P_YSpeed + 0.01f;
     P_Move_Y = P_Move_Y + P_YSpeed;
-    if (P_YSpeed >= 1.3f) {         //速度制限
-        P_YSpeed = 1.3f;
+    //Gliding_Anim();
+    if (P_YSpeed >= 1.0f) {         //速度制限  前は 1.3f
+        P_YSpeed = 1.0f;
     }
 }
 
@@ -347,6 +338,7 @@ void PLAYER::Player_Air_A()
 {
     // Aボタン単押し
     P_Stand_Flg = FALSE;
+    Rise_Anim();
     P_YSpeed = P_YSpeed + -0.2f;
     P_Move_Y = P_Move_Y + P_YSpeed;
     //P_Move_Y--;
@@ -357,13 +349,29 @@ void PLAYER::Player_Air_A()
 
 void PLAYER::Player_Air_B()
 {
+    /*AボタンとBボタンの処理を同じにするためにBボタン側にもインターバルをつける
+      Bボタンは長押しなので気にならないはず*/
+
     // Bボタン長押し
+    //P_Stand_Flg = FALSE;
+
+    //P_YSpeed = P_YSpeed + -0.04f;
+    ////P_YSpeed = P_YSpeed + -0.2;
+    //P_Move_Y = P_Move_Y + P_YSpeed;
+    ////P_Move_Y--;
+    //if (P_YSpeed <= -1.0f) {
+    //    P_YSpeed = -1.0f;
+    //}
+
     P_Stand_Flg = FALSE;
-    P_YSpeed = P_YSpeed + -0.07f;
-    P_Move_Y = P_Move_Y + P_YSpeed;
-    //P_Move_Y--;
-    if (P_YSpeed <= -1.1f) {
-        P_YSpeed = -1.1f;
+    Rise_Anim();
+    if (P_FPS % 2 == 0) {
+        P_YSpeed = P_YSpeed + -0.05f;
+        P_Move_Y = P_Move_Y + P_YSpeed;
+        //P_Move_Y--;
+        if (P_YSpeed <= -1.0f) {        //速度制限
+            P_YSpeed = -1.0f;
+        }
     }
 }
 
@@ -420,84 +428,186 @@ void PLAYER::Stand_Foot()
     }*/
  }
 
-int PLAYER::Stand_by_Anim()
+void PLAYER::Respawn_Anim()
 {
-    int S_AnimImg = 0;
+    if (P_Balloon_Flg == TRUE) {
 
-    // 0 から 3 秒
-    if (P_Seconas1 == 0) {
-        S_AnimImg = P_ArrayImg[STAND_BY_BALLOON2_1];
+        if (P_FPS >= 0 && P_FPS < 30) {
+            P_Img = P_ArrayImg[STAND_BY_BALLOON2_1];
+        }
+        else if (P_FPS > 29 && P_FPS <= 60) {
+            P_Img = P_ArrayImg[STAND_BY_BALLOON2_3];
+        }
     }
-    else if (P_Seconas1 > 0 && P_Seconas1 < 2) {
-        S_AnimImg = P_ArrayImg[STAND_BY_BALLOON2_0];
+    else {
+        if (P_FPS >= 0 && P_FPS < 30) {
+            P_Img = P_ArrayImg[STAND_BY_BALLOON1_1];
+        }
+        else if (P_FPS > 29 && P_FPS <= 60) {
+            P_Img = P_ArrayImg[STAND_BY_BALLOON1_3];
+        }
     }
-    else if (P_Seconas1 > 1 && P_Seconas1 < 3) {
-        S_AnimImg = P_ArrayImg[STAND_BY_BALLOON2_1];
-    }
-    else if (P_Seconas1 > 2 && P_Seconas1 < 4) {
-        S_AnimImg = P_ArrayImg[STAND_BY_BALLOON2_2];
-    }
-
-    return S_AnimImg;
 }
 
-int PLAYER::Run_Anim()
+void PLAYER::Stand_by_Anim()
 {
-    int R_AnimImg = 0;
-
-    // 5フレーム
-    if (P_FPS % 20 == 0 || P_FPS % 20 == 1 || P_FPS % 20 == 2 || P_FPS % 20 == 3 || P_FPS % 20 == 4) {
-        R_AnimImg = P_ArrayImg[RUN_BALLOON2_0];
+    if (P_Balloon_Flg == TRUE) {
+        // 0 から 3 秒
+        if (P_Seconas1 == 0) {
+            P_Img = P_ArrayImg[STAND_BY_BALLOON2_1];
+        }
+        else if (P_Seconas1 > 0 && P_Seconas1 < 2) {
+            P_Img = P_ArrayImg[STAND_BY_BALLOON2_0];
+        }
+        else if (P_Seconas1 > 1 && P_Seconas1 < 3) {
+            P_Img = P_ArrayImg[STAND_BY_BALLOON2_1];
+        }
+        else if (P_Seconas1 > 2 && P_Seconas1 < 4) {
+            P_Img = P_ArrayImg[STAND_BY_BALLOON2_2];
+        }
     }
-    else if (P_FPS % 20 == 5 || P_FPS % 20 == 6 || P_FPS % 20 == 7 || P_FPS % 20 == 8 || P_FPS % 20 == 9) {
-        R_AnimImg = P_ArrayImg[RUN_BALLOON2_1];
+    else {
+        // 0 から 3 秒
+        if (P_Seconas1 == 0) {
+            P_Img = P_ArrayImg[STAND_BY_BALLOON1_1];
+        }
+        else if (P_Seconas1 > 0 && P_Seconas1 < 2) {
+            P_Img = P_ArrayImg[STAND_BY_BALLOON1_0];
+        }
+        else if (P_Seconas1 > 1 && P_Seconas1 < 3) {
+            P_Img = P_ArrayImg[STAND_BY_BALLOON1_1];
+        }
+        else if (P_Seconas1 > 2 && P_Seconas1 < 4) {
+            P_Img = P_ArrayImg[STAND_BY_BALLOON1_2];
+        }
     }
-    else if (P_FPS % 20 == 10 || P_FPS % 20 == 11 || P_FPS % 20 == 12 || P_FPS % 20 == 13 || P_FPS % 20 == 14) {
-        R_AnimImg = P_ArrayImg[RUN_BALLOON2_2];
-    }
-    else if (P_FPS % 20 == 15 || P_FPS % 20 == 16 || P_FPS % 20 == 17 || P_FPS % 20 == 18 || P_FPS % 20 == 19) {
-        R_AnimImg = P_ArrayImg[RUN_BALLOON2_3];
-    }
-
-    return R_AnimImg;
 }
 
-int PLAYER::Levitation_Anim1()
+void PLAYER::Run_Anim()
 {
-    int F1_AnimImg = 0;
-
-    // 5フレーム
-    if (P_FPS % 20 == 0 || P_FPS % 20 == 1 || P_FPS % 20 == 2 || P_FPS % 20 == 3 || P_FPS % 20 == 4) {
-        F1_AnimImg = P_ArrayImg[LEVITATION_BALLOON2_0];
+    if (P_Balloon_Flg == TRUE) {
+        // 5フレーム
+        if (P_FPS % 20 == 0 || P_FPS % 20 == 1 || P_FPS % 20 == 2 || P_FPS % 20 == 3 || P_FPS % 20 == 4) {
+            P_Img = P_ArrayImg[RUN_BALLOON2_0];
+        }
+        else if (P_FPS % 20 == 5 || P_FPS % 20 == 6 || P_FPS % 20 == 7 || P_FPS % 20 == 8 || P_FPS % 20 == 9) {
+            P_Img = P_ArrayImg[RUN_BALLOON2_1];
+        }
+        else if (P_FPS % 20 == 10 || P_FPS % 20 == 11 || P_FPS % 20 == 12 || P_FPS % 20 == 13 || P_FPS % 20 == 14) {
+            P_Img = P_ArrayImg[RUN_BALLOON2_2];
+        }
+        else if (P_FPS % 20 == 15 || P_FPS % 20 == 16 || P_FPS % 20 == 17 || P_FPS % 20 == 18 || P_FPS % 20 == 19) {
+            P_Img = P_ArrayImg[RUN_BALLOON2_3];
+        }
     }
-    else if (P_FPS % 20 == 5 || P_FPS % 20 == 6 || P_FPS % 20 == 7 || P_FPS % 20 == 8 || P_FPS % 20 == 9) {
-        F1_AnimImg = P_ArrayImg[LEVITATION_BALLOON2_1];
+    else {
+        // 5フレーム
+        if (P_FPS % 15 == 0 || P_FPS % 15 == 1 || P_FPS % 15 == 2 || P_FPS % 15 == 3 || P_FPS % 15 == 4) {
+            P_Img = P_ArrayImg[RUN_BALLOON1_0];
+        }
+        else if (P_FPS % 15 == 5 || P_FPS % 15 == 6 || P_FPS % 15 == 7 || P_FPS % 15 == 8 || P_FPS % 15 == 9) {
+            P_Img = P_ArrayImg[RUN_BALLOON1_1];
+        }
+        else if (P_FPS % 15 == 10 || P_FPS % 15 == 11 || P_FPS % 15 == 12 || P_FPS % 15 == 13 || P_FPS % 15 == 14) {
+            P_Img = P_ArrayImg[RUN_BALLOON1_2];
+        }
     }
-    else if (P_FPS % 20 == 10 || P_FPS % 20 == 11 || P_FPS % 20 == 12 || P_FPS % 20 == 13 || P_FPS % 20 == 14) {
-        F1_AnimImg = P_ArrayImg[LEVITATION_BALLOON2_2];
-    }
-    else if (P_FPS % 20 == 15 || P_FPS % 20 == 16 || P_FPS % 20 == 17 || P_FPS % 20 == 18 || P_FPS % 20 == 19) {
-        F1_AnimImg = P_ArrayImg[LEVITATION_BALLOON2_3];
-    }
-
-    return F1_AnimImg;
+    
 }
 
-int PLAYER::Levitation_Anim2()
+void PLAYER::Gliding_Anim()
 {
-    int F2_AnimImg = 0;
+    if (P_Balloon_Flg == TRUE) {
 
-    if (P_FPS % 15 == 0 || P_FPS % 15 == 1 || P_FPS % 15 == 2 || P_FPS % 15 == 3 || P_FPS % 15 == 4) {
-        F2_AnimImg = P_ArrayImg[LEVITATION_BALLOON2_3];
+        if (P_FPS >= 0 && P_FPS < 15) {
+            P_Img = P_ArrayImg[LEVITATION_BALLOON2_2];
+        }
+        else if (P_FPS > 14 && P_FPS < 30) {
+            P_Img = P_ArrayImg[LEVITATION_BALLOON2_3];
+        }
+        else if (P_FPS > 29 && P_FPS < 45) {
+            P_Img = P_ArrayImg[LEVITATION_BALLOON2_2];
+        }
+        else if (P_FPS > 44 && P_FPS <= 60) {
+            P_Img = P_ArrayImg[LEVITATION_BALLOON2_4];
+        }
     }
-    else if (P_FPS % 15 == 5 || P_FPS % 15 == 6 || P_FPS % 15 == 7 || P_FPS % 15 == 8 || P_FPS % 15 == 9) {
-        F2_AnimImg = P_ArrayImg[LEVITATION_BALLOON2_2];
+    else {
+        if (P_FPS >= 0 && P_FPS < 15) {
+            P_Img = P_ArrayImg[LEVITATION_BALLOON1_2];
+        }
+        else if (P_FPS > 14 && P_FPS < 30) {
+            P_Img = P_ArrayImg[LEVITATION_BALLOON1_3];
+        }
+        else if (P_FPS > 29 && P_FPS < 45) {
+            P_Img = P_ArrayImg[LEVITATION_BALLOON1_2];
+        }
+        else if (P_FPS > 44 && P_FPS <= 60) {
+            P_Img = P_ArrayImg[LEVITATION_BALLOON1_4];
+        }
     }
-    else if (P_FPS % 15 == 10 || P_FPS % 15 == 11 || P_FPS % 15 == 12 || P_FPS % 15 == 13 || P_FPS % 15 == 14) {
-        F2_AnimImg = P_ArrayImg[LEVITATION_BALLOON2_4];
-    }
+}
 
-    return F2_AnimImg;
+void PLAYER::Rise_Anim()
+{
+    /*if (P_FPS >= 0 && P_FPS < 15) {
+        P_Img = P_ArrayImg[LEVITATION_BALLOON2_0];
+    }
+    else if (P_FPS > 14 && P_FPS < 30) {
+        P_Img = P_ArrayImg[LEVITATION_BALLOON2_1];
+    }
+    else if (P_FPS > 29 && P_FPS < 45) {
+        P_Img = P_ArrayImg[LEVITATION_BALLOON2_2];
+    }
+    else if (P_FPS > 44 && P_FPS <= 60) {
+        P_Img = P_ArrayImg[LEVITATION_BALLOON2_1];
+    }*/
+
+    if (P_Balloon_Flg == TRUE) {
+
+        if (P_FPS % 20 == 0 || P_FPS % 20 == 1 || P_FPS % 20 == 2 || P_FPS % 20 == 3 || P_FPS % 20 == 4) {
+            P_Img = P_ArrayImg[LEVITATION_BALLOON2_0];
+        }
+        else if (P_FPS % 20 == 5 || P_FPS % 20 == 6 || P_FPS % 20 == 7 || P_FPS % 20 == 8 || P_FPS % 20 == 9) {
+            P_Img = P_ArrayImg[LEVITATION_BALLOON2_1];
+        }
+        else if (P_FPS % 20 == 10 || P_FPS % 20 == 11 || P_FPS % 20 == 12 || P_FPS % 20 == 13 || P_FPS % 20 == 14) {
+            P_Img = P_ArrayImg[LEVITATION_BALLOON2_2];
+        }
+        else if (P_FPS % 20 == 15 || P_FPS % 20 == 16 || P_FPS % 20 == 17 || P_FPS % 20 == 18 || P_FPS % 20 == 19) {
+            P_Img = P_ArrayImg[LEVITATION_BALLOON2_1];
+        }
+    }
+    else {
+        if (P_FPS % 20 == 0 || P_FPS % 20 == 1 || P_FPS % 20 == 2 || P_FPS % 20 == 3 || P_FPS % 20 == 4) {
+            P_Img = P_ArrayImg[LEVITATION_BALLOON1_0];
+        }
+        else if (P_FPS % 20 == 5 || P_FPS % 20 == 6 || P_FPS % 20 == 7 || P_FPS % 20 == 8 || P_FPS % 20 == 9) {
+            P_Img = P_ArrayImg[LEVITATION_BALLOON1_1];
+        }
+        else if (P_FPS % 20 == 10 || P_FPS % 20 == 11 || P_FPS % 20 == 12 || P_FPS % 20 == 13 || P_FPS % 20 == 14) {
+            P_Img = P_ArrayImg[LEVITATION_BALLOON1_2];
+        }
+        else if (P_FPS % 20 == 15 || P_FPS % 20 == 16 || P_FPS % 20 == 17 || P_FPS % 20 == 18 || P_FPS % 20 == 19) {
+            P_Img = P_ArrayImg[LEVITATION_BALLOON1_1];
+        }
+    }
+}
+
+void PLAYER::Beaten_Anim()
+{
+    if (P_FPS >= 0 && P_FPS < 15) {
+        P_Img = P_ArrayImg[FALL_0];
+    }
+    else if (P_FPS > 14 && P_FPS < 30) {
+        P_Img = P_ArrayImg[FALL_1];
+    }
+    else if (P_FPS > 29 && P_FPS < 45) {
+        P_Img = P_ArrayImg[FALL_2];
+    }
+    else if (P_FPS > 44 && P_FPS <= 60) {
+        P_Img = P_ArrayImg[FALL_1];
+    }
 }
 
 PLAYER::~PLAYER()
@@ -520,13 +630,12 @@ void PLAYER::Draw()const
 
     DrawFormatString(0, 120, GetColor(255, 255, 255), " マウス座標：X座標 %d Y座標 %d", MouseX, MouseY);
 
-    DrawFormatString(0, 180, GetColor(255, 255, 255), " マウス座標：X座標 %d Y座標 %d", MouseX, MouseY);
+    //DrawFormatString(330, 120, GetColor(255, 255, 255), " AnimCnt：%d", AnimCnt);
 
-    DrawFormatString(330, 120, GetColor(255, 255, 255), " rand：%d", rand);
-
-    DrawFormatString(0, 140, GetColor(255, 255, 255), " 地上 Stand_Flg： %d ", P_Stand_Flg);
+    DrawFormatString(0, 140, GetColor(255, 255, 255), " 地上     Stand_Flg： %d ", P_Stand_Flg);
+    DrawFormatString(0, 160, GetColor(255, 255, 255), " やられ   Beaten_Flg ： %d ", Beaten_Flg);
     //DrawFormatString(0, 160, GetColor(255, 255, 255), " 海   Foll_Flg ： %d ", P_Foll_Flg);
-    //DrawFormatString(0, 180, GetColor(255, 255, 255), " 空   Air_Flg  ： %d ", P_Air_Flg);
+    DrawFormatString(0, 180, GetColor(255, 255, 255), " 風船   Balloon_Flg  ： %d ", P_Balloon_Flg);
     DrawFormatString(0, 200, GetColor(255, 255, 255), " p_uc X: %0.1f ", p_uc);
     DrawFormatString(0, 220, GetColor(255, 255, 255), " py2  Y: %0.1f ", py2);
     DrawFormatString(0, 240, GetColor(255, 255, 255), " P_YSpeed :%0.1f ", P_YSpeed);
@@ -535,9 +644,9 @@ void PLAYER::Draw()const
     DrawFormatString(0, 300, GetColor(255, 255, 255), " P_Air_R_Flg :%d", P_Air_R_Flg);
     DrawFormatString(0, 320, GetColor(255, 255, 255), " L_Stick :%d", P_L_Stick_Flg);
 
-    DrawCircleAA(p_uc, py2, 2.0f, 0xffff00, TRUE);
+    DrawCircle(p_uc, py2, 2.0f, 0xff0000, TRUE);
 
-    DrawCircleAA(p_uc, py2 - 54.0f, 2.0f, 0xfffff0, TRUE);
+    //DrawCircleAA(p_uc, py2 - 54.0f, 2.0f, 0xfffff0, TRUE);
 
     //プレイヤーの当たり判定
     DrawBoxAA(P_Move_X + 30, P_Move_Y + 37, P_Move_X + 35, P_Move_Y + 65, GetColor(255, 255, 255), FALSE);

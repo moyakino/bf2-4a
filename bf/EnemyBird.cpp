@@ -105,7 +105,7 @@ void EnemyBird::Update(int playerx, int playery)
 
 void EnemyBird::Draw() const
 {
-    DrawGraph(E_Move_X, E_Move_Y, E_ArrayImg_P[0], TRUE);
+    DrawGraphF(E_Move_X, E_Move_Y, E_ArrayImg_P[0], TRUE);
 
     //“G‚Ì“–‚½‚è”»’è
     DrawBox(E_Move_X + 30, E_Move_Y + 37, E_Move_X + 35, E_Move_Y + 65, GetColor(255, 255, 255), FALSE);

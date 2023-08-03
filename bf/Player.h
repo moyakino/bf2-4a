@@ -6,7 +6,7 @@
 #define STAND_BY_BALLOON2_3 3
 
 //プレイヤー 待機中アニメーション (風船が一つの場合)
-#define STAND_BY_ENEMY_0 4
+#define STAND_BY_BALLOON1_0 4
 #define STAND_BY_BALLOON1_1 5
 #define STAND_BY_BALLOON1_2 6
 #define STAND_BY_BALLOON1_3 7
@@ -67,13 +67,17 @@ private:
 	//(仮)デジタル方向ボタン左
 	int		P_Left_Btn;
 	//(仮)Aボタン
-	int		P_A_Btn;
+	int		P_A_Btn;	//単押し
 
 	//(仮)Bボタン長押し
 	int		P_B_Btn;
 
-	//(仮)Aボタン長押し
-	int		P_A_Pressed;
+	//(仮)Yボタン単押し
+	int		P_Y_Btn;
+	int		Beaten_Flg;
+	int		AnimCnt;
+	int		Respawn_Flg;
+
 	//(仮)
 	int		P_A_BtnFlg;
 	int		P_Air_R_Flg;
@@ -125,7 +129,11 @@ public:
 	static float	P_Move_X;
 	//Player  Y座標用変数
 	static float	P_Move_Y;
+	static int FishFlg;
+	//(仮)画像の左右反転用フラグ FALSE:普通に描画 TRUE:左右反転
+	static	int	P_TurnFlg;
 
+	//コンストラクタ
 	PLAYER();
 
 	//デストラクタ
@@ -136,9 +144,6 @@ public:
 
 	//描画処理
 	void Draw() const;
-	
-	//プレイヤーの右移動処理
-	//int P_Move_Flg();
 
 		//関数化
 	void Player_Warp();
@@ -149,18 +154,20 @@ public:
 	void Player_Air_A();
 	void Player_Air_B();
 
+	//Player初期処理
+	void Player_Init();
+	//Playerのリスポーンアニメーション
+	void Respawn_Anim();
 	//Playerの待機状態中のアニメーション
-	int Stand_by_Anim();
+	void Stand_by_Anim();
 	//Playerが走っている時のアニメーション
-	int Run_Anim();
-	//Playerが浮上している時のアニメーション 
-	int Levitation_Anim1();
-	int Levitation_Anim2();
-
+	void Run_Anim();
+	//Playerが滑空している時のアニメーション 
+	void Gliding_Anim();
+	//Playerが上昇している時のアニメーション
+	void Rise_Anim();
+	//Playerやられアニメーション
+	void Beaten_Anim();
+	//Playerが地面についているかを取る
 	void Stand_Foot();
-
-
-	static int FishFlg;
-	//(仮)画像の左右反転用フラグ FALSE:普通に描画 TRUE:左右反転
-	static	int	P_TurnFlg;
 };
