@@ -14,7 +14,6 @@ GameMain::GameMain()
 	PlaySoundMem(Bgm, DX_PLAYTYPE_BACK);
 
 	player = new PLAYER();
-	bubble = new Bubble();
 	fish = new Fish();
 	enemybird = new EnemyBird();
 	bubble = new Bubble();
@@ -30,9 +29,6 @@ GameMain::~GameMain()
 	delete thunder;
 	delete fish;
 	delete enemybird;
-	delete bubble;
-
-
 }
 
 
@@ -41,7 +37,6 @@ AbstractScene* GameMain::Update()
 	stage->Update();
 	player->Update();
 	//enemybird->Update(PLAYER::P_Move_X, PLAYER::P_Move_Y);
-	bubble->Update();
 	fish->Update();
 	//enemybird->Update(player->GetLocationX(), player->GetLocationY());
 	bubble->Update();
