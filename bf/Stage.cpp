@@ -77,8 +77,8 @@ void Stage::Update()
 
 void Stage::Draw() const
 {
-	DrawFormatString(400, 20, GetColor(255, 255, 255), " Stage:  %d ", Snum);
-	DrawFormatString(400, 0, 0xffffff, "Bound :%d", Stand);
+	//DrawFormatString(400, 20, GetColor(255, 255, 255), " Stage:  %d ", Snum);
+	//DrawFormatString(400, 0, 0xffffff, "Bound :%d", Stand);
 
 	//“–‚½‚è”»’è‚Ì‰¼•\Ž¦
 	switch (Snum)

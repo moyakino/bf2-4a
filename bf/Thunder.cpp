@@ -5,7 +5,7 @@
 Thunder::Thunder()
 {
 	//雲画像データの読み込み
-	if ((CloudImg = LoadGraph("images/Stage/Stage_Cloud01.png")) == -1);
+	if (CloudImg = LoadGraph("images/Stage/Stage_Cloud01.png")) {};
 	if (LoadDivGraph("images/Stage/Stage_CloudAnimation.png", 3, 3, 1,64, 64, Cloud_AnimImg)) {}
 
 	//雷(稲光)画像データの分割読み込み

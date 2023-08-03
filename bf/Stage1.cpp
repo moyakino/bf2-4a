@@ -84,7 +84,9 @@ int Stage1::HitBox()
 
 void Stage1::Draw() const
 {
-	DrawFormatString(400, 20, 0xffffff, "px1 :%d", px1);
+	// px1‚Ì’†‚É•s’è’l‚ª“ü‚Á‚Ä‚¢‚é‚½‚ßãè‚­“®‚¯‚Ä‚¢‚È‚¢‚Á‚Û‚¢
+	// 
+	//DrawFormatString(400, 20, 0xffffff, "px1 :%d", px1);
 
 
 	//SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
