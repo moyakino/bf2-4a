@@ -170,9 +170,9 @@ void EnemyBird::Enemy_Levitation_Move_X()
             SpeedX = 0.1f;
         }
     }
-    if (E_Stand_Flg == TRUE) {
+  /*  if (E_Stand_Flg == TRUE) {
         SpeedX = 0;
-    }
+    }*/
     E_Move_X += SpeedX;
 }
 void EnemyBird::Enemy_Levitation_Move_Y()
@@ -193,10 +193,10 @@ void EnemyBird::Enemy_Levitation_Move_Y()
             SpeedY = 0.1f;
         }
     }
-    if (E_Stand_Flg == TRUE) {
+  /*  if (E_Stand_Flg == TRUE) {
         SpeedY = 0;
         EnemyState= ENEMY_STATE::START;
-    }
+    }*/
     
     E_Move_Y += SpeedY;
 }
@@ -227,7 +227,7 @@ void EnemyBird::Fly_Anim()
     EnemyState = ENEMY_STATE::FLY_RIGHT;
     if (E_FPS % 20 == 0) {
         Cnt++;
-        CntWait = 0;
+        CntWait = 4;
         if (Cnt >= 13) {
             Cnt = 9;
         }
