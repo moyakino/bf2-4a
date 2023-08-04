@@ -5,18 +5,16 @@
 Thunder::Thunder()
 {
 	//雲画像データの読み込み
-	if ((CloudImg = LoadGraph("images/Stage/Stage_Cloud01.png")) == -1);
+	if (CloudImg = LoadGraph("images/Stage/Stage_Cloud01.png")) {};
+	//雲画像アニメーションの読み込み
 	if (LoadDivGraph("images/Stage/Stage_CloudAnimation.png", 3, 3, 1,64, 64, Cloud_AnimImg)) {}
 
 	//雷(稲光)画像データの分割読み込み
 	if (LoadDivGraph("images/Stage/Stage_ThunderAnimation.png", 6, 6, 1, 64, 64, ThunderImg)) {}
 	//雷(雷の弾)画像データの分割読み込み
 	if (LoadDivGraph("images/Stage/Stage_ThunderEffectAnimation.png", 3, 3, 1, 32, 32, EffectImg)) {}
-
-	ThunderImg[6];
 	T_Img = 0;
 
-	EffectImg[3];
 	E_Img = 0;
 
 	S_FPS1 = 0;

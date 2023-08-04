@@ -11,8 +11,8 @@ testPlayer::testPlayer()
 	VelX = 0;	//‰‘¬x
 	VelY = 0;	//‰‘¬y
 
-	Gravity = 0.6;	//d—Í
-	Reflect = 0.8;	//”½”­
+	Gravity = 0.6f;	//d—Í
+	Reflect = 0.8f;	//”½”­
 
 	sCnt = 0;
 	wCnt = 0;
@@ -341,9 +341,9 @@ void testPlayer::Draw() const
 
 	//Å‰‚Í‰EŒü‚«‚Å•`‰æ‚³‚ê‚é
 	if (pLeft==FALSE) {
-		DrawTurnGraph(location.x, location.y, P_Img, TRUE);
+		DrawTurnGraphF(location.x, location.y, P_Img, TRUE);
 	}
 	else if(pLeft==TRUE) {
-		DrawGraph(location.x, location.y, P_Img, TRUE);
+		DrawGraphF(location.x, location.y, P_Img, TRUE);
 	}
 }

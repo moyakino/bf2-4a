@@ -29,7 +29,8 @@
 
 enum class ENEMY_STATE {
     START,
-    FLY,
+    FLY_LEFT,
+    FLY_RIGHT,
     FALL,
     WAIT,
 };
@@ -37,10 +38,8 @@ enum class ENEMY_STATE {
 
 class EnemyBird {
 private:
-    int x, y;
-    int my;
-    int hp;
-    int cnt;
+    int Cnt;
+    int CntWait;
     float SpeedX;
     float SpeedY;
 
@@ -53,9 +52,6 @@ private:
     int E_FPS;
     int E_Second;
 
-    int PlayerPos;
-    int EnemyPos;
-
     //立っている状態のフラグ
     int		E_Stand_Flg;
     //海に落下する状態のフラグ
@@ -65,8 +61,6 @@ private:
     float	ex1, ey1, ex2, ey2, e_uc;
 
     //敵の座標
-    float E_location_X;
-    float E_location_Y;
 
     float E_Move_X;
     float E_Move_Y;
@@ -75,47 +69,21 @@ private:
     float E_AirSpeed;
     float E_Air_Flg;
 
-    //(仮)左スティック
-    int		E_L_Stick;
-
-    int      E_R_Stick;
-
-    //(仮)デジタル方向ボタン右
-    int		E_Right_Btn;
-    //(仮)デジタル方向ボタン左
-    int		E_Left_Btn;
-    //(仮)Aボタン
-    int		E_A_Btn;
-
-    //(仮)Bボタン長押し
-    int		E_B_Btn;
-
-    //(仮)Aボタン長押し
-    int		E_A_Pressed;
-    //(仮)
-    int		E_A_BtnFlg;
-    int		E_Air_R_Flg;
-    int		E_Air_L_Flg;
+    //敵の移動
+    float E_Balloon_Flg;
     int     E_AnimImg;
 
     //プレイヤーの地上スピード X座標
     float	E_XSpeed;
     //プレイヤーの地上スピード Y座標
     float	E_YSpeed;
-
     float   E_Speed;
-
     float	E_Accele;
 
     float	E_Air_Multiply;
 
-
-    float E_MoveR_Flg;
-    float E_MoveL_Flg;
-    float E_Balloon_Flg;
-
-    int  E_Img;
-
+    ENEMY_STATE EnemyState;
+    
     
 public:
 
@@ -129,7 +97,7 @@ public:
     // デストラクタ
     ~EnemyBird();
     // 更新処理を実装する
-    void Update(int playerx, int playery);
+    void Update();
     // 描画処理を実装する
     void Draw() const;
     //地面に立たせる
@@ -137,20 +105,14 @@ public:
 
     int  Balloon_Anim(void);
     //空中で移動しているときのアニメーション
-    int Levitation_Anim1();
+
     int Stand_by_Anim();
-
-    int Start_Anim();
-
-    int E_GetLocationX();
-    int E_GetLocationY();
-    int Return_MoveX();
-    int Return_MoveY();
+    void Start_Anim();
+    void Fly_Anim();
 
     void Enemy_Levitation_Move_X();
     void Enemy_Levitation_Move_Y();
 
     void Enemy_Gravity();
     void Enemy_Warp();
-    void Enemy_Img();
 };

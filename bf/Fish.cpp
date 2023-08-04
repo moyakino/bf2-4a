@@ -29,24 +29,28 @@ void Fish::Update()
     PlayerY = PLAYER::P_Move_Y;
 
     f_fps++;
-        if (PLAYER::FishFlg == TRUE) {
-            if (f_fps % 20 == 0) {
-                ChengeImg++;
-                if (ChengeImg > 5) {
-                    ChengeImg = 0;
-                    PLAYER::FishFlg = FALSE;
-                }
-            }
-        }
+    if (PLAYER::FishFlg == TRUE) {
+       if (f_fps % 20 == 0) {
+           ChengeImg++;
+           if(ChengeImg > 5) {
+              ChengeImg = 0;
+              PLAYER::FishFlg = FALSE;
+           }
+       }
+    }
+
+    if (f_fps > 59) {
+        f_fps = 0;
+    }
 }
    
 void Fish::Draw() const
 {
-    DrawFormatString(0, 20, 0xffffff, "Second:%d", F_Seconas1);
+    //DrawFormatString(0, 20, 0xffffff, "Second:%d", F_Seconas1);
     DrawFormatString(100, 400, 0xffffff, "f_fps:%d", f_fps);
     if (PLAYER::FishFlg == TRUE) {
        
-            DrawRotaGraph(PlayerX + 30, 420, 1.0f, 0, Fish_ArrayImg[ChengeImg], TRUE);
+            DrawRotaGraphF(PlayerX + 30, 420, 1.0f, 0, Fish_ArrayImg[ChengeImg], TRUE);
        
     }
     /*DrawRotaGraph(300,410, 1.0f, 0, F_AnimImg, TRUE);*/
