@@ -153,6 +153,7 @@
     <ClCompile Include="testPlayer.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="Thunder.cpp" />
+    <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractScene.h" />
@@ -170,6 +171,7 @@
     <ClInclude Include="testPlayer.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="Thunder.h" />
+    <ClInclude Include="UI.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
