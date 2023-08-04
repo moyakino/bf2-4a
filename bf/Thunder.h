@@ -72,8 +72,8 @@ public:
 
     int Cloud_Anim();
 
-    void MoveBall();
-    void HitThunder();
-    void ChangeAngle();     //ボールの角度
+    //void MoveBall();
+    //void HitThunder();
+    //void ChangeAngle();     //ボールの角度
 
 };
