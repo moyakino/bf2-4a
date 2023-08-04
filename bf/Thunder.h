@@ -23,14 +23,17 @@ private:
     //雷画像 分割読み込み用変数
     int	ThunderImg[7];
     int T_Img;
+    int T_Thunder_Flg;
 
     int	EffectImg[3];
     int E_Img;
+    int T_Effect_Flg;
     
     //雲画像　分割読込耀変数
     int	CloudImg;
     int	Cloud_AnimImg[3];
     int C_Img;
+    int T_Cloud_Flg;
 
     //FPSと秒数カウント
     int	S_FPS1;
@@ -39,41 +42,32 @@ private:
     int	S_Seconas2;
 
     int BallFlg;                //ボールの状態(0...移動中 1...バー接触2:スタート状態)
-    int RestBall;               //残りのボールの数
-
-    //ボールの変数
-    int BallX, BallY;
-    //ボールの移動量
-    int MoveX, MoveY;
+    
+    int BallX, BallY;           //ボールの変数
+    int MoveX, MoveY;           //ボールの移動量
     int Speed;                  //ボールのスピード
     float BallAngle;            //ボールの角度
 
     int MouseX, MouseY;         // マウスの座標
-    int BarX, BarY;             // バーの座標
 
     int H_flg;
 
 public:
 
-    //コンストラクタ
-    Thunder();
+    Thunder(); //コンストラクタ
+    ~Thunder();// デストラクタ
+    
+    void Update();// 更新処理を実装する
 
-    // デストラクタ
-    ~Thunder();
-
-    // 更新処理を実装する
-    void Update();
-
-    // 描画処理を実装する
-    void Draw() const;
+    void Draw() const;// 描画処理を実装する
 
     int Thunder_Anim();
     int Effect_Anim();
 
     int Cloud_Anim();
 
-    //void MoveBall();
-    //void HitThunder();
-    //void ChangeAngle();     //ボールの角度
+    void MoveBall();
+    void HitThunder();
+    void ChangeAngle();     //ボールの角度
 
 };
