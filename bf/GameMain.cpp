@@ -64,13 +64,10 @@ void GameMain::Draw()const
 	stage->Draw();
 	
 	fish->Draw();
-	enemybird->Draw();
-
 	//bubble->Draw();
 
-
 	thunder->Draw();
-
+	enemybird->Draw();
 	player->Draw();
 	//DrawFormatString(0, 50, GetColor(255, 0, 0), "GameMain");
 	

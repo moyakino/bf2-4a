@@ -56,6 +56,8 @@ EnemyBird::EnemyBird()
     E_Balloon_Flg = 0;
     EnemyState = ENEMY_STATE::START;
 
+    int startTime = GetNowCount();
+
 }
 
 EnemyBird::~EnemyBird()
@@ -196,7 +198,7 @@ void EnemyBird::Enemy_Levitation_Move_Y()
     }
     if (E_Stand_Flg == TRUE) {
         SpeedY = 0;
-        EnemyState= ENEMY_STATE::START;
+       /* EnemyState= ENEMY_STATE::START;*/
     }
     
     E_Move_Y += SpeedY;
@@ -215,10 +217,13 @@ void EnemyBird::Enemy_Gravity()
 void EnemyBird::Start_Anim()
 {
     EnemyState = ENEMY_STATE::START;
-    if (E_FPS % 20 == 0) {
-        Cnt++;
-        if (Cnt >= 8) {
-            Cnt = 0;
+    int elapsedTime = GetNowCount() - startTime;
+    if (elapsedTime >= 3000) {
+        if (E_FPS % 20 == 0) {
+            Cnt++;
+            if (Cnt >= 8) {
+                Cnt = 0;
+            }
         }
     }
 }
@@ -234,29 +239,29 @@ void EnemyBird::Fly_Anim()
     }
 }
 
-//int EnemyBird::Stand_by_Anim()
-//{
-//    int S_AnimImg = 0;
-//
-//    // 0 ‚©‚ç 3 •b
-//    if (E_Second == 0) {
-//        S_AnimImg = E_ArrayImg_P[STAND_BY_ENEMY_0];
-//    }
-//    else if (E_Second > 0 && E_Second < 2) {
-//        S_AnimImg = E_ArrayImg_P[STAND_BY_ENEMY_1];
-//    }
-//    else if (E_Second > 1 && E_Second < 3) {
-//        S_AnimImg = E_ArrayImg_P[STAND_BY_ENEMY_2];
-//    }
-//    else if (E_Second > 2 && E_Second < 4) {
-//        S_AnimImg = E_ArrayImg_P[STAND_BY_ENEMY_3];
-//    }
-//    else if (E_Second > 3 && E_Second < 5) {
-//        S_AnimImg = E_ArrayImg_P[STAND_BY_ENEMY_4];
-//    }
-//
-//    return S_AnimImg;
-//}
+int EnemyBird::Stand_by_Anim()
+{
+    int S_AnimImg = 0;
+
+    // 0 ‚©‚ç 3 •b
+    if (E_Second == 0) {
+        S_AnimImg = E_ArrayImg_P[STAND_BY_ENEMY_0];
+    }
+    else if (E_Second > 0 && E_Second < 2) {
+        S_AnimImg = E_ArrayImg_P[STAND_BY_ENEMY_1];
+    }
+    else if (E_Second > 1 && E_Second < 3) {
+        S_AnimImg = E_ArrayImg_P[STAND_BY_ENEMY_2];
+    }
+    else if (E_Second > 2 && E_Second < 4) {
+        S_AnimImg = E_ArrayImg_P[STAND_BY_ENEMY_3];
+    }
+    else if (E_Second > 3 && E_Second < 5) {
+        S_AnimImg = E_ArrayImg_P[STAND_BY_ENEMY_4];
+    }
+
+    return S_AnimImg;
+}
 void EnemyBird::Draw() const
 {
     DrawGraphF(E_Move_X, E_Move_Y, E_ArrayImg_P[0], TRUE);
