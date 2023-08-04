@@ -21,7 +21,7 @@ class Thunder {
 private:
 
     //—‹‰æ‘œ •ªŠ„“Ç‚İ‚İ—p•Ï”
-    int	ThunderImg[6];
+    int	ThunderImg[7];
     int T_Img;
 
     int	EffectImg[3];

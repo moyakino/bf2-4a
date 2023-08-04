@@ -10,8 +10,8 @@ GameMain::GameMain()
 
 	StageSample = 0;
 
-	Bgm = LoadSoundMem("sounds/SE_Start.wav");
-	PlaySoundMem(Bgm, DX_PLAYTYPE_BACK);
+	/*Bgm = LoadSoundMem("sounds/SE_Start.wav");
+	PlaySoundMem(Bgm, DX_PLAYTYPE_BACK);*/
 
 	player = new PLAYER();
 	fish = new Fish();
@@ -38,7 +38,7 @@ AbstractScene* GameMain::Update()
 	player->Update();
 	//enemybird->Update(PLAYER::P_Move_X, PLAYER::P_Move_Y);
 	fish->Update();
-	//enemybird->Update(player->GetLocationX(), player->GetLocationY());
+	enemybird->Update(/*player->GetLocationX(), player->GetLocationY()*/);
 	bubble->Update();
 	thunder->Update();
 
@@ -64,10 +64,9 @@ void GameMain::Draw()const
 	stage->Draw();
 	
 	fish->Draw();
-	//enemybird->Draw();
-	//enemybird->Draw();
+	enemybird->Draw();
 
-	bubble->Draw();
+	//bubble->Draw();
 
 
 	thunder->Draw();
