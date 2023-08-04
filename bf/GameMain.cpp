@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "testPlayer.h"
 
+#include "PadInput.h"
 
 //コンストラクタ
 GameMain::GameMain()
@@ -17,8 +18,22 @@ GameMain::GameMain()
 	fish = new Fish();
 	enemybird = new EnemyBird();
 	//bubble = new Bubble();
-	stage = new Stage();
+	//stage = new Stage();
 	thunder = new Thunder();
+
+
+	switch (Snum)
+	{
+	case 0:
+
+		for (int i = 0; i < 3; i++)
+		{
+			StageFoot[i] = new Stage(Snum, i);
+		}
+
+		break;
+	}
+
 }
 
 GameMain::~GameMain()
@@ -32,12 +47,15 @@ GameMain::~GameMain()
 	//delete bubble;
 
 
+
+
+
 }
 
 
 AbstractScene* GameMain::Update()
 {
-	stage->Update();
+	//stage->Update();
 	player->Update();
 	enemybird->Update(PLAYER::P_Move_X, PLAYER::P_Move_Y);
 	bubble->Update();
@@ -47,6 +65,38 @@ AbstractScene* GameMain::Update()
 	thunder->Update();
 
 	//bubble->Update();
+
+
+	
+	fps++;
+
+	// Xボタン単押し
+	int X_Btn = PAD_INPUT::OnButton(XINPUT_BUTTON_X);
+	if (X_Btn == 1) {
+		if (fps % 2 == 0) {
+			if (++Snum > 4) {
+				Snum = 0;
+			}
+		}
+	}
+
+
+	switch (Snum)
+	{
+	case 0:
+
+		for (int i = 0; i < 3; i++)
+		{
+			if (StageFoot[i]->HitCollider(player) == true)
+			{
+				Stage::Stand = TRUE;
+			}
+
+		}
+		break;
+	}
+
+
 
 	return this;
 }
@@ -65,7 +115,21 @@ void GameMain::Draw()const
 	//DrawGraph(480, 416, StageLand_R, TRUE);
 	//DrawGraph(160,444,StageSea,TRUE);
 
-	stage->Draw();
+
+	switch (Snum)
+	{
+	case 0:
+
+		for (int i = 0; i < 3; i++)
+		{
+			StageFoot[i]->Draw();
+		}
+
+		break;
+	}
+
+
+	//stage->Draw();
 	player->Draw();
 	//enemybird->Draw();
 	enemybird->Draw();
@@ -77,5 +141,6 @@ void GameMain::Draw()const
 
 
 	DrawFormatString(0, 50, GetColor(255, 0, 0), "GameMain");
+	DrawFormatString(400, 50, GetColor(255, 0, 0), "Snum:%d", Snum);
 	
 }

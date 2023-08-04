@@ -21,6 +21,8 @@ protected:
 public:
 
 	int HitCollider(BoxCollider* b_col);
+	int TopBoxCollider();
+
 	Location GetLocation();
 	Erea GetErea();
 

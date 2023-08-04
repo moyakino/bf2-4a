@@ -10,11 +10,26 @@ int BoxCollider::HitCollider(BoxCollider* b_col)
 	float py1 = b_col->GetLocation().y + 37;
 	float py2 = b_col->GetLocation().y + 65;
 
-	//敵
-	float ex1;
-	float ex2;
-	float ey1;
-	float ey2;
+	//ステージ
+	float sx1 = location.x;
+	float sx2 = location.x + erea.Width;
+	float sy1 = location.y;
+	float sy2 = location.y + erea.Height;
+
+	//空中足場
+	if ((sx1 < px2) && (sx2 > px1) && (sy1 < py2) && (sy2 > py1))
+	{
+		re = true;
+	}
+
+	return re;
+}
+
+int BoxCollider::TopBoxCollider()
+{
+	int re = false;
+
+
 
 	return re;
 }

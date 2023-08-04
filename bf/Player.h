@@ -1,4 +1,5 @@
 #pragma once
+#include "BoxCollider.h"
 
 //プレイヤー 待機中アニメーション (風船が二つの場合)
 #define STAND_BY_BALLOON2_0 0
@@ -49,7 +50,7 @@
 #define LEFT_MOVE -2000
 #define RIGHT_MOVE 2000
 
-class PLAYER
+class PLAYER :public BoxCollider
 {
 private:
 	//(仮)プレイヤー画像 分割読み込み用変数

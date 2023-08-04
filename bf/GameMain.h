@@ -9,15 +9,27 @@
 
 #include "testPlayer.h"
 
+
+
 class GameMain:
 	public AbstractScene
 {
 private:
 
+	int fps = 0;
+
 	int Bgm;
 	int StageSample;
 
+
 public:
+
+
+	int Snum;
+
+
+	Stage* StageFoot[8];
+
 	GameMain();
 	~GameMain();
 	void Draw()const;
