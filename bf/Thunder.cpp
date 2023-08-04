@@ -178,6 +178,24 @@ int Thunder::Cloud_Anim()
 	return C_AnimImg;
 }
 
+void Thunder::HitThunder()
+{
+	int Delete = 0;
+
+	DrawFormatString(0, 360, GetColor(255, 255, 255), "Delete:%d", Delete);
+	if (PLAYER::px1 < MoveX - 15 && PLAYER::py1 < MoveY - 15 && MoveX - 15 < PLAYER::px2 && MoveY + 15 < PLAYER::py2 && Delete == 0) {
+		H_flg = 1;
+		if (H_flg == 1) {
+			DeleteGraph(E_Img);
+			DrawFormatString(MoveX, MoveY, GetColor(255, 0, 0), "Hit");
+			Delete++;
+		}
+	}
+	else {
+		H_flg = 0;
+	}
+}
+
 void Thunder::Draw() const
 {
 	//雷（稲光）の表示
@@ -186,7 +204,11 @@ void Thunder::Draw() const
 	//雷（雷の弾）の表示
 	DrawGraph(BallX, BallY, E_Img, TRUE);
 
+	DrawCircle(BallX, BallY, 5, 0xffffff, TRUE);
+
 	//
 	DrawGraph(310, 90, CloudImg, TRUE);
 	DrawGraph(285, 90, C_Img, TRUE);
+
+	DrawFormatString(0, 340, GetColor(255, 255, 255), "H_flg:%d", H_flg);
 }

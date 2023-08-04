@@ -51,6 +51,8 @@ private:
     int MouseX, MouseY;         // マウスの座標
     int BarX, BarY;             // バーの座標
 
+    int H_flg;
+
 public:
 
     //コンストラクタ
@@ -71,6 +73,7 @@ public:
     int Cloud_Anim();
 
     void MoveBall();
+    void HitThunder();
     void ChangeAngle();     //ボールの角度
 
 };
