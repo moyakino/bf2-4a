@@ -2,8 +2,8 @@
 #include"DxLib.h"
 UI::UI()
 {
-	if(LoadDivGraph("images/UI/UI_NumAnimation.png",10,10,1,64,64,Number)){}
-	gScore = Number[5];
+	if(LoadDivGraph("images/UI/UI_NumAnimation.png",10,10,1,32,30,Number)){}
+	gScore = Number[8];
 	Score = LoadGraph("images/UI/UI_Score.png");
 	HiScore = LoadGraph("images/UI/UI_HiScore.png");
 	Stock1 = LoadGraph("images/UI/UI_Stock.png");
@@ -32,6 +32,7 @@ void UI::Update()
 
 void UI::Draw() const
 {
+	DrawGraph(130, -5, gScore, TRUE);
 	DrawGraph(100,0,Score,FALSE);
 	DrawGraph(250, 0, HiScore, FALSE);
 	DrawGraph(100,30, Stock1, TRUE);

@@ -36,7 +36,6 @@ Bubble::~Bubble()
 void Bubble::Update()
 {
 
-
 	Player = PLAYER::p_uc;
 	PlayerY = PLAYER::py2 + PLAYER::py1;
 

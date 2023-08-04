@@ -57,7 +57,7 @@ private:
     //ŠC‚É—‰º‚·‚éó‘Ô‚Ìƒtƒ‰ƒO
     int		E_Foll_Flg;
 
-    int startTime;
+    int StartTime;
 
     float	sx1, sy1, sx2, sy2;
     float	ex1, ey1, ex2, ey2, e_uc;
