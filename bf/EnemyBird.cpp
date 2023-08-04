@@ -12,8 +12,6 @@ EnemyBird::EnemyBird()
 	if (LoadDivGraph("images/Enemy/Enemy_G_Animation.png", 18, 6, 3, 64, 64, E_ArrayImg_G)) {}
 	if (LoadDivGraph("images/Enemy/Enemy_R_Animation.png", 18, 6, 3, 64, 64, E_ArrayImg_R)) {}
 
-   /* E_location_X = 200.0f;
-    E_location_Y = 200.0f;*/
     E_AnimImg = 0;
     E_Move_X = 200.0f;
     E_Move_Y = 220.0f;
@@ -165,9 +163,11 @@ void EnemyBird::Enemy_Levitation_Move_X()
         }
         if (SpeedX <= -1.0f) {
             SpeedX = -0.1f;
+            EnemyState = ENEMY_STATE::FLY_LEFT;
         }
         if (SpeedX >= 1.0f) {
             SpeedX = 0.1f;
+            EnemyState = ENEMY_STATE::FLY_RIGHT;
         }
     }
     if (E_Stand_Flg == TRUE) {
