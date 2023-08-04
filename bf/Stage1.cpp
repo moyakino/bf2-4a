@@ -84,7 +84,9 @@ int Stage1::HitBox()
 
 void Stage1::Draw() const
 {
-	DrawFormatString(400, 20, 0xffffff, "px1 :%d", px1);
+	// px1‚Ì’†‚É•s’è’l‚ª“ü‚Á‚Ä‚¢‚é‚½‚ßãè‚­“®‚¯‚Ä‚¢‚È‚¢‚Á‚Û‚¢
+	// 
+	//DrawFormatString(400, 20, 0xffffff, "px1 :%d", px1);
 
 
 	//SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
@@ -92,7 +94,7 @@ void Stage1::Draw() const
 	//SetDrawBlendMode(DX_BLENDGRAPHTYPE_ALPHA, 255);
 
 	//‹ó’†‚Ì‘«ê
-	DrawBox(sx1, sy1, sx2, sy2, 0x00ff00, FALSE);
+	DrawBoxAA(sx1, sy1, sx2, sy2, 0x00ff00, FALSE);
 
 	//‹ó’†‚Ì‘«ê
 	//DrawGraph(180, 280, StageFoot[0],TRUE);
