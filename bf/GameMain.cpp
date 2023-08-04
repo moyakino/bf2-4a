@@ -11,7 +11,7 @@ GameMain::GameMain()
 
 	/*Bgm = LoadSoundMem("sounds/SE_Start.wav");
 	PlaySoundMem(Bgm, DX_PLAYTYPE_BACK);*/
-
+	ui = new UI();
 	player = new PLAYER();
 	bubble = new Bubble();
 	fish = new Fish();
@@ -28,6 +28,7 @@ GameMain::~GameMain()
 	delete bubble;
 	delete thunder;
 	delete fish;
+	delete ui;
 	delete enemybird;
 	//delete bubble;
 
@@ -74,7 +75,7 @@ void GameMain::Draw()const
 
 
 	thunder->Draw();
-
+	ui->Draw();
 
 	DrawFormatString(0, 50, GetColor(255, 0, 0), "GameMain");
 	
