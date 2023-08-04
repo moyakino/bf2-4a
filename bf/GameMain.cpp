@@ -10,8 +10,8 @@ GameMain::GameMain()
 
 	StageSample = 0;
 
-	Bgm = LoadSoundMem("sounds/SE_Start.wav");
-	PlaySoundMem(Bgm, DX_PLAYTYPE_BACK);
+	/*Bgm = LoadSoundMem("sounds/SE_Start.wav");
+	PlaySoundMem(Bgm, DX_PLAYTYPE_BACK);*/
 
 	player = new PLAYER();
 	fish = new Fish();
@@ -67,7 +67,7 @@ void GameMain::Draw()const
 	//enemybird->Draw();
 	//enemybird->Draw();
 
-	bubble->Draw();
+	//bubble->Draw();
 
 
 	thunder->Draw();

@@ -145,21 +145,11 @@ void PLAYER::Update()
         if (P_B_Btn == 1) {
             Respawn_Flg = FALSE;
             Player_Air_B();
-            //Gliding_Anim();
         }
 
         if (P_Stand_Flg == FALSE) {
             Player_Levitation_Move();
         }
-
-        //Player_Levitation_Move();
-
-        /*if (P_Stand_Flg == FALSE && P_B_Btn == 0) {
-            P_XSpeed = P_XSpeed + -0.1f;
-            if (P_XSpeed <= 0.5f) {
-                P_XSpeed = 0.5f;
-            }
-        }*/
 
         if (P_Stand_Flg == FALSE && P_B_Btn == 0 || P_Stand_Flg == FALSE && P_A_Btn == 0 ) {
             Player_Gravity();
@@ -168,7 +158,6 @@ void PLAYER::Update()
     else {
         if (Beaten_Flg == TRUE) {
             if (P_Move_Y < 500.0f) {
-                //P_YSpeed = P_YSpeed * 0.99;
                 P_Move_Y = P_Move_Y + 1.0f;
                 Beaten_Anim();
             }
@@ -183,6 +172,7 @@ void PLAYER::Update()
     if (P_FPS > 59) {
         P_FPS = 0;
         P_Seconas1++;
+
     }// P_FPS_INC は 秒数を取っている
     else if (P_Seconas1 > 3) {
         P_Seconas1 = 0;
@@ -292,8 +282,8 @@ void PLAYER::Player_Levitation_Move()
 
         P_XSpeed = P_XSpeed + 0.09f;    //速度加算
         P_Move_X = P_Move_X + P_XSpeed;
-        if (P_XSpeed >= 1.5f) {          //速度制限
-            P_XSpeed = 1.5f;                //速度上限値
+        if (P_XSpeed >= 1.3f) {          //速度制限
+            P_XSpeed = 1.3f;                //速度上限値
         }
     }
     else {
@@ -307,8 +297,8 @@ void PLAYER::Player_Levitation_Move()
 
         P_XSpeed = P_XSpeed + -0.09f;
         P_Move_X = P_Move_X + P_XSpeed;
-        if (P_XSpeed <= -1.5f) {
-            P_XSpeed = -1.5f;
+        if (P_XSpeed <= -1.3f) {
+            P_XSpeed = -1.3f;
         }
     }
     else {
@@ -319,8 +309,9 @@ void PLAYER::Player_Levitation_Move()
     ここで上手く処理をかければ成功するはず*/
 
     if (P_Stand_Flg == FALSE && P_Air_L_Flg == FALSE && P_Air_R_Flg == FALSE) {
-        P_XSpeed = P_XSpeed;
-        //P_XSpeed = P_XSpeed * 0.98f;
+        //P_XSpeed = P_XSpeed;
+        P_XSpeed *= 0.999f;
+        Gliding_Anim();
         P_Move_X = P_Move_X + P_XSpeed;
     }
 }
@@ -332,7 +323,6 @@ void PLAYER::Player_Gravity()
     //P_YSpeed = P_YSpeed + 0.009f;
     P_YSpeed = P_YSpeed + 0.01f;
     P_Move_Y = P_Move_Y + P_YSpeed;
-    //Gliding_Anim();
     if (P_YSpeed >= 1.0f) {         //速度制限  前は 1.3f
         P_YSpeed = 1.0f;
     }
@@ -554,19 +544,6 @@ void PLAYER::Gliding_Anim()
 
 void PLAYER::Rise_Anim()
 {
-    /*if (P_FPS >= 0 && P_FPS < 15) {
-        P_Img = P_ArrayImg[LEVITATION_BALLOON2_0];
-    }
-    else if (P_FPS > 14 && P_FPS < 30) {
-        P_Img = P_ArrayImg[LEVITATION_BALLOON2_1];
-    }
-    else if (P_FPS > 29 && P_FPS < 45) {
-        P_Img = P_ArrayImg[LEVITATION_BALLOON2_2];
-    }
-    else if (P_FPS > 44 && P_FPS <= 60) {
-        P_Img = P_ArrayImg[LEVITATION_BALLOON2_1];
-    }*/
-
     if (P_Balloon_Flg == TRUE) {
 
         if (P_FPS % 20 == 0 || P_FPS % 20 == 1 || P_FPS % 20 == 2 || P_FPS % 20 == 3 || P_FPS % 20 == 4) {
@@ -621,7 +598,7 @@ PLAYER::~PLAYER()
 
 void PLAYER::Draw()const
 {
-    DrawFormatString(0, 20, GetColor(255, 255, 255), " FPS：%d", P_FPS);
+    DrawFormatString(0, 20, GetColor(255, 255, 255), " FPSCnt：%d", P_FPS);
 
     //Aボタン描画
     //DrawFormatString(0, 40, GetColor(255, 255, 255), " 押された瞬間：%d 離された瞬間：%d", PAD_INPUT::OnButton(XINPUT_BUTTON_A), PAD_INPUT::OnRelease(XINPUT_BUTTON_A));
