@@ -6,7 +6,7 @@
 #include "Thunder.h"
 #include "Fish.h"
 #include "enemybird.h"
-
+#include"UI.h"
 #include "testPlayer.h"
 
 class GameMain:
@@ -30,4 +30,5 @@ public:
 	Stage* stage;
 	Thunder* thunder;
 	Fish* fish;
+	UI* ui;
 };
