@@ -397,7 +397,7 @@ void PLAYER::Stand_Foot()
         P_Stand_Flg = FALSE;
     }
 
-    if (Stage::Bound)
+    if (Stage::Bound == TRUE)
     {
         if (P_YSpeed < 0) {
             P_YSpeed = P_YSpeed * -0.8f;
