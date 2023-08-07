@@ -6,7 +6,6 @@ private:
 	int B_Img;
 	int Bubbleflg;
 	int B_flg;
-	int H_flg;
 	int Img;
 	int B_AnimImg;
 	float MoveX;
@@ -22,6 +21,9 @@ private:
 	int Delete;
 	float SpeedX,SpeedY;
 public:
+
+	static int H_flg;
+
 	Bubble();
 	~Bubble();
 	void Update();
@@ -31,5 +33,4 @@ public:
 	void BubbleMove();
 	int  BubbleAnim();
 	void Score();
-
 };

@@ -149,7 +149,6 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Stage.cpp" />
-    <ClCompile Include="Stage1.cpp" />
     <ClCompile Include="testPlayer.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="Thunder.cpp" />
@@ -167,7 +166,6 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Stage.h" />
-    <ClInclude Include="Stage1.h" />
     <ClInclude Include="testPlayer.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="Thunder.h" />

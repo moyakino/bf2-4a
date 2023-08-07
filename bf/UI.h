@@ -1,7 +1,7 @@
 #pragma once
 class UI {
 private:
-	int Number[9];
+	int Number[10];
 	int Score;
 	int HiScore;
 	int Stock1;
@@ -9,6 +9,9 @@ private:
 	int Phase;
 	int gScore;
 	int GameOver;
+	int TempScore;
+	int PosX;
+	int Cnt;
 public:
 	UI();
 	~UI();
