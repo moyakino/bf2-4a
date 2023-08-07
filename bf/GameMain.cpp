@@ -157,7 +157,7 @@ void GameMain::Draw()const
 	player->Draw();
 	enemybird->Draw();
 	//enemybird->Draw();
-
+	fish->Draw();
 	bubble->Draw();
 
 

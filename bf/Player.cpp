@@ -374,7 +374,7 @@ void PLAYER::Stand_Foot()
     int fpscount = 0;
 
     //‹›‚ÌoŒ»
-    if (py_u > 405&&py_u<430)
+    if (location.y +30 > 405&& location.y + 30 <430)
     {
         //60fps == 1•b@‚Å’´‚¦‚½‚ç fps‚ð 0 ‚É‚·‚é
         if (P_FPS > 59) {
