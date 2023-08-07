@@ -56,7 +56,7 @@ AbstractScene* GameMain::Update()
 	player->Update();
 	//enemybird->Update(PLAYER::P_Move_X, PLAYER::P_Move_Y);
 	bubble->Update();
-	fish->Update();
+	fish->Update(player->GetLocation().x , player->GetLocation().y);
 	//enemybird->Update(player->GetLocationX(), player->GetLocationY());
 	thunder->Update();
 
@@ -91,6 +91,10 @@ AbstractScene* GameMain::Update()
 				if (StageFoot[i]->TopBoxCollider(player) == true) 
 				{
 					player->Player_Move();
+				}
+				else
+				{
+					player->SetStandFlg(false);
 				}
 
 				//‚»‚êˆÈŠO‚ÌêŠ‚È‚ç’µ‚Ë•Ô‚é
@@ -157,10 +161,9 @@ void GameMain::Draw()const
 	player->Draw();
 	enemybird->Draw();
 	//enemybird->Draw();
-
+	fish->Draw();
 	bubble->Draw();
-
-
+	ui->Draw();
 	thunder->Draw();
 	ui->Draw();
 

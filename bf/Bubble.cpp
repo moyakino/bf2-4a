@@ -4,6 +4,8 @@
 #include"PadInput.h"
 #include"FPS.h"
 
+int Bubble::H_flg;
+
 Bubble::Bubble()
 {
 	if (LoadDivGraph("images/stage/Stage_BubbleAnimation.png", 4, 4, 1, 64, 64, BubbleImg)) {}
