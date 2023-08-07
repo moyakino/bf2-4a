@@ -57,7 +57,7 @@ AbstractScene* GameMain::Update()
 	//enemybird->Update(PLAYER::P_Move_X, PLAYER::P_Move_Y);
 	bubble->Update();
 	fish->Update(player->GetLocation().x , player->GetLocation().y);
-	//enemybird->Update(player->GetLocationX(), player->GetLocationY());
+	enemybird->Update();
 	thunder->Update();
 
 	//bubble->Update();
@@ -91,6 +91,7 @@ AbstractScene* GameMain::Update()
 				if (StageFoot[i]->TopBoxCollider(player) == true) 
 				{
 					player->Player_Move();
+
 				}
 				else
 				{
@@ -160,12 +161,10 @@ void GameMain::Draw()const
 	//stage->Draw();
 	player->Draw();
 	enemybird->Draw();
-	//enemybird->Draw();
 	fish->Draw();
 	bubble->Draw();
 	ui->Draw();
 	thunder->Draw();
-	ui->Draw();
 
 	DrawFormatString(0, 50, GetColor(255, 0, 0), "GameMain");
 	DrawFormatString(400, 50, GetColor(255, 0, 0), "Snum:%d", Snum);

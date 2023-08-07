@@ -130,10 +130,6 @@ void PLAYER::Update()
 
     if (Beaten_Flg == FALSE) {
         //ステージの足場に立っていたら地上の移動に入る
-        if (P_Stand_Flg == TRUE) {
-            //地上の移動
-            Player_Move();
-        }
 
         if (P_A_Btn == 1) {
             Respawn_Flg = FALSE;

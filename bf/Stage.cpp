@@ -30,7 +30,6 @@ Stage::Stage(int num,int i)
 
 
 	Stand = TRUE;
-
 	Death = FALSE;
 
 
