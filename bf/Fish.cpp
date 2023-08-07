@@ -17,8 +17,9 @@ Fish::Fish()
 	if (LoadDivGraph("images/Enemy/Enemy_FishAnimation.png", 10, 5, 2, 64, 64, Fish_ArrayImg)) {}
     ChengeImg = 0;
 
-  
+    
 }
+
 
 Fish::~Fish()
 {
