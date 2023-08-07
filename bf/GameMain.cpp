@@ -21,11 +21,12 @@ GameMain::GameMain()
 	//stage = new Stage();
 	thunder = new Thunder();
 
+	Snum = 0;
 
 	switch (Snum)
 	{
 	case 0:
-
+		//ステージの生成
 		for (int i = 0; i < 3; i++)
 		{
 			StageFoot[i] = new Stage(Snum, i);
@@ -47,10 +48,6 @@ GameMain::~GameMain()
 	delete enemybird;
 	//delete bubble;
 
-
-
-
-
 }
 
 
@@ -58,7 +55,7 @@ AbstractScene* GameMain::Update()
 {
 	//stage->Update();
 	player->Update();
-	enemybird->Update(PLAYER::P_Move_X, PLAYER::P_Move_Y);
+	//enemybird->Update(PLAYER::P_Move_X, PLAYER::P_Move_Y);
 	bubble->Update();
 	fish->Update();
 	//enemybird->Update(player->GetLocationX(), player->GetLocationY());
@@ -82,16 +79,43 @@ AbstractScene* GameMain::Update()
 	}
 
 
+	//当たり判定
 	switch (Snum)
 	{
 	case 0:
 
 		for (int i = 0; i < 3; i++)
 		{
+			//プレイヤーが足場に当たっているか
 			if (StageFoot[i]->HitCollider(player) == true)
 			{
-				Stage::Stand = TRUE;
+				//かつ、足場の上に立っているかどうか
+				if (StageFoot[i]->TopBoxCollider(player) == true) 
+				{
+					player->Player_Move();
+				}
+
+				//それ以外の場所なら跳ね返る
+				if (StageFoot[i]->L_SideBoxCollider(player) == true) 
+				{
+
+				}
+
+				if (StageFoot[i]->R_SideBoxCollider(player) == true) 
+				{
+
+				}
 			}
+
+			////敵が足場に当たっているか
+			//if (StageFoot[i]->HitCollider(Enemy[i]) == true)
+			//{
+			//	//かつ、足場の上に立っているかどうか
+			//	if (StageFoot[i]->TopBoxCollider(Enemy[i]) == true)
+			//	{
+			//		Enemy[i]->Update();
+			//	}
+			//}
 
 		}
 		break;
@@ -120,11 +144,12 @@ void GameMain::Draw()const
 	switch (Snum)
 	{
 	case 0:
-
+		//ステージの描画
 		for (int i = 0; i < 3; i++)
 		{
 			StageFoot[i]->Draw();
 		}
+
 
 		break;
 	}
@@ -132,8 +157,8 @@ void GameMain::Draw()const
 
 	//stage->Draw();
 	player->Draw();
-	//enemybird->Draw();
 	enemybird->Draw();
+	//enemybird->Draw();
 
 	bubble->Draw();
 

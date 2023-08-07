@@ -27,7 +27,6 @@ public:
 
 	int Snum;
 
-
 	Stage* StageFoot[8];
 
 	GameMain();

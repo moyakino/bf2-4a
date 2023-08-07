@@ -57,6 +57,8 @@ EnemyBird::EnemyBird()
 
     E_Balloon_Flg = 0;
     EnemyState = ENEMY_STATE::START;
+    
+
 
 }
 
