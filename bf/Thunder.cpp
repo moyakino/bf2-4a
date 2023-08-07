@@ -102,21 +102,21 @@ void Thunder::MoveBall()
 		if (BallAngle > 1) BallAngle -= 1.0f;
 		ChangeAngle();
 	}
-	if (BallY < 8 || BallY > 510) { // 上下の壁
-		if (BallY < 8) {
-			BallAngle = (1 - BallAngle);
-			//BallY = 8;
-		}
-		else {
-			BallY = 510;
-		}
-		BallAngle = (1 - BallAngle) + 0.5f;
-		ChangeAngle();
-	}
-	//if (BallY < 8) { // 上の壁
-	//	
+	//if (BallY < 8 || BallY > 510) { // 上下の壁
+	//	if (BallY < 8) {
+	//		BallAngle = (1 - BallAngle);
+	//		//BallY = 8;
+	//	}
+	//	else {
+	//		BallY = 510;
+	//	}
+	//	BallAngle = (1 - BallAngle) + 0.5f;
 	//	ChangeAngle();
 	//}
+	if (BallY < 8) { // 上の壁
+		BallAngle = (1 - BallAngle);
+		ChangeAngle();
+	}
 	if (BallY > 480 + 4) {
 		//ボールをスタート状態にする
 		BallFlg = 2;
