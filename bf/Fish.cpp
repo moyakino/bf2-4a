@@ -30,7 +30,7 @@ void Fish::Update()
     f_fps++;
     PlayerX = PLAYER::P_Move_X;
     PlayerY = PLAYER::P_Move_Y;
-    if (f_fps > 59) {
+    if (f_fps > 20) {
       /*  F_Seconas2++;*/
         f_fps = 0;
         //魚のアニメーション
@@ -52,7 +52,6 @@ void Fish::Update()
 void Fish::Draw() const
 {
     DrawFormatString(0, 20, 0xffffff, "Second:%d", F_Seconas2);
-    DrawFormatString(100, 400, 0xffffff, "f_fps:%d", f_fps);
     if (PLAYER::FishFlg == TRUE) 
     {
         if (PLAYER::F_TurnFlg == TRUE)
