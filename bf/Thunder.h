@@ -41,7 +41,7 @@ private:
     int	S_Seconas1;
     int	S_Seconas2;
 
-    int BallFlg;                //ボールの状態(0...移動中 1...バー接触2:スタート状態)
+    int BallFlg;                //ボールの状態(0...移動中 1...Player接触2:スタート状態)
     
     int BallX, BallY;           //ボールの変数
     int MoveX, MoveY;           //ボールの移動量

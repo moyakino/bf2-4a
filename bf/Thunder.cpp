@@ -28,8 +28,8 @@ Thunder::Thunder()
 	S_Seconas1 = 0;
 	S_Seconas2 = 0;
 
-	BallX = 280;
-	BallY = 200 - 5;
+	BallX = 200;
+	BallY = 200;
 	BallAngle = 0;
 
 	MoveX = 0;
@@ -49,7 +49,7 @@ void Thunder::Update()
 	S_FPS2++;
 
 	//雷(稲光)のFPS
-	if (S_FPS1 > 39) {
+	if (S_FPS1 > 34) {
 		S_FPS1 = 0;
 		S_Seconas1++;
 	}// P_FPS_INC は 秒数を取っている
@@ -69,42 +69,55 @@ void Thunder::Update()
 	T_Img = Thunder_Anim();
 	E_Img = Effect_Anim();
 	C_Img = Cloud_Anim();
+
+	MoveBall();
 }
 
 void Thunder::MoveBall()
 {
 	// マウス左クリックでゲームスタート
-	if (CheckHitKey(KEY_INPUT_1) == 1)
+	if (CheckHitKey(KEY_INPUT_1))
 	{
 		BallFlg = 0;
-		Speed = 5;
+		Speed = 2;
 		BallAngle = 0.625f;
 		ChangeAngle();
 	}
 
 	//ボールの移動処理
-	if (BallFlg != 0) {
+	if (BallFlg != 2) {
 		BallX += MoveX;
 		BallY += MoveY;
 	}
 
 	//壁・天井での反射
-	if (BallX < 4 || BallX > 640 - 4) { // 横の壁
+	if (BallX < 4 || BallX > 610) { // 横の壁
 		if (BallX < 4) {
 			BallX = 4;
 		}
 		else {
-			BallX = 640 - 4;
+			BallX = 610;
 		}
 		BallAngle = (1 - BallAngle) + 0.5f;
 		if (BallAngle > 1) BallAngle -= 1.0f;
 		ChangeAngle();
 	}
-	if (BallY < 8) { // 上の壁
-		BallAngle = (1 - BallAngle);
+	if (BallY < 8 || BallY > 510) { // 上下の壁
+		if (BallY < 8) {
+			BallAngle = (1 - BallAngle);
+			//BallY = 8;
+		}
+		else {
+			BallY = 510;
+		}
+		BallAngle = (1 - BallAngle) + 0.5f;
 		ChangeAngle();
 	}
-	if (BallY > 480 + 4) {  
+	//if (BallY < 8) { // 上の壁
+	//	
+	//	ChangeAngle();
+	//}
+	if (BallY > 480 + 4) {
 		//ボールをスタート状態にする
 		BallFlg = 2;
 	}
@@ -240,9 +253,9 @@ void Thunder::Draw() const
 	DrawGraph(400, 100, T_Img, TRUE);
 	
 	//雷（雷の弾）の表示
-	DrawGraph(400, 200, E_Img, TRUE);
+	DrawGraph(BallX, BallY, E_Img, TRUE);
 
-	DrawCircle(BallX, BallY, 5, 0xffffff, TRUE);
+	//DrawCircle(BallX, BallY, 5, 0xffffff, TRUE);
 
 	//雲の描画
 	DrawGraph(320, 90, CloudImg, TRUE);
