@@ -40,7 +40,7 @@ AbstractScene* GameMain::Update()
 {
 	stage->Update();
 	player->Update();
-	enemybird->Update(PLAYER::P_Move_X, PLAYER::P_Move_Y);
+	enemybird->Update(/*PLAYER::P_Move_X, PLAYER::P_Move_Y*/);
 	bubble->Update();
 	fish->Update();
 	//enemybird->Update(player->GetLocationX(), player->GetLocationY());
