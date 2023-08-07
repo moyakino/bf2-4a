@@ -11,7 +11,7 @@ class Fish {
 private:
   int  Fish_ArrayImg[9];
   int i = 0;
-  int	F_Seconas1;
+  int	F_Seconas2;
   int F_AnimImg = 0;
   int Fish_Img = 0;
   int f_fps;
@@ -29,7 +29,7 @@ public:
     ~Fish();
 
     // XVˆ—‚ğÀ‘•‚·‚é
-    void Update();
+    void Update(int x, int y);
 
     // •`‰æˆ—‚ğÀ‘•‚·‚é
     void Draw() const;

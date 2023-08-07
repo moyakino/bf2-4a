@@ -1,4 +1,6 @@
 #pragma once
+#include "BoxCollider.h"
+
 //プレイヤー 待機中アニメーション (風船が二つの場合)
 #define STAND_BY_BALLOON2_0 0
 #define STAND_BY_BALLOON2_1 1
@@ -48,7 +50,7 @@
 #define LEFT_MOVE -2000
 #define RIGHT_MOVE 2000
 
-class PLAYER
+class PLAYER :public BoxCollider
 {
 private:
 	//(仮)プレイヤー画像 分割読み込み用変数
@@ -117,7 +119,7 @@ private:
 	//FPSと秒数カウント
 	int		P_FPS;
 	int		P_Seconas1;
-
+	int		F_Seconas1;
 	int		MouseX;
 	int		MouseY;
 
@@ -129,10 +131,10 @@ public:
 	//Player  Y座標用変数
 	static float	P_Move_Y;
 	static int		FishFlg;
-	//(仮)画像の左右反転用フラグ FALSE:普通に描画 TRUE:左右反転
+	/*(仮)画像の左右反転用フラグ FALSE:普通に描画 TRUE:左右反転*/
 	static	int		P_TurnFlg;
 	static float	px1, py1, px2, py2, p_uc, py_u;
-
+	static	int		F_TurnFlg;
 	//コンストラクタ
 	PLAYER();
 
@@ -171,4 +173,9 @@ public:
 	void Beaten_Anim();
 	//Playerが地面についているかを取る
 	void Stand_Foot();
+
+	void SetStandFlg(bool b) { P_Stand_Flg = b; }
+
+	Location GetLocation() { return location; }
+
 };
