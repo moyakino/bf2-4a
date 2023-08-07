@@ -20,7 +20,21 @@ protected:
 
 public:
 
+	float stage_y;
+	float box_y;
+
+	float stage_x1;
+	float stage_x2;
+
+	float box_x1;
+	float box_x2;
+
 	int HitCollider(BoxCollider* b_col);
+	int TopBoxCollider(BoxCollider* b_col);
+	int L_SideBoxCollider(BoxCollider* b_col);
+	int R_SideBoxCollider(BoxCollider* b_col);
+
+
 	Location GetLocation();
 	Erea GetErea();
 

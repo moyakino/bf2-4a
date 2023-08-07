@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "testPlayer.h"
 
+#include "PadInput.h"
 
 //コンストラクタ
 GameMain::GameMain()
@@ -15,9 +16,25 @@ GameMain::GameMain()
 	player = new PLAYER();
 	bubble = new Bubble();
 	fish = new Fish();
-	//enemybird = new EnemyBird();
-	stage = new Stage();
+	enemybird = new EnemyBird();
+	//bubble = new Bubble();
+	//stage = new Stage();
 	thunder = new Thunder();
+
+	Snum = 0;
+
+	switch (Snum)
+	{
+	case 0:
+		//ステージの生成
+		for (int i = 0; i < 3; i++)
+		{
+			StageFoot[i] = new Stage(Snum, i);
+		}
+
+		break;
+	}
+
 }
 
 GameMain::~GameMain()
@@ -30,13 +47,12 @@ GameMain::~GameMain()
 	delete ui;
 	delete enemybird;
 
-
 }
 
 
 AbstractScene* GameMain::Update()
 {
-	stage->Update();
+	//stage->Update();
 	player->Update();
 	//enemybird->Update(PLAYER::P_Move_X, PLAYER::P_Move_Y);
 	bubble->Update();
@@ -45,6 +61,65 @@ AbstractScene* GameMain::Update()
 	thunder->Update();
 
 	//bubble->Update();
+
+
+	
+	fps++;
+
+	// Xボタン単押し
+	int X_Btn = PAD_INPUT::OnButton(XINPUT_BUTTON_X);
+	if (X_Btn == 1) {
+		if (fps % 2 == 0) {
+			if (++Snum > 4) {
+				Snum = 0;
+			}
+		}
+	}
+
+
+	//当たり判定
+	switch (Snum)
+	{
+	case 0:
+
+		for (int i = 0; i < 3; i++)
+		{
+			//プレイヤーが足場に当たっているか
+			if (StageFoot[i]->HitCollider(player) == true)
+			{
+				//かつ、足場の上に立っているかどうか
+				if (StageFoot[i]->TopBoxCollider(player) == true) 
+				{
+					player->Player_Move();
+				}
+
+				//それ以外の場所なら跳ね返る
+				if (StageFoot[i]->L_SideBoxCollider(player) == true) 
+				{
+
+				}
+
+				if (StageFoot[i]->R_SideBoxCollider(player) == true) 
+				{
+
+				}
+			}
+
+			////敵が足場に当たっているか
+			//if (StageFoot[i]->HitCollider(Enemy[i]) == true)
+			//{
+			//	//かつ、足場の上に立っているかどうか
+			//	if (StageFoot[i]->TopBoxCollider(Enemy[i]) == true)
+			//	{
+			//		Enemy[i]->Update();
+			//	}
+			//}
+
+		}
+		break;
+	}
+
+
 
 	return this;
 }
@@ -63,9 +138,24 @@ void GameMain::Draw()const
 	//DrawGraph(480, 416, StageLand_R, TRUE);
 	//DrawGraph(160,444,StageSea,TRUE);
 
-	stage->Draw();
+
+	switch (Snum)
+	{
+	case 0:
+		//ステージの描画
+		for (int i = 0; i < 3; i++)
+		{
+			StageFoot[i]->Draw();
+		}
+
+
+		break;
+	}
+
+
+	//stage->Draw();
 	player->Draw();
-	//enemybird->Draw();
+	enemybird->Draw();
 	//enemybird->Draw();
 
 	bubble->Draw();
@@ -75,5 +165,6 @@ void GameMain::Draw()const
 	ui->Draw();
 
 	DrawFormatString(0, 50, GetColor(255, 0, 0), "GameMain");
+	DrawFormatString(400, 50, GetColor(255, 0, 0), "Snum:%d", Snum);
 	
 }
