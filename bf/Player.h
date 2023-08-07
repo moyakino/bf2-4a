@@ -174,6 +174,6 @@ public:
 	//Player‚ª’n–Ê‚É‚Â‚¢‚Ä‚¢‚é‚©‚ðŽæ‚é
 	void Stand_Foot();
 
-	static int F_TurnFlg;
-	
+	void SetStandFlg(bool b) { P_Stand_Flg = b; }
+
 };
