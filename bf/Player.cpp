@@ -325,31 +325,25 @@ void PLAYER::Player_Gravity()
 {
     if (P_Stand_Flg == FALSE)
     {
-        //P_YSpeed = P_YSpeed + 0.009f;
-        P_YSpeed = P_YSpeed + 0.01f;
-        location.y = location.y + P_YSpeed;
-        if (P_YSpeed >= 1.0f) {         //速度制限  前は 1.3f
-            P_YSpeed = 1.0f;
+        if (P_Balloon_Flg == TRUE) {
+            P_Stand_Flg = FALSE;
+            //P_YSpeed = P_YSpeed + 0.009f;
+            P_YSpeed = P_YSpeed + 0.01f;
+            location.y = location.y + P_YSpeed;
+            if (P_YSpeed >= 1.3f) {         //速度制限  前は 1.3f
+                P_YSpeed = 1.3f;
+            }
+        }
+        else {
+            P_Stand_Flg = FALSE;
+            //P_YSpeed = P_YSpeed + 0.009f;
+            P_YSpeed = P_YSpeed + 0.02f;
+            location.y = location.y + P_YSpeed;
+            if (P_YSpeed >= 1.0f) {         //速度制限  前は 1.3f
+                P_YSpeed = 1.0f;
+            }
         }
     }
-}
-    if (P_Balloon_Flg == TRUE) {
-        P_Stand_Flg = FALSE;
-        //P_YSpeed = P_YSpeed + 0.009f;
-        P_YSpeed = P_YSpeed + 0.01f;
-        P_Move_Y = P_Move_Y + P_YSpeed;
-        if (P_YSpeed >= 1.3f) {         //速度制限  前は 1.3f
-            P_YSpeed = 1.3f;
-        }
-    }else {
-        P_Stand_Flg = FALSE;
-        //P_YSpeed = P_YSpeed + 0.009f;
-        P_YSpeed = P_YSpeed + 0.02f;
-        P_Move_Y = P_Move_Y + P_YSpeed;
-        if (P_YSpeed >= 1.0f) {         //速度制限  前は 1.3f
-            P_YSpeed = 1.0f;
-        }
-    } 
 }
 
 void PLAYER::Player_Air_A()
