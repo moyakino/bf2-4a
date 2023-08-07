@@ -12,10 +12,12 @@ Fish::Fish()
 
 
     f_fps = 0;
-    F_Seconas1 = 0;
+    F_Seconas2 = 0;
 
 	if (LoadDivGraph("images/Enemy/Enemy_FishAnimation.png", 10, 5, 2, 64, 64, Fish_ArrayImg)) {}
     ChengeImg = 0;
+
+  
 }
 
 Fish::~Fish()
@@ -25,33 +27,48 @@ Fish::~Fish()
 
 void Fish::Update()
 {
+    f_fps++;
     PlayerX = PLAYER::P_Move_X;
     PlayerY = PLAYER::P_Move_Y;
-
-    f_fps++;
-    if (PLAYER::FishFlg == TRUE) {
-       if (f_fps % 20 == 0) {
-           ChengeImg++;
-           if(ChengeImg > 5) {
-              ChengeImg = 0;
-              PLAYER::FishFlg = FALSE;
-           }
-       }
-    }
-
-    if (f_fps > 59) {
+    if (f_fps > 20) {
+      /*  F_Seconas2++;*/
         f_fps = 0;
+        //魚のアニメーション
+        if (PLAYER::FishFlg == TRUE) {
+         //   /* if (f_fps / 1==0) {*/
+         //    if (f_fps % 10 == 0 || f_fps % 10 == 1 || f_fps % 10 == 2 || f_fps % 10 == 3 || f_fps % 10 == 4 || f_fps % 10 ==5) {
+            if (F_Seconas2++) {
+                ChengeImg++;
+                if (ChengeImg > 5) {
+                    ChengeImg = 0;
+                    PLAYER::FishFlg = FALSE;
+                }
+            }
+           /* }*/
+        }
     }
 }
    
 void Fish::Draw() const
 {
-    //DrawFormatString(0, 20, 0xffffff, "Second:%d", F_Seconas1);
-    DrawFormatString(100, 400, 0xffffff, "f_fps:%d", f_fps);
-    if (PLAYER::FishFlg == TRUE) {
-       
-            DrawRotaGraphF(PlayerX + 30, 420, 1.0f, 0, Fish_ArrayImg[ChengeImg], TRUE);
-       
+    DrawFormatString(0, 20, 0xffffff, "Second:%d", F_Seconas2);
+    if (PLAYER::FishFlg == TRUE) 
+    {
+        if (PLAYER::F_TurnFlg == TRUE)
+        {
+            /*DrawRotaGraph(PlayerX + 30, PlayerY+30, 1.0f, 0, Fish_ArrayImg[ChengeImg], TRUE);*/
+            DrawGraph(PlayerX , 390, Fish_ArrayImg[ChengeImg], TRUE);
+        }
+        else {
+            if (PLAYER::F_TurnFlg == FALSE) {
+                DrawTurnGraph(PlayerX , 390, Fish_ArrayImg[ChengeImg], TRUE);
+            }
+        }
+       /* if (PLAYER::F_TurnFlg == FALSE)
+        {
+            DrawTurnGraph(PlayerX - 30, PlayerY + 30, Fish_ArrayImg[ChengeImg], TRUE);*/
+            /*DrawTurnGraph(PlayerX - 30, 420, Fish_ArrayImg[ChengeImg], TRUE);*/
+       /* }*/
     }
     /*DrawRotaGraph(300,410, 1.0f, 0, F_AnimImg, TRUE);*/
     /*DrawGraph(300, 410, Fish_Img, TRUE410);*/

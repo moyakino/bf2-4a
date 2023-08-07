@@ -5,6 +5,7 @@
 
 int PLAYER::FishFlg;
 int PLAYER::P_TurnFlg;
+int PLAYER::F_TurnFlg;
 
 float PLAYER::p_uc;
 float PLAYER::P_Move_X;
@@ -54,6 +55,7 @@ PLAYER::PLAYER()
     P_Air_L_Flg = 0;
     P_FPS = 0;
     P_Seconas1 = 0;
+    F_Seconas1 = 0;
     MouseX = 0;
     MouseY = 0;
 
@@ -172,6 +174,7 @@ void PLAYER::Update()
         P_Seconas1 = 0;
     }
 
+    
 }
 
 void PLAYER::Player_Init()
@@ -371,19 +374,34 @@ void PLAYER::Stand_Foot()
     int fpscount = 0;
 
     //魚の出現
-    if (py_u > 420)
+    if (py_u > 405&&py_u<430)
     {
-        rand = GetRand(100);
-
-        if (rand <= 30) 
-        {
-            FishFlg = TRUE;
-
+        //60fps == 1秒　で超えたら fpsを 0 にする
+        if (P_FPS > 59) {
+            P_FPS = 0;
+            F_Seconas1++;
         }
+        if (F_Seconas1 == 3) {
+            rand = GetRand(99);
+            F_Seconas1 = 0;
+            if (rand < 30)
+            {
+                FishFlg = TRUE;
+               
+            }
+           
+        }
+        //rand = GetRand(i);
     }
-   /* else {
-        FishFlg = FALSE;
-    }*/
+    //魚の向き
+    if (P_TurnFlg == TRUE) 
+    {
+        F_TurnFlg = TRUE;
+    }
+    else {
+        F_TurnFlg = FALSE;
+    }
+
  }
 
 void PLAYER::Respawn_Anim()
@@ -562,8 +580,8 @@ PLAYER::~PLAYER()
 
 void PLAYER::Draw()const
 {
-    DrawFormatString(0, 20, GetColor(255, 255, 255), " FPSCnt：%d", P_FPS);
-
+    DrawFormatString(0, 20, GetColor(255, 255, 255), " FPS：%d", P_FPS); 
+        DrawFormatString(0, 340, GetColor(255, 255, 255), " F_Seconas1：%d", F_Seconas1);
     //Aボタン描画
     //DrawFormatString(0, 40, GetColor(255, 255, 255), " 押された瞬間：%d 離された瞬間：%d", PAD_INPUT::OnButton(XINPUT_BUTTON_A), PAD_INPUT::OnRelease(XINPUT_BUTTON_A));
 
@@ -576,6 +594,9 @@ void PLAYER::Draw()const
     DrawFormatString(0, 120, GetColor(255, 255, 255), " マウス座標：X座標 %d Y座標 %d", MouseX, MouseY);
 
     //DrawFormatString(330, 120, GetColor(255, 255, 255), " AnimCnt：%d", AnimCnt);
+    DrawFormatString(0, 180, GetColor(255, 255, 255), " マウス座標：X座標 %d Y座標 %d", MouseX, MouseY);
+
+    DrawFormatString(0, 360, GetColor(255, 255, 255), " rand：%d", rand);
 
     DrawFormatString(0, 140, GetColor(255, 255, 255), " 地上     Stand_Flg： %d ", P_Stand_Flg);
     DrawFormatString(0, 160, GetColor(255, 255, 255), " やられ   Beaten_Flg ： %d ", Beaten_Flg);
@@ -587,7 +608,9 @@ void PLAYER::Draw()const
     DrawFormatString(0, 260, GetColor(255, 255, 255), " P_XSpeed :%0.1f ", P_XSpeed);
     DrawFormatString(0, 280, GetColor(255, 255, 255), " P_Air_L_Flg :%d", P_Air_L_Flg);
     DrawFormatString(0, 300, GetColor(255, 255, 255), " P_Air_R_Flg :%d", P_Air_R_Flg);
-    DrawFormatString(0, 320, GetColor(255, 255, 255), " L_Stick :%d", P_L_Stick_Flg);
+    DrawFormatString(0, 320, GetColor(255, 255, 255), " Fish :%d", FishFlg);
+
+    DrawLine(160, 417, 480, 417, 0xffffff, TRUE);
 
     DrawCircle(p_uc, py2, 2.0f, 0xff0000, TRUE);
 
