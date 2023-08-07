@@ -15,8 +15,7 @@ GameMain::GameMain()
 	player = new PLAYER();
 	bubble = new Bubble();
 	fish = new Fish();
-	enemybird = new EnemyBird();
-	//bubble = new Bubble();
+	//enemybird = new EnemyBird();
 	stage = new Stage();
 	thunder = new Thunder();
 }
@@ -29,8 +28,7 @@ GameMain::~GameMain()
 	delete thunder;
 	delete fish;
 	delete ui;
-	delete enemybird;
-	//delete bubble;
+	//delete enemybird;
 
 
 }
@@ -40,14 +38,11 @@ AbstractScene* GameMain::Update()
 {
 	stage->Update();
 	player->Update();
-	enemybird->Update(PLAYER::P_Move_X, PLAYER::P_Move_Y);
+	//enemybird->Update(PLAYER::P_Move_X, PLAYER::P_Move_Y);
 	bubble->Update();
 	fish->Update();
 	//enemybird->Update(player->GetLocationX(), player->GetLocationY());
-	bubble->Update();
 	thunder->Update();
-
-	//bubble->Update();
 
 	return this;
 }
@@ -65,18 +60,15 @@ void GameMain::Draw()const
 	//DrawGraph(0, 416, StageLand_L, TRUE);
 	//DrawGraph(480, 416, StageLand_R, TRUE);
 	//DrawGraph(160,444,StageSea,TRUE);
-
+	
 	stage->Draw();
-	player->Draw();
+	
 	//enemybird->Draw();
-	enemybird->Draw();
-
+	//enemybird->Draw();
 	bubble->Draw();
-
-
-	thunder->Draw();
 	ui->Draw();
-
-	DrawFormatString(0, 50, GetColor(255, 0, 0), "GameMain");
+	thunder->Draw();
+	player->Draw();
+	
 	
 }

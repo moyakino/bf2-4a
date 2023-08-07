@@ -154,16 +154,23 @@ void PLAYER::Update()
         if (P_Stand_Flg == FALSE && P_B_Btn == 0 || P_Stand_Flg == FALSE && P_A_Btn == 0 ) {
             Player_Gravity();
         }
+
+        if (P_Move_Y > 500.0f) {
+            Player_Init();
+        }
     }
     else {
         if (Beaten_Flg == TRUE) {
+            //海の箇所に落ちると死亡に変更
             if (P_Move_Y < 500.0f) {
                 P_Move_Y = P_Move_Y + 1.0f;
                 Beaten_Anim();
             }
             else {
+                if (P_Move_Y > 500.0f) {
+                    Player_Init();
+                }
                 Beaten_Flg = FALSE;
-                Player_Init();
             }
         }
     }
@@ -277,7 +284,7 @@ void PLAYER::Player_Levitation_Move()
     //加速が強すぎると速すぎてすごい動きになるため減速させたい
 
     //空中右移動
-    if (P_B_Btn == 1 && P_L_Stick > 128 && P_L_Stick > RIGHT_MOVE || P_A_Btn == 1 && P_L_Stick > RIGHT_MOVE) {
+    if (P_B_Btn == 1 && P_L_Stick > RIGHT_MOVE || P_A_Btn == 1 && P_L_Stick > RIGHT_MOVE) {
         P_Air_R_Flg = TRUE;
 
         P_XSpeed = P_XSpeed + 0.09f;    //速度加算
@@ -309,35 +316,57 @@ void PLAYER::Player_Levitation_Move()
     ここで上手く処理をかければ成功するはず*/
 
     if (P_Stand_Flg == FALSE && P_Air_L_Flg == FALSE && P_Air_R_Flg == FALSE) {
-        //P_XSpeed = P_XSpeed;
         P_XSpeed *= 0.999f;
         Gliding_Anim();
         P_Move_X = P_Move_X + P_XSpeed;
     }
 }
 
-
 void PLAYER::Player_Gravity()
 {
-    P_Stand_Flg = FALSE;
-    //P_YSpeed = P_YSpeed + 0.009f;
-    P_YSpeed = P_YSpeed + 0.01f;
-    P_Move_Y = P_Move_Y + P_YSpeed;
-    if (P_YSpeed >= 1.0f) {         //速度制限  前は 1.3f
-        P_YSpeed = 1.0f;
-    }
+    if (P_Balloon_Flg == TRUE) {
+        P_Stand_Flg = FALSE;
+        //P_YSpeed = P_YSpeed + 0.009f;
+        P_YSpeed = P_YSpeed + 0.01f;
+        P_Move_Y = P_Move_Y + P_YSpeed;
+        if (P_YSpeed >= 1.3f) {         //速度制限  前は 1.3f
+            P_YSpeed = 1.3f;
+        }
+    }else {
+        P_Stand_Flg = FALSE;
+        //P_YSpeed = P_YSpeed + 0.009f;
+        P_YSpeed = P_YSpeed + 0.02f;
+        P_Move_Y = P_Move_Y + P_YSpeed;
+        if (P_YSpeed >= 1.0f) {         //速度制限  前は 1.3f
+            P_YSpeed = 1.0f;
+        }
+    } 
 }
 
 void PLAYER::Player_Air_A()
 {
-    // Aボタン単押し
-    P_Stand_Flg = FALSE;
-    Rise_Anim();
-    P_YSpeed = P_YSpeed + -0.2f;
-    P_Move_Y = P_Move_Y + P_YSpeed;
-    //P_Move_Y--;
-    if (P_YSpeed <= -1.0f) {        //速度制限
-        P_YSpeed = -1.0f;
+    if (P_Balloon_Flg == TRUE) {
+        // Aボタン単押し
+        if (P_FPS % 2 == 0) {
+            P_Stand_Flg = FALSE;
+            Rise_Anim();
+            P_YSpeed = P_YSpeed + -0.4f;
+            P_Move_Y = P_Move_Y + P_YSpeed;
+            if (P_YSpeed <= -1.0f) {        //速度制限
+                P_YSpeed = -1.0f;
+            }
+        }
+    }
+    else {
+        if (P_FPS % 2 == 0) {
+            P_Stand_Flg = FALSE;
+            Rise_Anim();
+            P_YSpeed = P_YSpeed + -0.6f;
+            P_Move_Y = P_Move_Y + P_YSpeed;
+            if (P_YSpeed <= -1.0f) {        //速度制限
+                P_YSpeed = -1.0f;
+            }
+        }
     }
 }
 
@@ -345,26 +374,26 @@ void PLAYER::Player_Air_B()
 {
     /*AボタンとBボタンの処理を同じにするためにBボタン側にもインターバルをつける
       Bボタンは長押しなので気にならないはず*/
-
-    // Bボタン長押し
-    //P_Stand_Flg = FALSE;
-
-    //P_YSpeed = P_YSpeed + -0.04f;
-    ////P_YSpeed = P_YSpeed + -0.2;
-    //P_Move_Y = P_Move_Y + P_YSpeed;
-    ////P_Move_Y--;
-    //if (P_YSpeed <= -1.0f) {
-    //    P_YSpeed = -1.0f;
-    //}
-
-    P_Stand_Flg = FALSE;
-    Rise_Anim();
-    if (P_FPS % 2 == 0) {
-        P_YSpeed = P_YSpeed + -0.05f;
-        P_Move_Y = P_Move_Y + P_YSpeed;
-        //P_Move_Y--;
-        if (P_YSpeed <= -1.0f) {        //速度制限
-            P_YSpeed = -1.0f;
+    if (P_Balloon_Flg == TRUE) {
+        if (P_FPS % 8 == 0) {
+            P_Stand_Flg = FALSE;
+            Rise_Anim();
+            P_YSpeed = P_YSpeed + -0.2f;
+            P_Move_Y = P_Move_Y + P_YSpeed;
+            if (P_YSpeed <= -1.0f) {        //速度制限
+                P_YSpeed = -1.0f;
+            }
+        }
+    }
+    else {
+        if (P_FPS % 10 == 0) {
+            P_Stand_Flg = FALSE;
+            Rise_Anim();
+            P_YSpeed = P_YSpeed + -0.4f;
+            P_Move_Y = P_Move_Y + P_YSpeed;
+            if (P_YSpeed <= -1.0f) {        //速度制限
+                P_YSpeed = -1.0f;
+            }
         }
     }
 }
@@ -542,6 +571,39 @@ void PLAYER::Gliding_Anim()
     }
 }
 
+void PLAYER::Rise_Anim_A()
+{
+    if (P_Balloon_Flg == TRUE) {
+
+        if (P_FPS % 24 >= 0 && P_FPS % 24 < 10) {
+            P_Img = P_ArrayImg[LEVITATION_BALLOON2_0];
+        }
+        else if (P_FPS % 24 > 9 && P_FPS % 24 < 20) {
+            P_Img = P_ArrayImg[LEVITATION_BALLOON2_1];
+        }
+        else if (P_FPS % 24 > 19 && P_FPS % 24 < 30) {
+            P_Img = P_ArrayImg[LEVITATION_BALLOON2_2];
+        }
+        else if (P_FPS % 24 > 29 && P_FPS % 24 <= 40) {
+            P_Img = P_ArrayImg[LEVITATION_BALLOON2_1];
+        }
+    }
+    else {
+        if (P_FPS >= 0 && P_FPS < 15) {
+            P_Img = P_ArrayImg[LEVITATION_BALLOON1_0];
+        }
+        else if (P_FPS > 14 && P_FPS < 30) {
+            P_Img = P_ArrayImg[LEVITATION_BALLOON1_1];
+        }
+        else if (P_FPS > 29 && P_FPS < 45) {
+            P_Img = P_ArrayImg[LEVITATION_BALLOON1_2];
+        }
+        else if (P_FPS > 44 && P_FPS <= 60) {
+            P_Img = P_ArrayImg[LEVITATION_BALLOON1_1];
+        }
+    }
+}
+
 void PLAYER::Rise_Anim()
 {
     if (P_Balloon_Flg == TRUE) {
@@ -603,27 +665,27 @@ void PLAYER::Draw()const
     //Aボタン描画
     //DrawFormatString(0, 40, GetColor(255, 255, 255), " 押された瞬間：%d 離された瞬間：%d", PAD_INPUT::OnButton(XINPUT_BUTTON_A), PAD_INPUT::OnRelease(XINPUT_BUTTON_A));
 
-    DrawFormatString(0, 60, GetColor(255, 255, 255), " 左スティック：横軸値 %d 縦軸値 %d", PAD_INPUT::GetLStickX(), PAD_INPUT::GetLStickY());
+    //DrawFormatString(0, 60, GetColor(255, 255, 255), " 左スティック：横軸値 %d 縦軸値 %d", PAD_INPUT::GetLStickX(), PAD_INPUT::GetLStickY());
 
-    DrawFormatString(0, 80, GetColor(255, 255, 255), " プレイ左上：X座標 %0.1f Y座標 %0.01f", P_Move_X, P_Move_Y);
+    //DrawFormatString(0, 80, GetColor(255, 255, 255), " プレイ左上：X座標 %0.1f Y座標 %0.01f", P_Move_X, P_Move_Y);
 
-    DrawFormatString(0, 100, GetColor(255, 255, 255), " 移動フラグ：左移動 %d 右移動 %d", P_MoveL_Flg, P_MoveR_Flg);
+    //DrawFormatString(0, 100, GetColor(255, 255, 255), " 移動フラグ：左移動 %d 右移動 %d", P_MoveL_Flg, P_MoveR_Flg);
 
     DrawFormatString(0, 120, GetColor(255, 255, 255), " マウス座標：X座標 %d Y座標 %d", MouseX, MouseY);
 
-    //DrawFormatString(330, 120, GetColor(255, 255, 255), " AnimCnt：%d", AnimCnt);
+    DrawFormatString(0, 140, GetColor(255, 255, 255), " AnimCnt：%d", AnimCnt);
 
-    DrawFormatString(0, 140, GetColor(255, 255, 255), " 地上     Stand_Flg： %d ", P_Stand_Flg);
-    DrawFormatString(0, 160, GetColor(255, 255, 255), " やられ   Beaten_Flg ： %d ", Beaten_Flg);
+    DrawFormatString(0, 160, GetColor(255, 255, 255), " 地上     Stand_Flg： %d ", P_Stand_Flg);
+    //DrawFormatString(0, 160, GetColor(255, 255, 255), " やられ   Beaten_Flg ： %d ", Beaten_Flg);
     //DrawFormatString(0, 160, GetColor(255, 255, 255), " 海   Foll_Flg ： %d ", P_Foll_Flg);
-    DrawFormatString(0, 180, GetColor(255, 255, 255), " 風船   Balloon_Flg  ： %d ", P_Balloon_Flg);
+    //DrawFormatString(0, 180, GetColor(255, 255, 255), " 風船   Balloon_Flg  ： %d ", P_Balloon_Flg);
     DrawFormatString(0, 200, GetColor(255, 255, 255), " p_uc X: %0.1f ", p_uc);
     DrawFormatString(0, 220, GetColor(255, 255, 255), " py2  Y: %0.1f ", py2);
     DrawFormatString(0, 240, GetColor(255, 255, 255), " P_YSpeed :%0.1f ", P_YSpeed);
     DrawFormatString(0, 260, GetColor(255, 255, 255), " P_XSpeed :%0.1f ", P_XSpeed);
-    DrawFormatString(0, 280, GetColor(255, 255, 255), " P_Air_L_Flg :%d", P_Air_L_Flg);
-    DrawFormatString(0, 300, GetColor(255, 255, 255), " P_Air_R_Flg :%d", P_Air_R_Flg);
-    DrawFormatString(0, 320, GetColor(255, 255, 255), " L_Stick :%d", P_L_Stick_Flg);
+    //DrawFormatString(0, 280, GetColor(255, 255, 255), " P_Air_L_Flg :%d", P_Air_L_Flg);
+    //DrawFormatString(0, 300, GetColor(255, 255, 255), " P_Air_R_Flg :%d", P_Air_R_Flg);
+    //DrawFormatString(0, 320, GetColor(255, 255, 255), " L_Stick :%d", P_L_Stick_Flg);
 
     DrawCircle(p_uc, py2, 2.0f, 0xff0000, TRUE);
 

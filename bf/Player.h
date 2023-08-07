@@ -74,6 +74,7 @@ private:
 
 	//(仮)Yボタン単押し
 	int		P_Y_Btn;
+	//(仮)やられアニメーションの再生
 	int		Beaten_Flg;
 	int		AnimCnt;
 	int		Respawn_Flg;
@@ -112,8 +113,6 @@ private:
 	int		P_Foll_Flg;
 
 	float	sx1, sy1, sx2, sy2;
-
-
 
 	//FPSと秒数カウント
 	int		P_FPS;
@@ -166,6 +165,7 @@ public:
 	//Playerが滑空している時のアニメーション 
 	void Gliding_Anim();
 	//Playerが上昇している時のアニメーション
+	void Rise_Anim_A();
 	void Rise_Anim();
 	//Playerやられアニメーション
 	void Beaten_Anim();
