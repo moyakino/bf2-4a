@@ -581,7 +581,7 @@ PLAYER::~PLAYER()
 void PLAYER::Draw()const
 {
     DrawFormatString(0, 20, GetColor(255, 255, 255), " FPS：%d", P_FPS); 
-        DrawFormatString(0, 340, GetColor(255, 255, 255), " F_Seconas1：%d", F_Seconas1);
+        DrawFormatString(100, 340, GetColor(255, 255, 255), " F_Seconas1：%d", F_Seconas1);
     //Aボタン描画
     //DrawFormatString(0, 40, GetColor(255, 255, 255), " 押された瞬間：%d 離された瞬間：%d", PAD_INPUT::OnButton(XINPUT_BUTTON_A), PAD_INPUT::OnRelease(XINPUT_BUTTON_A));
 
@@ -596,7 +596,7 @@ void PLAYER::Draw()const
     //DrawFormatString(330, 120, GetColor(255, 255, 255), " AnimCnt：%d", AnimCnt);
     DrawFormatString(0, 180, GetColor(255, 255, 255), " マウス座標：X座標 %d Y座標 %d", MouseX, MouseY);
 
-    DrawFormatString(0, 360, GetColor(255, 255, 255), " rand：%d", rand);
+    DrawFormatString(100, 360, GetColor(255, 255, 255), " rand：%d", rand);
 
     DrawFormatString(0, 140, GetColor(255, 255, 255), " 地上     Stand_Flg： %d ", P_Stand_Flg);
     DrawFormatString(0, 160, GetColor(255, 255, 255), " やられ   Beaten_Flg ： %d ", Beaten_Flg);
