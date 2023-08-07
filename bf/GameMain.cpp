@@ -94,6 +94,10 @@ AbstractScene* GameMain::Update()
 				{
 					player->Player_Move();
 				}
+				else
+				{
+					player->SetStandFlg(false);
+				}
 
 				//‚»‚êˆÈŠO‚ÌêŠ‚È‚ç’µ‚Ë•Ô‚é
 				if (StageFoot[i]->L_SideBoxCollider(player) == true) 

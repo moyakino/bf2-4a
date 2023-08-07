@@ -127,8 +127,6 @@ void PLAYER::Update()
     Player_Img();
 
     if (Beaten_Flg == FALSE) {
-        //ステージの足場に立っていたら地上の移動に入る
-
 
         if (P_A_Btn == 1) {
             Respawn_Flg = FALSE;
@@ -226,7 +224,7 @@ void PLAYER::Player_Img()
 
 void PLAYER::Player_Move()
 {
-    //P_Air_Flg = FALSE;
+    P_Stand_Flg = TRUE;
     P_YSpeed = 0.0f;
 
     //右移動
@@ -313,12 +311,14 @@ void PLAYER::Player_Levitation_Move()
 
 void PLAYER::Player_Gravity()
 {
-    P_Stand_Flg = FALSE;
-    //P_YSpeed = P_YSpeed + 0.009f;
-    P_YSpeed = P_YSpeed + 0.01f;
-    location.y = location.y + P_YSpeed;
-    if (P_YSpeed >= 1.0f) {         //速度制限  前は 1.3f
-        P_YSpeed = 1.0f;
+    if (P_Stand_Flg == FALSE)
+    {
+        //P_YSpeed = P_YSpeed + 0.009f;
+        P_YSpeed = P_YSpeed + 0.01f;
+        location.y = location.y + P_YSpeed;
+        if (P_YSpeed >= 1.0f) {         //速度制限  前は 1.3f
+            P_YSpeed = 1.0f;
+        }
     }
 }
 
