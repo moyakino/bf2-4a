@@ -26,11 +26,11 @@ Fish::~Fish()
     
 }
 
-void Fish::Update()
+void Fish::Update(int x,int y)
 {
     f_fps++;
-    PlayerX = PLAYER::P_Move_X;
-    PlayerY = PLAYER::P_Move_Y;
+    PlayerX =x;
+    PlayerY = y;
     if (f_fps > 20) {
       /*  F_Seconas2++;*/
         f_fps = 0;

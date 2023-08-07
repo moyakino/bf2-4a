@@ -29,7 +29,7 @@ public:
     ~Fish();
 
     // XVˆ—‚ğÀ‘•‚·‚é
-    void Update();
+    void Update(int x, int y);
 
     // •`‰æˆ—‚ğÀ‘•‚·‚é
     void Draw() const;

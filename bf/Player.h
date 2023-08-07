@@ -135,7 +135,7 @@ public:
 	/*(仮)画像の左右反転用フラグ FALSE:普通に描画 TRUE:左右反転*/
 	static	int		P_TurnFlg;
 	static float	px1, py1, px2, py2, p_uc, py_u;
-
+	static	int		F_TurnFlg;
 	//コンストラクタ
 	PLAYER();
 
@@ -175,5 +175,7 @@ public:
 	void Stand_Foot();
 
 	void SetStandFlg(bool b) { P_Stand_Flg = b; }
+
+	Location GetLocation() { return location; }
 
 };
