@@ -10,8 +10,9 @@ GameMain::GameMain()
 {
 
 
-	/*Bgm = LoadSoundMem("sounds/SE_Start.wav");
-	PlaySoundMem(Bgm, DX_PLAYTYPE_BACK);*/
+	Bgm = LoadSoundMem("sounds/SE_Start.wav");
+	PlaySoundMem(Bgm, DX_PLAYTYPE_BACK);
+
 	ui = new UI();
 	player = new PLAYER();
 	bubble = new Bubble();
@@ -163,7 +164,7 @@ void GameMain::Draw()const
 	enemybird->Draw();
 	fish->Draw();
 	bubble->Draw();
-	ui->Draw();
+	//ui->Draw();
 	thunder->Draw();
 
 	DrawFormatString(0, 50, GetColor(255, 0, 0), "GameMain");

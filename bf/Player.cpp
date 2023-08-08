@@ -29,11 +29,10 @@ PLAYER::PLAYER()
     P_Y_Btn = 0;
 
     location.x = 20.0f;
-    location.y = 350.0f;
+    location.y = 349.4f;
     //P_Move_Y = 200.0f;
 
-    P_Move_X = location.x;
-    P_Move_Y = location.y;
+
 
     //地上のスピード
     P_XSpeed = 0.0f;
@@ -97,6 +96,9 @@ void PLAYER::Update()
 
     // Bボタン長押し
     P_B_Btn = PAD_INPUT::OnPressed(XINPUT_BUTTON_B);
+
+    P_Move_X = location.x;
+    P_Move_Y = location.y;
 
     //ワープ用
     Player_Warp();
@@ -187,7 +189,7 @@ void PLAYER::Player_Init()
     P_XSpeed = 0;
     P_YSpeed = 0;
     location.x = 20.0f;
-    location.y = 350.0f;
+    location.y = 349.4f;
     Respawn_Flg = TRUE;
     P_Balloon_Flg = TRUE;
 }
@@ -645,19 +647,19 @@ PLAYER::~PLAYER()
 void PLAYER::Draw()const
 {
     DrawFormatString(0, 20, GetColor(255, 255, 255), " FPS：%d", P_FPS); 
-        DrawFormatString(100, 340, GetColor(255, 255, 255), " F_Seconas1：%d", F_Seconas1);
+        //DrawFormatString(100, 340, GetColor(255, 255, 255), " F_Seconas1：%d", F_Seconas1);
     //Aボタン描画
     //DrawFormatString(0, 40, GetColor(255, 255, 255), " 押された瞬間：%d 離された瞬間：%d", PAD_INPUT::OnButton(XINPUT_BUTTON_A), PAD_INPUT::OnRelease(XINPUT_BUTTON_A));
 
     //DrawFormatString(0, 60, GetColor(255, 255, 255), " 左スティック：横軸値 %d 縦軸値 %d", PAD_INPUT::GetLStickX(), PAD_INPUT::GetLStickY());
 
-    //DrawFormatString(0, 80, GetColor(255, 255, 255), " プレイ左上：X座標 %0.1f Y座標 %0.01f", P_Move_X, P_Move_Y);
+    DrawFormatString(0, 80, GetColor(255, 255, 255), " プレイ左上：X座標 %0.1f Y座標 %0.01f", P_Move_X, P_Move_Y);
 
     //DrawFormatString(0, 100, GetColor(255, 255, 255), " 移動フラグ：左移動 %d 右移動 %d", P_MoveL_Flg, P_MoveR_Flg);
 
     DrawFormatString(0, 120, GetColor(255, 255, 255), " マウス座標：X座標 %d Y座標 %d", MouseX, MouseY);
 
-    DrawFormatString(0, 140, GetColor(255, 255, 255), " AnimCnt：%d", AnimCnt);
+    //DrawFormatString(0, 140, GetColor(255, 255, 255), " AnimCnt：%d", AnimCnt);
 
     DrawFormatString(0, 160, GetColor(255, 255, 255), " 地上     Stand_Flg： %d ", P_Stand_Flg);
     //DrawFormatString(0, 160, GetColor(255, 255, 255), " やられ   Beaten_Flg ： %d ", Beaten_Flg);
@@ -670,8 +672,8 @@ void PLAYER::Draw()const
     //DrawFormatString(0, 280, GetColor(255, 255, 255), " P_Air_L_Flg :%d", P_Air_L_Flg);
     //DrawFormatString(0, 300, GetColor(255, 255, 255), " P_Air_R_Flg :%d", P_Air_R_Flg);
     //DrawFormatString(0, 320, GetColor(255, 255, 255), " L_Stick :%d", P_L_Stick_Flg);
-    DrawFormatString(0, 280, GetColor(255, 255, 255), " P_Air_L_Flg :%d", P_Air_L_Flg);
-    DrawFormatString(0, 300, GetColor(255, 255, 255), " P_Air_R_Flg :%d", P_Air_R_Flg);
+    //DrawFormatString(0, 280, GetColor(255, 255, 255), " P_Air_L_Flg :%d", P_Air_L_Flg);
+    //DrawFormatString(0, 300, GetColor(255, 255, 255), " P_Air_R_Flg :%d", P_Air_R_Flg);
     DrawFormatString(0, 320, GetColor(255, 255, 255), " Fish :%d", FishFlg);
 
     DrawLine(160, 417, 480, 417, 0xffffff, TRUE);

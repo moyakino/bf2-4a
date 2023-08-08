@@ -77,14 +77,14 @@ void Bubble::Update()
 void Bubble::Draw() const {
 
 	DrawRotaGraphF(MoveX, MoveY, 1.0f, 1.0, B_Img, TRUE);
-	DrawFormatString(0, 40, GetColor(255, 255, 255), "Player X???W : %0.1f Y???W : %0.1f", Player, PlayerY);
+	//DrawFormatString(0, 40, GetColor(255, 255, 255), "Player X???W : %0.1f Y???W : %0.1f", Player, PlayerY);
 	DrawBoxAA(MoveX - 15, MoveY - 15, MoveX + 15, MoveY + 15, GetColor(255, 255, 255), FALSE);
 	SetFontSize(14);
 	DrawRotaGraphF(MoveX, MoveY, 1.0f, 1, B_Img, TRUE);
 	DrawLineAA(MoveX - 15, MoveY - 15, MoveX - 15, MoveY + 15, GetColor(255, 0, 0), 1);
-	DrawFormatString(0, 40, GetColor(255, 255, 255), "Player X???W : %0.1f Y???W : %0.1f", Player, PlayerY);
-	DrawFormatString(0, 300, GetColor(255, 255, 255), "MoveX:%0.1f MoveY:%0.1f", MoveX, MoveY);
-	DrawFormatString(0, 320, GetColor(255, 255, 255), "Bubbleflg:%d", Bubbleflg);
+	//DrawFormatString(0, 40, GetColor(255, 255, 255), "Player X???W : %0.1f Y???W : %0.1f", Player, PlayerY);
+	//DrawFormatString(0, 300, GetColor(255, 255, 255), "MoveX:%0.1f MoveY:%0.1f", MoveX, MoveY);
+	//DrawFormatString(0, 320, GetColor(255, 255, 255), "Bubbleflg:%d", Bubbleflg);
 	DrawFormatString(0, 340, GetColor(255, 255, 255), "H_flg:%d", H_flg);
 
 }

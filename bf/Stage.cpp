@@ -45,7 +45,7 @@ Stage::Stage(int num,int i)
 			break;
 
 		case 1:
-			location.x = -55.0;
+			location.x = 0.0;
 			location.y = 414.0;
 			erea.Width = 160.0;
 			erea.Height = 64.0;
