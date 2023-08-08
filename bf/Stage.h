@@ -1,5 +1,8 @@
 #pragma once
-#include "Stage1.h"
+#include "BoxCollider.h"
+
+#define GREEN_FOOT_WIDTH_1 280.0
+#define GREEN_FOOT_HEIGHT_1 17.0
 
 #define GREEN_FOOT_WIDTH_2 112
 #define GREEN_FOOT_HEIGHT_2 17
@@ -26,7 +29,7 @@
 #define RAND_HEIGHT 64
 
 
-class Stage
+class Stage :public BoxCollider
 {
 private:
 	int StageFoot[8];
@@ -40,19 +43,16 @@ private:
 	int StageSample4;
 	int StageSample5;
 
-	int Snum;
-
-	int sFps;
-
-	Stage1* s1;
 
 public:
 
-	static int Bound;
 	static int Stand;
+	static int Bound;
+	static int Death;
+
 
 	//コンストラクタ
-	Stage();
+	Stage(int num,int i);
 
 	//デストラクタ
 	~Stage();
@@ -63,6 +63,5 @@ public:
 	//描画処理
 	void Draw() const;
 
-	void StandRand();
 
 };
