@@ -229,7 +229,7 @@ void EnemyBird::Fly_Anim()
 
 void EnemyBird::Stand_by_Anim()
 {
-    if (E_Second == 0.0f) {
+   /* if (E_Second == 0.0f) {
         E_Img = E_ArrayImg_P[STAND_BY_ENEMY_0];
     }
     else if (E_Second > 0.0f && E_Second <= 0.5f) {
@@ -252,7 +252,7 @@ void EnemyBird::Stand_by_Anim()
     }
     else if (E_Second > 3.0f && E_Second <= 3.5f) {
         E_Img = E_ArrayImg_P[STAND_BY_ENEMY_7];
-    }
+    }*/
 
     /*if (E_Second == 0.0f) {
         E_Img = E_ArrayImg_P[STAND_BY_ENEMY_0];
@@ -314,16 +314,16 @@ void EnemyBird::Draw() const
 }
 void EnemyBird::Anim()
 {
-    if (E_FPS % 20 == 4) {
+    if (E_FPS % 20 == 1) {
         E_Img = E_ArrayImg_P[STAND_BY_ENEMY_0];
     }
-    else if ( E_FPS % 20 == 9) {
+    else if ( E_FPS % 20 == 5) {
         E_Img = E_ArrayImg_P[STAND_BY_ENEMY_1];
     }
-    else if ( E_FPS % 20 == 14) {
+    else if ( E_FPS % 20 == 9) {
         E_Img = E_ArrayImg_P[STAND_BY_ENEMY_0];
     }
-    else if ( E_FPS % 20 == 19) {
+    else if ( E_FPS % 20 == 13) {
         E_Img = E_ArrayImg_P[STAND_BY_ENEMY_1];
     }
 }

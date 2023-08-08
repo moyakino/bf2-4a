@@ -9,8 +9,6 @@
 //コンストラクタ
 GameMain::GameMain()
 {
-
-
 	/*Bgm = LoadSoundMem("sounds/SE_Start.wav");
 	PlaySoundMem(Bgm, DX_PLAYTYPE_BACK);*/
 	ui = new UI();
@@ -55,13 +53,12 @@ AbstractScene* GameMain::Update()
 {
 	//stage->Update();
 	player->Update();
-	//enemybird->Update(PLAYER::P_Move_X, PLAYER::P_Move_Y);
+	enemybird->Update();
 	bubble->Update();
 	fish->Update(player->GetLocation().x , player->GetLocation().y);
-	//enemybird->Update(player->GetLocationX(), player->GetLocationY());
 	bubble->Update();
 	thunder->Update();
-	//bubble->Update();
+	
 
 
 	
@@ -161,15 +158,14 @@ void GameMain::Draw()const
 
 	//stage->Draw();
 	enemybird->Draw();
-	//enemybird->Draw();
 	fish->Draw();
 
-	ui->Draw();
+	player->Draw();
 
 	thunder->Draw();
-	ui->Draw();
+	//ui->Draw();
 
 	DrawFormatString(400, 50, GetColor(255, 0, 0), "Snum:%d", Snum);
-	DrawFormatString(0, 50, GetColor(255, 0, 0), "GameMain");
+	//DrawFormatString(0, 50, GetColor(255, 0, 0), "GameMain");
 	
 }
