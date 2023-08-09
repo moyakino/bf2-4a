@@ -6,6 +6,7 @@
 int PLAYER::FishFlg;
 int PLAYER::P_TurnFlg;
 int PLAYER::F_TurnFlg;
+int PLAYER::P_Stand_Flg;
 
 float PLAYER::p_uc;
 float PLAYER::P_Move_X;
@@ -15,6 +16,7 @@ float PLAYER::py1;
 float PLAYER::px2;
 float PLAYER::py2;
 float PLAYER::py_u;
+
 PLAYER::PLAYER()
 {
     //プレイヤー画像データの読み込み
@@ -31,9 +33,6 @@ PLAYER::PLAYER()
     location.x = 20.0f;
     location.y = 350.0f;
     //P_Move_Y = 200.0f;
-
-    P_Move_X = location.x;
-    P_Move_Y = location.y;
 
     //地上のスピード
     P_XSpeed = 0.0f;
@@ -61,8 +60,10 @@ PLAYER::PLAYER()
 
     rand = 0;
 
+    px1 = 0, py1 = 0, px2 = 0, py2 = 0;
+
     //立ち状態フラグ
-    P_Stand_Flg = 0;
+    P_Stand_Flg = TRUE;
     //落下状態フラグ
     P_Foll_Flg = 0;
     Beaten_Flg = FALSE;
@@ -97,6 +98,14 @@ void PLAYER::Update()
 
     // Bボタン長押し
     P_B_Btn = PAD_INPUT::OnPressed(XINPUT_BUTTON_B);
+
+    P_Move_X = location.x;
+    P_Move_Y = location.y;
+
+    /*px1 = location.x;
+    py1 = location.y;
+    px2 = location.y + 64;
+    py2 = location.y + 64;*/
 
     //ワープ用
     Player_Warp();
@@ -154,7 +163,7 @@ void PLAYER::Update()
             Player_Gravity();
         }
 
-        if (P_Move_Y > 500.0f) {
+        if (location.y > 500.0f) {
             Player_Init();
         }
     }
@@ -165,7 +174,7 @@ void PLAYER::Update()
                 Beaten_Anim();
             }
             else {
-                if (P_Move_Y > 500.0f) {
+                if (location.y > 500.0f) {
                     Player_Init();
                 }
                 Beaten_Flg = FALSE;
@@ -238,7 +247,7 @@ void PLAYER::Player_Img()
 
 void PLAYER::Player_Move()
 {
-    P_Stand_Flg = TRUE;
+    //P_Stand_Flg = TRUE;
     P_YSpeed = 0.0f;
 
     //右移動
@@ -349,10 +358,11 @@ void PLAYER::Player_Gravity()
 void PLAYER::Player_Air_A()
 {
     if (P_Balloon_Flg == TRUE) {
+        Rise_Anim();
         // Aボタン単押し
         if (P_FPS % 2 == 0) {
             P_Stand_Flg = FALSE;
-            Rise_Anim();
+            
             P_YSpeed = P_YSpeed + -0.4f;
             P_Move_Y = P_Move_Y + P_YSpeed;
             if (P_YSpeed <= -1.0f) {        //速度制限
@@ -361,9 +371,10 @@ void PLAYER::Player_Air_A()
         }
     }
     else {
+        Rise_Anim();
         if (P_FPS % 2 == 0) {
             P_Stand_Flg = FALSE;
-            Rise_Anim();
+            
             P_YSpeed = P_YSpeed + -0.6f;
             P_Move_Y = P_Move_Y + P_YSpeed;
             if (P_YSpeed <= -1.0f) {        //速度制限
@@ -378,9 +389,10 @@ void PLAYER::Player_Air_B()
     /*AボタンとBボタンの処理を同じにするためにBボタン側にもインターバルをつける
       Bボタンは長押しなので気にならないはず*/
     if (P_Balloon_Flg == TRUE) {
+        Rise_Anim();
         if (P_FPS % 8 == 0) {
             P_Stand_Flg = FALSE;
-            Rise_Anim();
+            
             P_YSpeed = P_YSpeed + -0.2f;
             P_Move_Y = P_Move_Y + P_YSpeed;
             if (P_YSpeed <= -1.0f) {        //速度制限
@@ -389,9 +401,10 @@ void PLAYER::Player_Air_B()
         }
     }
     else {
+        Rise_Anim();
         if (P_FPS % 10 == 0) {
             P_Stand_Flg = FALSE;
-            Rise_Anim();
+            
             P_YSpeed = P_YSpeed + -0.4f;
             P_Move_Y = P_Move_Y + P_YSpeed;
             if (P_YSpeed <= -1.0f) {        //速度制限
@@ -408,17 +421,17 @@ void PLAYER::Stand_Foot()
 
     int fpscount = 0;
 
-    //魚の出現
-    if (location.y +30 > 405&& location.y + 30 <430)
+    //魚の出現 ステージの Y 座標しかとっていない locationはプレイヤーの身長分の座標
+    if (location.y +30 > 405 && location.y + 30 < 430)
     {
         //60fps == 1秒　で超えたら fpsを 0 にする
         if (P_FPS > 59) {
             P_FPS = 0;
-            F_Seconas1++;
+            P_Seconas1++;
         }
-        if (F_Seconas1 == 3) {
+        if (P_Seconas1 == 3) {
             rand = GetRand(99);
-            F_Seconas1 = 0;
+            P_Seconas1 = 0;
             if (rand < 30)
             {
                 FishFlg = TRUE;
@@ -655,7 +668,7 @@ void PLAYER::Draw()const
 
     //DrawFormatString(0, 60, GetColor(255, 255, 255), " 左スティック：横軸値 %d 縦軸値 %d", PAD_INPUT::GetLStickX(), PAD_INPUT::GetLStickY());
 
-    //DrawFormatString(0, 80, GetColor(255, 255, 255), " プレイ左上：X座標 %0.1f Y座標 %0.01f", P_Move_X, P_Move_Y);
+    DrawFormatString(0, 80, GetColor(255, 255, 255), " プレイ左上：X座標 %0.1f Y座標 %0.01f", P_Move_X, P_Move_Y);
 
     //DrawFormatString(0, 100, GetColor(255, 255, 255), " 移動フラグ：左移動 %d 右移動 %d", P_MoveL_Flg, P_MoveR_Flg);
 
@@ -674,25 +687,35 @@ void PLAYER::Draw()const
     //DrawFormatString(0, 280, GetColor(255, 255, 255), " P_Air_L_Flg :%d", P_Air_L_Flg);
     //DrawFormatString(0, 300, GetColor(255, 255, 255), " P_Air_R_Flg :%d", P_Air_R_Flg);
     //DrawFormatString(0, 320, GetColor(255, 255, 255), " L_Stick :%d", P_L_Stick_Flg);
-    DrawFormatString(0, 280, GetColor(255, 255, 255), " P_Air_L_Flg :%d", P_Air_L_Flg);
-    DrawFormatString(0, 300, GetColor(255, 255, 255), " P_Air_R_Flg :%d", P_Air_R_Flg);
     DrawFormatString(0, 320, GetColor(255, 255, 255), " Fish :%d", FishFlg);
 
-    DrawLine(160, 417, 480, 417, 0xffffff, TRUE);
+    //DrawLine(160, 417, 480, 417, 0xffffff, TRUE);
 
-    DrawCircle(p_uc, py2, 2.0f, 0xff0000, TRUE);
+    //DrawCircle(p_uc, py2, 2.0f, 0xff0000, TRUE);
 
     //DrawCircleAA(p_uc, py2 - 54.0f, 2.0f, 0xfffff0, TRUE);
 
     //プレイヤーの当たり判定
-    DrawBoxAA(location.x + 30, location.y + 37, location.x + 35, location.y + 65, GetColor(255, 255, 255), FALSE);
+    //DrawBoxAA(location.x + 30, location.y + 37, location.x + 35, location.y + 65, GetColor(255, 255, 255), FALSE);
 
     //風船の当たり判定
-    DrawBoxAA(location.x + 5, location.y + 10, location.x + 59, location.y + 37, GetColor(255, 255, 255), FALSE);
+    //DrawBoxAA(location.x + 5, location.y + 10, location.x + 59, location.y + 37, GetColor(255, 255, 255), FALSE);
+
+    //上
+    DrawLine(location.x + 5, location.y + 10, location.x + 59, location.y + 10, GetColor(255, 0, 0), FALSE);
+
+    //下
+    DrawLine(location.x + 5, location.y + 66, location.x + 59, location.y + 66, GetColor(255, 0, 0), FALSE);
+
+    //左
+    DrawLine(location.x + 5, location.y + 10, location.x + 5, location.y + 66, GetColor(0, 255, 0), FALSE);
+
+    //右
+    DrawLine(location.x + 59, location.y + 10, location.x + 59, location.y + 66, GetColor(0, 255, 0), FALSE);
 
     //DrawBoxAA(px1, py1, px2, py2, GetColor(255, 0, 0), FALSE);
 
-    //DrawBox(P_Move_X, P_Move_Y, P_Move_X + 64, P_Move_Y + 64, GetColor(255, 0, 0), FALSE);
+    //DrawBox(location.x, location.y, location.x + 64, location.y + 64, GetColor(255, 0, 0), FALSE);
 
     ////縦線
     //DrawLine(sx1, 0, sx1, 480, 0xff0000);
