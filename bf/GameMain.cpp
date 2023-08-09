@@ -92,24 +92,25 @@ AbstractScene* GameMain::Update()
 				if (StageFoot[i]->TopBoxCollider(player) == true) 
 				{
 					player->Player_Move();
-
 				}
 				else
 				{
 					player->SetStandFlg(false);
 				}
+	
 
-				//‚»‚êˆÈŠO‚ÌêŠ‚È‚ç’µ‚Ë•Ô‚é
-				if (StageFoot[i]->L_SideBoxCollider(player) == true) 
-				{
+				////‚»‚êˆÈŠO‚ÌêŠ‚È‚ç’µ‚Ë•Ô‚é
+				//if (StageFoot[i]->L_SideBoxCollider(player) == true) 
+				//{
 
-				}
+				//}
 
-				if (StageFoot[i]->R_SideBoxCollider(player) == true) 
-				{
+				//if (StageFoot[i]->R_SideBoxCollider(player) == true) 
+				//{
 
-				}
+				//}
 			}
+		
 
 			////“G‚ª‘«ê‚É“–‚½‚Á‚Ä‚¢‚é‚©
 			//if (StageFoot[i]->HitCollider(Enemy[i]) == true)

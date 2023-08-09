@@ -46,11 +46,6 @@ private:
 
 public:
 
-	static int Stand;
-	static int Bound;
-	static int Death;
-
-
 	//コンストラクタ
 	Stage(int num,int i);
 

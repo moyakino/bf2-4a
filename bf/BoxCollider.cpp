@@ -4,11 +4,11 @@ int BoxCollider::HitCollider(BoxCollider* b_col)
 {
 	int re = false;
 
-	//プレイヤー
-	float px1 = b_col->GetLocation().x + 17;
-	float px2 = b_col->GetLocation().x + 48;
-	float py1 = b_col->GetLocation().y + 37;
-	float py2 = b_col->GetLocation().y + 65;
+	//プレイヤー 敵
+	float px1 = b_col->GetLocation().x +15;
+	float py1 = b_col->GetLocation().y +15;
+	float px2 = px1 + b_col->GetErea().Width;
+	float py2 = py1 + b_col->GetErea().Height;
 
 	//ステージ
 	float sx1 = location.x;
@@ -16,20 +16,19 @@ int BoxCollider::HitCollider(BoxCollider* b_col)
 	float sy1 = location.y;
 	float sy2 = location.y + erea.Height;
 
-	//足場
+	//当たり判定
 	if ((sx1 < px2) && (sx2 > px1) && (sy1 < py2) && (sy2 > py1))
 	{
 		re = true;
 	}
 
 	stage_x1 = sx1;
-	stage_x2 = sx2;
-
-	stage_y = sy1;
-
 	box_x1 = px1;
+
+	stage_x2 = sx2;
 	box_x2 = px2;
 
+	stage_y = sy1;
 	box_y = py2;
 
 	return re;

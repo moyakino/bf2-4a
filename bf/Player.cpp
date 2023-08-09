@@ -3,6 +3,8 @@
 #include "PadInput.h"
 #include "Stage.h"
 
+#define SLIDE 15
+
 int PLAYER::FishFlg;
 int PLAYER::P_TurnFlg;
 int PLAYER::F_TurnFlg;
@@ -15,6 +17,7 @@ float PLAYER::py1;
 float PLAYER::px2;
 float PLAYER::py2;
 float PLAYER::py_u;
+
 PLAYER::PLAYER()
 {
     //プレイヤー画像データの読み込み
@@ -30,6 +33,8 @@ PLAYER::PLAYER()
 
     location.x = 20.0f;
     location.y = 349.4f;
+    erea.Height = 50;
+    erea.Width = 35;
     //P_Move_Y = 200.0f;
 
 
@@ -197,11 +202,11 @@ void PLAYER::Player_Init()
 void PLAYER::Player_Warp()
 {
     //左ワープ
-    if (location.x <= -52) {
+    if (location.x <= -50) {
         location.x = 640;
     }
     //右ワープ
-    else if (location.x >= 680) {
+    else if (location.x >= 650) {
         location.x = -50;
     }
 
@@ -237,6 +242,7 @@ void PLAYER::Player_Img()
 void PLAYER::Player_Move()
 {
     P_Stand_Flg = TRUE;
+
     P_YSpeed = 0.0f;
 
     //右移動
@@ -321,25 +327,22 @@ void PLAYER::Player_Levitation_Move()
 
 void PLAYER::Player_Gravity()
 {
-    if (P_Stand_Flg == FALSE)
-    {
-        if (P_Balloon_Flg == TRUE) {
-            P_Stand_Flg = FALSE;
-            //P_YSpeed = P_YSpeed + 0.009f;
-            P_YSpeed = P_YSpeed + 0.01f;
-            location.y = location.y + P_YSpeed;
-            if (P_YSpeed >= 1.3f) {         //速度制限  前は 1.3f
-                P_YSpeed = 1.3f;
-            }
+
+    if (P_Balloon_Flg == TRUE) {
+        P_Stand_Flg = FALSE;
+        //P_YSpeed = P_YSpeed + 0.009f;
+        P_YSpeed = P_YSpeed + 0.01f;
+        location.y = location.y + P_YSpeed;
+        if (P_YSpeed >= 1.3f) {         //速度制限  前は 1.3f
+            P_YSpeed = 1.3f;
         }
-        else {
-            P_Stand_Flg = FALSE;
-            //P_YSpeed = P_YSpeed + 0.009f;
-            P_YSpeed = P_YSpeed + 0.02f;
-            location.y = location.y + P_YSpeed;
-            if (P_YSpeed >= 1.0f) {         //速度制限  前は 1.3f
-                P_YSpeed = 1.0f;
-            }
+    }
+    else {
+        //P_YSpeed = P_YSpeed + 0.009f;
+        P_YSpeed = P_YSpeed + 0.02f;
+        location.y = location.y + P_YSpeed;
+        if (P_YSpeed >= 1.0f) {         //速度制限  前は 1.3f
+            P_YSpeed = 1.0f;
         }
     }
 }
@@ -683,10 +686,10 @@ void PLAYER::Draw()const
     //DrawCircleAA(p_uc, py2 - 54.0f, 2.0f, 0xfffff0, TRUE);
 
     //プレイヤーの当たり判定
-    DrawBoxAA(location.x + 30, location.y + 37, location.x + 35, location.y + 65, GetColor(255, 255, 255), FALSE);
+    //DrawBoxAA(location.x + 30, location.y + 37, location.x + erea.Width, location.y + erea.Height, GetColor(255, 255, 255), FALSE);
 
     //風船の当たり判定
-    DrawBoxAA(location.x + 5, location.y + 10, location.x + 59, location.y + 37, GetColor(255, 255, 255), FALSE);
+    DrawBoxAA(location.x+15, location.y+15, location.x+15 + erea.Width, location.y+15 + erea.Height, GetColor(255, 255, 255), FALSE);
 
     //DrawBoxAA(px1, py1, px2, py2, GetColor(255, 0, 0), FALSE);
 

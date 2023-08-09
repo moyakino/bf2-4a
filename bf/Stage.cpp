@@ -1,13 +1,5 @@
 #include "DxLib.h"
-#include "Player.h"
 #include "Stage.h"
-#include "PadInput.h"
-
-
-int Stage::Stand;
-int Stage::Bound;
-int Stage::Death;
-
 
 Stage::Stage(int num,int i)
 {
@@ -29,10 +21,6 @@ Stage::Stage(int num,int i)
 	if (StageSample5 = LoadGraph("images/StageSample/Stage_5.png")) {}
 
 
-	Stand = TRUE;
-	Death = FALSE;
-
-
 	switch (num) {
 	case 0:
 		switch (i)
@@ -45,16 +33,16 @@ Stage::Stage(int num,int i)
 			break;
 
 		case 1:
-			location.x = 0.0;
+			location.x = -55.0;
 			location.y = 414.0;
-			erea.Width = 160.0;
+			erea.Width = 215.0;
 			erea.Height = 64.0;
 			break;
 
 		case 2:
 			location.x = 480.0;
 			location.y = 414.0;
-			erea.Width = 160.0;
+			erea.Width = 220.0;
 			erea.Height = 64.0;
 			break;
 
