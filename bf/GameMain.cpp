@@ -161,7 +161,6 @@ void GameMain::Draw()const
 	fish->Draw();
 
 	player->Draw();
-
 	thunder->Draw();
 	//ui->Draw();
 

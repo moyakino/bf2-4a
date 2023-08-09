@@ -43,6 +43,8 @@ private:
     int E_Img;
     float SpeedX;
     float SpeedY;
+    int frame;
+    int charge;
 
 
     int E_ArrayImg_P[18];
