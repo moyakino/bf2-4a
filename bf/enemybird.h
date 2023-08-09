@@ -42,8 +42,7 @@ private:
     int CntWait;
     float SpeedX;
     float SpeedY;
-
-
+    int E_flg;
     int E_ArrayImg_P[18];
     int E_ArrayImg_G[18];
     int E_ArrayImg_R[18];
@@ -106,7 +105,7 @@ public:
     int  Balloon_Anim(void);
     //空中で移動しているときのアニメーション
 
-    int Stand_by_Anim();
+  /*  int Stand_by_Anim();*/
     void Start_Anim();
     void Fly_Anim();
 
