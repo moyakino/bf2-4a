@@ -48,8 +48,8 @@ void Fish::Update(int x,int y)
         //魚のアニメーション
         if (PLAYER::FishFlg == TRUE) {
             {
-               
-                if (PlayerX >= fx1 &&PlayerX < fx2 && PlayerY>410 && PlayerY < 500) {
+               //当たり判定
+                if (PlayerX >= fx1 &&PlayerX < fx2 && PlayerY>390 && PlayerY < 500) {
                     FishEatP_flg = TRUE;
                 }
                
@@ -74,7 +74,7 @@ void Fish::Update(int x,int y)
                     else if (F_Seconds2 == 5) {
                         Fish_Img = 5;
                     }
-                    else if (F_Seconds2 == 6&&F_Seconds2 ==7) {
+                    else if (F_Seconds2 == 6) {
                         Fish_Img = 0;
                     }
                 }
@@ -109,7 +109,7 @@ void Fish::Update(int x,int y)
                 }
 
                 F_Seconds2++;
-                if (F_Seconds2 == 7) {
+                if (F_Seconds2 == 8) {
                     F_Seconds2 = 0;
                     PLAYER::FishFlg = FALSE;
                 }
