@@ -76,12 +76,12 @@ void EnemyBird::Update()
         Start_Anim();
     }
     
-    //if (E_Air_Flg == TRUE && E_Stand_Flg == FALSE) {
-    //    SpeedY = SpeedY;
-    //    //SpeedX = SpeedX;
-    //    E_Move_Y = E_Move_Y + SpeedY;
-    //    //E_Move_X = E_Move_X + SpeedX;
-    //}
+    if (E_Air_Flg == TRUE && E_Stand_Flg == FALSE) {
+        SpeedY = SpeedY;
+        SpeedX = SpeedX;
+        E_Move_Y = E_Move_Y + SpeedY;
+        E_Move_X = E_Move_X + SpeedX;
+    }
 
     //60fps == 1•b@‚Å’´‚¦‚½‚ç fps‚ð 0 ‚É‚·‚é
     if (E_FPS > 59) {
