@@ -31,11 +31,11 @@ Thunder::Thunder()
 	BallX = 200;
 	BallY = 200;
 	BallAngle = 0;
+    BallFlg = 0;
 
 	MoveX = 0;
 	MoveY = 0;
-
-	BallFlg = 0;
+	
 }
 
 Thunder::~Thunder()
@@ -102,7 +102,7 @@ void Thunder::MoveBall()
 		if (BallAngle > 1) BallAngle -= 1.0f;
 		ChangeAngle();
 	}
-	//if (BallY < 8 || BallY > 510) { // 上下の壁
+	//if (BallY < 8 || BallY > 310) { // 上下の壁
 	//	if (BallY < 8) {
 	//		BallAngle = (1 - BallAngle);
 	//		//BallY = 8;
@@ -131,6 +131,40 @@ void Thunder::ChangeAngle()
 	MoveX = (int)(Speed * cosf(rad));
 	MoveY = (int)(Speed * sinf(rad));
 }
+
+void Thunder::HitThunder()
+{
+	//ボールとバーの当たり判定
+	//int mx0, mx1, my0, my1, sx0, sx1, sy0, sy1;
+
+
+	////座標位置の事前計算
+	//mx0 = BallX - 4;
+	//mx1 = BallX + 4;
+	//my0 = BallY - 4;
+	//my1 = BallY + 4;
+	//sx0 = 0;
+	//sx1 = 0;
+	//sy0 = 0;
+	//sy1 = 0;
+
+	//// ボールとバーの当たり判定
+	//if (sx0 <= mx1 && sx1 >= mx0 &&
+	//	sy0 <= my1 && sy1 >= my0) {
+	//	if (BallFlg == 0) {
+	//		BallAngle = (0.3f / 60) * (mx1 - sx0) + 0.6f;
+	//		ChangeAngle();
+
+	//		BallFlg = 1;
+	//	}
+	//}
+	//else {
+	//	if (BallFlg != 2)BallFlg = 0;
+	//}
+
+	//ChangeAngle();
+}
+
 
 int Thunder::Thunder_Anim()
 {
