@@ -76,12 +76,12 @@ void EnemyBird::Update()
         Start_Anim();
     }
     
-    if (E_Air_Flg == TRUE && E_Stand_Flg == FALSE) {
-        SpeedY = SpeedY;
-        SpeedX = SpeedX;
-        E_Move_Y = E_Move_Y + SpeedY;
-        E_Move_X = E_Move_X + SpeedX;
-    }
+    //if (E_Air_Flg == TRUE && E_Stand_Flg == FALSE) {
+    //    SpeedY = SpeedY;
+    //    //SpeedX = SpeedX;
+    //    E_Move_Y = E_Move_Y + SpeedY;
+    //    //E_Move_X = E_Move_X + SpeedX;
+    //}
 
     //60fps == 1秒　で超えたら fpsを 0 にする
     if (E_FPS > 59) {
@@ -106,29 +106,6 @@ void EnemyBird::Update()
     
 }
 
-void EnemyBird::Enemy_Warp()
-{
-    //左ワープ
-    if (E_Move_X <= -53) {
-        E_Move_X = 700;
-    }
-    //右ワープ
-    else if (E_Move_X >= 700) {
-        E_Move_X = -53;
-    }
-
-    ////天井
-    //if (E_Move_Y <= -25) {
-    //    E_Move_Y = 250;
-    //}
-
-    if (E_Move_Y <= -25) {
-        E_Move_Y = -20;
-        if (SpeedY < 0) {
-            SpeedY = SpeedY * -0.8f;
-        }
-    }
-}
 
 void EnemyBird::Enemy_Levitation_Move_X()
 {
@@ -192,6 +169,31 @@ void EnemyBird::Enemy_Levitation_Move_X()
 //        E_YSpeed = 1.0f;
 //    }
 //}
+
+void EnemyBird::Enemy_Warp()
+{
+    //左ワープ
+    if (E_Move_X <= -53) {
+        E_Move_X = 700;
+    }
+    //右ワープ
+    else if (E_Move_X >= 700) {
+        E_Move_X = -53;
+    }
+
+    ////天井
+    //if (E_Move_Y <= -25) {
+    //    E_Move_Y = 250;
+    //}
+
+    if (E_Move_Y <= -25) {
+        E_Move_Y = -20;
+        if (SpeedY < 0) {
+            SpeedY = SpeedY * -0.8f;
+        }
+    }
+}
+
 
 void EnemyBird::Start_Anim()
 {
