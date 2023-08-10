@@ -109,8 +109,7 @@ private:
 	int		P_Balloon_Flg;
 
 
-	//立っている状態のフラグ
-	int		P_Stand_Flg;
+	
 	//海に落下する状態のフラグ
 	int		P_Foll_Flg;
 
@@ -126,6 +125,8 @@ private:
 	int rand;
 
 public:
+	//立っている状態のフラグ
+	static int		P_Stand_Flg;
 	//Player  X座標用変数
 	static float	P_Move_X;
 	//Player  Y座標用変数
