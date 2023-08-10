@@ -421,8 +421,8 @@ void PLAYER::Stand_Foot()
 
     int fpscount = 0;
 
-    //魚の出現 ステージの Y 座標しかとっていない locationはプレイヤーの身長分の座標
-    if (location.y +30 > 405 && location.y + 30 < 430)
+    //魚の出現
+    if (location.x + 30 >104&&location.x + 30 <480&&location.y +30 > 405&& location.y + 30 <430)
     {
         //60fps == 1秒　で超えたら fpsを 0 にする
         if (P_FPS > 59) {
