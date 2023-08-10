@@ -33,7 +33,6 @@ EnemyBird::EnemyBird()
     SpeedX = 0;
     SpeedY = 0;
     E_Speed = 0;
-    frame = 0;
 
     //“G‚ÌÀ•W
     ex1 = 0, ex2 = 0, ey1 = 0,ey2 = 0, e_uc = 0;
@@ -45,7 +44,6 @@ EnemyBird::EnemyBird()
     //‹ó’†‚Å‚ÌƒXƒs[ƒh
     E_AirSpeed = 0.0f;
 
-    E_Img = 0;
     E_Second = 0;
     CntWait = 0;
     Cnt = 0;
@@ -53,7 +51,6 @@ EnemyBird::EnemyBird()
     E_Balloon_Flg = 0;
     EnemyState = ENEMY_STATE::START;
     
-    StartTime = 0;
 }
 
 EnemyBird::~EnemyBird()
@@ -63,14 +60,6 @@ EnemyBird::~EnemyBird()
 
 void EnemyBird::Update()
 {
-    //10•bŽæ‚Á‚Ä‚¢‚é
-    if (++frame > 600) {
-        frame = 0;
-    }
-
-    if (++charge > 6) {
-        charge = 0;
-    }
 
    /*  PlayerPos= Return_MoveX, Return_MoveY;*/
     E_FPS++;
@@ -141,32 +130,32 @@ void EnemyBird::Enemy_Warp()
     }
 }
 
-//void EnemyBird::Enemy_Levitation_Move_X()
-//{
-//    E_Air_Flg = TRUE;
-//    if (E_Stand_Flg == FALSE) {
-//        if (E_Move_X >= PLAYER::P_Move_X) {
-//            SpeedX -= 0.5f;
-//            EnemyState = ENEMY_STATE::FLY_LEFT;
-//        }
-//        if (E_Move_X <= PLAYER::P_Move_X) {
-//            SpeedX += 0.5f;
-//            EnemyState = ENEMY_STATE::FLY_RIGHT;
-//        }
-//        if (SpeedX <= -1.0f) {
-//            SpeedX = -0.1f;
-//            EnemyState = ENEMY_STATE::FLY_LEFT;
-//        }
-//        if (SpeedX >= 1.0f) {
-//            SpeedX = 0.1f;
-//            EnemyState = ENEMY_STATE::FLY_RIGHT;
-//        }
-//    }
-//    if (E_Stand_Flg == TRUE) {
-//        SpeedX = 0;
-//    }
-//    E_Move_X += SpeedX;
-//}
+void EnemyBird::Enemy_Levitation_Move_X()
+{
+    E_Air_Flg = TRUE;
+    if (E_Stand_Flg == FALSE) {
+        if (E_Move_X >= PLAYER::P_Move_X) {
+            SpeedX -= 0.5f;
+            EnemyState = ENEMY_STATE::FLY_LEFT;
+        }
+        if (E_Move_X <= PLAYER::P_Move_X) {
+            SpeedX += 0.5f;
+            EnemyState = ENEMY_STATE::FLY_RIGHT;
+        }
+        if (SpeedX <= -1.0f) {
+            SpeedX = -0.1f;
+            EnemyState = ENEMY_STATE::FLY_LEFT;
+        }
+        if (SpeedX >= 1.0f) {
+            SpeedX = 0.1f;
+            EnemyState = ENEMY_STATE::FLY_RIGHT;
+        }
+    }
+    if (E_Stand_Flg == TRUE) {
+        SpeedX = 0;
+    }
+    E_Move_X += SpeedX;
+}
 //void EnemyBird::Enemy_Levitation_Move_Y()
 //{
 //    E_Air_Flg = TRUE;
@@ -204,20 +193,20 @@ void EnemyBird::Enemy_Warp()
 //    }
 //}
 
-//void EnemyBird::Start_Anim()
-//{
-//    EnemyState = ENEMY_STATE::START;
-//    int startTime = GetNowCount();
-//    int elapsedTime = GetNowCount() - startTime;
-//    if (elapsedTime >= 3000) {
-//        if (E_FPS % 120 == 0) {
-//            Cnt++;
-//            if (Cnt >= 8) {
-//                Cnt = 0;
-//            }
-//        }
-//    }
-//}
+void EnemyBird::Start_Anim()
+{
+    EnemyState = ENEMY_STATE::START;
+    int startTime = GetNowCount();
+    int elapsedTime = GetNowCount() - startTime;
+    if (elapsedTime >= 3000) {
+        if (E_FPS % 120 == 0) {
+            Cnt++;
+            if (Cnt >= 8) {
+                Cnt = 0;
+            }
+        }
+    }
+}
 void EnemyBird::Fly_Anim()
 {
     E_Air_Flg = TRUE;
@@ -277,7 +266,7 @@ void EnemyBird::Enemy_Levitation_Move_Y()
 
 void EnemyBird::Start_Anim()
 {
-    //EnemyState = ENEMY_STATE::START;
+    EnemyState = ENEMY_STATE::START;
     if (E_FPS % 60 == 0) {
         ++Cnt;
         if (Cnt > 7) {
@@ -326,7 +315,7 @@ void EnemyBird::Fly_Anim()
 
 void EnemyBird::Draw() const
 {
-    DrawGraphF(E_Move_X, E_Move_Y, E_Img, TRUE);
+   /* DrawGraphF(E_Move_X, E_Move_Y, E_Img, TRUE);*/
 
     //“G‚Ì“–‚½‚è”»’è
     DrawBox(E_Move_X + 30, E_Move_Y + 37, E_Move_X + 35, E_Move_Y + 65, GetColor(255, 255, 255), FALSE);
@@ -340,7 +329,7 @@ void EnemyBird::Draw() const
     switch (EnemyState)
     {
     case  ENEMY_STATE::START:
-        DrawGraphF(E_Move_X, E_Move_Y, E_ArrayImg_P[0 + (frame % 20) + charge], TRUE);
+        DrawGraphF(E_Move_X, E_Move_Y, E_ArrayImg_P[Cnt], TRUE);
         break;
     case  ENEMY_STATE::FLY_LEFT:
         DrawGraphF(E_Move_X, E_Move_Y, E_ArrayImg_P[Cnt], TRUE);
