@@ -422,16 +422,16 @@ void PLAYER::Stand_Foot()
     int fpscount = 0;
 
     //‹›‚ÌoŒ»
-    if (location.x + 30 >104&&location.x + 30 <480&&location.y +30 > 405&& location.y + 30 <430)
+    if (P_Move_X>160&& P_Move_X <480&& P_Move_Y > 380&& P_Move_Y <430)
     {
         //60fps == 1•b@‚Å’´‚¦‚½‚ç fps‚ð 0 ‚É‚·‚é
         if (P_FPS > 59) {
             P_FPS = 0;
-            P_Seconas1++;
+            F_Seconas1++;
         }
-        if (P_Seconas1 == 3) {
+        if (F_Seconas1 == 3) {
             rand = GetRand(99);
-            P_Seconas1 = 0;
+            F_Seconas1 = 0;
             if (rand < 30)
             {
                 FishFlg = TRUE;
