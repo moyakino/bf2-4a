@@ -14,7 +14,7 @@ float PLAYER::px1;
 float PLAYER::py1;
 float PLAYER::px2;
 float PLAYER::py2;
-float PLAYER::py_u;
+
 PLAYER::PLAYER()
 {
     //プレイヤー画像データの読み込み
@@ -29,7 +29,7 @@ PLAYER::PLAYER()
     P_Y_Btn = 0;
 
     location.x = 20.0f;
-    location.y = 350.0f;
+    location.y = 349.4f;
     //P_Move_Y = 200.0f;
 
     P_Move_X = location.x;
@@ -191,7 +191,7 @@ void PLAYER::Player_Init()
     P_XSpeed = 0;
     P_YSpeed = 0;
     location.x = 20.0f;
-    location.y = 350.0f;
+    location.y = 349.4f;
     Respawn_Flg = TRUE;
     P_Balloon_Flg = TRUE;
 }
@@ -677,18 +677,31 @@ void PLAYER::Draw()const
     DrawFormatString(0, 280, GetColor(255, 255, 255), " P_Air_L_Flg :%d", P_Air_L_Flg);
     DrawFormatString(0, 300, GetColor(255, 255, 255), " P_Air_R_Flg :%d", P_Air_R_Flg);
     DrawFormatString(0, 320, GetColor(255, 255, 255), " Fish :%d", FishFlg);
+    
+    //上
+    DrawLine(location.x + 5, location.y + 10, location.x + 59, location.y + 10, GetColor(255, 0, 0), FALSE);
 
-    DrawLine(160, 417, 480, 417, 0xffffff, TRUE);
+    //下
+    DrawLine(location.x + 5, location.y + 66, location.x + 59, location.y + 66, GetColor(255, 0, 0), FALSE);
 
-    DrawCircle(p_uc, py2, 2.0f, 0xff0000, TRUE);
+    //左
+    DrawLine(location.x + 5, location.y + 10, location.x + 5, location.y + 66, GetColor(0, 255, 0), FALSE);
+
+    //右
+    DrawLine(location.x + 59, location.y + 10, location.x + 59, location.y + 66, GetColor(0, 255, 0), FALSE);
+
+
+    //DrawLine(160, 417, 480, 417, 0xffffff, TRUE);
+
+   // DrawCircle(p_uc, py2, 2.0f, 0xff0000, TRUE);
 
     //DrawCircleAA(p_uc, py2 - 54.0f, 2.0f, 0xfffff0, TRUE);
 
     //プレイヤーの当たり判定
-    DrawBoxAA(location.x + 30, location.y + 37, location.x + 35, location.y + 65, GetColor(255, 255, 255), FALSE);
+    //DrawBoxAA(location.x + 30, location.y + 37, location.x + 35, location.y + 65, GetColor(255, 255, 255), FALSE);
 
     //風船の当たり判定
-    DrawBoxAA(location.x + 5, location.y + 10, location.x + 59, location.y + 37, GetColor(255, 255, 255), FALSE);
+    //DrawBoxAA(location.x + 5, location.y + 10, location.x + 59, location.y + 37, GetColor(255, 255, 255), FALSE);
 
     //DrawBoxAA(px1, py1, px2, py2, GetColor(255, 0, 0), FALSE);
 

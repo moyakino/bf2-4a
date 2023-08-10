@@ -77,10 +77,13 @@ void Bubble::Update()
 void Bubble::Draw() const {
 
 	DrawRotaGraphF(MoveX, MoveY, 1.0f, 1.0, B_Img, TRUE);
-	DrawBoxAA(MoveX - 15, MoveY - 15, MoveX + 15, MoveY + 15, GetColor(255, 255, 255), FALSE);
+	/*DrawBoxAA(MoveX - 15, MoveY - 15, MoveX + 15, MoveY + 15, GetColor(255, 255, 255), FALSE);*/
 	SetFontSize(14);
 	DrawRotaGraphF(MoveX, MoveY, 1.0f, 1, B_Img, TRUE);
-	DrawLineAA(MoveX - 15, MoveY - 15, MoveX - 15, MoveY + 15, GetColor(255, 0, 0), 1);
+	DrawLineAA(MoveX - 15, MoveY - 15, MoveX - 15, MoveY + 15, GetColor(255, 0, 0), 1); //左
+	DrawLineAA(MoveX + 15, MoveY - 15, MoveX + 15, MoveY + 15, GetColor(255, 0, 0), 1); //右
+	DrawLineAA(MoveX - 15, MoveY - 15, MoveX + 15, MoveY - 15, GetColor(0, 255, 0), 1); //上
+	DrawLineAA(MoveX - 15, MoveY + 15, MoveX + 15, MoveY + 15, GetColor(0, 255, 0), 1); //下
 	DrawFormatString(0, 40, GetColor(255, 255, 255), "Player X???W : %0.1f Y???W : %0.1f", Player, PlayerY);
 	DrawFormatString(0, 300, GetColor(255, 255, 255), "MoveX:%0.1f MoveY:%0.1f", MoveX, MoveY);
 	DrawFormatString(0, 320, GetColor(255, 255, 255), "Bubbleflg:%d", Bubbleflg);
@@ -101,12 +104,13 @@ int  Bubble::BubbleControl()
 	}
 	return B_AnimImg;
 }
-void Bubble::Hit()
+void Bubble::Check()
 {
+
 	int Delete = 0;
 
 	DrawFormatString(0, 360, GetColor(255, 255, 255), "Delete:%d", Delete);
-	if (PLAYER::px1 < MoveX - 15 && PLAYER::py1 < MoveY - 15 && MoveX - 15 < PLAYER::px2 && MoveY + 15 < PLAYER::py2 && Delete == 0){
+	//if (PLAYER::px1 < MoveX - 15 && PLAYER::py1 < MoveY - 15 && MoveX - 15 < PLAYER::px2 && MoveY + 15 < PLAYER::py2 /*&& Delete == 0*/){
 		H_flg = 1;
 		if (H_flg == 1) {
 			Score();
@@ -114,8 +118,8 @@ void Bubble::Hit()
 			DrawFormatStringF(MoveX, MoveY, GetColor(255, 0, 0), "750");
 			Delete++;
 		}
-	}
-	else {
+	/*}*/
+	/*else */{
 		H_flg = 0;
 	}
 }
@@ -152,3 +156,31 @@ void Bubble::Score()
 		B_Img = BubbleImg[3];
 	}
 };
+void Bubble::Hit()
+{
+	int Delete = 0;
+
+	//if (location.x + 59 > MoveX - 15 && location.y + 10 > MoveY - 15 && MoveX - 15 > location.x + 59 && MoveY + 15 > location.x + 66    //プレイヤー　右　敵　左
+	//	|| location.x + 5 > MoveX + 15 && location.y + 10 > MoveY - 15 && MoveX + 15 > location.x + 5 && MoveY - 15 > location.y + 66   //プレイヤー　左　敵　右
+	//	|| location.x + 5 > MoveX + 15 && location.y + 10  >MoveY + 15 && MoveX + 15 > location.x + 59 && MoveY + 15 > location.y + 10  //プレイヤー　上　敵　下
+	//	|| location.x + 5 > MoveX - 15 && location.y + 66 >MoveY - 15 && MoveX + 15 >location.x + 59 && MoveY - 15 > location.y + 66)//プレイヤー　下　敵　上
+	//{
+	if(0){
+		
+		DrawFormatString(0, 360, GetColor(255, 255, 255), "Delete:%d", Delete);
+		//if (PLAYER::px1 < MoveX - 15 && PLAYER::py1 < MoveY - 15 && MoveX - 15 < PLAYER::px2 && MoveY + 15 < PLAYER::py2 /*&& Delete == 0*/){
+		H_flg = 1;
+		if (H_flg == 1) {
+			Score();
+			DeleteGraph(B_Img);
+			DrawFormatStringF(MoveX, MoveY, GetColor(255, 0, 0), "750");
+			Delete++;
+		}
+		/*}*/
+		/*else */ {
+			H_flg = 0;
+		}
+	}
+
+
+}

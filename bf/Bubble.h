@@ -1,6 +1,7 @@
 #pragma once
+#include "BoxCollider.h"
 
-class Bubble {
+class Bubble : public BoxCollider{
 private:
 	int BubbleImg[4];
 	int B_Img;
@@ -29,8 +30,9 @@ public:
 	void Update();
 	void Draw()const;
 	int BubbleControl();
-	void  Hit();
+	void  Check();
 	void BubbleMove();
 	int  BubbleAnim();
 	void Score();
+	void Hit();
 };

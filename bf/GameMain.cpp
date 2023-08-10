@@ -17,7 +17,6 @@ GameMain::GameMain()
 	bubble = new Bubble();
 	fish = new Fish();
 	enemybird = new EnemyBird();
-	//bubble = new Bubble();
 	//stage = new Stage();
 	thunder = new Thunder();
 
@@ -163,7 +162,6 @@ void GameMain::Draw()const
 	//enemybird->Draw();
 	fish->Draw();
 	bubble->Draw();
-	ui->Draw();
 	thunder->Draw();
 	ui->Draw();
 

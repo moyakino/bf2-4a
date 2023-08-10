@@ -280,7 +280,7 @@ void EnemyBird::Draw() const
     case  ENEMY_STATE::FLY_LEFT:
         DrawGraphF(E_Move_X, E_Move_Y, E_ArrayImg_P[Cnt], TRUE);
         break;
-    case  ENEMY_STATE::FLY_RIGHT:
+     case  ENEMY_STATE::FLY_RIGHT:
         DrawGraphF(E_Move_X, E_Move_Y, E_ArrayImg_P[Cnt], TRUE);
         break;
     case  ENEMY_STATE::FALL:

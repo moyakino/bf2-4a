@@ -34,6 +34,7 @@ public:
 	int L_SideBoxCollider(BoxCollider* b_col);
 	int R_SideBoxCollider(BoxCollider* b_col);
 
+	int BubbleHit(BoxCollider* bubble);
 
 	Location GetLocation();
 	Erea GetErea();
