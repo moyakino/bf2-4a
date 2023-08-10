@@ -17,7 +17,7 @@ int BoxCollider::HitCollider(BoxCollider* b_col)
 	float sy1 = location.y;
 	float sy2 = location.y + erea.Height;
 
-	//‹ó’†‘«ê
+	//‘«ê
 	if ((sx1 < px2) && (sx2 > px1) && (sy1 < py2) && (sy2 > py1))
 	{
 		re = true;

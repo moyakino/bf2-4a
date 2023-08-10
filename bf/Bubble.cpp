@@ -115,7 +115,7 @@ void Bubble::Check()
 		if (H_flg == 1) {
 			Score();
 			DeleteGraph(B_Img);
-			DrawFormatStringF(MoveX, MoveY, GetColor(255, 0, 0), "750");
+			DrawFormatString(MoveX, MoveY, GetColor(255, 0, 0), "750");
 			Delete++;
 		}
 	/*}*/
