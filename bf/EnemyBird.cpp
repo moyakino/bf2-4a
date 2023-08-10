@@ -156,15 +156,15 @@ void EnemyBird::Enemy_Levitation_Move_X()
 }
 
 
-//void EnemyBird::Enemy_Gravity()
-//{
-//    E_Air_Flg = TRUE;
-//    E_YSpeed = E_YSpeed + 0.01f;
-//    E_Move_Y = E_Move_Y + E_YSpeed;
-//    if (E_YSpeed >= 1.0f) {//ë¨ìxêßå¿
-//        E_YSpeed = 1.0f;
-//    }
-//}
+void EnemyBird::Enemy_Gravity()
+{
+    E_Air_Flg = TRUE;
+    E_YSpeed = E_YSpeed + 0.01f;
+    E_Move_Y = E_Move_Y + E_YSpeed;
+    if (E_YSpeed >= 1.0f) {//ë¨ìxêßå¿
+        E_YSpeed = 1.0f;
+    }
+}
 
 void EnemyBird::Start_Anim()
 {
