@@ -9,19 +9,27 @@ Fish::Fish()
     
     PlayerX = 0;
     PlayerY = 0;
-
-
+    fx1 = 0;
+    fy1 = 0;
+    fx2 = 0;
+    fy2 = 0;
+    Fish_Img = 0;
     f_fps = 0;
-    F_Seconas2 = 0;
-
+    F_Seconds2 = 0;
+    /*FishEatP_flg = 0;*/
 	if (LoadDivGraph("images/Enemy/Enemy_FishAnimation.png", 10, 5, 2, 64, 64, Fish_ArrayImg)) {}
     ChengeImg = 0;
-
-    
+    FishEatP_flg = FALSE;
+   
 }
 
 
 Fish::~Fish()
+{
+    
+}
+
+void Fish::Fish_NAnim()
 {
     
 }
@@ -31,116 +39,120 @@ void Fish::Update(int x,int y)
     f_fps++;
     PlayerX =x;
     PlayerY = y;
-    if (f_fps > 20) {
-      /*  F_Seconas2++;*/
+    fx1 = x;
+    fy1 = y;
+    fx2 = x+55;
+    fy2 = y+50;
+    if (f_fps > 120) {
         f_fps = 0;
         //魚のアニメーション
         if (PLAYER::FishFlg == TRUE) {
-         //   /* if (f_fps / 1==0) {*/
-         //    if (f_fps % 10 == 0 || f_fps % 10 == 1 || f_fps % 10 == 2 || f_fps % 10 == 3 || f_fps % 10 == 4 || f_fps % 10 ==5) {
-            if (F_Seconas2++) {
-                ChengeImg++;
-                if (ChengeImg > 5) {
-                    ChengeImg = 0;
+            {
+               //当たり判定
+                if (PlayerX >= fx1 &&PlayerX < fx2 && PlayerY>390 && PlayerY < 500) {
+                    FishEatP_flg = TRUE;
+                }
+               
+                //何も食えなかった時
+                if (FishEatP_flg == FALSE) {
+
+                    if (F_Seconds2 == 0) {
+                        Fish_Img = 0;
+                    }
+                    else if (F_Seconds2 == 1) {
+                        Fish_Img = 1;
+                    }
+                    else if (F_Seconds2 == 2) {
+                        Fish_Img = 2;
+                    }
+                    else if (F_Seconds2 == 3) {
+                        Fish_Img = 3;
+                    }
+                    else if (F_Seconds2 == 4) {
+                        Fish_Img = 4;
+                    }
+                    else if (F_Seconds2 == 5) {
+                        Fish_Img = 5;
+                    }
+                    else if (F_Seconds2 == 6) {
+                        PLAYER::FishFlg = FALSE;
+                    }
+                }
+                //player捕食
+                if (FishEatP_flg == TRUE) {
+
+                    if (F_Seconds2 == 0) {
+                        Fish_Img = 0;
+                    }
+                    else if (F_Seconds2 == 1) {
+                        Fish_Img = 1;
+                    }
+                    else if (F_Seconds2 == 2) {
+                        Fish_Img = 2;
+                    }
+                    else if (F_Seconds2 == 3) {
+                        Fish_Img = 6;
+                    }
+                    else if (F_Seconds2 == 4) {
+                        Fish_Img = 3;
+                    }
+                    else if (F_Seconds2 == 5) {
+                        Fish_Img = 4;
+                    }
+                    else if (F_Seconds2 == 6) {
+                        Fish_Img = 5;
+                    }
+                    else if (F_Seconds2 == 7) {
+                        FishEatP_flg = FALSE;
+                    }
+                }
+                //アニメーション用秒数
+                F_Seconds2++;
+                if (F_Seconds2 == 8) {
+                    F_Seconds2 = 0;
                     PLAYER::FishFlg = FALSE;
                 }
             }
-           /* }*/
+          
         }
     }
-}
    
+
+    
+}
+
+
+
 void Fish::Draw() const
 {
-    DrawFormatString(0, 20, 0xffffff, "Second:%d", F_Seconas2);
-    if (PLAYER::FishFlg == TRUE) 
+    DrawFormatString(400, 20, 0xffffff, "F_Second2:%d", F_Seconds2);
+    DrawFormatString(400, 40, 0xffffff, "Fish_Img_:%d", Fish_Img);
+    DrawFormatString(400, 80, 0xffffff, "PX_:%d", PlayerX);
+    DrawFormatString(400, 100, 0xffffff, "PY_:%d", PlayerY);
+    if (PLAYER::FishFlg == TRUE)
     {
+
         if (PLAYER::F_TurnFlg == TRUE)
         {
-            /*DrawRotaGraph(PlayerX + 30, PlayerY+30, 1.0f, 0, Fish_ArrayImg[ChengeImg], TRUE);*/
-            DrawGraph(PlayerX , 390, Fish_ArrayImg[ChengeImg], TRUE);
+            DrawGraph(PlayerX, 390, Fish_ArrayImg[Fish_Img], TRUE);
+          /*  DrawGraph(PlayerX, 390, Fish_ArrayImg[ChengeImg], TRUE);*/
+            DrawBoxAA(fx1 , 410 , fx2, 500, GetColor(255, 255, 255), FALSE);
         }
         else {
             if (PLAYER::F_TurnFlg == FALSE) {
-                DrawTurnGraph(PlayerX , 390, Fish_ArrayImg[ChengeImg], TRUE);
+                DrawTurnGraph(PlayerX, 390, Fish_ArrayImg[Fish_Img], TRUE);
+                DrawBoxAA(fx1, 410, fx2, 500, GetColor(255, 255, 255), FALSE);
             }
         }
-       /* if (PLAYER::F_TurnFlg == FALSE)
-        {
-            DrawTurnGraph(PlayerX - 30, PlayerY + 30, Fish_ArrayImg[ChengeImg], TRUE);*/
-            /*DrawTurnGraph(PlayerX - 30, 420, Fish_ArrayImg[ChengeImg], TRUE);*/
-       /* }*/
+
     }
-    /*DrawRotaGraph(300,410, 1.0f, 0, F_AnimImg, TRUE);*/
-    /*DrawGraph(300, 410, Fish_Img, TRUE410);*/
-   /* DrawGraph(300, 410, Fish_Img, TRUE);*/
-   
 
 }
-    //if (PLAYER::FishFlg == TRUE)
-    //{
-    //    //Fish_Img = Fish_Anim();
-
-    //   
-    //}
-
-
-//int Fish::Fish_Anim()
-//{ 
-    /*if (f_fps % 20 == 0) {
-
-        F_Seconas1++;*/
-
-        /*if (F_Seconas1 > 5) {
-            F_Seconas1 = 0;
-        }*/
-    //}
-
-
-   /* switch (F_Seconas1)
-    {
-    case 0:
-        F_AnimImg = Fish_ArrayImg[0];
-        break;
-    case 1:
-        F_AnimImg = Fish_ArrayImg[1];
-        break;
-    case 2:
-        F_AnimImg = Fish_ArrayImg[2];
-        break;
-    case 3:
-        F_AnimImg = Fish_ArrayImg[3];
-        break;
-    case 4:
-        F_AnimImg = Fish_ArrayImg[4];
-        break;
-    case 5:
-        F_AnimImg = Fish_ArrayImg[5];
-//        break;
-//    
-//    }*/
-//
-//    return F_AnimImg;
-//
-//}
 
 
 
-    //// 0 から 3 秒
-    //if (F_Seconas1 == 0) {
-    //    F_AnimImg = Fish_ArrayImg[FISH_0];
-    //}
-    //else if (F_Seconas1 > 0 && F_Seconas1 < 2) {
-    //    F_AnimImg = Fish_ArrayImg[FISH_1];
-    //}
-    //else if (F_Seconas1 > 1 && F_Seconas1 < 3) {
-    //    F_AnimImg = Fish_ArrayImg[FISH_2];
-    //}
-    //else if (F_Seconas1 > 2 && F_Seconas1 < 4) {
-    //    F_AnimImg = Fish_ArrayImg[FISH_3];
-    //}
-    //else if (F_Seconas1 > 3 && F_Seconas1 < 5) {
-    //    F_AnimImg = Fish_ArrayImg[FISH_4];
-    //}
+
+
+
 
    

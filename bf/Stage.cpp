@@ -39,24 +39,27 @@ Stage::Stage(int num,int i)
 		switch (i)
 		{
 		case 0:
+			//空中の足場の座標
 			location.x = 180.0;
 			location.y = 285.0;
 			erea.Width = 280.0;
-			erea.Height = 17.0;
+			erea.Height = 20.0;
 			break;
 
 		case 1:
-			location.x = -55.0;
-			location.y = 414.0;
+			//地上　右の足場の座標
+			location.x = 0.0;
+			location.y = 418.0;
 			erea.Width = 160.0;
-			erea.Height = 64.0;
+			erea.Height = 62.0;
 			break;
 
 		case 2:
+			//地上　左の足場の座標
 			location.x = 480.0;
-			location.y = 414.0;
+			location.y = 418.0;
 			erea.Width = 160.0;
-			erea.Height = 64.0;
+			erea.Height = 62.0;
 			break;
 
 		}
@@ -114,7 +117,7 @@ void Stage::Draw() const
 
 
 	////空中の足場
-	//	DrawBox(180, 285, 460, 305, 0x00ff00, FALSE);
+	//DrawBox(180, 285, 460, 305, 0x00ff00, FALSE);
 	//	DrawBox(100, 165, 220, 182, 0x00ff00, FALSE);
 	//	DrawBox(460, 150, 580, 165, 0x00ff00, FALSE);
 	//	break;
@@ -178,8 +181,8 @@ void Stage::Draw() const
 	//DrawBox(0, 418, 160, 480, 0x00ff00, FALSE);	//左
 	//DrawBox(480, 418, 640, 480, 0x00ff00, FALSE);	//右
 
-	////海
-	//DrawBox(160, 444, 480, 480, 0x0000ff, FALSE);
+	//海
+	DrawBox(160, 444, 480, 480, 0x0000ff, FALSE);
 
 
 }
