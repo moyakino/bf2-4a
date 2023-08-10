@@ -75,7 +75,7 @@ void Fish::Update(int x,int y)
                         Fish_Img = 5;
                     }
                     else if (F_Seconds2 == 6) {
-                        Fish_Img = 0;
+                        PLAYER::FishFlg = FALSE;
                     }
                 }
                 //player捕食
@@ -103,11 +103,10 @@ void Fish::Update(int x,int y)
                         Fish_Img = 5;
                     }
                     else if (F_Seconds2 == 7) {
-                        Fish_Img = 0;
                         FishEatP_flg = FALSE;
                     }
                 }
-
+                //アニメーション用秒数
                 F_Seconds2++;
                 if (F_Seconds2 == 8) {
                     F_Seconds2 = 0;
