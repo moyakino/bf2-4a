@@ -59,7 +59,7 @@ AbstractScene* GameMain::Update()
 	enemybird->Update();
 	thunder->Update();
 
-	bubble->Update();
+	//bubble->Update();
 
 
 	
