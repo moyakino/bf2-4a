@@ -27,6 +27,7 @@ Bubble::Bubble()
 	SpeedX = 0.0f;
 	SpeedY = 30.0f;
 	
+	BubbleScore = 0;
 	
 	D_flg = TRUE;
 	F_flg = FALSE;
@@ -38,9 +39,7 @@ Bubble::~Bubble()
 void Bubble::Update()
 {
 
-
-	Player = PLAYER::p_uc;
-	PlayerY = PLAYER::py2 + PLAYER::py1;
+	Oncollision();
 
 	B_FPS++;
 
@@ -84,11 +83,10 @@ void Bubble::Draw() const {
 	DrawLineAA(MoveX + 15, MoveY - 15, MoveX + 15, MoveY + 15, GetColor(255, 0, 0), 1); //右
 	DrawLineAA(MoveX - 15, MoveY - 15, MoveX + 15, MoveY - 15, GetColor(0, 255, 0), 1); //上
 	DrawLineAA(MoveX - 15, MoveY + 15, MoveX + 15, MoveY + 15, GetColor(0, 255, 0), 1); //下
-	DrawFormatString(0, 40, GetColor(255, 255, 255), "Player X???W : %0.1f Y???W : %0.1f", Player, PlayerY);
 	DrawFormatString(0, 300, GetColor(255, 255, 255), "MoveX:%0.1f MoveY:%0.1f", MoveX, MoveY);
 	DrawFormatString(0, 320, GetColor(255, 255, 255), "Bubbleflg:%d", Bubbleflg);
 	DrawFormatString(0, 340, GetColor(255, 255, 255), "H_flg:%d", H_flg);
-
+	DrawFormatString(0, 360, GetColor(255, 255, 255), "Delete:%d", Delete);
 }
 int  Bubble::BubbleControl()
 {
@@ -107,21 +105,21 @@ int  Bubble::BubbleControl()
 void Bubble::Check()
 {
 
-	int Delete = 0;
+	//int Delete = 0;
 
-	DrawFormatString(0, 360, GetColor(255, 255, 255), "Delete:%d", Delete);
-	//if (PLAYER::px1 < MoveX - 15 && PLAYER::py1 < MoveY - 15 && MoveX - 15 < PLAYER::px2 && MoveY + 15 < PLAYER::py2 /*&& Delete == 0*/){
-		H_flg = 1;
-		if (H_flg == 1) {
-			Score();
-			DeleteGraph(B_Img);
-			DrawFormatString(MoveX, MoveY, GetColor(255, 0, 0), "750");
-			Delete++;
-		}
-	/*}*/
-	/*else */{
-		H_flg = 0;
-	}
+	//DrawFormatString(0, 360, GetColor(255, 255, 255), "Delete:%d", Delete);
+	////if (PLAYER::px1 < MoveX - 15 && PLAYER::py1 < MoveY - 15 && MoveX - 15 < PLAYER::px2 && MoveY + 15 < PLAYER::py2 /*&& Delete == 0*/){
+	//	H_flg = 1;
+	//	if (H_flg == 1) {
+	//		Score();
+	//		DeleteGraph(B_Img);
+	//		DrawFormatString(MoveX, MoveY, GetColor(255, 0, 0), "%d", );
+	//		Delete++;
+	//	}
+	///*}*/
+	///*else */{
+	//	H_flg = 0;
+	//}
 }
 void Bubble::BubbleMove()
 	{
@@ -159,28 +157,29 @@ void Bubble::Score()
 void Bubble::Hit()
 {
 	int Delete = 0;
+	//if (PLAYER::px1 < MoveX - 15 && PLAYER::py1 < MoveY - 15 && MoveX - 15 < PLAYER::px2 && MoveY + 15 < PLAYER::py2 /*&& Delete == 0*/){
 
-	//if (location.x + 59 > MoveX - 15 && location.y + 10 > MoveY - 15 && MoveX - 15 > location.x + 59 && MoveY + 15 > location.x + 66    //プレイヤー　右　敵　左
-	//	|| location.x + 5 > MoveX + 15 && location.y + 10 > MoveY - 15 && MoveX + 15 > location.x + 5 && MoveY - 15 > location.y + 66   //プレイヤー　左　敵　右
-	//	|| location.x + 5 > MoveX + 15 && location.y + 10  >MoveY + 15 && MoveX + 15 > location.x + 59 && MoveY + 15 > location.y + 10  //プレイヤー　上　敵　下
-	//	|| location.x + 5 > MoveX - 15 && location.y + 66 >MoveY - 15 && MoveX + 15 >location.x + 59 && MoveY - 15 > location.y + 66)//プレイヤー　下　敵　上
-	//{
-	if(0){
-		
-		DrawFormatString(0, 360, GetColor(255, 255, 255), "Delete:%d", Delete);
-		//if (PLAYER::px1 < MoveX - 15 && PLAYER::py1 < MoveY - 15 && MoveX - 15 < PLAYER::px2 && MoveY + 15 < PLAYER::py2 /*&& Delete == 0*/){
-		H_flg = 1;
-		if (H_flg == 1) {
-			Score();
-			DeleteGraph(B_Img);
-			DrawFormatStringF(MoveX, MoveY, GetColor(255, 0, 0), "750");
-			Delete++;
-		}
-		/*}*/
-		/*else */ {
-			H_flg = 0;
-		}
+	if (H_flg == 1) {
+		//Score();
+		DeleteGraph(B_Img);
+		DrawFormatStringF(MoveX, MoveY, GetColor(255, 0, 0), "%d", BubbleScore);
+		Delete++;
 	}
+	else {
+		BubbleScore = 0;
+	}
+}
 
+void Bubble::Oncollision()
+{
+	if (PLAYER::P_Move_X + 59 < MoveX - 15 && PLAYER::P_Move_Y + 10 < MoveY - 15 && MoveX - 15 < PLAYER::P_Move_X + 59 && MoveY + 15 < PLAYER::P_Move_Y + 66    //プレイヤー　右　敵　左
+		/* || PLAYER::P_Move_X + 5 > MoveX + 15 && PLAYER::P_Move_Y + 10 > MoveY - 15 && MoveX + 15 < PLAYER::P_Move_X + 5 && MoveY - 15 < PLAYER::P_Move_Y + 66   //プレイヤー　左　敵　右
+		|| PLAYER::P_Move_X + 5 > MoveX + 15 && PLAYER::P_Move_Y + 10 > MoveY + 15 && MoveX + 15 < PLAYER::P_Move_X + 59 && MoveY + 15 < PLAYER::P_Move_Y + 10  //プレイヤー　上　敵　下
+		|| PLAYER::P_Move_X + 5 > MoveX - 15 && PLAYER::P_Move_Y + 66 > MoveY - 15 && MoveX + 15 < PLAYER::P_Move_X + 59 && MoveY - 15 < PLAYER::P_Move_Y + 66*/) { //プレイヤー　下　敵　上
 
+		H_flg = 1;
+	}
+	else {
+		H_flg = 0;
+	}
 }

@@ -1,7 +1,7 @@
 #pragma once
 #include "BoxCollider.h"
 
-class Bubble : public BoxCollider{
+class Bubble{
 private:
 	int BubbleImg[4];
 	int B_Img;
@@ -21,6 +21,7 @@ private:
 	int FontHandle;
 	int Delete;
 	float SpeedX,SpeedY;
+	int BubbleScore;
 public:
 
 	static int H_flg;
@@ -35,4 +36,5 @@ public:
 	int  BubbleAnim();
 	void Score();
 	void Hit();
+	void Oncollision();
 };
