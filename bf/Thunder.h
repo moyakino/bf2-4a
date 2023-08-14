@@ -38,8 +38,10 @@ private:
     //FPSと秒数カウント
     int	S_FPS1;
     int	S_FPS2;
+    int	S_FPS3;
     int	S_Seconas1;
     int	S_Seconas2;
+    int	S_Seconas3;
 
     int BallFlg;                //ボールの状態(0...移動中 1...Player接触2:スタート状態)
     int BallX, BallY;           //ボールの変数
@@ -50,6 +52,8 @@ private:
     int MouseX, MouseY;         // マウスの座標
 
     int H_flg;
+
+    int Subject;
 
 public:
 
