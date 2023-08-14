@@ -43,16 +43,19 @@ void Fish::Update(int x,int y)
     fy1 = y;
     fx2 = x+55;
     fy2 = y+50;
-    if (f_fps > 120) {
+    if (f_fps > 10) {
         f_fps = 0;
         //魚のアニメーション
         if (PLAYER::FishFlg == TRUE) {
             {
-               //当たり判定
-                if (PlayerX >= fx1 &&PlayerX < fx2 && PlayerY>390 && PlayerY < 500) {
+                //当たり判定
+                if (PlayerX >= fx1 && PlayerX < fx2 && PlayerY>380 && PlayerY < 500) {
                     FishEatP_flg = TRUE;
                 }
-               
+                else if (PlayerX <= fx1 && PlayerX > fx2 && PlayerY < 380 && PlayerY > 500) {
+                    FishEatP_flg = FALSE;
+                }
+
                 //何も食えなかった時
                 if (FishEatP_flg == FALSE) {
 
@@ -75,7 +78,8 @@ void Fish::Update(int x,int y)
                         Fish_Img = 5;
                     }
                     else if (F_Seconds2 == 6) {
-                        PLAYER::FishFlg = FALSE;
+                        F_Seconds2 = 7;
+                        Fish_Img = 0;
                     }
                 }
                 //player捕食
@@ -104,6 +108,7 @@ void Fish::Update(int x,int y)
                     }
                     else if (F_Seconds2 == 7) {
                         FishEatP_flg = FALSE;
+                        Fish_Img = 0;
                     }
                 }
                 //アニメーション用秒数
@@ -113,11 +118,9 @@ void Fish::Update(int x,int y)
                     PLAYER::FishFlg = FALSE;
                 }
             }
-          
+
         }
     }
-   
-
     
 }
 
@@ -135,7 +138,6 @@ void Fish::Draw() const
         if (PLAYER::F_TurnFlg == TRUE)
         {
             DrawGraph(PlayerX, 390, Fish_ArrayImg[Fish_Img], TRUE);
-          /*  DrawGraph(PlayerX, 390, Fish_ArrayImg[ChengeImg], TRUE);*/
             DrawBoxAA(fx1 , 410 , fx2, 500, GetColor(255, 255, 255), FALSE);
         }
         else {

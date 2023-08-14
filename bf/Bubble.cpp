@@ -4,151 +4,167 @@
 #include"PadInput.h"
 #include"FPS.h"
 
-int Bubble::H_flg;
-
 Bubble::Bubble()
 {
 	if (LoadDivGraph("images/stage/Stage_BubbleAnimation.png", 4, 4, 1, 64, 64, BubbleImg)) {}
+	if(BubbleScoreImg = LoadGraph("images/Score/GetScore_750.png")){}
 	B_Img = BubbleImg[0];
-	Bubbleflg = 0;
+	BubbleMoveflg = 0;
 	B_flg = 0;
+	ScoreFlg = 0;
 	H_flg = 0;
-	Img = 0;
-	B_AnimImg = 0;
-	MoveX = 338;
-	MoveY = 245;
+	MoveX = 330;
+	//MoveY = 245;
+	MoveY = 420;
 	B_FPS = 0;
 	seconds = 0;
-	HitBox = 0;
-	Player = 0.0f;
-	PlayerY = 0.0f;
-	FontHandle = 0;
-	Delete = 0;
 	SpeedX = 0.0f;
 	SpeedY = 30.0f;
 	
+	PlayerX = 0, PlayerY = 0;
 	
 	D_flg = TRUE;
-	F_flg = FALSE;
 	
 }
+
 Bubble::~Bubble()
 {
+
 }
-void Bubble::Update()
+
+void Bubble::Update(float x, float y)
 {
-
-	Player = PLAYER::p_uc;
-	PlayerY = PLAYER::py2 + PLAYER::py1;
-
 	B_FPS++;
 
-	if (CheckHitKey(KEY_INPUT_Z)) {
-		B_flg = TRUE;
-		BubbleMove();
-	}
+	PlayerX = x;
+	PlayerY = y;
+
 	if (MoveY <= -30) {
 		MoveY = 245;
 	}
-	Hit();
-	F_flg = FALSE;
 
+	if (CheckHitKey(KEY_INPUT_Z)) {
+		B_flg = TRUE;
+	}
 
-	if (MoveY != 0 && B_flg == TRUE) {
+	if (B_flg == TRUE) {
+		//BubbleMove();
+		BubbleMoveAnim();
 		MoveY -= 0.09f;
-		B_Img = BubbleControl();
+
 		Hit();
 
+		if (H_flg == TRUE) {
+			Score();
+		}
 	}
 
-
-	if (B_FPS > 60) {
+	if (ScoreFlg == TRUE) {
 		if (B_FPS > 59) {
-			B_FPS = 0;
 			seconds++;
+			if (seconds > 2) {
+				ScoreFlg = FALSE;
+				seconds = 0;
+			}
 		}
-		else if (seconds > 3) {
-			seconds = 0;
-		}
+	}
+
+	if (B_FPS > 59) {
+		B_FPS = 0;
 	}
 }
 
-void Bubble::Draw() const {
+void Bubble::Draw() const 
+{
+	if (B_flg == TRUE) {
+		DrawRotaGraph(MoveX, MoveY, 1.0f, 1, B_Img, TRUE);
+	}
+	
+	if (ScoreFlg == TRUE) {
+		DrawGraph(MoveX - 15, MoveY - 40, BubbleScoreImg, TRUE);
+	}
+	
+	//DrawBoxAA(MoveX - 20, MoveY - 20, MoveX + 20, MoveY + 20, GetColor(255, 255, 255), FALSE);
+	DrawLine(MoveX - 20, MoveY - 15, MoveX - 20, MoveY + 15, GetColor(255, 0, 0), 1);		//左
+	DrawLine(MoveX + 20, MoveY - 15, MoveX + 20, MoveY + 15, GetColor(255, 0, 0), 1);		//右
+	DrawLine(MoveX - 20, MoveY - 15, MoveX + 20, MoveY - 15, GetColor(255, 255, 255), 1);	//上
+	DrawLine(MoveX - 20, MoveY + 15, MoveX + 20, MoveY + 15, GetColor(255, 255, 255), 1);	//下
 
-	DrawRotaGraphF(MoveX, MoveY, 1.0f, 1.0, B_Img, TRUE);
-	DrawBoxAA(MoveX - 15, MoveY - 15, MoveX + 15, MoveY + 15, GetColor(255, 255, 255), FALSE);
-	SetFontSize(14);
-	DrawRotaGraph(MoveX, MoveY, 1.0f, 1, B_Img, TRUE);
-	DrawLine(MoveX - 15, MoveY - 15, MoveX - 15, MoveY + 15, GetColor(255, 0, 0), 1);
-	//DrawFormatString(0, 40, GetColor(255, 255, 255), "Player X???W : %0.1f Y???W : %0.1f", Player, PlayerY);
+	DrawFormatString(0, 400, GetColor(255, 255, 255), "X : %0.1f Y : %0.1f", PlayerX, PlayerY);
 	//DrawFormatString(0, 300, GetColor(255, 255, 255), "MoveX:%0.1f MoveY:%0.1f", MoveX, MoveY);
 	//DrawFormatString(0, 320, GetColor(255, 255, 255), "Bubbleflg:%d", Bubbleflg);
-	//DrawFormatString(0, 340, GetColor(255, 255, 255), "H_flg:%d", H_flg);
+	DrawFormatString(0, 340, GetColor(255, 255, 255), "Bubble Hit:%d", H_flg);
+	
 
 }
-int  Bubble::BubbleControl()
-{
-		int B_AnimImg = 0;
-	if (B_FPS % 15 == 0 || B_FPS % 15 == 1 || B_FPS % 15 == 2 || B_FPS % 15 == 3 || B_FPS % 15 == 4) {
-		B_AnimImg = BubbleImg[0];
-	}
-	else if (B_FPS % 15 == 5 || B_FPS % 15 == 6 || B_FPS % 15 == 7 || B_FPS % 15 == 8 || B_FPS % 15 == 9) {
-		B_AnimImg = BubbleImg[1];
-	}
-	else if (B_FPS % 15 == 10 || B_FPS % 15 == 11 || B_FPS % 15 == 12 || B_FPS % 15 == 13 || B_FPS % 15 == 14) {
-		B_AnimImg = BubbleImg[2];
-	}
-	return B_AnimImg;
-}
+
 void Bubble::Hit()
 {
-	int Delete = 0;
+	if (PlayerX + 5 < MoveX - 20 && PlayerX + 57 > MoveX - 20 && PlayerY + 8 < MoveY - 15 && PlayerY + 68 > MoveY + 15 || //左
+		PlayerX + 5 < MoveX + 20 && PlayerX + 57 > MoveX - 20 && PlayerY + 8 < MoveY - 15 && PlayerY + 68 > MoveY + 15 || //右
+		PlayerX + 5 < MoveX - 20 && PlayerX + 57 > MoveX + 20 && PlayerY + 8 < MoveY - 15 && PlayerY + 68 > MoveY - 15 || //上
+		PlayerX + 5 < MoveX - 20 && PlayerX + 57 > MoveX + 20 && PlayerY + 8 < MoveY + 15 && PlayerY + 68 > MoveY + 15 ){ //下
 
-	//DrawFormatString(0, 360, GetColor(255, 255, 255), "Delete:%d", Delete);
-	//ここの px1 とかを　全部変えるとできる
-	if (PLAYER::px1 < MoveX - 15 && PLAYER::py1 < MoveY - 15 && MoveX - 15 < PLAYER::px2 && MoveY + 15 < PLAYER::py2 /*&& Delete == 0*/){
-		H_flg = 1;
-		if (H_flg == 1) {
-			Score();
-			DeleteGraph(B_Img);
-			DrawFormatString(MoveX, MoveY, GetColor(255, 0, 0), "750");
-			Delete++;
-		}
-	}
-	else {
-		H_flg = 0;
+		//　上記の線がPlayerのBoxの範囲に入っていたら HIt!
+		H_flg = TRUE;
 	}
 }
+
+void Bubble::Score()
+{
+	if (B_FPS > 59) {
+		seconds++;
+		if (seconds < 2) {
+			B_Img = BubbleImg[3];
+		}
+		else {
+			seconds = 0;
+			B_flg = FALSE;
+			H_flg = FALSE;
+			ScoreFlg = TRUE;
+		}
+	}
+};
+
+void Bubble::BubbleMoveAnim()
+{
+	if (H_flg == FALSE) {
+		if (B_FPS >= 0 && B_FPS < 15) {
+			B_Img = BubbleImg[BUBBLEMOVE2];
+		}
+		else if (B_FPS > 14 && B_FPS < 30) {
+			B_Img = BubbleImg[BUBBLEMOVE1];
+		}
+		else if (B_FPS > 29 && B_FPS < 45) {
+			B_Img = BubbleImg[BUBBLEMOVE2];
+		}
+		else if (B_FPS > 44 && B_FPS <= 60) {
+			B_Img = BubbleImg[BUBBLEMOVE3];
+		}
+	}
+}
+
 void Bubble::BubbleMove()
-	{
-		if (MoveX == 400) {
+{
+	/*if (MoveX == 400) {
 		SpeedX = 0.7f;
 	}
 	if (SpeedX <= 0) {
-		Bubbleflg = 1;
+		BubbleMoveflg = 1;
 	}
 	if (SpeedX >= 10) {
-		Bubbleflg = 0;
+		BubbleMoveflg = 0;
 	}
-	if (Bubbleflg == 1) {
+	if (BubbleMoveflg == 1) {
 		SpeedX++;
 		MoveX++;;
 	}
 	else {
 		SpeedX--;
 		MoveX--;
-	}
-}
-void Bubble::Score()
-{
+	}*/
 
-	if (B_FPS % 15 == 0 || B_FPS % 15 == 1 || B_FPS % 15 == 2 || B_FPS % 15 == 3 || B_FPS % 15 == 4 && D_flg == TRUE) {
-		B_Img = BubbleImg[3];
-	}
-	else if (B_FPS % 15 == 5 || B_FPS % 15 == 6 || B_FPS % 15 == 7 || B_FPS % 15 == 8 || B_FPS % 15 == 9 && D_flg == TRUE) {
-		B_Img = BubbleImg[3];
-	}
-	else if (B_FPS % 15 == 10 || B_FPS % 15 == 11 || B_FPS % 15 == 12 || B_FPS % 15 == 13 || B_FPS % 15 == 14 && D_flg == TRUE) {
-		B_Img = BubbleImg[3];
-	}
-};
+	// 290 380
+
+	//if(MoveX )
+}
