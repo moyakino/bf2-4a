@@ -130,8 +130,8 @@ void Fish::Update(int x,int y)
 
 void Fish::Draw() const
 {
-    DrawFormatString(400, 20, 0xffffff, "F_Second2:%d", F_Seconds2);
-    DrawFormatString(400, 40, 0xffffff, "Fish_Img_:%d", Fish_Img);
+    //DrawFormatString(400, 20, 0xffffff, "F_Second2:%d", F_Seconds2);
+    //DrawFormatString(400, 40, 0xffffff, "Fish_Img_:%d", Fish_Img);
     
    
     if (PLAYER::FishFlg == TRUE)

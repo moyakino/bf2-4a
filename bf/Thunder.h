@@ -73,6 +73,8 @@ public:
 
     int Cloud_Anim();
 
+    void ThunderBallInit();
+
     void MoveBall();
     void HitThunder();
     void ChangeAngle();     //ƒ{[ƒ‹‚ÌŠp“x

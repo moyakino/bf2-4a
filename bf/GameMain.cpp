@@ -190,6 +190,6 @@ void GameMain::Draw()const
 	}
 	
 	//DrawFormatString(0, 50, GetColor(255, 0, 0), "GameMain");
-	DrawFormatString(400, 50, GetColor(255, 0, 0), "Snum:%d", Snum);
+	//DrawFormatString(400, 50, GetColor(255, 0, 0), "Snum:%d", Snum);
 	
 }

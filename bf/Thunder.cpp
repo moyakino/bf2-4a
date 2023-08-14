@@ -40,6 +40,8 @@ Thunder::Thunder()
 	PlayerX = 0, PlayerY = 0;
 
 	Subject = rand() % 3;
+
+	flg = 0;
 	
 }
 
@@ -52,16 +54,15 @@ void Thunder::Update(float x, float y)
 {
 	S_FPS1++;
 	S_FPS2++;
-	S_FPS3++;
+
+	PlayerX = x;
+	PlayerY = y;
 
 	T_Img = Thunder_Anim();
 	E_Img = Effect_Anim();
 	C_Img = Cloud_Anim();
 
 	MoveBall();
-
-	PlayerX = x;
-	PlayerY = y;
 
 	//雷(稲光)用 FPS
 	if (S_FPS1 > 34) {
@@ -77,19 +78,6 @@ void Thunder::Update(float x, float y)
 		S_FPS2 = 0;
 		S_Seconas2++;
 	}
-
-	/*else if (S_Seconas2 > 6) {
-		flg = TRUE;
-	}*/
-	
-	//雷の弾の発射用 FPS
-	//if (S_FPS3 > 59) {
-	//	S_FPS3 = 0;
-	//	S_Seconas3++;
-	//}// P_FPS_INC は 秒数を取っている
-	//else if (S_Seconas3 == 5) {
-	//	flg = TRUE;
-	//}
 }
 
 void Thunder::MoveBall()
@@ -171,6 +159,11 @@ void Thunder::MoveBall()
 	}
 
 	//ChangeAngle();
+}
+
+void Thunder::ThunderBallInit()
+{
+
 }
 
 void Thunder::ChangeAngle()
@@ -340,5 +333,7 @@ void Thunder::Draw() const
 	//雷（雷の弾）の表示
 	DrawGraph(BallX, BallY, E_Img, TRUE);
 
-	
+	DrawFormatString(0, 300, GetColor(255, 255, 255), " 雷発生 :%d", S_Seconas2);
+
+	DrawBox(BallX + 2, BallY + 4, BallX + 28, BallY + 26, GetColor(255, 0, 0), FALSE);
 }

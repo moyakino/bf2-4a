@@ -90,10 +90,10 @@ void Bubble::Draw() const
 	DrawLine(MoveX - 20, MoveY - 15, MoveX + 20, MoveY - 15, GetColor(255, 255, 255), 1);	//è„
 	DrawLine(MoveX - 20, MoveY + 15, MoveX + 20, MoveY + 15, GetColor(255, 255, 255), 1);	//â∫
 
-	DrawFormatString(0, 400, GetColor(255, 255, 255), "X : %0.1f Y : %0.1f", PlayerX, PlayerY);
+	//DrawFormatString(0, 400, GetColor(255, 255, 255), "X : %0.1f Y : %0.1f", PlayerX, PlayerY);
 	//DrawFormatString(0, 300, GetColor(255, 255, 255), "MoveX:%0.1f MoveY:%0.1f", MoveX, MoveY);
 	//DrawFormatString(0, 320, GetColor(255, 255, 255), "Bubbleflg:%d", Bubbleflg);
-	DrawFormatString(0, 340, GetColor(255, 255, 255), "Bubble Hit:%d", H_flg);
+	//DrawFormatString(0, 340, GetColor(255, 255, 255), "Bubble Hit:%d", H_flg);
 	
 
 }
