@@ -60,6 +60,7 @@ private:
     float	ex1, ey1, ex2, ey2, e_uc;
 
     //ìGÇÃç¿ïW
+    float location;
 
     float E_Move_X;
     float E_Move_Y;
@@ -82,7 +83,7 @@ private:
     float	E_Air_Multiply;
 
     ENEMY_STATE EnemyState;
-    
+    int x1, x2, y1, y2;
     
 public:
 
@@ -114,4 +115,5 @@ public:
 
     void Enemy_Gravity();
     void Enemy_Warp();
+
 };

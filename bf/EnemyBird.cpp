@@ -34,9 +34,9 @@ EnemyBird::EnemyBird()
     SpeedY = 0;
     E_Speed = 0;
 
-    //敵の座標
-    ex1 = 0, ex2 = 0, ey1 = 0,ey2 = 0, e_uc = 0;
-    sx1 = 0, sy1 = 0, sx2 = 0, sy2 = 0;
+    ////敵の座標
+    //ex1 = 0, ex2 = 0, ey1 = 0,ey2 = 0, e_uc = 0;
+    //sx1 = 0, sy1 = 0, sx2 = 0, sy2 = 0;
     //地上のスピード
     E_XSpeed = 0.0f;
     E_YSpeed = 0.0f;
@@ -50,7 +50,12 @@ EnemyBird::EnemyBird()
 
     E_Balloon_Flg = 0;
     EnemyState = ENEMY_STATE::START;
-    
+    //x1 = E_Move_X + 10;
+    //x2 = E_Move_X + 30;
+    //y1 = E_Move_Y + 37;
+    //y2 = E_Move_Y + 65;
+
+    location = 0;
 }
 
 EnemyBird::~EnemyBird()
@@ -102,8 +107,6 @@ void EnemyBird::Update()
     
     
  /*   Start_Anim();*/
-
-    
 }
 
 void EnemyBird::Enemy_Warp()
@@ -133,12 +136,32 @@ void EnemyBird::Enemy_Warp()
 void EnemyBird::Enemy_Levitation_Move_X()
 {
     E_Air_Flg = TRUE;
+
+   // E_Move_X + 10, E_Move_Y + 37, E_Move_X + 50, E_Move_Y + 65,
+
+ 
+    //  //上
+    //DrawLine(PLAYER::P_Move_X + 5, PLAYER::P_Move_Y+10, PLAYER::P_Move_X + 59, PLAYER::P_Move_Y + 10, GetColor(255, 0, 0), FALSE);
+
+    ////下
+    //DrawLine(PLAYER::P_Move_X + 5, PLAYER::P_Move_Y + 66, PLAYER::P_Move_X + 59, PLAYER::P_Move_Y + 66, GetColor(255, 0, 0), FALSE);
+
+    ////左
+    //DrawLine(PLAYER::P_Move_X + 5, PLAYER::P_Move_Y + 10, PLAYER::P_Move_X + 5, PLAYER::P_Move_Y + 66, GetColor(0, 255, 0), FALSE);
+
+    ////右
+    //DrawLine(PLAYER::P_Move_X + 59, PLAYER::P_Move_Y + 10, PLAYER::P_Move_X + 59, PLAYER::P_Move_Y + 66, GetColor(0, 255, 0), FALSE);
+
     if (E_Stand_Flg == FALSE) {
-        if (E_Move_X >= PLAYER::P_Move_X) {
+        if (E_Move_X + 10 <= PLAYER::P_Move_X && E_Move_Y + 37 <= PLAYER::P_Move_Y + 10) {
             SpeedX -= 0.01f;
+            SpeedY -= 0.01f;
             EnemyState = ENEMY_STATE::FLY_LEFT;
         }
-        if (E_Move_X <= PLAYER::P_Move_X) {
+        else {
+
+        }
+        if (E_Move_X + 50 <= PLAYER::P_Move_X && E_Move_Y + 37 <= PLAYER::P_Move_Y + 37) {
             SpeedX += 0.01f;
             EnemyState = ENEMY_STATE::FLY_RIGHT;
         }
@@ -147,24 +170,52 @@ void EnemyBird::Enemy_Levitation_Move_X()
         }
         if (SpeedX >= 0.7f) {
             SpeedX = 0.7f;
+
+            if (SpeedY <= -0.7f) {
+                SpeedY = -0.7f;
+
+            }
+            if (SpeedY >= 0.05f) {
+                SpeedY = 0.05f;
+            }
         }
     }
-    /*if (E_Stand_Flg == TRUE) {
-        SpeedX = 0;
-    }*/
+
     E_Move_X += SpeedX;
 }
 
+//void EnemyBird::Enemy_Levitation_Move_Y()
+//{
+//    E_Air_Flg = TRUE;
+//    if (E_Stand_Flg == FALSE) {
+//        if (E_Move_Y <= PLAYER::P_Move_Y) {
+//            SpeedY -= 0.01f;
+//
+//        }
+//        /*if (E_Move_Y <= PLAYER::P_Move_Y) {
+//            SpeedY += 0.05f;
+//        }*/
+//        if (SpeedY <= -0.7f) {
+//            SpeedY = -0.7f;
+//
+//        }
+//        /*if (SpeedY >= 0.05f) {
+//            SpeedY = 0.05f;
+//        }*/
+//    }
+//    E_Move_Y += SpeedY;
+//}
 
-void EnemyBird::Enemy_Gravity()
-{
-    E_Air_Flg = TRUE;
-    E_YSpeed = E_YSpeed + 0.01f;
-    E_Move_Y = E_Move_Y + E_YSpeed;
-    if (E_YSpeed >= 1.0f) {//速度制限
-        E_YSpeed = 1.0f;
-    }
-}
+
+//void EnemyBird::Enemy_Gravity()
+//{
+//    E_Air_Flg = TRUE;
+//    E_YSpeed = E_YSpeed + 0.01f;
+//    E_Move_Y = E_Move_Y + E_YSpeed;
+//    if (E_YSpeed >= 1.0f) {//速度制限
+//        E_YSpeed = 1.0f;
+//    }
+//}
 
 void EnemyBird::Start_Anim()
 {
@@ -180,33 +231,6 @@ void EnemyBird::Fly_Anim()
    
 }
 
-void EnemyBird::Enemy_Levitation_Move_Y()
-{
-    E_Air_Flg = TRUE;
-    if (E_Stand_Flg == FALSE) {
-        if (E_Move_Y <= PLAYER::P_Move_Y) {
-            SpeedY -= 0.01f;
-
-        }
-        /*if (E_Move_Y <= PLAYER::P_Move_Y) {
-            SpeedY += 0.05f;
-        }*/
-        if (SpeedY <= -0.7f) {
-            SpeedY = -0.7f;
-
-        }
-        /*if (SpeedY >= 0.05f) {
-            SpeedY = 0.05f;
-        }*/
-    }
-    E_Move_Y += SpeedY;
-}
-
-    /*if (E_Stand_Flg == TRUE) {
-        SpeedY = 0;
-        EnemyState= ENEMY_STATE::START;
-    }*/
-    
     /*if (E_Second == 0.0f) {
         E_Img = E_ArrayImg_P[STAND_BY_ENEMY_0];
     }
@@ -268,7 +292,7 @@ void EnemyBird::Draw() const
     DrawGraphF(E_Move_X, E_Move_Y, E_ArrayImg_P[0], TRUE);
 
     //敵の当たり判定
-    DrawBox(E_Move_X + 30, E_Move_Y + 37, E_Move_X + 35, E_Move_Y + 65, GetColor(255, 255, 255), FALSE);
+    DrawBox(E_Move_X + 10 , E_Move_Y + 37, E_Move_X + 50, E_Move_Y + 65, GetColor(255, 255, 255), FALSE);
     DrawFormatStringF(0, 160, GetColor(255, 255, 255), " enemy座標：X座標 %0.1f Y座標 %0.1f", E_Move_X, E_Move_Y);
 
     ////風船の当たり判定

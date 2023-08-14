@@ -108,8 +108,6 @@ private:
 	//(‰¼)•—‘Dî•ñ 1:2ŒÂ 0:1ŒÂ
 	int		P_Balloon_Flg;
 
-
-	
 	//ŠC‚É—‰º‚·‚éó‘Ô‚Ìƒtƒ‰ƒO
 	int		P_Foll_Flg;
 
