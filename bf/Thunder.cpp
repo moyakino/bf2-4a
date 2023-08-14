@@ -36,6 +36,8 @@ Thunder::Thunder()
 	MoveX = 0;
 	MoveY = 0;
 
+	PlayerX = 0, PlayerY = 0;
+
 	Subject = rand() % 3;
 	
 }
@@ -45,11 +47,14 @@ Thunder::~Thunder()
 
 }
 
-void Thunder::Update()
+void Thunder::Update(float x, float y)
 {
 	S_FPS1++;
 	S_FPS2++;
 	S_FPS3++;
+
+	PlayerX = x;
+	PlayerY = y;
 
 	//雷(稲光)用 FPS
 	if (S_FPS1 > 34) {
@@ -331,4 +336,6 @@ void Thunder::Draw() const
 	
 	//雷（雷の弾）の表示
 	DrawGraph(BallX, BallY, E_Img, TRUE);
+
+	
 }

@@ -50,7 +50,7 @@ void Bubble::Update(float x, float y)
 	if (B_flg == TRUE) {
 		//BubbleMove();
 		BubbleMoveAnim();
-		MoveY -= 0.09f;
+		MoveY -= 0.5f;
 
 		Hit();
 
@@ -81,7 +81,7 @@ void Bubble::Draw() const
 	}
 	
 	if (ScoreFlg == TRUE) {
-		DrawGraph(MoveX - 15, MoveY - 40, BubbleScoreImg, TRUE);
+		DrawGraph(MoveX - 15, MoveY - 50, BubbleScoreImg, TRUE);
 	}
 	
 	//DrawBoxAA(MoveX - 20, MoveY - 20, MoveX + 20, MoveY + 20, GetColor(255, 255, 255), FALSE);

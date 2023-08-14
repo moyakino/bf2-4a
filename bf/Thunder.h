@@ -49,6 +49,8 @@ private:
     int Speed;                  //ボールのスピード
     float BallAngle;            //ボールの角度
 
+    float PlayerX, PlayerY;
+
     int MouseX, MouseY;         // マウスの座標
 
     int H_flg;
@@ -60,7 +62,7 @@ public:
     Thunder(); //コンストラクタ
     ~Thunder();// デストラクタ
     
-    void Update();// 更新処理を実装する
+    void Update(float x, float y);// 更新処理を実装する
 
     void Draw() const;// 描画処理を実装する
 

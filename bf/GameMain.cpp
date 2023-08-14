@@ -75,7 +75,7 @@ AbstractScene* GameMain::Update()
 	bubble->Update(player->GetLocation().x, player->GetLocation().y);
 	fish->Update(player->GetLocation().x , player->GetLocation().y);
 	enemybird->Update();
-	thunder->Update();
+	thunder->Update(player->GetLocation().x, player->GetLocation().y);
 
 
 	
