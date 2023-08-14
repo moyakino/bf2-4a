@@ -9,13 +9,19 @@ private:
 	int Phase;
 	int gScore;
 	int GameOver;
-	int TempScore;
+	int TotalScore;
 	int PosX;
 	int Cnt;
-public:
+	int Respawn_Cnt;
+	int fpsCnt;
+	int byou;
+	int GameOver_Flg;
+public:	
+
 	UI();
 	~UI();
 	void Update();
 	void Draw()const;
+	int GetGameOver()const;
 
 };

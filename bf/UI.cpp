@@ -1,6 +1,9 @@
 #include"DxLib.h"
 #include "UI.h"
 #include "Bubble.h"
+#include "Player.h"
+#include "TitleScene.h"
+
 
 UI::UI()
 {
@@ -8,13 +11,22 @@ UI::UI()
 	Score = LoadGraph("images/UI/UI_Score.png");
 	HiScore = LoadGraph("images/UI/UI_HiScore.png");
 	Stock1 = LoadGraph("images/UI/UI_Stock.png");
-	Stock2 = LoadGraph("images/UI/UI_Stock.png");
+	Stock2 = 0;
 	Phase = LoadGraph("images/UI/UI_Phase.png");
-	GameOver = LoadGraph("images / UI / UI_GameOver.png");
+	GameOver = LoadGraph("images/UI/UI_GameOver.png");
 	gScore = 0;
-	TempScore = 0;
+	TotalScore = 500;
 	PosX = 200;
 	Cnt = 0;
+	Respawn_Cnt = 0;
+	GameOver_Flg = 0;
+	fpsCnt = 0;
+	byou = 0;
+
+	//îzóÒÇÃèâä˙âª
+	for (int i = 0; i < 10; i++) {
+		Number[i] = 0;
+	}
 }
 
 UI::~UI()
@@ -24,37 +36,80 @@ UI::~UI()
 
 void UI::Update()
 {
-	gScore = Bubble::H_flg;
+	//gScore = Bubble::H_flg;
 
-	TempScore = 750;
+	//TempScore = 750;
 
-	/*if (CheckHitKey(KEY_INPUT_E))
-	{
-		DrawGraph(200, 200, GameOver, FALSE);
-	}*/
+	///*if (CheckHitKey(KEY_INPUT_E))
+	//{
+	//	DrawGraph(200, 200, GameOver, FALSE);
+	//}*/
 
-	if (gScore == 1) {
-		Cnt += 1;
-		//TempScore = TempScore % 10;
-		TempScore /= 10;
-		PosX -= 30;
+	//if (gScore == 1) {
+	//	Cnt += 1;
+	//	//TempScore = TempScore % 10;
+	//	TempScore /= 10;
+	//	PosX -= 30;
+	//}
+	//fpsCnt++;
+
+	// 10à»â∫Ç»ÇÁ1ÇÃà Ç≈Ç∑Çﬁ
+	if (TotalScore > 10) {
+		gScore = TotalScore % 10;
+		// 100 à»â∫Ç»ÇÁ 10ÇÃÇ≠ÇÁÇ¢Ç≈çœÇﬁ
 	}
-	
+
+
+
+	/*do {
+		DrawGraph(PosX, 30, Number[TotalScore % 10], TRUE);
+		TotalScore /= 10;
+		PosX -= 30;
+	} while (TotalScore > 0);*/
+
+
+	if (PLAYER::zanki == TRUE) {
+		Cnt += 1;
+		Respawn_Cnt = Respawn_Cnt + Cnt;
+	}
+
+	if (Respawn_Cnt > 3) {
+		GameOver_Flg = TRUE;
+	}
+
 }
 
 void UI::Draw() const
 {
-	//DrawGraph(60,12,Score,TRUE);
-	//DrawGraph(250, 0, HiScore, FALSE);
-	//DrawGraph(100,30, Stock1, TRUE);
-	//DrawGraph(140, 30, Stock2, TRUE);
+	DrawGraph(60,12,Score,TRUE);
+	DrawGraph(240, 15, HiScore, TRUE);
 
-	//DrawGraph(73, 6, Number[0], TRUE);
-	//DrawGraph(92, 6, Number[0], TRUE);
-	//DrawGraph(111, 6, Number[4], TRUE);
-	//DrawGraph(111, 6, Number[0], TRUE);
 
-	//DrawGraph(0, 200, gScore, TRUE);
+
+	if (Respawn_Cnt == 0) {
+		DrawGraph(145, 35, Stock1, TRUE);
+		DrawGraph(165, 35, Stock1, TRUE);
+	}
+	else if (Respawn_Cnt == 1) {
+		DrawGraph(145, 35, Stock1, TRUE);
+		DrawGraph(165, 35, Stock2, TRUE);
+	}
+	else if (Respawn_Cnt == 2) {
+		DrawGraph(145, 35, Stock2, TRUE);
+		DrawGraph(165, 35, Stock2, TRUE);
+	}
+
+	if (GameOver_Flg == TRUE) {
+		DrawGraph(220, 240, GameOver, TRUE);
+	}
+
+	DrawFormatString(0, 20, GetColor(255, 255, 255), " UI CntÅF%d", Respawn_Cnt);
+	DrawFormatString(0, 40, GetColor(255, 255, 255), " GameOverÅF%d", GameOver_Flg);
+
+
+
+
+	DrawGraph(200, 300, Number[gScore], TRUE);
 
 	//DrawFormatString(0, 200, GetColor(255, 255, 255), "TempScore : %d", TempScore);
 
@@ -62,4 +117,9 @@ void UI::Draw() const
 	/*if (Cnt >= 1) {
 		DrawGraph(PosX, 30, Number[TempScore], TRUE);
 	}*/
+}
+
+int UI::GetGameOver()const
+{
+	return GameOver_Flg;
 }

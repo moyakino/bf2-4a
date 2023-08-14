@@ -16,7 +16,9 @@ class GameMain:
 {
 private:
 
-	int fps = 0;
+	int fps;
+	int Cnt;
+	int DrawGameOver;
 
 	int Bgm;
 	int StageSample;

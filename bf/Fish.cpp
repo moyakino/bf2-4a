@@ -3,10 +3,11 @@
 #include"GameMain.h"
 #include "Player.h"
 
-
+int Fish::FishEatP_flg;
+int Fish::F_Seconds2;
 Fish::Fish()
 {
-    
+    i = 0;
     PlayerX = 0;
     PlayerY = 0;
     fx1 = 0;
@@ -16,7 +17,7 @@ Fish::Fish()
     Fish_Img = 0;
     f_fps = 0;
     F_Seconds2 = 0;
-    /*FishEatP_flg = 0;*/
+    FishEatP_flg = 0;
 	if (LoadDivGraph("images/Enemy/Enemy_FishAnimation.png", 10, 5, 2, 64, 64, Fish_ArrayImg)) {}
     ChengeImg = 0;
     FishEatP_flg = FALSE;
@@ -43,7 +44,7 @@ void Fish::Update(int x,int y)
     fy1 = y;
     fx2 = x+55;
     fy2 = y+50;
-    if (f_fps > 10) {
+    if (f_fps > 15) {
         f_fps = 0;
         //魚のアニメーション
         if (PLAYER::FishFlg == TRUE) {
@@ -110,6 +111,7 @@ void Fish::Update(int x,int y)
                         FishEatP_flg = FALSE;
                         Fish_Img = 0;
                     }
+                 
                 }
                 //アニメーション用秒数
                 F_Seconds2++;
@@ -130,8 +132,8 @@ void Fish::Draw() const
 {
     DrawFormatString(400, 20, 0xffffff, "F_Second2:%d", F_Seconds2);
     DrawFormatString(400, 40, 0xffffff, "Fish_Img_:%d", Fish_Img);
-    DrawFormatString(400, 80, 0xffffff, "PX_:%d", PlayerX);
-    DrawFormatString(400, 100, 0xffffff, "PY_:%d", PlayerY);
+    
+   
     if (PLAYER::FishFlg == TRUE)
     {
 
