@@ -10,12 +10,16 @@
 class Fish {
 private:
   int  Fish_ArrayImg[9];
-  int i = 0;
-  int	F_Seconas2;
-  int F_AnimImg = 0;
-  int Fish_Img = 0;
+  int fx1;
+  int fy1;
+  int fx2;
+  int fy2;
+  int	F_Seconds2;
+  int F_AnimImg ;
+  int Fish_Img;
   int f_fps;
   int ChengeImg;
+  int FishEatP_flg;
   //プレイヤー座標
   float PlayerX;
   float PlayerY;
@@ -34,5 +38,5 @@ public:
     // 描画処理を実装する
     void Draw() const;
 
-    int Fish_Anim();
+    void Fish_NAnim();
 };

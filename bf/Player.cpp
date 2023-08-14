@@ -411,16 +411,17 @@ void PLAYER::Stand_Foot()
 
     int fpscount = 0;
 
-    //魚の出現 ステージの Y 座標しかとっていない locationはプレイヤーの身長分の座標
-    if (location.y + 30 > 405 && location.y + 30 < 430)
+    //魚の出現
+    if (P_Move_X>160&& P_Move_X <480&& P_Move_Y > 380&& P_Move_Y <430)
     {
         //60fps == 1秒　で超えたら fpsを 0 にする
         if (P_FPS > 59) {
-            FishCnt++;
+            P_FPS = 0;
+            F_Seconas1++;
         }
-        if (FishCnt == 3) {
+        if (F_Seconas1 == 3) {
             rand = GetRand(99);
-            FishCnt = 0;
+            F_Seconas1 = 0;
             if (rand < 30)
             {
                 //確率が30以下だったらサカナがPlayerのY座標に出てくる
