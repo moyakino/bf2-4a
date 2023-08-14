@@ -19,9 +19,9 @@ Thunder::Thunder()
 	E_Img = 0;
 	C_Img = 0;
 
-	T_Thunder_Flg = TRUE;
+	T_Thunder_Flg = FALSE;
 	T_Effect_Flg = TRUE;
-	T_Cloud_Flg = TRUE;
+	T_Cloud_Flg = FALSE;
 
 	S_FPS1 = 0;
 	S_FPS2 = 0;
@@ -29,8 +29,8 @@ Thunder::Thunder()
 	S_Seconas2 = 0;
 
 	BallFlg = 0;
-	BallX = 200;
-	BallY = 200;
+	BallX = 345;
+	BallY = 105;
 	BallAngle = 0;
 
 	MoveX = 0;
@@ -50,6 +50,12 @@ void Thunder::Update()
 	S_FPS1++;
 	S_FPS2++;
 	S_FPS3++;
+
+	T_Img = Thunder_Anim();
+	E_Img = Effect_Anim();
+	C_Img = Cloud_Anim();
+
+	MoveBall();
 
 	//雷(稲光)用 FPS
 	if (S_FPS1 > 34) {
@@ -77,18 +83,11 @@ void Thunder::Update()
 	else if (S_Seconas3 > 30) {
 		S_Seconas3 = 0;
 	}
-
-	T_Img = Thunder_Anim();
-	E_Img = Effect_Anim();
-	C_Img = Cloud_Anim();
-
-	MoveBall();
 }
 
 void Thunder::MoveBall()
 {
-
-	if (S_Seconas3 == 30)
+	if (S_Seconas3 == 5)
 	{
 		BallFlg = 1;
 		Speed = 2;
@@ -96,24 +95,26 @@ void Thunder::MoveBall()
 		//BallAngle = 0.375f;  //左下
 		//BallAngle = 0.875f;  //右上
 		//BallAngle = 0.125f;  //右上
+		T_Effect_Flg = TRUE;
 		ChangeAngle();
 	}
 
 	// マウス左クリックでゲームスタート
-	if (CheckHitKey(KEY_INPUT_1))
-	{
-		BallFlg = 1;
-		Speed = 2;
-		BallAngle = 0.625f;  //左上
-		//BallAngle = 0.375f;  //左下
-		//BallAngle = 0.875f;  //右上
-		//BallAngle = 0.125f;  //右上
-		ChangeAngle();
-	}
+	//if (CheckHitKey(KEY_INPUT_1))
+	//{
+	//	BallFlg = 1;
+	//	Speed = 2;
+	//	BallAngle = 0.625f;  //左上
+	//	//BallAngle = 0.375f;  //左下
+	//	//BallAngle = 0.875f;  //右上
+	//	//BallAngle = 0.125f;  //右上
+	//	T_Effect_Flg = TRUE;
+	//	ChangeAngle();
+	//}
 	
 	// 2でリセット
-	if(CheckHitKey(KEY_INPUT_2))BallFlg = 2;
-		
+	//if(CheckHitKey(KEY_INPUT_2))BallFlg = 2;
+	//	
 	//ボールの移動処理
 	if (BallFlg != 2) 
 	{
@@ -150,18 +151,18 @@ void Thunder::MoveBall()
 	//	BallAngle = (1 - BallAngle);
 	//	ChangeAngle();
 	//}
-	if (BallY > 480 + 4) {
-		//ボールをスタート状態にする
+	if (BallY > 480 + 4) //(海)
+	{
 		BallFlg = 2;
 	}
-	
+	//ボールをスタート状態にする
 	if (BallFlg == 2)
 		{
 			BallX = 345;
 			BallY = 105;
 		}
 
-	ChangeAngle();
+	//ChangeAngle();
 }
 
 void Thunder::ChangeAngle()
@@ -203,7 +204,6 @@ void Thunder::HitThunder()
 
 	//ChangeAngle();
 }
-
 
 int Thunder::Thunder_Anim()
 {
