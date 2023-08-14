@@ -9,23 +9,25 @@
 
 class Fish {
 private:
+    int i;
   int  Fish_ArrayImg[9];
   int fx1;
   int fy1;
   int fx2;
   int fy2;
-  int	F_Seconds2;
+  /*int	F_Seconds2;*/
   int F_AnimImg ;
   int Fish_Img;
   int f_fps;
   int ChengeImg;
-  int FishEatP_flg;
+  /*int FishEatP_flg;*/
   //プレイヤー座標
   float PlayerX;
   float PlayerY;
 
 public:
-
+    static int FishEatP_flg;
+    static int	F_Seconds2;
     //コンストラクタ
     Fish();
 

@@ -136,6 +136,7 @@ public:
 	static	int		P_TurnFlg;
 	static float	px1, py1, px2, py2, p_uc, py_u;
 	static	int		F_TurnFlg;
+
 	//コンストラクタ
 	PLAYER();
 

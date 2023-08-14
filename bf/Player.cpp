@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "PadInput.h"
 #include "Stage.h"
+#include "Fish.h"
 
 int PLAYER::FishFlg;
 int PLAYER::P_TurnFlg;
@@ -448,6 +449,13 @@ void PLAYER::Stand_Foot()
     }
     else {
         F_TurnFlg = FALSE;
+    }
+    //ãõÇ…Ç†ÇΩÇ¡ÇΩÇ∆Ç´ÉäÉXÉ|Å[Éì
+    if (Fish::FishEatP_flg == TRUE) {
+        if (Fish::F_Seconds2 == 7) {
+            Player_Init();
+            Respawn_Anim();
+        }
     }
 
  }
