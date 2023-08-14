@@ -1,14 +1,16 @@
 #include"DxLib.h"
 #include"GameMain.h"
-#include "Player.h"
-#include "testPlayer.h"
-
 #include "PadInput.h"
+#include "Player.h"
+#include "TitleScene.h"
+#include "testPlayer.h"
 
 //コンストラクタ
 GameMain::GameMain()
 {
-
+	fps = 0;
+	Cnt = 0;
+	DrawGameOver = FALSE;
 
 	/*Bgm = LoadSoundMem("sounds/SE_Start.wav");
 	PlaySoundMem(Bgm, DX_PLAYTYPE_BACK);*/
@@ -52,19 +54,32 @@ GameMain::~GameMain()
 
 AbstractScene* GameMain::Update()
 {
+	fps++;
+
+	if (ui->GetGameOver() == TRUE) {
+		DrawGameOver = TRUE;
+		if (fps > 59) {
+			if (fps % 2 == 0) {
+				Cnt++;
+			}
+		}
+		if (Cnt > 3) {
+			return new Title();
+			Cnt = 0;
+		}
+	}
+
 	//stage->Update();
 	player->Update();
-	//enemybird->Update(PLAYER::P_Move_X, PLAYER::P_Move_Y);
-	bubble->Update();
+	ui->Update();
+	bubble->Update(player->GetLocation().x, player->GetLocation().y);
 	fish->Update(player->GetLocation().x , player->GetLocation().y);
 	enemybird->Update();
 	thunder->Update();
 
-	bubble->Update();
-
 
 	
-	fps++;
+	
 
 	// Xボタン単押し
 	int X_Btn = PAD_INPUT::OnButton(XINPUT_BUTTON_X);
@@ -101,7 +116,7 @@ AbstractScene* GameMain::Update()
 				}
 
 				//それ以外の場所なら跳ね返る
-				if (StageFoot[i]->L_SideBoxCollider(player) == 1) 
+				/*if (StageFoot[i]->L_SideBoxCollider(player) == 1) 
 				{
 
 				}
@@ -109,7 +124,7 @@ AbstractScene* GameMain::Update()
 				if (StageFoot[i]->R_SideBoxCollider(player) == 1) 
 				{
 
-				}
+				}*/
 			}
 
 			////敵が足場に当たっているか
@@ -126,7 +141,9 @@ AbstractScene* GameMain::Update()
 		break;
 	}
 
-
+	if (fps > 59) {
+		fps = 0;
+	}
 
 	return this;
 }
@@ -141,9 +158,9 @@ void GameMain::Draw()const
 	//DrawGraph(180, 280, StageFoot[0],TRUE);
 
 	//地面と海
-	//DrawGraph(0, 416, StageLand_L, TRUE);
-	//DrawGraph(480, 416, StageLand_R, TRUE);
-	//DrawGraph(160,444,StageSea,TRUE);
+	/*DrawGraph(0, 416, StageLand_L, TRUE);
+	DrawGraph(480, 416, StageLand_R, TRUE);
+	DrawGraph(160,444,StageSea,TRUE);*/
 
 
 	switch (Snum)
@@ -162,16 +179,17 @@ void GameMain::Draw()const
 
 	//stage->Draw();
 	
-	//enemybird->Draw();
-	enemybird->Draw();
-	fish->Draw();
-	bubble->Draw();
-	//ui->Draw();
-	thunder->Draw();
-	//ui->Draw();
-	player->Draw();
+	ui->Draw();
 
-	DrawFormatString(0, 50, GetColor(255, 0, 0), "GameMain");
+	if (DrawGameOver == FALSE) {
+		//enemybird->Draw();
+		bubble->Draw();
+		thunder->Draw();
+		player->Draw();
+		fish->Draw();
+	}
+	
+	//DrawFormatString(0, 50, GetColor(255, 0, 0), "GameMain");
 	DrawFormatString(400, 50, GetColor(255, 0, 0), "Snum:%d", Snum);
 	
 }

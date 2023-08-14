@@ -52,7 +52,7 @@ void Fish::Update(int x,int y)
    
 void Fish::Draw() const
 {
-    DrawFormatString(0, 20, 0xffffff, "Second:%d", F_Seconas2);
+    //DrawFormatString(0, 20, 0xffffff, "Second:%d", F_Seconas2);
     if (PLAYER::FishFlg == TRUE) 
     {
         if (PLAYER::F_TurnFlg == TRUE)
