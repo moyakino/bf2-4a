@@ -55,6 +55,8 @@ private:
 
     int Subject;
 
+    int flg;
+
 public:
 
     Thunder(); //コンストラクタ

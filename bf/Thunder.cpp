@@ -27,6 +27,7 @@ Thunder::Thunder()
 	S_FPS2 = 0;
 	S_Seconas1 = 0;
 	S_Seconas2 = 0;
+	S_Seconas3 = 0;
 
 	BallFlg = 0;
 	BallX = 345;
@@ -36,7 +37,9 @@ Thunder::Thunder()
 	MoveX = 0;
 	MoveY = 0;
 
-	Subject = rand() % 3;
+	flg = 0;
+
+	//Subject = rand() % 3;
 	
 }
 
@@ -70,25 +73,27 @@ void Thunder::Update()
 	if (S_FPS2 > 59) {
 		S_FPS2 = 0;
 		S_Seconas2++;
-	}// P_FPS_INC は 秒数を取っている
-	else if (S_Seconas2 > 6) {
-		S_Seconas2 = 0;
 	}
+
+	/*else if (S_Seconas2 > 6) {
+		flg = TRUE;
+	}*/
 	
 	//雷の弾の発射用 FPS
-	if (S_FPS3 > 59) {
-		S_FPS3 = 0;
-		S_Seconas3++;
-	}// P_FPS_INC は 秒数を取っている
-	else if (S_Seconas3 > 30) {
-		S_Seconas3 = 0;
-	}
+	//if (S_FPS3 > 59) {
+	//	S_FPS3 = 0;
+	//	S_Seconas3++;
+	//}// P_FPS_INC は 秒数を取っている
+	//else if (S_Seconas3 == 5) {
+	//	flg = TRUE;
+	//}
 }
 
 void Thunder::MoveBall()
 {
-	if (S_Seconas3 == 5)
+	if (S_Seconas2 > 30)
 	{
+		S_Seconas2 = 0;
 		BallFlg = 1;
 		Speed = 2;
 		BallAngle = 0.625f;  //左上
@@ -100,21 +105,21 @@ void Thunder::MoveBall()
 	}
 
 	// マウス左クリックでゲームスタート
-	//if (CheckHitKey(KEY_INPUT_1))
-	//{
-	//	BallFlg = 1;
-	//	Speed = 2;
-	//	BallAngle = 0.625f;  //左上
-	//	//BallAngle = 0.375f;  //左下
-	//	//BallAngle = 0.875f;  //右上
-	//	//BallAngle = 0.125f;  //右上
-	//	T_Effect_Flg = TRUE;
-	//	ChangeAngle();
-	//}
+	if (CheckHitKey(KEY_INPUT_1))
+	{
+		BallFlg = 1;
+		Speed = 2;
+		BallAngle = 0.625f;  //左上
+		//BallAngle = 0.375f;  //左下
+		//BallAngle = 0.875f;  //右上
+		//BallAngle = 0.125f;  //右上
+		T_Effect_Flg = TRUE;
+		ChangeAngle();
+	}
 	
 	// 2でリセット
-	//if(CheckHitKey(KEY_INPUT_2))BallFlg = 2;
-	//	
+	if(CheckHitKey(KEY_INPUT_2))BallFlg = 2;
+		
 	//ボールの移動処理
 	if (BallFlg != 2) 
 	{
@@ -160,7 +165,7 @@ void Thunder::MoveBall()
 		{
 			BallX = 345;
 			BallY = 105;
-		}
+	}
 
 	//ChangeAngle();
 }
