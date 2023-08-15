@@ -4,6 +4,8 @@
 #include "Stage.h"
 #include "Fish.h"
 
+#define SLIDE 15
+
 int PLAYER::FishFlg;
 int PLAYER::P_TurnFlg;
 int PLAYER::F_TurnFlg;
@@ -36,8 +38,13 @@ PLAYER::PLAYER()
     P_Air_L_Flg = 0;
 
     location.x = 20.0f;
-    location.y = 350.0f;
+    location.y = 349.4f;
+    erea.Height = 50;
+    erea.Width = 35;
     //P_Move_Y = 200.0f;
+
+    P_Move_X = location.x;
+    P_Move_Y = location.y;
 
     //地上のスピード
     P_XSpeed = 0.0f;
@@ -131,7 +138,6 @@ void PLAYER::Update()
         zanki = FALSE;
         //ステージの足場に立っていたら地上の移動に入る
         if (P_Stand_Flg == TRUE) {
-            //地上の移動
             Player_Move();
         }
 
@@ -152,6 +158,7 @@ void PLAYER::Update()
             }
         }
 
+     
         if (P_Stand_Flg == FALSE) {
             Player_Levitation_Move();
         }
@@ -199,7 +206,7 @@ void PLAYER::Player_Init()
     P_XSpeed = 0;
     P_YSpeed = 0;
     location.x = 20.0f;
-    location.y = 350.0f;
+    location.y = 349.4f;
     Respawn_Flg = TRUE;
     P_Balloon_Flg = TRUE;
 }
@@ -207,23 +214,116 @@ void PLAYER::Player_Init()
 void PLAYER::Player_Warp()
 {
     //左ワープ
-    if (location.x <= -52) {
+    if (location.x <= -50) {
         location.x = 640;
     }
     //右ワープ
-    else if (location.x >= 680) {
+    else if (location.x >= 650) {
         location.x = -50;
     }
 
     //天井で跳ね返る
     if (location.y <= -25) {
         location.y = -20;
-        if (P_YSpeed < 0) {
-            P_YSpeed = P_YSpeed * -0.8f;
-        }
+        BoundPlusY();
     }
     
 }
+
+//下方向へ跳ね返る
+void PLAYER::BoundPlusY()
+{
+    if (location.y != location.y + 5)
+    {
+        location.y += 0.1f;
+    }
+
+    if (P_YSpeed < 0) {
+        P_YSpeed = (P_YSpeed * -1) * 0.8f;
+    }
+}
+
+//上方向へ跳ね返る
+void PLAYER::BoundMinusY()
+{
+    if (location.y != location.y - 5)
+    {
+        location.y -= 0.1f;
+    }
+
+    if (P_YSpeed > 0) {
+        P_YSpeed = (P_YSpeed * -1) * 0.8f;
+    }
+}
+
+//右方向へ跳ね返る
+void PLAYER::BoundPlusX()
+{
+    if (location.x != location.x + 5)
+    {
+        location.x += 0.1f;
+    }
+
+    if (P_XSpeed < 0) {
+        P_XSpeed = (P_XSpeed * -1) * 0.8f;
+    }
+}
+
+//左方向へ跳ね返る
+void PLAYER::BoundMinusX()
+{
+    if (location.x != location.x - 5)
+    {
+        location.x -= 0.1f;
+    }
+
+    if (P_XSpeed > 0) {
+        P_XSpeed = (P_XSpeed * -1) * 0.8f;
+    }
+}
+
+int PLAYER::CheckBound(BoxCollider* b_col)
+{
+    int re = 0;
+
+    //プレイヤー 敵
+    float px1 = b_col->GetLocation().x;
+    float py1 = b_col->GetLocation().y;
+    float px2 = px1 + b_col->GetErea().Width;
+    float py2 = py1 + b_col->GetErea().Height;
+
+    //ステージ
+    float sx1 = location.x + 15;
+    float sx2 = sx1 + erea.Width;
+    float sy1 = location.y + 15;
+    float sy2 = sy1 + erea.Height;
+
+
+    //当たり判定
+    if ((sx1 < px2) && (px1 < sx2) && (sy1 < py2) && (sy2 > py1))
+    {
+        if (P_Stand_Flg == FALSE)
+        {
+            //左の壁
+            if ((sx1 < px2) && (px1 > sx2 - (erea.Width / 4))) {
+                BoundMinusX();
+                re = 1;
+            }
+
+            //右の壁
+            if ((px1 <= sx2) && (px2 < sx2 + (erea.Width / 4))) {
+                BoundPlusX();
+                re = 2;
+            }
+
+            BoundPlusY();
+        }
+    }
+    return re;
+}
+
+
+
 
 void PLAYER::Player_Img()
 {
@@ -241,7 +341,6 @@ void PLAYER::Player_Img()
 
 void PLAYER::Player_Move()
 {
-    //P_Stand_Flg = TRUE;
     P_YSpeed = 0.0f;
 
     //右移動
@@ -325,25 +424,22 @@ void PLAYER::Player_Levitation_Move()
 
 void PLAYER::Player_Gravity()
 {
-    if (P_Stand_Flg == FALSE)
-    {
-        if (P_Balloon_Flg == TRUE) {
-            P_Stand_Flg = FALSE;
-            //P_YSpeed = P_YSpeed + 0.009f;
-            P_YSpeed = P_YSpeed + 0.01f;
-            location.y = location.y + P_YSpeed;
-            if (P_YSpeed >= 1.3f) {         //速度制限  前は 1.3f
-                P_YSpeed = 1.3f;
-            }
+
+    if (P_Balloon_Flg == TRUE) {
+        P_Stand_Flg = FALSE;
+        //P_YSpeed = P_YSpeed + 0.009f;
+        P_YSpeed = P_YSpeed + 0.01f;
+        location.y = location.y + P_YSpeed;
+        if (P_YSpeed >= 1.3f) {         //速度制限  前は 1.3f
+            P_YSpeed = 1.3f;
         }
-        else {
-            P_Stand_Flg = FALSE;
-            //P_YSpeed = P_YSpeed + 0.009f;
-            P_YSpeed = P_YSpeed + 0.02f;
-            location.y = location.y + P_YSpeed;
-            if (P_YSpeed >= 1.0f) {         //速度制限  前は 1.3f
-                P_YSpeed = 1.0f;
-            }
+    }
+    else {
+        //P_YSpeed = P_YSpeed + 0.009f;
+        P_YSpeed = P_YSpeed + 0.02f;
+        location.y = location.y + P_YSpeed;
+        if (P_YSpeed >= 1.0f) {         //速度制限  前は 1.3f
+            P_YSpeed = 1.0f;
         }
     }
 }
@@ -453,6 +549,8 @@ void PLAYER::Stand_Foot()
     }
 
  }
+
+
 
 void PLAYER::Respawn_Anim()
 {
@@ -663,8 +761,8 @@ PLAYER::~PLAYER()
 
 void PLAYER::Draw()const
 {
-    DrawFormatString(0, 20, GetColor(255, 255, 255), " FPS：%d", P_FPS); 
-    //DrawFormatString(100, 340, GetColor(255, 255, 255), " FishCnt：%d", FishCnt);
+    //DrawFormatString(0, 20, GetColor(255, 255, 255), " FPS：%d", P_FPS); 
+        //DrawFormatString(100, 340, GetColor(255, 255, 255), " F_Seconas1：%d", F_Seconas1);
     //Aボタン描画
     //DrawFormatString(0, 40, GetColor(255, 255, 255), " 押された瞬間：%d 離された瞬間：%d", PAD_INPUT::OnButton(XINPUT_BUTTON_A), PAD_INPUT::OnRelease(XINPUT_BUTTON_A));
 
@@ -695,6 +793,8 @@ void PLAYER::Draw()const
 
     //DrawCircleAA(p_uc, py2 - 54.0f, 2.0f, 0xfffff0, TRUE);
 
+    //プレイヤーの当たり判定
+    DrawBoxAA(location.x + 15, location.y + 15, location.x + 15+erea.Width, location.y + 15+erea.Height, GetColor(255, 255, 255), FALSE);
     //プレイヤーの当たり判定 敵用    Playerの体
     //DrawBoxAA(location.x + 17, location.y + 37, location.x + 48, location.y + 65, GetColor(255, 255, 255), FALSE);
 
