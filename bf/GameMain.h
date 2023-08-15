@@ -1,12 +1,12 @@
 #pragma once
 #include "AbstractScene.h"
 #include "Player.h"
-#include"Bubble.h"
+#include "Bubble.h"
 #include "Stage.h"
 #include "Thunder.h"
 #include "Fish.h"
 #include "enemybird.h"
-#include"UI.h"
+#include "UI.h"
 
 
 
