@@ -19,24 +19,29 @@ Thunder::Thunder()
 	E_Img = 0;
 	C_Img = 0;
 
-	T_Thunder_Flg = TRUE;
+	T_Thunder_Flg = FALSE;
 	T_Effect_Flg = TRUE;
-	T_Cloud_Flg = TRUE;
+	T_Cloud_Flg = FALSE;
 
 	S_FPS1 = 0;
 	S_FPS2 = 0;
 	S_Seconas1 = 0;
 	S_Seconas2 = 0;
+	S_Seconas3 = 0;
 
 	BallFlg = 0;
-	BallX = 200;
-	BallY = 200;
+	BallX = 345;
+	BallY = 105;
 	BallAngle = 0;
 
 	MoveX = 0;
 	MoveY = 0;
 
+	PlayerX = 0, PlayerY = 0;
+
 	Subject = rand() % 3;
+
+	flg = 0;
 	
 }
 
@@ -45,11 +50,19 @@ Thunder::~Thunder()
 
 }
 
-void Thunder::Update()
+void Thunder::Update(float x, float y)
 {
 	S_FPS1++;
 	S_FPS2++;
-	S_FPS3++;
+
+	PlayerX = x;
+	PlayerY = y;
+
+	T_Img = Thunder_Anim();
+	E_Img = Effect_Anim();
+	C_Img = Cloud_Anim();
+
+	MoveBall();
 
 	//雷(稲光)用 FPS
 	if (S_FPS1 > 34) {
@@ -64,38 +77,21 @@ void Thunder::Update()
 	if (S_FPS2 > 59) {
 		S_FPS2 = 0;
 		S_Seconas2++;
-	}// P_FPS_INC は 秒数を取っている
-	else if (S_Seconas2 > 6) {
-		S_Seconas2 = 0;
 	}
-	
-	//雷の弾の発射用 FPS
-	if (S_FPS3 > 59) {
-		S_FPS3 = 0;
-		S_Seconas3++;
-	}// P_FPS_INC は 秒数を取っている
-	else if (S_Seconas3 > 30) {
-		S_Seconas3 = 0;
-	}
-
-	T_Img = Thunder_Anim();
-	E_Img = Effect_Anim();
-	C_Img = Cloud_Anim();
-
-	MoveBall();
 }
 
 void Thunder::MoveBall()
 {
-
-	if (S_Seconas3 == 30)
+	if (S_Seconas2 > 30)
 	{
+		S_Seconas2 = 0;
 		BallFlg = 1;
 		Speed = 2;
 		BallAngle = 0.625f;  //左上
 		//BallAngle = 0.375f;  //左下
 		//BallAngle = 0.875f;  //右上
 		//BallAngle = 0.125f;  //右上
+		T_Effect_Flg = TRUE;
 		ChangeAngle();
 	}
 
@@ -108,6 +104,7 @@ void Thunder::MoveBall()
 		//BallAngle = 0.375f;  //左下
 		//BallAngle = 0.875f;  //右上
 		//BallAngle = 0.125f;  //右上
+		T_Effect_Flg = TRUE;
 		ChangeAngle();
 	}
 	
@@ -150,18 +147,23 @@ void Thunder::MoveBall()
 	//	BallAngle = (1 - BallAngle);
 	//	ChangeAngle();
 	//}
-	if (BallY > 480 + 4) {
-		//ボールをスタート状態にする
+	if (BallY > 480 + 4) //(海)
+	{
 		BallFlg = 2;
 	}
-	
+	//ボールをスタート状態にする
 	if (BallFlg == 2)
 		{
 			BallX = 345;
 			BallY = 105;
-		}
+	}
 
-	ChangeAngle();
+	//ChangeAngle();
+}
+
+void Thunder::ThunderBallInit()
+{
+
 }
 
 void Thunder::ChangeAngle()
@@ -203,7 +205,6 @@ void Thunder::HitThunder()
 
 	//ChangeAngle();
 }
-
 
 int Thunder::Thunder_Anim()
 {
@@ -331,4 +332,8 @@ void Thunder::Draw() const
 	
 	//雷（雷の弾）の表示
 	DrawGraph(BallX, BallY, E_Img, TRUE);
+
+	DrawFormatString(0, 300, GetColor(255, 255, 255), " 雷発生 :%d", S_Seconas2);
+
+	DrawBox(BallX + 2, BallY + 4, BallX + 28, BallY + 26, GetColor(255, 0, 0), FALSE);
 }

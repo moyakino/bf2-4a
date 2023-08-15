@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "PadInput.h"
 #include "Stage.h"
+#include "Fish.h"
 
 int PLAYER::FishFlg;
 int PLAYER::P_TurnFlg;
@@ -412,7 +413,7 @@ void PLAYER::Stand_Foot()
     int fpscount = 0;
 
     //魚の出現
-    if (P_Move_X>160&& P_Move_X <480&& P_Move_Y > 380&& P_Move_Y <430)
+    if (location.x > 160 && location.x < 480 && location.y > 380 && location.y < 430)
     {
         //60fps == 1秒　で超えたら fpsを 0 にする
         if (P_FPS > 59) {
@@ -442,6 +443,13 @@ void PLAYER::Stand_Foot()
     }
     else {
         F_TurnFlg = FALSE;
+    }
+    //魚にあたったときリスポーン
+    if (Fish::FishEatP_flg == TRUE) {
+        if (Fish::F_Seconds2 == 7) {
+            Player_Init();
+            Respawn_Anim();
+        }
     }
 
  }
@@ -655,8 +663,8 @@ PLAYER::~PLAYER()
 
 void PLAYER::Draw()const
 {
-    //DrawFormatString(0, 20, GetColor(255, 255, 255), " FPS：%d", P_FPS); 
-    DrawFormatString(100, 340, GetColor(255, 255, 255), " FishCnt：%d", FishCnt);
+    DrawFormatString(0, 20, GetColor(255, 255, 255), " FPS：%d", P_FPS); 
+    //DrawFormatString(100, 340, GetColor(255, 255, 255), " FishCnt：%d", FishCnt);
     //Aボタン描画
     //DrawFormatString(0, 40, GetColor(255, 255, 255), " 押された瞬間：%d 離された瞬間：%d", PAD_INPUT::OnButton(XINPUT_BUTTON_A), PAD_INPUT::OnRelease(XINPUT_BUTTON_A));
 
@@ -668,7 +676,7 @@ void PLAYER::Draw()const
 
     DrawFormatString(0, 120, GetColor(255, 255, 255), " マウス座標：X座標 %d Y座標 %d", MouseX, MouseY);
 
-    DrawFormatString(0, 140, GetColor(255, 255, 255), " AnimCnt：%d", AnimCnt);
+    //DrawFormatString(0, 140, GetColor(255, 255, 255), " AnimCnt：%d", AnimCnt);
 
     DrawFormatString(0, 160, GetColor(255, 255, 255), " 地上     Stand_Flg： %d ", P_Stand_Flg);
     //DrawFormatString(0, 160, GetColor(255, 255, 255), " やられ   Beaten_Flg ： %d ", Beaten_Flg);
@@ -679,7 +687,7 @@ void PLAYER::Draw()const
     //DrawFormatString(0, 280, GetColor(255, 255, 255), " 確率 :%d", rand);
     //DrawFormatString(0, 300, GetColor(255, 255, 255), " P_Air_R_Flg :%d", P_Air_R_Flg);
     //DrawFormatString(0, 320, GetColor(255, 255, 255), " L_Stick :%d", P_L_Stick_Flg);
-    DrawFormatString(0, 320, GetColor(255, 255, 255), " Fish :%d", FishFlg);
+    //DrawFormatString(0, 320, GetColor(255, 255, 255), " Fish :%d", FishFlg);
 
     //DrawLine(160, 417, 480, 417, 0xffffff, TRUE);
 
@@ -687,11 +695,18 @@ void PLAYER::Draw()const
 
     //DrawCircleAA(p_uc, py2 - 54.0f, 2.0f, 0xfffff0, TRUE);
 
-    //プレイヤーの当たり判定
-    DrawBoxAA(location.x + 17, location.y + 37, location.x + 48, location.y + 65, GetColor(255, 255, 255), FALSE);
+    //プレイヤーの当たり判定 敵用    Playerの体
+    //DrawBoxAA(location.x + 17, location.y + 37, location.x + 48, location.y + 65, GetColor(255, 255, 255), FALSE);
+
+    DrawBoxAA(location.x + 12, location.y + 37, location.x + 53, location.y + 65, GetColor(255, 255, 255), FALSE);
+
+    //プレイヤーの当たり判定 敵用    Playerの風船
+    DrawBoxAA(location.x + 9, location.y + 11, location.x + 55, location.y + 35, GetColor(255, 255, 255), FALSE);
+
+    //DrawLine(location.x + 9, location.y + 35, location.x + 60, location.y + 35, GetColor(255, 0, 0), 1);
 
     //プレイヤー　風船を含めた当たり判定　シャボン玉用
-    DrawBoxAA(location.x + 5, location.y + 8, location.x + 57, location.y + 68, GetColor(255, 255, 255), FALSE);
+    //DrawBoxAA(location.x + 5, location.y + 8, location.x + 57, location.y + 68, GetColor(255, 255, 255), FALSE);
 
     //風船の当たり判定
     //DrawBoxAA(location.x + 5, location.y + 10, location.x + 59, location.y + 37, GetColor(255, 255, 255), FALSE);

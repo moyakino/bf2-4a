@@ -75,8 +75,8 @@ AbstractScene* GameMain::Update()
 	ui->Update();
 	bubble->Update(player->GetLocation().x, player->GetLocation().y);
 	fish->Update(player->GetLocation().x , player->GetLocation().y);
-	enemybird->Update(player->GetLocation().x, player->GetLocation().y);
-	//thunder->Update();
+	enemybird->Update();
+	thunder->Update(player->GetLocation().x, player->GetLocation().y);
 
 
 	
@@ -192,7 +192,6 @@ void GameMain::Draw()const
 	}
 	
 	//DrawFormatString(0, 50, GetColor(255, 0, 0), "GameMain");
-	DrawFormatString(400, 50, GetColor(255, 0, 0), "Snum:%d", Snum);
-	//DrawFormatString(0, 50, GetColor(255, 0, 0), "GameMain");
+	//DrawFormatString(400, 50, GetColor(255, 0, 0), "Snum:%d", Snum);
 	
 }
