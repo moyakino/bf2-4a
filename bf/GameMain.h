@@ -7,7 +7,6 @@
 #include "Fish.h"
 #include "enemybird.h"
 #include"UI.h"
-#include "testPlayer.h"
 
 
 
@@ -19,15 +18,15 @@ private:
 	int fps = 0;
 
 	int Bgm;
-	int StageSample;
+	int StageSea;
 
-
+	void CreateStage();
 public:
 
 
 	int Snum;
 
-	Stage* StageFoot[8];
+	Stage* StageFoot[10];
 
 	GameMain();
 	~GameMain();

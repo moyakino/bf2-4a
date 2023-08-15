@@ -1,6 +1,6 @@
 #include "BoxCollider.h"
 
-int BoxCollider::HitCollider(BoxCollider* b_col)
+bool BoxCollider::HitCollider(BoxCollider* b_col)
 {
 	int re = false;
 
@@ -17,7 +17,7 @@ int BoxCollider::HitCollider(BoxCollider* b_col)
 	float sy2 = location.y + erea.Height;
 
 	//“–‚½‚è”»’è
-	if ((sx1 < px2) && (sx2 > px1) && (sy1 < py2) && (sy2 > py1))
+	if ((sx1 < px2) && (px1 < sx2) && (sy1 < py2) && (sy2 > py1))
 	{
 		re = true;
 	}
@@ -34,7 +34,7 @@ int BoxCollider::HitCollider(BoxCollider* b_col)
 	return re;
 }
 
-int BoxCollider::TopBoxCollider(BoxCollider* b_col)
+bool BoxCollider::TopBoxCollider(BoxCollider* b_col)
 {
 	int re = false;
 
@@ -43,14 +43,15 @@ int BoxCollider::TopBoxCollider(BoxCollider* b_col)
 		re = true;
 	}
 
+
 	return re;
 }
 
-int BoxCollider::L_SideBoxCollider(BoxCollider* b_col)
+bool BoxCollider::L_SideBoxCollider(BoxCollider* b_col)
 {
 	int re = false;
 
-	if (static_cast<int>(stage_x1) == static_cast<int>(box_x1)) 
+	if (static_cast<int>(stage_x1) == static_cast<int>(box_x2)) 
 	{
 		re = true;
 	}
@@ -58,11 +59,11 @@ int BoxCollider::L_SideBoxCollider(BoxCollider* b_col)
 	return re;
 }
 
-int BoxCollider::R_SideBoxCollider(BoxCollider* b_col)
+bool BoxCollider::R_SideBoxCollider(BoxCollider* b_col)
 {
 	int re = false;
 
-	if (static_cast<int>(stage_x2) == static_cast<int>(box_x2))
+	if (static_cast<int>(stage_x2) == static_cast<int>(box_x1))
 	{
 		re = true;
 	}

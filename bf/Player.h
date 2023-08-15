@@ -177,6 +177,13 @@ public:
 
 	void SetStandFlg(bool b) { P_Stand_Flg = b; }
 
+	void BoundPlusX();
+	void BoundMinusX();
+	void BoundPlusY();
+	void BoundMinusY();
+
+	int CheckBound(BoxCollider* b_col);
+
 	Location GetLocation() { return location; }
 
 };
