@@ -40,6 +40,7 @@ class EnemyBird {
 private:
     int Cnt;
     int CntWait;
+    int H_Flg;
     float SpeedX;
     float SpeedY;
     int E_flg;
@@ -82,6 +83,8 @@ private:
 
     float	E_Air_Multiply;
 
+    float PlayerX, PlayerY;
+
     ENEMY_STATE EnemyState;
     int x1, x2, y1, y2;
     
@@ -97,7 +100,7 @@ public:
     // デストラクタ
     ~EnemyBird();
     // 更新処理を実装する
-    void Update();
+    void Update(float x, float y);
     // 描画処理を実装する
     void Draw() const;
     //地面に立たせる
@@ -115,5 +118,7 @@ public:
 
     void Enemy_Gravity();
     void Enemy_Warp();
+
+    void Hit();
 
 };

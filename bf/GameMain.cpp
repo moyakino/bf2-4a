@@ -75,7 +75,7 @@ AbstractScene* GameMain::Update()
 	ui->Update();
 	bubble->Update(player->GetLocation().x, player->GetLocation().y);
 	fish->Update(player->GetLocation().x , player->GetLocation().y);
-	enemybird->Update();
+	enemybird->Update(player->GetLocation().x, player->GetLocation().y);
 	//thunder->Update();
 
 
@@ -184,7 +184,7 @@ void GameMain::Draw()const
 	ui->Draw();
 
 	if (DrawGameOver == FALSE) {
-		//enemybird->Draw();
+		enemybird->Draw();
 		bubble->Draw();
 		thunder->Draw();
 		player->Draw();
