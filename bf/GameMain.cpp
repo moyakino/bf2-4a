@@ -4,7 +4,6 @@
 #include "PadInput.h"
 #include "Player.h"
 #include "TitleScene.h"
-#include "testPlayer.h"
 #include"enemybird.h"
 
 //コンストラクタ
