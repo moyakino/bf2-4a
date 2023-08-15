@@ -34,9 +34,6 @@ EnemyBird::EnemyBird()
     SpeedY = 0;
     E_Speed = 0;
 
-    ////敵の座標
-    //ex1 = 0, ex2 = 0, ey1 = 0,ey2 = 0, e_uc = 0;
-    //sx1 = 0, sy1 = 0, sx2 = 0, sy2 = 0;
     //地上のスピード
     E_XSpeed = 0.0f;
     E_YSpeed = 0.0f;
@@ -78,8 +75,8 @@ void EnemyBird::Update(float x,float y)
     Hit();
     
     if (EnemyState == ENEMY_STATE::FLY_LEFT) {
-       /* Fly_Anim();
-        Enemy_Levitation_Move_Y();*/
+        Fly_Anim();
+        Enemy_Levitation_Move_Y();
         Enemy_Levitation_Move_X();
     }
 
@@ -129,7 +126,7 @@ void EnemyBird::Enemy_Levitation_Move_X()
    // E_Move_X + 10, E_Move_Y + 37, E_Move_X + 50, E_Move_Y + 65,
 
     if (E_Stand_Flg == FALSE) {
-        if (E_Move_X + 10 <= PLAYER::P_Move_X && E_Move_Y + 37 <= PLAYER::P_Move_Y + 10) {
+        if (E_Move_X + 10 <= PLAYER::P_Move_X && E_Move_Y + 37 <= PLAYER::P_Move_X + 10) {
             SpeedX -= 0.01f;
             SpeedY -= 0.01f;
             EnemyState = ENEMY_STATE::FLY_LEFT;
@@ -202,29 +199,6 @@ void EnemyBird::Start_Anim()
         }
     }
 }
-//void EnemyBird::Fly_Anim()
-//{
-//   
-//}
-//
-//    if (E_Second == 0.0f) {
-//        E_Img = E_ArrayImg_P[STAND_BY_ENEMY_0];
-//    }
-//    else if (E_Second > 0.5f) {
-//        E_Img = E_ArrayImg_P[STAND_BY_ENEMY_1];
-//    }
-//}
-//
-//void EnemyBird::Start_Anim()
-//{
-//    EnemyState = ENEMY_STATE::START;
-//    if (E_FPS % 60 == 0) {
-//        ++Cnt;
-//        if (Cnt > 7) {
-//            EnemyState = ENEMY_STATE::FLY_LEFT;
-//        }
-//    }
-//}
 
 //上昇のみ
 void EnemyBird::Fly_Anim()
