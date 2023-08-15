@@ -3,6 +3,9 @@
 #include"GameMain.h"
 #include "PadInput.h"
 #include "Player.h"
+#include "TitleScene.h"
+#include "testPlayer.h"
+#include"enemybird.h"
 
 //コンストラクタ
 GameMain::GameMain()
@@ -64,7 +67,7 @@ AbstractScene* GameMain::Update()
 	ui->Update();
 	bubble->Update(player->GetLocation().x, player->GetLocation().y);
 	fish->Update(player->GetLocation().x , player->GetLocation().y);
-	enemybird->Update();
+	enemybird->Update(player->GetLocation().x, player->GetLocation().y);
 	thunder->Update(player->GetLocation().x, player->GetLocation().y);
 
 
@@ -235,7 +238,8 @@ AbstractScene* GameMain::Update()
 	if (fps > 59) {
 		fps = 0;
 	}
-	
+
+
 	return this;
 }
 
@@ -333,7 +337,7 @@ void GameMain::Draw()const
 	ui->Draw();
 
 	if (DrawGameOver == FALSE) {
-		//enemybird->Draw();
+		enemybird->Draw();
 		bubble->Draw();
 		thunder->Draw();
 		player->Draw();
