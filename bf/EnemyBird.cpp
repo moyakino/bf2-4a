@@ -63,8 +63,6 @@ EnemyBird::~EnemyBird()
 
 void EnemyBird::Update(float x,float y)
 {
-
-   /*  PlayerPos= Return_MoveX, Return_MoveY;*/
     E_FPS++;
 
     PlayerX = x;
@@ -73,6 +71,8 @@ void EnemyBird::Update(float x,float y)
     Enemy_Warp();
 
     Hit();
+
+
     
     if (EnemyState == ENEMY_STATE::FLY_LEFT) {
         Fly_Anim();
@@ -106,11 +106,6 @@ void EnemyBird::Enemy_Warp()
         E_Move_X = -53;
     }
 
-    ////ìVà‰
-    //if (E_Move_Y <= -25) {
-    //    E_Move_Y = 250;
-    //}
-
     if (E_Move_Y <= -25) {
         E_Move_Y = -20;
         if (SpeedY < 0) {
@@ -126,32 +121,22 @@ void EnemyBird::Enemy_Levitation_Move_X()
    // E_Move_X + 10, E_Move_Y + 37, E_Move_X + 50, E_Move_Y + 65,
 
     if (E_Stand_Flg == FALSE) {
-        if (E_Move_X + 10 <= PLAYER::P_Move_X && E_Move_Y + 37 <= PLAYER::P_Move_X + 10) {
+        if (E_Move_X + 10 < PlayerX && E_Move_Y + 37 < PlayerX + 10) {
             SpeedX -= 0.01f;
-            SpeedY -= 0.01f;
+            if (SpeedX <= -0.2f) {
+                SpeedX = -0.2f;
+            }
             EnemyState = ENEMY_STATE::FLY_LEFT;
         }
-        else {
-
-        }
-        if (E_Move_X + 50 <= PLAYER::P_Move_X && E_Move_Y + 37 <= PLAYER::P_Move_Y + 37) {
-            SpeedX += 0.01f;
-            EnemyState = ENEMY_STATE::FLY_RIGHT;
-        }
-        if (SpeedX <= -0.7f) {
-            SpeedX = -0.7f;
-        }
-        if (SpeedX >= 0.7f) {
-            SpeedX = 0.7f;
-
-            if (SpeedY <= -0.7f) {
-                SpeedY = -0.7f;
-
+       /* else {
+            if (E_Move_X + 50 < PlayerX && E_Move_Y + 37 < PlayerX + 37) {
+                SpeedX += 0.01f;
+                if (SpeedX >= 0.2f) {
+                    SpeedX = 0.2f;
+                }
+                EnemyState = ENEMY_STATE::FLY_RIGHT;
             }
-            if (SpeedY >= 0.05f) {
-                SpeedY = 0.05f;
-            }
-        }
+        }*/
     }
 
     E_Move_X += SpeedX;
@@ -161,34 +146,27 @@ void EnemyBird::Enemy_Levitation_Move_Y()
 {
     E_Air_Flg = TRUE;
     if (E_Stand_Flg == FALSE) {
-        if (E_Move_Y <= PLAYER::P_Move_Y) {
+        if (E_Move_Y < PlayerY) {
             SpeedY -= 0.01f;
+            if (SpeedY <= -0.2f) {
+                SpeedY = -0.2f;
+            }
 
         }
-        /*if (E_Move_Y <= PLAYER::P_Move_Y) {
-            SpeedY += 0.05f;
-        }*/
-        if (SpeedY <= -0.7f) {
-            SpeedY = -0.7f;
-
-        }
-        /*if (SpeedY >= 0.05f) {
-            SpeedY = 0.05f;
-        }*/
+        
     }
     E_Move_Y += SpeedY;
 }
 
-
-//void EnemyBird::Enemy_Gravity()
-//{
-//    E_Air_Flg = TRUE;
-//    E_YSpeed = E_YSpeed + 0.01f;
-//    E_Move_Y = E_Move_Y + E_YSpeed;
-//    if (E_YSpeed >= 1.0f) {//ë¨ìxêßå¿
-//        E_YSpeed = 1.0f;
-//    }
-//}
+void EnemyBird::Enemy_Gravity()
+{
+    E_Air_Flg = TRUE;
+    E_YSpeed = E_YSpeed + 0.01f;
+    E_Move_Y = E_Move_Y + E_YSpeed;
+    if (E_YSpeed >= 1.0f) {//ë¨ìxêßå¿
+        E_YSpeed = 1.0f;
+    }
+}
 
 void EnemyBird::Start_Anim()
 {

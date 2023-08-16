@@ -70,9 +70,6 @@ AbstractScene* GameMain::Update()
 	thunder->Update(player->GetLocation().x, player->GetLocation().y);
 
 
-	
-	
-
 	// Xƒ{ƒ^ƒ“’P‰Ÿ‚µ
 	int X_Btn = PAD_INPUT::OnButton(XINPUT_BUTTON_X);
 	if (X_Btn == 1)
