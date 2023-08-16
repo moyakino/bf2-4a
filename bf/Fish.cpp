@@ -109,7 +109,6 @@ void Fish::Update(int x,int y)
                     }
                     else if (F_Seconds2 == 7) {
                         FishEatP_flg = FALSE;
-                        Fish_Img = 0;
                     }
                  
                 }
@@ -117,6 +116,7 @@ void Fish::Update(int x,int y)
                 F_Seconds2++;
                 if (F_Seconds2 == 8) {
                     F_Seconds2 = 0;
+                     Fish_Img = 0;
                     PLAYER::FishFlg = FALSE;
                 }
             }

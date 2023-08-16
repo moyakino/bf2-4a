@@ -542,6 +542,7 @@ void PLAYER::Stand_Foot()
     }
     //‹›‚É‚ ‚½‚Á‚½‚Æ‚«ƒŠƒXƒ|[ƒ“
     if (Fish::FishEatP_flg == TRUE) {
+    
         if (Fish::F_Seconds2 == 7) {
             Player_Init();
             Respawn_Anim();
