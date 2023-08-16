@@ -53,7 +53,7 @@ private:
 
     int MouseX, MouseY;         // マウスの座標
 
-    int H_flg;
+    int HitFlg;
 
     int Subject;
 
