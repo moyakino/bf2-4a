@@ -105,7 +105,7 @@ void PLAYER::Update()
     P_Move_Y = location.y;
 
     //サカナの判定
-    Stand_Foot();
+    //Stand_Foot();
 
     //ワープ用
     Player_Warp();
@@ -134,8 +134,13 @@ void PLAYER::Update()
     //画像切り替え用
     Player_Img();
 
+    //zanki = FALSE;
+
     if (Beaten_Flg == FALSE) {
         zanki = FALSE;
+
+        Stand_Foot();
+
         //ステージの足場に立っていたら地上の移動に入る
         if (P_Stand_Flg == TRUE) {
             Player_Move();
@@ -322,9 +327,6 @@ int PLAYER::CheckBound(BoxCollider* b_col)
     return re;
 }
 
-
-
-
 void PLAYER::Player_Img()
 {
     //右移動で反転描画
@@ -501,7 +503,6 @@ void PLAYER::Player_Air_B()
     }
 }
 
-
 void PLAYER::Stand_Foot()
 {
     //ここで足場の判定とらなくていい
@@ -513,7 +514,7 @@ void PLAYER::Stand_Foot()
     {
         //60fps == 1秒　で超えたら fpsを 0 にする
         if (P_FPS > 59) {
-            P_FPS = 0;
+            //P_FPS = 0;
             F_Seconas1++;
         }
         if (F_Seconas1 == 3) {
@@ -543,14 +544,13 @@ void PLAYER::Stand_Foot()
     //魚にあたったときリスポーン
     if (Fish::FishEatP_flg == TRUE) {
         if (Fish::F_Seconds2 == 7) {
+            zanki = TRUE;
             Player_Init();
             Respawn_Anim();
         }
     }
 
  }
-
-
 
 void PLAYER::Respawn_Anim()
 {
@@ -776,7 +776,7 @@ void PLAYER::Draw()const
 
     //DrawFormatString(0, 140, GetColor(255, 255, 255), " AnimCnt：%d", AnimCnt);
 
-    DrawFormatString(0, 160, GetColor(255, 255, 255), " 地上     Stand_Flg： %d ", P_Stand_Flg);
+    DrawFormatString(0, 160, GetColor(255, 255, 255), " 残機 ： %d ", zanki);
     //DrawFormatString(0, 160, GetColor(255, 255, 255), " やられ   Beaten_Flg ： %d ", Beaten_Flg);
     DrawFormatString(0, 180, GetColor(255, 255, 255), " 風船   Balloon_Flg  ： %d ", P_Balloon_Flg);
   

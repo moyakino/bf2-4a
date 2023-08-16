@@ -344,9 +344,9 @@ void Thunder::Draw() const
 	//—‹i—‹‚Ì’ej‚Ì•\¦
 	DrawGraph(BallX, BallY, E_Img, TRUE);
 
-	DrawFormatString(0, 280, GetColor(255, 255, 255), " —‹ Hit! :%d", HitFlg);
+	//DrawFormatString(0, 280, GetColor(255, 255, 255), " —‹ Hit! :%d", HitFlg);
 
-	DrawFormatString(0, 300, GetColor(255, 255, 255), " —‹”­¶ :%d", S_Seconas2);
+	//DrawFormatString(0, 300, GetColor(255, 255, 255), " —‹”­¶ :%d", S_Seconas2);
 
 	//DrawBox(BallX + 2, BallY + 4, BallX + 28, BallY + 26, GetColor(255, 0, 0), FALSE);
 
