@@ -4,7 +4,6 @@
 #include "PadInput.h"
 #include "Player.h"
 #include "TitleScene.h"
-#include "testPlayer.h"
 #include"enemybird.h"
 
 //コンストラクタ
@@ -70,9 +69,6 @@ AbstractScene* GameMain::Update()
 	enemybird->Update(player->GetLocation().x, player->GetLocation().y);
 	thunder->Update(player->GetLocation().x, player->GetLocation().y);
 
-
-	
-	
 
 	// Xボタン単押し
 	int X_Btn = PAD_INPUT::OnButton(XINPUT_BUTTON_X);

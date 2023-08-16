@@ -811,18 +811,6 @@ void PLAYER::Draw()const
     //ïóëDÇÃìñÇΩÇËîªíË
     //DrawBoxAA(location.x + 5, location.y + 10, location.x + 59, location.y + 37, GetColor(255, 255, 255), FALSE);
 
-    //è„
-    //DrawLine(location.x + 5, location.y + 10, location.x + 59, location.y + 10, GetColor(255, 0, 0), FALSE);
-
-    //â∫
-    //DrawLine(location.x + 5, location.y + 66, location.x + 59, location.y + 66, GetColor(255, 0, 0), FALSE);
-
-    //ç∂
-    //DrawLine(location.x + 5, location.y + 10, location.x + 5, location.y + 66, GetColor(0, 255, 0), FALSE);
-
-    //âE
-    //DrawLine(location.x + 53, location.y + 10, location.x + 53, location.y + 66, GetColor(0, 255, 0), FALSE);
-
     //DrawBoxAA(px1, py1, px2, py2, GetColor(255, 0, 0), FALSE);
 
     //DrawBox(location.x, location.y, location.x + 64, location.y + 64, GetColor(255, 0, 0), FALSE);
