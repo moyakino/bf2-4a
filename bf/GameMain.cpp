@@ -6,13 +6,15 @@
 #include "TitleScene.h"
 #include"enemybird.h"
 
+bool GameMain::PauseFlg;
+
 //コンストラクタ
 GameMain::GameMain()
 {
 	if (StageSea = LoadGraph("images/Stage/Stage_Sea01.png")) {}
 
-	/*Bgm = LoadSoundMem("sounds/SE_Start.wav");
-	PlaySoundMem(Bgm, DX_PLAYTYPE_BACK);*/
+	MainBgm = LoadSoundMem("sounds/SE_Start.wav");
+	PlaySoundMem(MainBgm, DX_PLAYTYPE_BACK);
 	ui = new UI();
 	player = new PLAYER();
 	bubble = new Bubble();
@@ -29,6 +31,7 @@ GameMain::GameMain()
 		StageFoot[i] = new Stage(Snum, i);
 	}
 
+	PauseFlg = TRUE;
 }
 
 GameMain::~GameMain()
@@ -46,20 +49,29 @@ GameMain::~GameMain()
 
 AbstractScene* GameMain::Update()
 {
-	fps++;
+	////ポーズフラグ切り替え処理
+	//if (PAD_INPUT::OnButton(XINPUT_BUTTON_START))
+	//{
+	//	PauseFlg = !PauseFlg;
+	//}
 
-	if (ui->GetGameOver() == TRUE) {
-		DrawGameOver = TRUE;
-		if (fps > 59) {
-			if (fps % 2 == 0) {
-				Cnt++;
+	//ポーズ中でないなら
+	if (PauseFlg == FALSE) {
+
+		fps++;
+
+		if (ui->GetGameOver() == TRUE) {
+			DrawGameOver = TRUE;
+			if (fps > 59) {
+				if (fps % 2 == 0) {
+					Cnt++;
+				}
+			}
+			if (Cnt > 3) {
+				return new Title();
+				Cnt = 0;
 			}
 		}
-		if (Cnt > 3) {
-			return new Title();
-			Cnt = 0;
-		}
-	}
 
 	//stage->Update();
 	player->Update();
@@ -68,6 +80,9 @@ AbstractScene* GameMain::Update()
 	bubble->Update(player->GetLocation().x, player->GetLocation().y);
 	enemybird->Update(player->GetLocation().x, player->GetLocation().y);
 	thunder->Update(player->GetLocation().x, player->GetLocation().y);
+
+	
+	
 
 	// Xボタン単押し
 	int X_Btn = PAD_INPUT::OnButton(XINPUT_BUTTON_X);
@@ -86,12 +101,14 @@ AbstractScene* GameMain::Update()
 	}
 
 	bool TouchFlg = false;
+	bool tHitFlg = false;
 	
 	//当たり判定
 	switch (Snum)
 	{
 	case 0:
 		for (int i = 0; i < 3; i++){
+
 			//プレイヤーが足場に当たっているか
 			if (StageFoot[i]->HitCollider(player) == true){
 				//かつ、足場の上に立っているかどうか
@@ -105,137 +122,155 @@ AbstractScene* GameMain::Update()
 			if (StageFoot[i]->TopBoxCollider(player) != true){
 				player->CheckBound(StageFoot[i]);
 			}
+
+			//雷
+			if (thunder->StageHit(StageFoot[i]) == true) {
+				tHitFlg = true;
+			}	
+			
+
 		}
 
-		if (TouchFlg == true)
+		if (tHitFlg == true)
 		{
-			player->P_Stand_Flg = TRUE;
-		}	
-		if (TouchFlg == false)
+			thunder->flg = TRUE;
+		}
+		if (tHitFlg == false)
 		{
-			player->P_Stand_Flg = FALSE;
+			thunder->flg = FALSE;
 		}
 
-		break;
+			if (TouchFlg == true)
+			{
+				player->P_Stand_Flg = TRUE;
+			}
+			if (TouchFlg == false)
+			{
+				player->P_Stand_Flg = FALSE;
+			}
 
-	case 1:
-		for (int i = 0; i < 5; i++) {
-			//プレイヤーが足場に当たっているか
-			if (StageFoot[i]->HitCollider(player) == true) {
-				//かつ、足場の上に立っているかどうか
-				if (StageFoot[i]->TopBoxCollider(player) == true)
-				{
-					TouchFlg = true;
+			break;
+
+		case 1:
+			for (int i = 0; i < 5; i++) {
+				//プレイヤーが足場に当たっているか
+				if (StageFoot[i]->HitCollider(player) == true) {
+					//かつ、足場の上に立っているかどうか
+					if (StageFoot[i]->TopBoxCollider(player) == true)
+					{
+						TouchFlg = true;
+					}
+				}
+
+				//跳ね返りの判定
+				if (StageFoot[i]->TopBoxCollider(player) != true) {
+					player->CheckBound(StageFoot[i]);
 				}
 			}
+
+			if (TouchFlg == true)
+			{
+				player->P_Stand_Flg = TRUE;
+			}
+			if (TouchFlg == false)
+			{
+				player->P_Stand_Flg = FALSE;
+			}
+
+			break;
+
+		case 2:
+			for (int i = 0; i < 10; i++) {
+				//プレイヤーが足場に当たっているか
+				if (StageFoot[i]->HitCollider(player) == true) {
+					//かつ、足場の上に立っているかどうか
+					if (StageFoot[i]->TopBoxCollider(player) == true)
+					{
+						TouchFlg = true;
+					}
+				}
+
+				//跳ね返りの判定
+				if (StageFoot[i]->TopBoxCollider(player) != true) {
+					player->CheckBound(StageFoot[i]);
+				}
+			}
+
+			if (TouchFlg == true)
+			{
+				player->P_Stand_Flg = TRUE;
+			}
+			if (TouchFlg == false)
+			{
+				player->P_Stand_Flg = FALSE;
+			}
+
+			break;
+
+		case 3:
+			for (int i = 0; i < 7; i++) {
+				//プレイヤーが足場に当たっているか
+				if (StageFoot[i]->HitCollider(player) == true) {
+					//かつ、足場の上に立っているかどうか
+					if (StageFoot[i]->TopBoxCollider(player) == true)
+					{
+						TouchFlg = true;
+					}
+				}
+
+				//跳ね返りの判定
+				if (StageFoot[i]->TopBoxCollider(player) != true) {
+					player->CheckBound(StageFoot[i]);
+				}
+			}
+
+			if (TouchFlg == true)
+			{
+				player->P_Stand_Flg = TRUE;
+			}
+			if (TouchFlg == false)
+			{
+				player->P_Stand_Flg = FALSE;
+			}
+
+			break;
+
+		case 4:
+			for (int i = 0; i < 8; i++) {
+				//プレイヤーが足場に当たっているか
+				if (StageFoot[i]->HitCollider(player) == true) {
+					//かつ、足場の上に立っているかどうか
+					if (StageFoot[i]->TopBoxCollider(player) == true)
+					{
+						TouchFlg = true;
+					}
+				}
 
 			//跳ね返りの判定
 			if (StageFoot[i]->TopBoxCollider(player) != true) {
 				player->CheckBound(StageFoot[i]);
 			}
+
 		}
 
-		if (TouchFlg == true)
-		{
-			player->P_Stand_Flg = TRUE;
-		}
-		if (TouchFlg == false)
-		{
-			player->P_Stand_Flg = FALSE;
-		}
-
-		break;
-
-	case 2:
-		for (int i = 0; i < 10; i++) {
-			//プレイヤーが足場に当たっているか
-			if (StageFoot[i]->HitCollider(player) == true) {
-				//かつ、足場の上に立っているかどうか
-				if (StageFoot[i]->TopBoxCollider(player) == true)
-				{
-					TouchFlg = true;
-				}
+			if (TouchFlg == true)
+			{
+				player->P_Stand_Flg = TRUE;
 			}
-
-			//跳ね返りの判定
-			if (StageFoot[i]->TopBoxCollider(player) != true) {
-				player->CheckBound(StageFoot[i]);
+			if (TouchFlg == false)
+			{
+				player->P_Stand_Flg = FALSE;
 			}
+			break;
 		}
 
-		if (TouchFlg == true)
-		{
-			player->P_Stand_Flg = TRUE;
-		}
-		if (TouchFlg == false)
-		{
-			player->P_Stand_Flg = FALSE;
+		if (fps > 59) {
+			fps = 0;
 		}
 
-		break;
-
-	case 3:
-		for (int i = 0; i < 7; i++) {
-			//プレイヤーが足場に当たっているか
-			if (StageFoot[i]->HitCollider(player) == true) {
-				//かつ、足場の上に立っているかどうか
-				if (StageFoot[i]->TopBoxCollider(player) == true)
-				{
-					TouchFlg = true;
-				}
-			}
-
-			//跳ね返りの判定
-			if (StageFoot[i]->TopBoxCollider(player) != true) {
-				player->CheckBound(StageFoot[i]);
-			}
-		}
-
-		if (TouchFlg == true)
-		{
-			player->P_Stand_Flg = TRUE;
-		}
-		if (TouchFlg == false)
-		{
-			player->P_Stand_Flg = FALSE;
-		}
-
-		break;
-
-	case 4:
-		for (int i = 0; i < 8; i++) {
-			//プレイヤーが足場に当たっているか
-			if (StageFoot[i]->HitCollider(player) == true) {
-				//かつ、足場の上に立っているかどうか
-				if (StageFoot[i]->TopBoxCollider(player) == true)
-				{
-					TouchFlg = true;
-				}
-			}
-
-			//跳ね返りの判定
-			if (StageFoot[i]->TopBoxCollider(player) != true) {
-				player->CheckBound(StageFoot[i]);
-			}
-		}
-
-		if (TouchFlg == true)
-		{
-			player->P_Stand_Flg = TRUE;
-		}
-		if (TouchFlg == false)
-		{
-			player->P_Stand_Flg = FALSE;
-		}
-		break;
 	}
-
-	if (fps > 59) {
-		fps = 0;
-	}
-
-
 	return this;
+	
 }
 
 void GameMain::CreateStage()
@@ -340,8 +375,17 @@ void GameMain::Draw()const
 	}
 
 	DrawGraph(160, 445, StageSea, TRUE);
-
+	
 	//DrawFormatString(0, 50, GetColor(255, 0, 0), "GameMain");
 	//DrawFormatString(400, 50, GetColor(255, 0, 0), "Snum:%d", Snum);
 	
+	//一時停止中の描画
+	if (PauseFlg == TRUE)
+	{
+	
+		/*SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);*/
+		DrawBox(0, 0, 1000, 780, 0x000000, FALSE);
+		/*SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);*/
+		DrawString(120, 70, "ポーズメニュー表示", GetColor(255, 255, 255));
+	}
 }

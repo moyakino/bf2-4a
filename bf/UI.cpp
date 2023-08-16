@@ -3,6 +3,7 @@
 #include "Bubble.h"
 #include "Player.h"
 #include "TitleScene.h"
+#include "GameMain.h"
 
 UI::UI()
 {
@@ -110,40 +111,43 @@ void UI::Update(int Player_zanki, int Fish_Death)
 
 void UI::Draw() const
 {
-	DrawGraph(60,12,Score,TRUE);
-	DrawGraph(240, 15, HiScore, TRUE);
+	
 
-	if (Respawn_Cnt == 0) {
-		DrawGraph(145, 35, Stock1, TRUE);
-		DrawGraph(165, 35, Stock1, TRUE);
-	}
-	//残機の残り 2個
-	else if (Respawn_Cnt == 1) {
-		DrawGraph(145, 35, Stock1, TRUE);
-		DrawGraph(165, 35, Stock2, TRUE);
-	}
-	//残機の残り 1個
-	else if (Respawn_Cnt == 2) {
-		DrawGraph(145, 35, Stock2, TRUE);
-		DrawGraph(165, 35, Stock2, TRUE);
-	}
+		DrawGraph(60, 12, Score, TRUE);
+		DrawGraph(240, 15, HiScore, TRUE);
 
-	if (GameOver_Flg == TRUE) {
-		DrawGraph(220, 240, GameOver, TRUE);
-	}
+		if (Respawn_Cnt == 0) {
+			DrawGraph(145, 35, Stock1, TRUE);
+			DrawGraph(165, 35, Stock1, TRUE);
+		}
+		//残機の残り 2個
+		else if (Respawn_Cnt == 1) {
+			DrawGraph(145, 35, Stock1, TRUE);
+			DrawGraph(165, 35, Stock2, TRUE);
+		}
+		//残機の残り 1個
+		else if (Respawn_Cnt == 2) {
+			DrawGraph(145, 35, Stock2, TRUE);
+			DrawGraph(165, 35, Stock2, TRUE);
+		}
+
+		if (GameOver_Flg == TRUE) {
+			DrawGraph(220, 240, GameOver, TRUE);
+		}
 
 	DrawFormatString(0, 200, GetColor(255, 255, 255), " Respawn_Cnt：%d", Respawn_Cnt);
 	DrawFormatString(0, 300, GetColor(255, 255, 255), " Cnt ：%d", Cnt);
 	DrawFormatString(0, 340, GetColor(255, 255, 255), " FishHit：%d", Test);
 
-	DrawGraph(200, 300, Number[gScore], TRUE);
+		DrawGraph(200, 300, Number[gScore], TRUE);
 
-	//DrawFormatString(0, 200, GetColor(255, 255, 255), "TempScore : %d", TempScore);
+		//DrawFormatString(0, 200, GetColor(255, 255, 255), "TempScore : %d", TempScore);
 
 
-	/*if (Cnt >= 1) {
-		DrawGraph(PosX, 30, Number[TempScore], TRUE);
-	}*/
+		/*if (Cnt >= 1) {
+			DrawGraph(PosX, 30, Number[TempScore], TRUE);
+		}*/
+	
 }
 
 int UI::GetGameOver()const
