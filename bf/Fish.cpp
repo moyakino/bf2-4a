@@ -44,7 +44,7 @@ void Fish::Update(int x,int y)
     fy1 = y;
     fx2 = x+55;
     fy2 = y+50;
-    if (f_fps > 15) {
+    if (f_fps > 120) {
         f_fps = 0;
         //魚のアニメーション
         if (PLAYER::FishFlg == TRUE) {
@@ -107,17 +107,20 @@ void Fish::Update(int x,int y)
                     else if (F_Seconds2 == 6) {
                         Fish_Img = 5;
                     }
-                    else if (F_Seconds2 == 7) {
-                        FishEatP_flg = FALSE;
+                    else if (F_Seconds2 == 7) {  
+                        Fish_Img = 10;
                     }
-                 
+                    else if (F_Seconds2 == 8) {
+                        PLAYER::FishFlg = FALSE;
+                    }
                 }
                 //アニメーション用秒数
                 F_Seconds2++;
-                if (F_Seconds2 == 8) {
+                if (F_Seconds2 == 9) {
                     F_Seconds2 = 0;
                      Fish_Img = 0;
                     PLAYER::FishFlg = FALSE;
+                    FishEatP_flg = FALSE;
                 }
             }
 
@@ -130,8 +133,8 @@ void Fish::Update(int x,int y)
 
 void Fish::Draw() const
 {
-    //DrawFormatString(400, 20, 0xffffff, "F_Second2:%d", F_Seconds2);
-    //DrawFormatString(400, 40, 0xffffff, "Fish_Img_:%d", Fish_Img);
+    DrawFormatString(400, 20, 0xffffff, "F_Second2:%d", F_Seconds2);
+    DrawFormatString(400, 40, 0xffffff, "Fish_Img_:%d", Fish_Img);
     
    
     if (PLAYER::FishFlg == TRUE)

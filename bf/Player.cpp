@@ -513,7 +513,7 @@ void PLAYER::Stand_Foot()
     {
         //60fps == 1秒　で超えたら fpsを 0 にする
         if (P_FPS > 59) {
-            P_FPS = 0;
+           // P_FPS = 0;
             F_Seconas1++;
         }
         if (F_Seconas1 == 3) {
@@ -543,7 +543,8 @@ void PLAYER::Stand_Foot()
     //魚にあたったときリスポーン
     if (Fish::FishEatP_flg == TRUE) {
     
-        if (Fish::F_Seconds2 == 7) {
+        if (Fish::F_Seconds2 == 8) {
+            zanki = TRUE;
             Player_Init();
             Respawn_Anim();
         }
