@@ -29,10 +29,10 @@ public:
 	float box_x1;
 	float box_x2;
 
-	int HitCollider(BoxCollider* b_col);
-	int TopBoxCollider(BoxCollider* b_col);
-	int L_SideBoxCollider(BoxCollider* b_col);
-	int R_SideBoxCollider(BoxCollider* b_col);
+	bool HitCollider(BoxCollider* b_col);
+	bool TopBoxCollider(BoxCollider* b_col);
+	bool L_SideBoxCollider(BoxCollider* b_col);
+	bool R_SideBoxCollider(BoxCollider* b_col);
 
 
 	Location GetLocation();
