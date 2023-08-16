@@ -11,6 +11,8 @@ int PLAYER::P_TurnFlg;
 int PLAYER::F_TurnFlg;
 int PLAYER::P_Stand_Flg;
 int PLAYER::zanki;
+int PLAYER::FishHit;
+int PLAYER::FishDeath;
 
 float PLAYER::P_Move_X;
 float PLAYER::P_Move_Y;
@@ -60,6 +62,8 @@ PLAYER::PLAYER()
     MouseX = 0;
     MouseY = 0;
     zanki = 0;
+    FishHit = 0;
+    FishDeath = 0;
 
     //サカナ
     FishCnt = 0;
@@ -134,13 +138,12 @@ void PLAYER::Update()
     //画像切り替え用
     Player_Img();
 
-    //zanki = FALSE;
+    zanki = FALSE;
+    FishDeath = FALSE;
 
     if (Beaten_Flg == FALSE) {
-        zanki = FALSE;
-
+        //zanki = FALSE;
         Stand_Foot();
-
         //ステージの足場に立っていたら地上の移動に入る
         if (P_Stand_Flg == TRUE) {
             Player_Move();
@@ -543,14 +546,16 @@ void PLAYER::Stand_Foot()
     }
     //魚にあたったときリスポーン
     if (Fish::FishEatP_flg == TRUE) {
-    
         if (Fish::F_Seconds2 == 8) {
-            zanki = TRUE;
-            Player_Init();
-            Respawn_Anim();
+                FishHit += 1;
+                FishDeath = TRUE;
+                if (FishHit < 49) {
+                    Player_Init();
+                    Respawn_Anim();
+                }
+            //zanki = TRUE;
         }
     }
-
  }
 
 void PLAYER::Respawn_Anim()
@@ -777,7 +782,7 @@ void PLAYER::Draw()const
 
     //DrawFormatString(0, 140, GetColor(255, 255, 255), " AnimCnt：%d", AnimCnt);
 
-    DrawFormatString(0, 160, GetColor(255, 255, 255), " 残機 ： %d ", zanki);
+    DrawFormatString(0, 320, GetColor(255, 255, 255), " zanki ： %d ", zanki);
     //DrawFormatString(0, 160, GetColor(255, 255, 255), " やられ   Beaten_Flg ： %d ", Beaten_Flg);
     DrawFormatString(0, 180, GetColor(255, 255, 255), " 風船   Balloon_Flg  ： %d ", P_Balloon_Flg);
   

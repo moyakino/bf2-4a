@@ -63,15 +63,11 @@ AbstractScene* GameMain::Update()
 
 	//stage->Update();
 	player->Update();
-	ui->Update();
+	fish->Update(player->GetLocation().x, player->GetLocation().y);
+	ui->Update(player->zanki, player->FishHit);
 	bubble->Update(player->GetLocation().x, player->GetLocation().y);
-	fish->Update(player->GetLocation().x , player->GetLocation().y);
 	enemybird->Update(player->GetLocation().x, player->GetLocation().y);
 	thunder->Update(player->GetLocation().x, player->GetLocation().y);
-
-
-	
-	
 
 	// Xƒ{ƒ^ƒ“’P‰Ÿ‚µ
 	int X_Btn = PAD_INPUT::OnButton(XINPUT_BUTTON_X);
@@ -329,7 +325,7 @@ void GameMain::Draw()const
 
 	//ŠC
 	//DrawBox(160, 444, 480, 480, 0x0000ff, FALSE);
-	DrawGraph(160, 445, StageSea, TRUE);
+	//DrawGraph(160, 445, StageSea, TRUE);
 
 	//stage->Draw();
 	
@@ -342,7 +338,9 @@ void GameMain::Draw()const
 		player->Draw();
 		fish->Draw();
 	}
-	
+
+	DrawGraph(160, 445, StageSea, TRUE);
+
 	//DrawFormatString(0, 50, GetColor(255, 0, 0), "GameMain");
 	//DrawFormatString(400, 50, GetColor(255, 0, 0), "Snum:%d", Snum);
 	

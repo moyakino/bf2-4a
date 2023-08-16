@@ -4,7 +4,6 @@
 #include "Player.h"
 #include "TitleScene.h"
 
-
 UI::UI()
 {
 	if(LoadDivGraph("images/UI/UI_NumAnimation.png",10,10,1,32,30,Number)){}
@@ -19,9 +18,11 @@ UI::UI()
 	PosX = 200;
 	Cnt = 0;
 	Respawn_Cnt = 0;
+	Beaten_Cnt = 0;
 	GameOver_Flg = 0;
 	fpsCnt = 0;
 	byou = 0;
+	Test = 0;
 
 	//配列の初期化
 	for (int i = 0; i < 10; i++) {
@@ -34,9 +35,13 @@ UI::~UI()
 
 }
 
-void UI::Update()
+void UI::Update(int Player_zanki, int Fish_Death)
 {
 	fpsCnt++;
+
+	byou = Player_zanki;
+	Test = Fish_Death;
+
 
 	//gScore = Bubble::H_flg;
 
@@ -56,12 +61,10 @@ void UI::Update()
 	//fpsCnt++;
 
 	// 10以下なら1の位ですむ
-	if (TotalScore > 10) {
-		gScore = TotalScore % 10;
-		// 100 以下なら 10のくらいで済む
-	}
-
-
+	//if (TotalScore > 10) {
+	//	gScore = TotalScore % 10;
+	//	// 100 以下なら 10のくらいで済む
+	//}
 
 	/*do {
 		DrawGraph(PosX, 30, Number[TotalScore % 10], TRUE);
@@ -69,13 +72,34 @@ void UI::Update()
 		PosX -= 30;
 	} while (TotalScore > 0);*/
 
+	/*if (Test == 16 && PLAYER::FishDeath == TRUE) {
+		Beaten_Cnt = Beaten_Cnt + 1;
+	}
+	else if (Test == 32 && PLAYER::FishDeath == TRUE) {
+		Beaten_Cnt = Beaten_Cnt + 1;
+	}
+	else if (Test == 48 && PLAYER::FishDeath == TRUE) {
+		Beaten_Cnt = Beaten_Cnt + 1;
+	}*/
 
-	if (PLAYER::zanki == TRUE) {
-		Cnt += 1;
-		Respawn_Cnt = Respawn_Cnt + Cnt;
+	/*if (Test == 32) {
+		Beaten_Cnt = Beaten_Cnt + 1;
 	}
 
-	if (Respawn_Cnt > 3) {
+	if (Test == 48) {
+		GameOver_Flg = TRUE;
+	}*/
+
+	/*if (PLAYER::DeathCnt == R_Cnt - 1) {
+		oooo++;
+	}*/
+
+	if (byou == TRUE || Test == 16 && PLAYER::FishDeath == TRUE || Test == 32 && PLAYER::FishDeath == TRUE || Test == 48 && PLAYER::FishDeath == TRUE) {
+		//Cnt = 1;
+		Respawn_Cnt = Respawn_Cnt + 1;
+	}
+
+	if (Respawn_Cnt == 4) {
 		GameOver_Flg = TRUE;
 	}
 
@@ -108,8 +132,9 @@ void UI::Draw() const
 		DrawGraph(220, 240, GameOver, TRUE);
 	}
 
-	DrawFormatString(0, 200, GetColor(255, 255, 255), " リスポーン：%d", Respawn_Cnt);
-	DrawFormatString(0, 300, GetColor(255, 255, 255), " Cnt		  ：%d", Cnt);
+	DrawFormatString(0, 200, GetColor(255, 255, 255), " Respawn_Cnt：%d", Respawn_Cnt);
+	DrawFormatString(0, 300, GetColor(255, 255, 255), " Cnt ：%d", Cnt);
+	DrawFormatString(0, 340, GetColor(255, 255, 255), " FishHit：%d", Test);
 
 	DrawGraph(200, 300, Number[gScore], TRUE);
 
