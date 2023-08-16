@@ -1,13 +1,12 @@
 #pragma once
 #include "AbstractScene.h"
 #include "Player.h"
-#include"Bubble.h"
+#include "Bubble.h"
 #include "Stage.h"
 #include "Thunder.h"
 #include "Fish.h"
 #include "enemybird.h"
-#include"UI.h"
-#include "testPlayer.h"
+#include "UI.h"
 
 
 
@@ -16,18 +15,20 @@ class GameMain:
 {
 private:
 
-	int fps = 0;
+	int fps;
+	int Cnt;
+	int DrawGameOver;
 
 	int Bgm;
-	int StageSample;
+	int StageSea;
 
-
+	void CreateStage();
 public:
 
 
 	int Snum;
 
-	Stage* StageFoot[8];
+	Stage* StageFoot[10];
 
 	GameMain();
 	~GameMain();

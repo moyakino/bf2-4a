@@ -79,7 +79,6 @@ private:
 	//(仮)やられアニメーションの再生
 	int		Beaten_Flg;
 	int		AnimCnt;
-	int		Respawn_Flg;
 
 	//(仮)
 	int		P_A_BtnFlg;
@@ -90,34 +89,19 @@ private:
 	float	P_XSpeed;
 	//プレイヤーの地上スピード Y座標
 	float	P_YSpeed;
-	//プレイヤーの空中スピード
-	float	P_AirSpeed;
-
-	//float P_Speed;
-
-	float	P_Accele;
-
-	float	P_Air_Multiply;
 
 	//(仮)プレイヤー右移動フラグ 移動無し:0 右移動:1
 	int		P_MoveR_Flg;
 	//(仮)プレイヤー左移動フラグ 移動無し:0 左移動:1
 	int		P_MoveL_Flg;
-	//(仮)プレイヤー浮上フラグ
-	int		P_Air_Flg;
 	//(仮)風船情報 1:2個 0:1個
 	int		P_Balloon_Flg;
-
-
-	
-	//海に落下する状態のフラグ
-	int		P_Foll_Flg;
-
-	float	sx1, sy1, sx2, sy2;
+	int		Respawn_Flg;
 
 	//FPSと秒数カウント
 	int		P_FPS;
 	int		P_Seconas1;
+	int		FishCnt;
 	int		F_Seconas1;
 	int		MouseX;
 	int		MouseY;
@@ -134,8 +118,9 @@ public:
 	static int		FishFlg;
 	/*(仮)画像の左右反転用フラグ FALSE:普通に描画 TRUE:左右反転*/
 	static	int		P_TurnFlg;
-	static float	px1, py1, px2, py2, p_uc, py_u;
 	static	int		F_TurnFlg;
+	static	int		zanki;
+
 	//コンストラクタ
 	PLAYER();
 
@@ -176,6 +161,13 @@ public:
 	void Stand_Foot();
 
 	void SetStandFlg(bool b) { P_Stand_Flg = b; }
+
+	void BoundPlusX();
+	void BoundMinusX();
+	void BoundPlusY();
+	void BoundMinusY();
+
+	int CheckBound(BoxCollider* b_col);
 
 	Location GetLocation() { return location; }
 

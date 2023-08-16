@@ -32,24 +32,16 @@
 class Stage :public BoxCollider
 {
 private:
-	int StageFoot[8];
-	int StageLand_R;
-	int StageLand_L;
-	int StageSea;
 
-	int StageSample1;
-	int StageSample2;
-	int StageSample3;
-	int StageSample4;
-	int StageSample5;
+	int StageImg;
+	int StageFoot[8];
+	int StageLand_R[2];
+	int StageLand_L[2];
+
+
 
 
 public:
-
-	static int Stand;
-	static int Bound;
-	static int Death;
-
 
 	//コンストラクタ
 	Stage(int num,int i);
