@@ -21,7 +21,7 @@ Thunder::Thunder()
 	C_Img = 0;
 
 	T_Thunder_Flg = FALSE;
-	T_Effect_Flg = TRUE;
+	T_Effect_Flg = FALSE;
 	T_Cloud_Flg = FALSE;
 
 	S_FPS1 = 0;
@@ -90,6 +90,58 @@ void Thunder::Update(float x, float y)
 
 void Thunder::MoveBall()
 {
+	if (S_Seconas2 > 30) {
+		for (int i = 0; i < 3; i++) {
+			printf("%d回目: ", i + 1);
+
+			// 乱数を発生
+			int num = rand() % 4 + 1;
+
+			Speed = 2;
+			ChangeAngle();
+
+			switch (num) {
+			case 1:
+				S_Seconas2 = 0;
+					BallFlg = 1;
+
+					BallAngle = 0.625f;  //左上
+					T_Thunder_Flg = TRUE;
+					T_Effect_Flg = TRUE;
+					T_Cloud_Flg = TRUE;
+				break;
+			case 2:
+				S_Seconas2 = 0;
+					BallFlg = 1;
+
+					BallAngle = 0.375f;  //左下
+					T_Thunder_Flg = TRUE;
+					T_Effect_Flg = TRUE;
+					T_Cloud_Flg = TRUE;
+				break;
+			case 3:
+				S_Seconas2 = 0;
+					BallFlg = 1;
+
+					BallAngle = 0.875f;  //右上
+					T_Thunder_Flg = TRUE;
+					T_Effect_Flg = TRUE;
+					T_Cloud_Flg = TRUE;
+				break;
+			case 4:
+				S_Seconas2 = 0;
+					BallFlg = 1;
+					
+					BallAngle = 0.125f;  //右上
+					T_Thunder_Flg = TRUE;
+					T_Effect_Flg = TRUE;
+					T_Cloud_Flg = TRUE;
+				break;
+			}
+		}
+	}
+
+
 	//if (S_Seconas2 > 30)
 	//{
 	//	S_Seconas2 = 0;
@@ -108,7 +160,7 @@ void Thunder::MoveBall()
 	{
 		BallFlg = 1;
 		Speed = 2;
-		BallAngle = 0.625f;  //左上
+		BallAngle = 0.655f;  //左上
 		//BallAngle = 0.375f;  //左下
 		//BallAngle = 0.875f;  //右上
 		//BallAngle = 0.125f;  //右上
@@ -159,6 +211,7 @@ void Thunder::MoveBall()
 	if (BallY > 480 + 4) //(海)
 	{
 		BallFlg = 2;
+		T_Effect_Flg = FALSE;
 	}
 
 	//ボールをスタート状態にする

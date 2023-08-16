@@ -108,8 +108,8 @@ void UI::Draw() const
 		DrawGraph(220, 240, GameOver, TRUE);
 	}
 
-	DrawFormatString(0, 200, GetColor(255, 255, 255), " リスポーン：%d", Respawn_Cnt);
-	DrawFormatString(0, 300, GetColor(255, 255, 255), " Cnt		  ：%d", Cnt);
+	//DrawFormatString(0, 200, GetColor(255, 255, 255), " リスポーン：%d", Respawn_Cnt);
+	//DrawFormatString(0, 300, GetColor(255, 255, 255), " Cnt		  ：%d", Cnt);
 
 	DrawGraph(200, 300, Number[gScore], TRUE);
 
