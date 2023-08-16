@@ -2,6 +2,7 @@
 #include "Thunder.h"
 #include"GameMain.h"
 #include <math.h>
+#include <stdlib.h>
 
 Thunder::Thunder()
 {
@@ -30,8 +31,11 @@ Thunder::Thunder()
 	S_Seconas3 = 0;
 
 	BallFlg = 0;
-	BallX = 345;
-	BallY = 105;
+	location.x = 345;
+	location.y = 105;
+	erea.Width = 32;
+	erea.Height = 32;
+
 	BallAngle = 0;
 
 	MoveX = 0;
@@ -39,11 +43,9 @@ Thunder::Thunder()
 
 	PlayerX = 0, PlayerY = 0;
 
-	Subject = rand() % 3;
-
 	HitFlg = 0;
 
-	flg = 0;
+	flg = FALSE;
 	
 }
 
@@ -54,6 +56,9 @@ Thunder::~Thunder()
 
 void Thunder::Update(float x, float y)
 {
+	BallX = location.x;
+	BallY = location.y;
+
 	S_FPS1++;
 	S_FPS2++;
 
@@ -65,7 +70,6 @@ void Thunder::Update(float x, float y)
 	C_Img = Cloud_Anim();
 
 	ThunderBallInit();
-
 	MoveBall();
 
 	//雷(稲光)用 FPS
@@ -86,18 +90,18 @@ void Thunder::Update(float x, float y)
 
 void Thunder::MoveBall()
 {
-	if (S_Seconas2 > 30)
-	{
-		S_Seconas2 = 0;
-		BallFlg = 1;
-		Speed = 2;
-		BallAngle = 0.625f;  //左上
-		//BallAngle = 0.375f;  //左下
-		//BallAngle = 0.875f;  //右上
-		//BallAngle = 0.125f;  //右上
-		T_Effect_Flg = TRUE;
-		ChangeAngle();
-	}
+	//if (S_Seconas2 > 30)
+	//{
+	//	S_Seconas2 = 0;
+	//	BallFlg = 1;
+	//	Speed = 2;
+	//	BallAngle = 0.625f;  //左上
+	//	//BallAngle = 0.375f;  //左下
+	//	//BallAngle = 0.875f;  //右上
+	//	//BallAngle = 0.125f;  //右上
+	//	T_Effect_Flg = TRUE;
+	//	ChangeAngle();
+	//}
 
 	// マウス左クリックでゲームスタート
 	if (CheckHitKey(KEY_INPUT_1))
@@ -118,36 +122,40 @@ void Thunder::MoveBall()
 	//ボールの移動処理
 	if (BallFlg != 2) 
 	{
-		BallX += MoveX;
-		BallY += MoveY;
+		location.x += MoveX;
+		location.y += MoveY;
 	}
 
+
 	//壁・天井での反射
-	if (BallX < 4 || BallX > 610) // 横の壁
+	if (location.x < 4 || location.x > 610) // 横の壁
 	{ 
-		if (BallX < 4) {
-			BallX = 4;
+		if (location.x < 4) {
+			location.x = 4;
 		}
 		else {
-			BallX = 610;
+			location.x = 610;
 		}
 		BallAngle = (1 - BallAngle) + 0.5f;
 		if (BallAngle > 1) BallAngle -= 1.0f;
 		ChangeAngle();
 	}
-	if (BallY < 8 || BallY > 460) // 上下の壁
+	if (location.y < 8 /*|| location.y > 460*/) // 上下の壁
 	{ 
-		if (BallY < 8) {
-			ChangeAngle();
-			//BallY = 8;
+		if (location.y < 8) {
+			BallAngle = (1 - BallAngle);		
+		    ChangeAngle();
 		}
-		else if(BallY > 460){
-			ChangeAngle();		
-		}
-		BallAngle = (1 - BallAngle);		
-		ChangeAngle();
+		
 	}
 	
+	if (flg == TRUE)
+	{
+		BallAngle = (1 - BallAngle) + 0.5f;
+		if (BallAngle > 1) BallAngle -= 1.0f;
+		ChangeAngle();
+	}
+
 	if (BallY > 480 + 4) //(海)
 	{
 		BallFlg = 2;
@@ -156,8 +164,8 @@ void Thunder::MoveBall()
 	//ボールをスタート状態にする
 	if (BallFlg == 2)
 		{
-			BallX = 345;
-			BallY = 105;
+			location.x = 345;
+			location.y = 105;
 	}
 
 }
@@ -184,37 +192,65 @@ void Thunder::ChangeAngle()
 	MoveY = (int)(Speed * sinf(rad));
 }
 
-void Thunder::HitThunder()
+bool Thunder::StageHit(BoxCollider* b_col)
 {
-	//ボールとバーの当たり判定
-	//int mx0, mx1, my0, my1, sx0, sx1, sy0, sy1;
+	int re =false;
+
+	//ステージ
+	float sx1 = b_col->GetLocation().x;
+	float sy1 = b_col->GetLocation().y;
+	float sx2 = sx1 + b_col->GetErea().Width;
+	float sy2 = sy1 + b_col->GetErea().Height;
+
+	//雷
+	float tx1 = location.x;
+	float tx2 = tx1 + erea.Width;
+	float ty1 = location.y;
+	float ty2 = ty1 + erea.Height;
 
 
-	////座標位置の事前計算
-	//mx0 = BallX - 4;
-	//mx1 = BallX + 4;
-	//my0 = BallY - 4;
-	//my1 = BallY + 4;
-	//sx0 = 0;
-	//sx1 = 0;
-	//sy0 = 0;
-	//sy1 = 0;
+	//当たり判定
+	if ((tx1 < sx2) && (sx1 < tx2) && (ty1 < sy2) && (ty2 > sy1))
+	{
+		////左
+		//if ((tx1 < sx2) && (sx1 > tx2 - (erea.Width / 4))) 
+		//{
+		//	BallAngle = (1 - BallAngle) + 0.5f;
+		//	if (BallAngle > 1) BallAngle -= 1.0f;
+		//	ChangeAngle();
+		//}
 
-	//// ボールとバーの当たり判定
-	//if (sx0 <= mx1 && sx1 >= mx0 &&
-	//	sy0 <= my1 && sy1 >= my0) {
-	//	if (BallFlg == 0) {
-	//		BallAngle = (0.3f / 60) * (mx1 - sx0) + 0.6f;
-	//		ChangeAngle();
+		////右
+		//if((sx1 < tx2) && (sx2 < tx2 + (erea.Width / 4)))
+		//{
+		//	BallAngle = (1 - BallAngle) + 0.5f;
+		//	if (BallAngle > 1) BallAngle -= 1.0f;
+		//	ChangeAngle();
+		//}
 
-	//		BallFlg = 1;
-	//	}
-	//}
-	//else {
-	//	if (BallFlg != 2)BallFlg = 0;
-	//}
+		BallAngle = (1 - BallAngle) + 0.5f;
+		if (BallAngle > 1) BallAngle -= 1.0f;
+		ChangeAngle();
 
-	//ChangeAngle();
+		////下
+		//if ((sy2 > ty1) && (sy2 < ty2 + (erea.Height / 4)))
+		//{
+		//	BallAngle = (1 - BallAngle)+0.5f;
+
+		//	ChangeAngle();
+		//}
+
+		//上
+		if ((sy1 < ty2) && (sy1 > sy1 - (erea.Height / 4)))
+		{
+			BallAngle = (1 - BallAngle);
+			ChangeAngle();
+		}
+
+		re = true;
+	}
+
+	return re;
 }
 
 int Thunder::Thunder_Anim()
@@ -347,6 +383,7 @@ void Thunder::Draw() const
 	DrawFormatString(0, 280, GetColor(255, 255, 255), " 雷 Hit! :%d", HitFlg);
 
 	DrawFormatString(0, 300, GetColor(255, 255, 255), " 雷発生 :%d", S_Seconas2);
+	DrawFormatString(0, 320, GetColor(255, 255, 255), " flg :%d", flg);
 
 	//DrawBox(BallX + 2, BallY + 4, BallX + 28, BallY + 26, GetColor(255, 0, 0), FALSE);
 

@@ -90,12 +90,14 @@ AbstractScene* GameMain::Update()
 	}
 
 	bool TouchFlg = false;
+	bool tHitFlg = false;
 	
 	//当たり判定
 	switch (Snum)
 	{
 	case 0:
 		for (int i = 0; i < 3; i++){
+
 			//プレイヤーが足場に当たっているか
 			if (StageFoot[i]->HitCollider(player) == true){
 				//かつ、足場の上に立っているかどうか
@@ -109,6 +111,22 @@ AbstractScene* GameMain::Update()
 			if (StageFoot[i]->TopBoxCollider(player) != true){
 				player->CheckBound(StageFoot[i]);
 			}
+
+			//雷
+			if (thunder->StageHit(StageFoot[i]) == true) {
+				tHitFlg = true;
+			}	
+			
+
+		}
+
+		if (tHitFlg == true)
+		{
+			thunder->flg = TRUE;
+		}
+		if (tHitFlg == false)
+		{
+			thunder->flg = FALSE;
 		}
 
 		if (TouchFlg == true)
@@ -221,6 +239,7 @@ AbstractScene* GameMain::Update()
 			if (StageFoot[i]->TopBoxCollider(player) != true) {
 				player->CheckBound(StageFoot[i]);
 			}
+
 		}
 
 		if (TouchFlg == true)
@@ -329,7 +348,7 @@ void GameMain::Draw()const
 
 	//海
 	//DrawBox(160, 444, 480, 480, 0x0000ff, FALSE);
-	DrawGraph(160, 445, StageSea, TRUE);
+	//DrawGraph(160, 445, StageSea, TRUE);
 
 	//stage->Draw();
 	
@@ -342,6 +361,8 @@ void GameMain::Draw()const
 		player->Draw();
 		fish->Draw();
 	}
+
+	DrawGraph(160, 445, StageSea, TRUE);
 	
 	//DrawFormatString(0, 50, GetColor(255, 0, 0), "GameMain");
 	//DrawFormatString(400, 50, GetColor(255, 0, 0), "Snum:%d", Snum);
