@@ -44,7 +44,7 @@ void Fish::Update(int x,int y)
     fy1 = y;
     fx2 = x+55;
     fy2 = y+50;
-    if (f_fps > 120) {
+    if (f_fps > 15) {
         f_fps = 0;
         //魚のアニメーション
         if (PLAYER::FishFlg == TRUE) {
