@@ -13,8 +13,8 @@ GameMain::GameMain()
 {
 	if (StageSea = LoadGraph("images/Stage/Stage_Sea01.png")) {}
 
-	/*MainBgm = LoadSoundMem("sounds/SE_Start.wav");
-	PlaySoundMem(MainBgm, DX_PLAYTYPE_BACK);*/
+	MainBgm = LoadSoundMem("sounds/SE_Start.wav");
+	PlaySoundMem(MainBgm, DX_PLAYTYPE_BACK);
 	ui = new UI();
 	player = new PLAYER();
 	bubble = new Bubble();
@@ -380,9 +380,10 @@ void GameMain::Draw()const
 	//一時停止中の描画
 	if (PauseFlg == TRUE)
 	{
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
-		DrawBox(0, 0, 1000, 780, 0x000000, TRUE);
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+	
+		/*SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);*/
+		DrawBox(0, 0, 1000, 780, 0x000000, FALSE);
+		/*SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);*/
 		DrawString(120, 70, "ポーズメニュー表示", GetColor(255, 255, 255));
 	}
 }

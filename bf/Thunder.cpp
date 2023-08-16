@@ -370,25 +370,28 @@ int Thunder::Cloud_Anim()
 
 void Thunder::Draw() const
 {
-	//雲の描画
-	DrawGraph(320, 90, CloudImg, TRUE);
-	DrawGraph(295, 90, C_Img, TRUE);
-
-	//雷（稲光）の表示
-	DrawGraph(400, 100, T_Img, TRUE);
 	
-	//雷（雷の弾）の表示
-	DrawGraph(BallX, BallY, E_Img, TRUE);
+		//雲の描画
+		DrawGraph(320, 90, CloudImg, TRUE);
+		DrawGraph(295, 90, C_Img, TRUE);
+		//ポーズ画面じゃないとき描写
+		if (GameMain::PauseFlg == FALSE) {
+		//雷（稲光）の表示
+		DrawGraph(400, 100, T_Img, TRUE);
 
-	//DrawFormatString(0, 280, GetColor(255, 255, 255), " 雷 Hit! :%d", HitFlg);
+		//雷（雷の弾）の表示
+		DrawGraph(BallX, BallY, E_Img, TRUE);
 
-	DrawFormatString(0, 300, GetColor(255, 255, 255), " 雷発生 :%d", S_Seconas2);
-	DrawFormatString(0, 320, GetColor(255, 255, 255), " flg :%d", flg);
+		//DrawFormatString(0, 280, GetColor(255, 255, 255), " 雷 Hit! :%d", HitFlg);
 
-	//DrawBox(BallX + 2, BallY + 4, BallX + 28, BallY + 26, GetColor(255, 0, 0), FALSE);
+		DrawFormatString(0, 300, GetColor(255, 255, 255), " 雷発生 :%d", S_Seconas2);
+		DrawFormatString(0, 320, GetColor(255, 255, 255), " flg :%d", flg);
 
-	DrawLine(BallX + 2, BallY + 4, BallX + 2, BallY + 26, GetColor(255, 0, 0), 1);
-	DrawLine(BallX + 28, BallY + 4, BallX + 28, BallY + 26, GetColor(255, 0, 0), 1);
-	DrawLine(BallX + 2, BallY + 4, BallX + 28, BallY + 4, GetColor(255, 255, 255), 1);
-	DrawLine(BallX + 2, BallY + 26, BallX + 28, BallY + 26, GetColor(255, 255, 255), 1);
+		//DrawBox(BallX + 2, BallY + 4, BallX + 28, BallY + 26, GetColor(255, 0, 0), FALSE);
+
+		DrawLine(BallX + 2, BallY + 4, BallX + 2, BallY + 26, GetColor(255, 0, 0), 1);
+		DrawLine(BallX + 28, BallY + 4, BallX + 28, BallY + 26, GetColor(255, 0, 0), 1);
+		DrawLine(BallX + 2, BallY + 4, BallX + 28, BallY + 4, GetColor(255, 255, 255), 1);
+		DrawLine(BallX + 2, BallY + 26, BallX + 28, BallY + 26, GetColor(255, 255, 255), 1);
+	}
 }
