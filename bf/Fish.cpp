@@ -133,27 +133,30 @@ void Fish::Update(int x,int y)
 
 void Fish::Draw() const
 {
-    DrawFormatString(400, 20, 0xffffff, "F_Second2:%d", F_Seconds2);
-    DrawFormatString(400, 40, 0xffffff, "Fish_Img_:%d", Fish_Img);
-    
-   
-    if (PLAYER::FishFlg == TRUE)
-    {
+    //É|Å[ÉYâÊñ Ç∂Ç·Ç»Ç¢Ç∆Ç´ï`é 
+    if (GameMain::PauseFlg == FALSE) {
 
-        if (PLAYER::F_TurnFlg == TRUE)
+       /* DrawFormatString(400, 20, 0xffffff, "F_Second2:%d", F_Seconds2);
+        DrawFormatString(400, 40, 0xffffff, "Fish_Img_:%d", Fish_Img);*/
+
+
+        if (PLAYER::FishFlg == TRUE)
         {
-            DrawGraph(PlayerX, 390, Fish_ArrayImg[Fish_Img], TRUE);
-            DrawBoxAA(fx1 , 410 , fx2, 500, GetColor(255, 255, 255), FALSE);
-        }
-        else {
-            if (PLAYER::F_TurnFlg == FALSE) {
-                DrawTurnGraph(PlayerX, 390, Fish_ArrayImg[Fish_Img], TRUE);
+
+            if (PLAYER::F_TurnFlg == TRUE)
+            {
+                DrawGraph(PlayerX, 390, Fish_ArrayImg[Fish_Img], TRUE);
                 DrawBoxAA(fx1, 410, fx2, 500, GetColor(255, 255, 255), FALSE);
             }
+            else {
+                if (PLAYER::F_TurnFlg == FALSE) {
+                    DrawTurnGraph(PlayerX, 390, Fish_ArrayImg[Fish_Img], TRUE);
+                    DrawBoxAA(fx1, 410, fx2, 500, GetColor(255, 255, 255), FALSE);
+                }
+            }
+
         }
-
     }
-
 }
 
 

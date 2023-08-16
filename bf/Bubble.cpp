@@ -3,6 +3,7 @@
 #include"Player.h"
 #include"PadInput.h"
 #include"FPS.h"
+#include"GameMain.h"
 
 Bubble::Bubble()
 {
@@ -76,25 +77,28 @@ void Bubble::Update(float x, float y)
 
 void Bubble::Draw() const 
 {
-	if (B_flg == TRUE) {
-		DrawRotaGraph(MoveX, MoveY, 1.0f, 1, B_Img, TRUE);
-	}
-	
-	if (ScoreFlg == TRUE) {
-		DrawGraph(MoveX - 15, MoveY - 50, BubbleScoreImg, TRUE);
-	}
-	
-	//DrawBoxAA(MoveX - 20, MoveY - 20, MoveX + 20, MoveY + 20, GetColor(255, 255, 255), FALSE);
-	DrawLine(MoveX - 20, MoveY - 15, MoveX - 20, MoveY + 15, GetColor(255, 0, 0), 1);		//左
-	DrawLine(MoveX + 20, MoveY - 15, MoveX + 20, MoveY + 15, GetColor(255, 0, 0), 1);		//右
-	DrawLine(MoveX - 20, MoveY - 15, MoveX + 20, MoveY - 15, GetColor(255, 255, 255), 1);	//上
-	DrawLine(MoveX - 20, MoveY + 15, MoveX + 20, MoveY + 15, GetColor(255, 255, 255), 1);	//下
+	//ポーズ画面じゃないとき描写
+	if (GameMain::PauseFlg == FALSE) {
 
-	//DrawFormatString(0, 400, GetColor(255, 255, 255), "X : %0.1f Y : %0.1f", PlayerX, PlayerY);
-	//DrawFormatString(0, 300, GetColor(255, 255, 255), "MoveX:%0.1f MoveY:%0.1f", MoveX, MoveY);
-	//DrawFormatString(0, 320, GetColor(255, 255, 255), "Bubbleflg:%d", Bubbleflg);
-	//DrawFormatString(0, 340, GetColor(255, 255, 255), "Bubble Hit:%d", H_flg);
-	
+		if (B_flg == TRUE) {
+			DrawRotaGraph(MoveX, MoveY, 1.0f, 1, B_Img, TRUE);
+		}
+
+		if (ScoreFlg == TRUE) {
+			DrawGraph(MoveX - 15, MoveY - 50, BubbleScoreImg, TRUE);
+		}
+
+		//DrawBoxAA(MoveX - 20, MoveY - 20, MoveX + 20, MoveY + 20, GetColor(255, 255, 255), FALSE);
+		DrawLine(MoveX - 20, MoveY - 15, MoveX - 20, MoveY + 15, GetColor(255, 0, 0), 1);		//左
+		DrawLine(MoveX + 20, MoveY - 15, MoveX + 20, MoveY + 15, GetColor(255, 0, 0), 1);		//右
+		DrawLine(MoveX - 20, MoveY - 15, MoveX + 20, MoveY - 15, GetColor(255, 255, 255), 1);	//上
+		DrawLine(MoveX - 20, MoveY + 15, MoveX + 20, MoveY + 15, GetColor(255, 255, 255), 1);	//下
+
+		//DrawFormatString(0, 400, GetColor(255, 255, 255), "X : %0.1f Y : %0.1f", PlayerX, PlayerY);
+		//DrawFormatString(0, 300, GetColor(255, 255, 255), "MoveX:%0.1f MoveY:%0.1f", MoveX, MoveY);
+		//DrawFormatString(0, 320, GetColor(255, 255, 255), "Bubbleflg:%d", Bubbleflg);
+		//DrawFormatString(0, 340, GetColor(255, 255, 255), "Bubble Hit:%d", H_flg);
+	}
 
 }
 
