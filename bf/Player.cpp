@@ -74,12 +74,15 @@ PLAYER::PLAYER()
     Respawn_Flg = TRUE;
 
     FishFlg = FALSE;
+    CheckSoundMem(UI::GameOver_BGM);
     P_Jump_SE = LoadSoundMem("sounds/SE_PlayerJump.wav");
+    P_Respawn_BGM = LoadSoundMem("sounds/SE_Restart.wav");
     
 }
 
 void PLAYER::Update()
 {
+  
     //フレーム取得
     P_FPS++;
 
@@ -207,8 +210,10 @@ void PLAYER::Update()
     else if (P_Seconas1 > 3) {
         P_Seconas1 = 0;
     }
-
-    
+    //もしゲームオーバー画面に遷移したらリスポーンBGMを切る
+    if (CheckSoundMem(UI::GameOver_BGM) == 1) {
+        StopSoundMem(P_Respawn_BGM);
+    }
 }
 
 void PLAYER::Player_Init()
@@ -219,6 +224,8 @@ void PLAYER::Player_Init()
     location.y = 349.4f;
     Respawn_Flg = TRUE;
     P_Balloon_Flg = TRUE;
+    PlaySoundMem(P_Respawn_BGM, DX_PLAYTYPE_BACK, FALSE);
+    
 }
 
 void PLAYER::Player_Warp()

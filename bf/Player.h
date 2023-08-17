@@ -108,6 +108,7 @@ private:
 
 	int rand;
     int  P_Jump_SE;
+	int  P_Respawn_BGM;
 public:
 	//—§‚Á‚Ä‚¢‚éó‘Ô‚Ìƒtƒ‰ƒO
 	static int		P_Stand_Flg;
