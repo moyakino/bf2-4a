@@ -146,8 +146,8 @@ void EnemyBird::Enemy_Warp()
         location.x = -53;
     }
 
-    if (E_Move_Y <= -25) {
-        E_Move_Y = -20;
+    if (location.y < -25) {
+        location.y = -20;
         if (SpeedY < 0) {
             SpeedY = SpeedY * -0.8f;
         }
@@ -207,10 +207,10 @@ void EnemyBird::Enemy_Levitation_Move_X()
    // E_Move_X + 10, E_Move_Y + 37, E_Move_X + 50, E_Move_Y + 65,
     
     //Player‚ª“G‚Ì^ã‚É‚¢‚éê‡‚ÍA‚»‚ÌŽž“_‚ÅŒü‚¢‚Ä‚¢‚é•ûŒü‚É‰Á‘¬‚·‚é
-    if (E_Move_Y - 60 > PlayerY && PlayerY < E_Move_Y && E_Move_X < PlayerX && PlayerX < E_Move_X + 60) {
+    if (location.y - 60 > PlayerY && PlayerY < location.y && location.x < PlayerX && PlayerX < location.x + 60) {
         if (EnemyState == ENEMY_STATE::FLY_LEFT) {
             SpeedX += -0.5f;
-            E_Move_X += SpeedX;
+            location.x += SpeedX;
             if (SpeedX <= -0.8f) {
                 SpeedX = -0.8f;
             }
@@ -218,7 +218,7 @@ void EnemyBird::Enemy_Levitation_Move_X()
         else {
             if (EnemyState == ENEMY_STATE::FLY_RIGHT) {
                 SpeedX += 0.5f;
-                E_Move_X += SpeedX;
+                location.x += SpeedX;
                 if (SpeedX >= 0.8f) {
                     SpeedX = 0.8f;
                 }
@@ -227,7 +227,7 @@ void EnemyBird::Enemy_Levitation_Move_X()
     }
     else {
         //Player‚ª“G‚æ‚è¶‚É‚¢‚é‚Æ‚«‚Í¶‚É“G‚ªˆÚ“®‚µ‚æ‚¤‚Æ‚·‚é
-        if (E_Move_X > PlayerX - 30) {
+        if (location.x > PlayerX - 30) {
             E_Air_Flg = TRUE;
             //SpeedX += -0.02f;
             SpeedX += -0.09f;
@@ -238,7 +238,7 @@ void EnemyBird::Enemy_Levitation_Move_X()
         }
         else {
             //Player‚ª“G‚æ‚è‰E‚É‚¢‚é‚Æ‚«‚Í‰E‚É“G‚ªˆÚ“®‚µ‚æ‚¤‚Æ‚·‚é
-            if (E_Move_X - 30 < PlayerX) {
+            if (location.x - 30 < PlayerX) {
                 E_Air_Flg = TRUE;
                 //SpeedX += 0.02f;
                 SpeedX += 0.09f;
@@ -256,7 +256,7 @@ void EnemyBird::Enemy_Levitation_Move_X()
 void EnemyBird::Enemy_Levitation_Move_Y()
 {
     //Player‚ª“G‚æ‚èã‚É‚¢‚é‚Æ‚«‚Íã¸‚µA‰º‚É‚¢‚é‚Æ‚«‚Íã¸‚ð‚â‚ß‚é ã¸‚ð‚â‚ß‚é‚Ì‚Íd—Í‚ª‚©‚©‚é‚Á‚Ä‚±‚ÆH
-    if (E_Move_Y > PlayerY) {
+    if (location.y >  PlayerY) {
         if (E_FPS % 10 == 0) {
             E_Air_Flg = TRUE;
             //SpeedY -= 0.025f;
@@ -302,6 +302,7 @@ void EnemyBird::Start_Anim()
         }
     }
 
+    E_Img = E_ArrayImg_P[Cnt];
 }
 
 
@@ -317,6 +318,9 @@ void EnemyBird::Fly_Anim()
             Cnt = 9;
         }
     }
+
+    E_Img = E_ArrayImg_P[Cnt];
+
 }
 
 //bool EnemyBird::Hit(BoxCollider* b_col)

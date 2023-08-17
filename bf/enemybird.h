@@ -37,7 +37,8 @@ enum class ENEMY_STATE {
 };
 
 
-class EnemyBird :public BoxCollider{
+class EnemyBird :public BoxCollider
+{
 private:
     int Cnt;
     int CntWait;

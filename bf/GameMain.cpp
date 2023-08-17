@@ -89,7 +89,9 @@ AbstractScene* GameMain::Update()
 	//enemybird->Update(player->GetLocation().x, player->GetLocation().y);
 	thunder->Update(player->GetLocation().x, player->GetLocation().y);
 
-	
+	for (int j = 0; j < 3; j++){
+		Enemy[j]->Update(player->GetLocation().x, player->GetLocation().y);
+	}
 	
 
 	// Xƒ{ƒ^ƒ“’P‰Ÿ‚µ
