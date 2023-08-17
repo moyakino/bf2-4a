@@ -55,7 +55,7 @@ private:
 
     float PlayerX, PlayerY;
 
-    int HitFlg;
+    //int HitFlg;
 
     int T_Thunder_X = 0;
     int T_Thunder_Y = 0;

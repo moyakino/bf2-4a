@@ -123,7 +123,7 @@ void Thunder::MoveBall()
 					location.x = 300;
 					location.y = 40;
 					S_Seconas2 = 0;
-					BallFlg = 1;
+					BallFlg = 0;
 					BallAngle = 0.625f;  //ç∂è„
 					T_Effect_Flg = TRUE;
 					break;
@@ -133,7 +133,7 @@ void Thunder::MoveBall()
 					location.x = 300;
 					location.y = 200;
 					S_Seconas2 = 0;
-					BallFlg = 1;
+					BallFlg = 0;
 					BallAngle = 0.375f;  //ç∂â∫
 					T_Effect_Flg = TRUE;
 					break;
@@ -141,7 +141,7 @@ void Thunder::MoveBall()
 					location.x = 390;
 					location.y = 40;
 					S_Seconas2 = 0;
-					BallFlg = 1;
+					BallFlg = 0;
 					BallAngle = 0.875f;  //âEè„
 					T_Effect_Flg = TRUE;
 					break;
@@ -149,7 +149,7 @@ void Thunder::MoveBall()
 					location.x = 390;
 					location.y = 180;
 					S_Seconas2 = 0;
-					BallFlg = 1;
+					BallFlg = 0;
 					BallAngle = 0.125f;  //âEè„
 					T_Effect_Flg = TRUE;
 					break;
