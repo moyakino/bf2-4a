@@ -224,10 +224,10 @@ void PLAYER::Player_Warp()
 {
     //左ワープ
     if (location.x <= -50) {
-        location.x = 640;
+        location.x = 630;
     }
     //右ワープ
-    else if (location.x >= 650) {
+    else if (location.x >= 630) {
         location.x = -50;
     }
 
@@ -239,7 +239,7 @@ void PLAYER::Player_Warp()
     
 }
 
-//下方向へ跳ね返る
+
 void PLAYER::BoundPlusY()
 {
     if (location.y != location.y + 5)
@@ -252,7 +252,6 @@ void PLAYER::BoundPlusY()
     }
 }
 
-//上方向へ跳ね返る
 void PLAYER::BoundMinusY()
 {
     if (location.y != location.y - 5)
@@ -265,7 +264,6 @@ void PLAYER::BoundMinusY()
     }
 }
 
-//右方向へ跳ね返る
 void PLAYER::BoundPlusX()
 {
     if (location.x != location.x + 5)
@@ -278,7 +276,6 @@ void PLAYER::BoundPlusX()
     }
 }
 
-//左方向へ跳ね返る
 void PLAYER::BoundMinusX()
 {
     if (location.x != location.x - 5)
@@ -291,45 +288,88 @@ void PLAYER::BoundMinusX()
     }
 }
 
-int PLAYER::CheckBound(BoxCollider* b_col)
+void PLAYER::CheckBound(BoxCollider* b_col)
 {
-    int re = 0;
 
-    //プレイヤー 敵
-    float px1 = b_col->GetLocation().x;
-    float py1 = b_col->GetLocation().y;
-    float px2 = px1 + b_col->GetErea().Width;
-    float py2 = py1 + b_col->GetErea().Height;
+    //ステージの座標
+    float sx1 = b_col->GetLocation().x;
+    float sy1 = b_col->GetLocation().y;
+    float sx2 = sx1 + b_col->GetErea().Width;
+    float sy2 = sy1 + b_col->GetErea().Height;
 
-    //ステージ
-    float sx1 = location.x + 15;
-    float sx2 = sx1 + erea.Width;
-    float sy1 = location.y + 15;
-    float sy2 = sy1 + erea.Height;
+    //プレイヤーの座標
+    float px1 = location.x + 15;
+    float px2 = px1 + erea.Width;
+    float py1 = location.y + 15;
+    float py2 = py1 + erea.Height;
 
 
     //当たり判定
-    if ((sx1 < px2) && (px1 < sx2) && (sy1 < py2) && (sy2 > py1))
+    if ((px1 < sx2) && (sx1 < px2) && (py1 < sy2) && (py2 > sy1))
     {
         if (P_Stand_Flg == FALSE)
         {
-            //左の壁
-            if ((sx1 < px2) && (px1 > sx2 - (erea.Width / 4))) {
+            //左の壁にあたった時
+            if ((px1 < sx2) && (sx1 > px1 - (erea.Width / 4))) {
                 BoundMinusX();
-                re = 1;
             }
 
-            //右の壁
-            if ((px1 <= sx2) && (px2 < sx2 + (erea.Width / 4))) {
+            //右の壁にあたったとき
+            if ((sx1 < px2) && (sx2 < px2 + (erea.Width / 4))) {
                 BoundPlusX();
-                re = 2;
             }
 
-            BoundPlusY();
+            //下の壁にあたったとき
+            if ((sy2 > py1) && (py2 > sy2 + (erea.Height / 4))) {
+                BoundPlusY();
+            }
         }
+    }
+}
+
+int PLAYER::EnemyCollider(BoxCollider* b_col)
+{
+    int re = 0;
+
+    //敵の座標
+    float ex1 = b_col->GetLocation().x + 15;
+    float ey1 = b_col->GetLocation().y + 15;
+    float ex2 = ex1 + b_col->GetErea().Width;
+    float ey2 = ey1 + b_col->GetErea().Height;
+
+    //プレイヤーの座標
+    float px1 = location.x + 15;
+    float px2 = px1 + erea.Width;
+    float py1 = location.y + 15;
+    float py2 = py1 + erea.Height;
+
+    //当たり判定
+    if ((px1 < ex2) && (ex1 < px2) && (py1 < ey2) && (py2 > ey1))
+    {
+        //プレイヤーが敵の左側にあたったとき
+        if ((ex1 < px2) && (px1 < ex1 - (erea.Width / 4))) {
+            re = 1;
+        }
+
+        //プレイヤーが敵の右側にあたったとき
+        if ((ex2 > px1) && (px2 > ex2 + (erea.Width / 4))) {
+            re = 2;
+        }
+
+        //プレイヤーが敵の上側にあたったとき
+        if ((ey1 < py2) && (py1 < ey1 - (erea.Height / 4))){
+            re = 3;
+        }
+
+        //プレイヤーが敵の下側にあたったとき
+        if ((ey2 > py1) && (py2 > ey2 + (erea.Height / 4))) {
+            re = 4;
+        }
+
     }
     return re;
 }
+
 
 void PLAYER::Player_Img()
 {
@@ -803,15 +843,16 @@ void PLAYER::Draw()const
 
         //DrawCircleAA(p_uc, py2 - 54.0f, 2.0f, 0xfffff0, TRUE);
 
-        //プレイヤーの当たり判定
-        DrawBoxAA(location.x + 15, location.y + 15, location.x + 15 + erea.Width, location.y + 15 + erea.Height, GetColor(255, 255, 255), FALSE);
-        //プレイヤーの当たり判定 敵用    Playerの体
-        //DrawBoxAA(location.x + 17, location.y + 37, location.x + 48, location.y + 65, GetColor(255, 255, 255), FALSE);
+    //プレイヤーの当たり判定
+    DrawBoxAA(location.x + 15, location.y + 15, location.x + 15+erea.Width, location.y + 15+erea.Height, GetColor(255, 255, 255), FALSE);
+   
+    //プレイヤーの当たり判定 敵用    Playerの体
+    //DrawBoxAA(location.x + 17, location.y + 37, location.x + 48, location.y + 65, GetColor(255, 255, 255), FALSE);
 
-        DrawBoxAA(location.x + 12, location.y + 37, location.x + 53, location.y + 65, GetColor(255, 255, 255), FALSE);
+    //DrawBoxAA(location.x + 12, location.y + 37, location.x + 53, location.y + 65, GetColor(255, 255, 255), FALSE);
 
-        //プレイヤーの当たり判定 敵用    Playerの風船
-        DrawBoxAA(location.x + 9, location.y + 11, location.x + 55, location.y + 35, GetColor(255, 255, 255), FALSE);
+    //プレイヤーの当たり判定 敵用    Playerの風船
+    //DrawBoxAA(location.x + 9, location.y + 11, location.x + 55, location.y + 35, GetColor(255, 255, 255), FALSE);
 
         //DrawLine(location.x + 9, location.y + 35, location.x + 60, location.y + 35, GetColor(255, 0, 0), 1);
 
