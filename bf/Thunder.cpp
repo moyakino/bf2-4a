@@ -36,7 +36,7 @@ Thunder::Thunder()
 	erea.Width = 32;
 	erea.Height = 32;
 
-	BallAngle = 0;
+	//BallAngle = 0;
 
 	MoveX = 0;
 	MoveY = 0;
@@ -180,7 +180,7 @@ void Thunder::MoveBall()
 
 
 	//ï«ÅEìVà‰Ç≈ÇÃîΩéÀ
-	if (location.x < 4 || location.x > 610) // â°ÇÃï«
+	if (location.x < 4 || location.x > 610) // ç∂âEÇÃï«
 	{ 
 		if (location.x < 4) {
 			location.x = 4;
@@ -192,13 +192,12 @@ void Thunder::MoveBall()
 		if (BallAngle > 1) BallAngle -= 1.0f;
 		ChangeAngle();
 	}
-	if (location.y < 8 /*|| location.y > 460*/) // è„â∫ÇÃï«
+	if (location.y < 8) // è„ÇÃï«
 	{ 
 		if (location.y < 8) {
 			BallAngle = (1 - BallAngle);		
 		    ChangeAngle();
 		}
-		
 	}
 	
 	if (flg == TRUE)
