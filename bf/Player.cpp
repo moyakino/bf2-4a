@@ -77,12 +77,12 @@ PLAYER::PLAYER()
     CheckSoundMem(UI::GameOver_BGM);
     P_Jump_SE = LoadSoundMem("sounds/SE_PlayerJump.wav");
     P_Respawn_BGM = LoadSoundMem("sounds/SE_Restart.wav");
-    
+    Fish_SE = LoadSoundMem("sounds / SE_Eatable.wav");
 }
 
 void PLAYER::Update()
 {
-  
+    
     //ÉtÉåÅ[ÉÄéÊìæ
     P_FPS++;
 
@@ -558,6 +558,8 @@ void PLAYER::Stand_Foot()
        
         if (Fish::F_Seconds2 == 8) {
             zanki = TRUE;
+           
+         
             Player_Init();
             Respawn_Anim();
         }
