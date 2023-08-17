@@ -31,7 +31,8 @@ public:
 
 	int Snum;
 
-	Stage* StageFoot[10];
+	Stage* StageFoot[11];
+	EnemyBird* Enemy[10];
 
 	GameMain();
 	~GameMain();

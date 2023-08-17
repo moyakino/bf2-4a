@@ -89,10 +89,10 @@ void Bubble::Draw() const
 		}
 
 		//DrawBoxAA(MoveX - 20, MoveY - 20, MoveX + 20, MoveY + 20, GetColor(255, 255, 255), FALSE);
-		DrawLine(MoveX - 20, MoveY - 15, MoveX - 20, MoveY + 15, GetColor(255, 0, 0), 1);		//ç∂
-		DrawLine(MoveX + 20, MoveY - 15, MoveX + 20, MoveY + 15, GetColor(255, 0, 0), 1);		//âE
-		DrawLine(MoveX - 20, MoveY - 15, MoveX + 20, MoveY - 15, GetColor(255, 255, 255), 1);	//è„
-		DrawLine(MoveX - 20, MoveY + 15, MoveX + 20, MoveY + 15, GetColor(255, 255, 255), 1);	//â∫
+		//DrawLine(MoveX - 20, MoveY - 15, MoveX - 20, MoveY + 15, GetColor(255, 0, 0), 1);		//ç∂
+		//DrawLine(MoveX + 20, MoveY - 15, MoveX + 20, MoveY + 15, GetColor(255, 0, 0), 1);		//âE
+		//DrawLine(MoveX - 20, MoveY - 15, MoveX + 20, MoveY - 15, GetColor(255, 255, 255), 1);	//è„
+		//DrawLine(MoveX - 20, MoveY + 15, MoveX + 20, MoveY + 15, GetColor(255, 255, 255), 1);	//â∫
 
 		//DrawFormatString(0, 400, GetColor(255, 255, 255), "X : %0.1f Y : %0.1f", PlayerX, PlayerY);
 		//DrawFormatString(0, 300, GetColor(255, 255, 255), "MoveX:%0.1f MoveY:%0.1f", MoveX, MoveY);

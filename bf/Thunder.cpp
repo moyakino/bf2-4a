@@ -4,6 +4,8 @@
 #include <math.h>
 #include <stdlib.h>
 
+int Thunder::HitFlg;
+
 Thunder::Thunder()
 {
 	//雲画像データの読み込み
@@ -30,7 +32,7 @@ Thunder::Thunder()
 	S_Seconas2 = 0;
 	S_Seconas3 = 0;
 
-	BallFlg = 0;
+	BallFlg = 2;
 	location.x = 345;
 	location.y = 105;
 	erea.Width = 32;
@@ -65,12 +67,20 @@ void Thunder::Update(float x, float y)
 	PlayerX = x;
 	PlayerY = y;
 
+	if (BallFlg == 1) {
+		BallFlg = 2;
+	}
+
 	T_Img = Thunder_Anim();
 	E_Img = Effect_Anim();
 	C_Img = Cloud_Anim();
 
-	ThunderBallInit();
+	if (BallFlg == 0) {
+		ThunderBallInit();
+	}
+	
 	MoveBall();
+	
 
 	//雷(稲光)用 FPS
 	if (S_FPS1 > 34) {
@@ -90,7 +100,7 @@ void Thunder::Update(float x, float y)
 
 void Thunder::MoveBall()
 {
-	if (S_Seconas2 > 30) {
+	if (S_Seconas2 > 29) {
 		for (int i = 0; i < 3; i++) {
 			printf("%d回目: ", i + 1);
 
@@ -103,7 +113,7 @@ void Thunder::MoveBall()
 			switch (num) {
 			case 1:
 				S_Seconas2 = 0;
-					BallFlg = 1;
+					BallFlg = 0;
 
 					BallAngle = 0.625f;  //左上
 					T_Thunder_Flg = TRUE;
@@ -112,7 +122,7 @@ void Thunder::MoveBall()
 				break;
 			case 2:
 				S_Seconas2 = 0;
-					BallFlg = 1;
+					BallFlg = 0;
 
 					BallAngle = 0.375f;  //左下
 					T_Thunder_Flg = TRUE;
@@ -121,7 +131,7 @@ void Thunder::MoveBall()
 				break;
 			case 3:
 				S_Seconas2 = 0;
-					BallFlg = 1;
+					BallFlg = 0;
 
 					BallAngle = 0.875f;  //右上
 					T_Thunder_Flg = TRUE;
@@ -130,7 +140,7 @@ void Thunder::MoveBall()
 				break;
 			case 4:
 				S_Seconas2 = 0;
-					BallFlg = 1;
+					BallFlg = 0;
 					
 					BallAngle = 0.125f;  //右上
 					T_Thunder_Flg = TRUE;
@@ -214,9 +224,9 @@ void Thunder::MoveBall()
 		T_Effect_Flg = FALSE;
 	}
 
-	//ボールをスタート状態にする
+	//ボールをスタート状態にする 雲の中心に戻す
 	if (BallFlg == 2)
-		{
+	{
 			location.x = 345;
 			location.y = 105;
 	}
@@ -232,9 +242,7 @@ void Thunder::ThunderBallInit()
 
 		//　上記の線がPlayerのBoxの範囲に入っていたら HIt!
 		HitFlg = TRUE;
-	}
-	else {
-		HitFlg = FALSE;
+		BallFlg = 1;
 	}
 }
 
@@ -423,28 +431,31 @@ int Thunder::Cloud_Anim()
 
 void Thunder::Draw() const
 {
-	
-		//雲の描画
-		DrawGraph(320, 90, CloudImg, TRUE);
-		DrawGraph(295, 90, C_Img, TRUE);
-		//ポーズ画面じゃないとき描写
-		if (GameMain::PauseFlg == FALSE) {
-		//雷（稲光）の表示
-		DrawGraph(400, 100, T_Img, TRUE);
+	//雲の描画
+	DrawGraph(320, 90, CloudImg, TRUE);
+	DrawGraph(295, 90, C_Img, TRUE);
 
+	//ポーズ画面じゃないとき描写
+	if (GameMain::PauseFlg == FALSE) {
+	//雷（稲光）の表示
+	DrawGraph(400, 100, T_Img, TRUE);
+
+	if (BallFlg == 0) {
 		//雷（雷の弾）の表示
 		DrawGraph(BallX, BallY, E_Img, TRUE);
+	}
 
-		//DrawFormatString(0, 280, GetColor(255, 255, 255), " 雷 Hit! :%d", HitFlg);
+	//DrawFormatString(0, 280, GetColor(255, 255, 255), " 雷 Hit! :%d", HitFlg);
 
-		DrawFormatString(0, 300, GetColor(255, 255, 255), " 雷発生 :%d", S_Seconas2);
-		DrawFormatString(0, 320, GetColor(255, 255, 255), " flg :%d", flg);
+	//DrawFormatString(0, 300, GetColor(255, 255, 255), " 雷発生 :%d", S_Seconas2);
+	//DrawFormatString(0, 320, GetColor(255, 255, 255), " BallFlg :%d", BallFlg);
 
-		//DrawBox(BallX + 2, BallY + 4, BallX + 28, BallY + 26, GetColor(255, 0, 0), FALSE);
+	//DrawBox(BallX + 2, BallY + 4, BallX + 28, BallY + 26, GetColor(255, 0, 0), FALSE);
 
-		DrawLine(BallX + 2, BallY + 4, BallX + 2, BallY + 26, GetColor(255, 0, 0), 1);
-		DrawLine(BallX + 28, BallY + 4, BallX + 28, BallY + 26, GetColor(255, 0, 0), 1);
-		DrawLine(BallX + 2, BallY + 4, BallX + 28, BallY + 4, GetColor(255, 255, 255), 1);
-		DrawLine(BallX + 2, BallY + 26, BallX + 28, BallY + 26, GetColor(255, 255, 255), 1);
+	/*DrawLine(BallX + 2, BallY + 4, BallX + 2, BallY + 26, GetColor(255, 0, 0), 1);
+	DrawLine(BallX + 28, BallY + 4, BallX + 28, BallY + 26, GetColor(255, 0, 0), 1);
+	DrawLine(BallX + 2, BallY + 4, BallX + 28, BallY + 4, GetColor(255, 255, 255), 1);
+	DrawLine(BallX + 2, BallY + 26, BallX + 28, BallY + 26, GetColor(255, 255, 255), 1);*/
+
 	}
 }

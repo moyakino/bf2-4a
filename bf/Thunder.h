@@ -55,10 +55,9 @@ private:
 
     float PlayerX, PlayerY;
 
-    int HitFlg;
-
 public:
 
+    static int HitFlg;
     int flg;
 
     Thunder();                      //コンストラクタ
