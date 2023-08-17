@@ -24,6 +24,9 @@ Thunder::Thunder()
 	T_Effect_Flg = FALSE;
 	T_Cloud_Flg = FALSE;
 
+	T_Thunder_X = 0;
+	T_Thunder_Y = 0;
+
 	S_FPS1 = 0;
 	S_FPS2 = 0;
 	S_Seconas1 = 0;
@@ -35,8 +38,6 @@ Thunder::Thunder()
 	location.y = 105;
 	erea.Width = 32;
 	erea.Height = 32;
-
-	//BallAngle = 0;
 
 	MoveX = 0;
 	MoveY = 0;
@@ -90,78 +91,80 @@ void Thunder::Update(float x, float y)
 
 void Thunder::MoveBall()
 {
-	if (S_Seconas2 > 30) {
-		for (int i = 0; i < 3; i++) {
-			printf("%d回目: ", i + 1);
+	if (S_Seconas2 > 30)
+	{
+		T_Cloud_Flg = TRUE;
+		T_Thunder_Flg = TRUE;
 
+		for (int i = 0; i < 3; i++)
+		{
 			// 乱数を発生
 			int num = rand() % 4 + 1;
 
 			Speed = 2;
 			ChangeAngle();
-
+			
 			switch (num) {
 			case 1:
+				T_Thunder_X = 290;
+				T_Thunder_Y = 100;
+				location.x = 300;
+				location.y = 40;
 				S_Seconas2 = 0;
-					BallFlg = 1;
-
-					BallAngle = 0.625f;  //左上
-					T_Thunder_Flg = TRUE;
-					T_Effect_Flg = TRUE;
-					T_Cloud_Flg = TRUE;
+				BallFlg = 1;
+				BallAngle = 0.625f;  //左上
+				T_Effect_Flg = TRUE;
 				break;
 			case 2:
+				T_Thunder_X = 290;
+				T_Thunder_Y = 155;
+				location.x = 300;
+				location.y = 200;
 				S_Seconas2 = 0;
-					BallFlg = 1;
-
-					BallAngle = 0.375f;  //左下
-					T_Thunder_Flg = TRUE;
-					T_Effect_Flg = TRUE;
-					T_Cloud_Flg = TRUE;
+				BallFlg = 1;
+				BallAngle = 0.375f;  //左下
+				T_Effect_Flg = TRUE;
 				break;
 			case 3:
+				location.x = 390;
+				location.y = 40;
 				S_Seconas2 = 0;
-					BallFlg = 1;
-
-					BallAngle = 0.875f;  //右上
-					T_Thunder_Flg = TRUE;
-					T_Effect_Flg = TRUE;
-					T_Cloud_Flg = TRUE;
+				BallFlg = 1;
+				BallAngle = 0.875f;  //右上
+				T_Effect_Flg = TRUE;
 				break;
 			case 4:
+				location.x = 390;
+				location.y = 180;
 				S_Seconas2 = 0;
-					BallFlg = 1;
-					
-					BallAngle = 0.125f;  //右上
-					T_Thunder_Flg = TRUE;
-					T_Effect_Flg = TRUE;
-					T_Cloud_Flg = TRUE;
+				BallFlg = 1;
+				BallAngle = 0.125f;  //右上
+				T_Effect_Flg = TRUE;
 				break;
+			}
+			if (S_Seconas2 > 1)
+			{
+				T_Cloud_Flg = FALSE;
+				T_Thunder_Flg = FALSE;
 			}
 		}
 	}
 
 
-	//if (S_Seconas2 > 30)
-	//{
-	//	S_Seconas2 = 0;
-	//	BallFlg = 1;
-	//	Speed = 2;
-	//	BallAngle = 0.625f;  //左上
-	//	//BallAngle = 0.375f;  //左下
-	//	//BallAngle = 0.875f;  //右上
-	//	//BallAngle = 0.125f;  //右上
-	//	T_Effect_Flg = TRUE;
-	//	ChangeAngle();
-	//}
 
 	// マウス左クリックでゲームスタート
 	if (CheckHitKey(KEY_INPUT_1))
 	{
+		location.x = 300;
+		location.y = 200;
+
+		T_Thunder_X = 290;
+		T_Thunder_Y = 90;
+
 		BallFlg = 1;
 		Speed = 2;
-		BallAngle = 0.655f;  //左上
-		//BallAngle = 0.375f;  //左下
+		//BallAngle = 0.655f;  //左上
+		BallAngle = 0.375f;  //左下
 		//BallAngle = 0.875f;  //右上
 		//BallAngle = 0.125f;  //右上
 		T_Effect_Flg = TRUE;
@@ -423,21 +426,22 @@ int Thunder::Cloud_Anim()
 void Thunder::Draw() const
 {
 	
+	
 		//雲の描画
 		DrawGraph(320, 90, CloudImg, TRUE);
 		DrawGraph(295, 90, C_Img, TRUE);
 		//ポーズ画面じゃないとき描写
 		if (GameMain::PauseFlg == FALSE) {
 		//雷（稲光）の表示
-		DrawGraph(400, 100, T_Img, TRUE);
+		DrawGraph(T_Thunder_X, T_Thunder_Y, T_Img, TRUE);
 
 		//雷（雷の弾）の表示
 		DrawGraph(BallX, BallY, E_Img, TRUE);
 
 		//DrawFormatString(0, 280, GetColor(255, 255, 255), " 雷 Hit! :%d", HitFlg);
 
-		DrawFormatString(0, 300, GetColor(255, 255, 255), " 雷発生 :%d", S_Seconas2);
-		DrawFormatString(0, 320, GetColor(255, 255, 255), " flg :%d", flg);
+		/*DrawFormatString(0, 300, GetColor(255, 255, 255), " 雷発生 :%d", S_Seconas2);
+		DrawFormatString(0, 320, GetColor(255, 255, 255), " flg :%d", flg);*/
 
 		//DrawBox(BallX + 2, BallY + 4, BallX + 28, BallY + 26, GetColor(255, 0, 0), FALSE);
 

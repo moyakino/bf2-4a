@@ -57,6 +57,9 @@ private:
 
     int HitFlg;
 
+    int T_Thunder_X = 0;
+    int T_Thunder_Y = 0;
+
 public:
 
     int flg;
