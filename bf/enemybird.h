@@ -87,6 +87,8 @@ private:
 
     ENEMY_STATE EnemyState;
     int x1, x2, y1, y2;
+
+    int EnemyFlyFlg;
     
 public:
 
@@ -115,6 +117,7 @@ public:
 
     void Enemy_Levitation_Move_X();
     void Enemy_Levitation_Move_Y();
+    void Enemy_Just_Above();
 
     void Enemy_Gravity();
     void Enemy_Warp();

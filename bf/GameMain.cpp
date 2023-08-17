@@ -76,7 +76,7 @@ AbstractScene* GameMain::Update()
 	//stage->Update();
 	player->Update();
 	fish->Update(player->GetLocation().x, player->GetLocation().y);
-	ui->Update(player->zanki, player->FishHit);
+	ui->Update(player->PlayerLife, player->FishHit);
 	bubble->Update(player->GetLocation().x, player->GetLocation().y);
 	enemybird->Update(player->GetLocation().x, player->GetLocation().y);
 	thunder->Update(player->GetLocation().x, player->GetLocation().y);

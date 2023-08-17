@@ -11,7 +11,7 @@ int PLAYER::FishFlg;
 int PLAYER::P_TurnFlg;
 int PLAYER::F_TurnFlg;
 int PLAYER::P_Stand_Flg;
-int PLAYER::zanki;
+int PLAYER::PlayerLife;
 int PLAYER::FishHit;
 int PLAYER::FishDeath;
 
@@ -34,14 +34,14 @@ PLAYER::PLAYER()
     P_Y_Btn = 0;
 
     //プレイヤー　フラグ
-    P_L_Stick_Flg = 0;
+    
     P_MoveR_Flg = 0;
     P_MoveL_Flg = 0;
     P_Air_R_Flg = 0;
     P_Air_L_Flg = 0;
 
     location.x = 20.0f;
-    location.y = 349.4f;
+    location.y = 353.2f;
     erea.Height = 50;
     erea.Width = 35;
     //P_Move_Y = 200.0f;
@@ -55,16 +55,18 @@ PLAYER::PLAYER()
 
     P_Balloon_Flg = TRUE;
     P_TurnFlg = TRUE;
-    P_A_BtnFlg = 0;
     
     P_FPS = 0;
     P_Seconas1 = 0;
     
     MouseX = 0;
     MouseY = 0;
-    zanki = 0;
+    PlayerLife = 0;
     FishHit = 0;
     FishDeath = 0;
+    Y_flg = TRUE;
+    LightningFlg = TRUE;
+    LightningCnt = 0;
 
     //サカナ
     FishCnt = 0;
@@ -109,8 +111,10 @@ void PLAYER::Update()
     P_Move_X = location.x;
     P_Move_Y = location.y;
 
+    FishDeath = FALSE;
+
     //サカナの判定
-    //Stand_Foot();
+    Fish_Respawn();
 
     //ワープ用
     Player_Warp();
@@ -119,6 +123,7 @@ void PLAYER::Update()
         Respawn_Anim();
     }
 
+    //デバック用 Yボタン
     if (P_Y_Btn == 1) {
         if (P_FPS % 2 == 0) {
             AnimCnt++;
@@ -139,64 +144,96 @@ void PLAYER::Update()
     //画像切り替え用
     Player_Img();
 
-    zanki = FALSE;
-    FishDeath = FALSE;
+    PlayerLife = FALSE;
 
-    if (Beaten_Flg == FALSE) {
-        //zanki = FALSE;
-        Stand_Foot();
-        //ステージの足場に立っていたら地上の移動に入る
-        if (P_Stand_Flg == TRUE) {
-            Player_Move();
-        }
+    //雷の玉に当たったか？
+    if (Thunder::HitFlg == FALSE) {
+        if (Beaten_Flg == FALSE) {
+            
+            //ステージの足場に立っていたら地上の移動に入る
+            if (P_Stand_Flg == TRUE) {
+                Player_Move();
+            }
 
-        if (P_A_Btn == 0 && P_B_Btn == 0 && P_Stand_Flg == FALSE) {
-            Gliding_Anim();
+            if (P_A_Btn == 0 && P_B_Btn == 0 && P_Stand_Flg == FALSE) {
+                Gliding_Anim();
+            }
+            else {
+                if (P_B_Btn == 1 || P_B_Btn == 1 && P_Air_R_Flg == TRUE || P_B_Btn == 1 && P_Air_L_Flg == TRUE) {
+                    Respawn_Flg = FALSE;
+                    Rise_Anim_B();
+                    Player_Air_B();
+                }
+
+                if (P_A_Btn == 1 || P_A_Btn == 1 && P_Air_R_Flg == TRUE || P_A_Btn == 1 && P_Air_L_Flg == TRUE) {
+                    Respawn_Flg = FALSE;
+                    Rise_Anim_A();
+                    Player_Air_A();
+                }
+            }
+
+            if (P_Stand_Flg == FALSE) {
+                Player_Levitation_Move();
+            }
+
+            if (P_Stand_Flg == FALSE || P_Stand_Flg == FALSE && P_B_Btn == 0 || P_Stand_Flg == FALSE && P_A_Btn == 0) {
+                Player_Gravity();
+            }
+
+            //Player が 海に落ちてしまった時の復活
+            if (location.y > 500.0f) {
+                PlayerLife = TRUE;
+                Player_Init();
+            }
         }
         else {
-            if (P_B_Btn == 1 || P_B_Btn == 1 && P_Air_R_Flg == TRUE || P_B_Btn == 1 && P_Air_L_Flg == TRUE) {
-                Respawn_Flg = FALSE;
-                Rise_Anim();
-                Player_Air_B();
+            if (Beaten_Flg == TRUE) {
+                if (location.y < 500.0f) {
+                    if (Y_flg == TRUE) {
+                        P_YSpeed = -1;
+                        Y_flg = FALSE;
+                    }
+                    P_YSpeed = P_YSpeed + 0.01f;
+                    location.y = location.y + P_YSpeed;
+                    Beaten_Anim();
+                }
+                else {
+                    if (location.y > 500.0f) {
+                        PlayerLife = TRUE;
+                        Player_Init();
+                    }
+                    Beaten_Flg = FALSE;
+                }
             }
-
-            if (P_A_Btn == 1 || P_A_Btn == 1 && P_Air_R_Flg == TRUE || P_A_Btn == 1 && P_Air_L_Flg == TRUE) {
-                Respawn_Flg = FALSE;
-                Rise_Anim_A();
-                Player_Air_A();
-            }
-        }
-
-     
-        if (P_Stand_Flg == FALSE) {
-            Player_Levitation_Move();
-        }
-
-        if (P_Stand_Flg == FALSE || P_Stand_Flg == FALSE && P_B_Btn == 0 || P_Stand_Flg == FALSE && P_A_Btn == 0 ) {
-            Player_Gravity();
-        }
-
-        if (location.y > 500.0f) {
-            zanki = TRUE;
-            Player_Init();
         }
     }
     else {
-        if (Beaten_Flg == TRUE) {
+
+        if (Thunder::HitFlg == TRUE) {
             if (location.y < 500.0f) {
-                location.y = location.y + 1.0f;
-                Beaten_Anim();
+                if (LightningFlg == FALSE) {
+                    Beaten_Anim();
+                }
+                else {
+                    Struck_by_Lightning_Anim();
+                }
+                if (Y_flg == TRUE) {
+                    P_YSpeed = -1;
+                    Y_flg = FALSE;
+                }
+                P_YSpeed = P_YSpeed + 0.01f;
+                location.y = location.y + P_YSpeed;
             }
             else {
                 if (location.y > 500.0f) {
-                    zanki = TRUE;
+                    PlayerLife = TRUE;
                     Player_Init();
                 }
-                Beaten_Flg = FALSE;
             }
         }
-    }
 
+    }
+    
     //60fps == 1秒　で超えたら fpsを 0 にする
     if (P_FPS > 59) {
         P_FPS = 0;
@@ -206,8 +243,6 @@ void PLAYER::Update()
     else if (P_Seconas1 > 3) {
         P_Seconas1 = 0;
     }
-
-    
 }
 
 void PLAYER::Player_Init()
@@ -215,9 +250,14 @@ void PLAYER::Player_Init()
     P_XSpeed = 0;
     P_YSpeed = 0;
     location.x = 20.0f;
-    location.y = 349.4f;
+    location.y = 353.2f;
+    P_TurnFlg = TRUE;
     Respawn_Flg = TRUE;
     P_Balloon_Flg = TRUE;
+    Y_flg = TRUE;
+    Thunder::HitFlg = FALSE;
+    LightningFlg = TRUE;
+    LightningCnt = 0;
 }
 
 void PLAYER::Player_Warp()
@@ -388,15 +428,13 @@ void PLAYER::Player_Move()
 
 void PLAYER::Player_Levitation_Move()
 {
-    //加速が強すぎると速すぎてすごい動きになるため減速させたい
-
     //空中右移動
-    if (P_B_Btn == 1 && P_L_Stick > RIGHT_MOVE || P_A_Btn == 1 && P_L_Stick > RIGHT_MOVE) {
+    if (P_B_Btn == 1 && P_L_Stick > RIGHT_MOVE || P_A_Btn == 1 && P_L_Stick > RIGHT_MOVE || P_B_Btn == 1 && P_Right_Btn == 1 || P_A_Btn == 1 && P_Right_Btn == 1) {
         P_Air_R_Flg = TRUE;
 
-        P_XSpeed = P_XSpeed + 0.09f;    //速度加算
+        P_XSpeed = P_XSpeed + 0.09f;        //速度加算
         location.x = location.x + P_XSpeed;
-        if (P_XSpeed >= 1.3f) {          //速度制限
+        if (P_XSpeed >= 1.3f) {             //速度制限
             P_XSpeed = 1.3f;                //速度上限値
         }
     }
@@ -406,7 +444,7 @@ void PLAYER::Player_Levitation_Move()
     }
 
     //空中左移動
-    if (P_B_Btn == 1 && P_L_Stick < LEFT_MOVE || P_A_Btn == 1&& P_L_Stick < LEFT_MOVE) {
+    if (P_B_Btn == 1 && P_L_Stick < LEFT_MOVE || P_A_Btn == 1&& P_L_Stick < LEFT_MOVE || P_B_Btn == 1 && P_Left_Btn == 1 || P_A_Btn == 1 && P_Left_Btn == 1) {
         P_Air_L_Flg = TRUE;
 
         P_XSpeed = P_XSpeed + -0.09f;
@@ -419,9 +457,6 @@ void PLAYER::Player_Levitation_Move()
         P_Air_L_Flg = FALSE;
     }
 
-    /*空中の慣性 P_XSpeedが正の数なら減らして　負の数なら増やす　Bボタンが押されていなくて左スティックが動いてなかったらここに来るから
-    ここで上手く処理をかければ成功するはず*/
-
     if (P_Stand_Flg == FALSE && P_Air_L_Flg == FALSE && P_Air_R_Flg == FALSE) {
         P_XSpeed *= 0.999f;
         location.x = location.x + P_XSpeed;
@@ -433,18 +468,16 @@ void PLAYER::Player_Gravity()
 
     if (P_Balloon_Flg == TRUE) {
         P_Stand_Flg = FALSE;
-        //P_YSpeed = P_YSpeed + 0.009f;
         P_YSpeed = P_YSpeed + 0.01f;
         location.y = location.y + P_YSpeed;
-        if (P_YSpeed >= 1.3f) {         //速度制限  前は 1.3f
+        if (P_YSpeed >= 1.3f) {         //速度制限
             P_YSpeed = 1.3f;
         }
     }
     else {
-        //P_YSpeed = P_YSpeed + 0.009f;
         P_YSpeed = P_YSpeed + 0.02f;
         location.y = location.y + P_YSpeed;
-        if (P_YSpeed >= 1.0f) {         //速度制限  前は 1.3f
+        if (P_YSpeed >= 1.0f) {         //速度制限
             P_YSpeed = 1.0f;
         }
     }
@@ -453,7 +486,6 @@ void PLAYER::Player_Gravity()
 void PLAYER::Player_Air_A()
 {
     if (P_Balloon_Flg == TRUE) {
-        //Rise_Anim_A();
         // Aボタン単押し
         if (P_FPS % 2 == 0) {
             P_Stand_Flg = FALSE;
@@ -466,7 +498,6 @@ void PLAYER::Player_Air_A()
         }
     }
     else {
-        //Rise_Anim_A();
         if (P_FPS % 2 == 0) {
             P_Stand_Flg = FALSE;
             
@@ -481,10 +512,7 @@ void PLAYER::Player_Air_A()
 
 void PLAYER::Player_Air_B()
 {
-    /*AボタンとBボタンの処理を同じにするためにBボタン側にもインターバルをつける
-      Bボタンは長押しなので気にならないはず*/
     if (P_Balloon_Flg == TRUE) {
-        //Rise_Anim();
         if (P_FPS % 8 == 0) {
             P_Stand_Flg = FALSE;
             P_YSpeed = P_YSpeed + -0.2f;
@@ -495,7 +523,6 @@ void PLAYER::Player_Air_B()
         }
     }
     else {
-        //Rise_Anim();
         if (P_FPS % 10 == 0) {
             P_Stand_Flg = FALSE;
             P_YSpeed = P_YSpeed + -0.4f;
@@ -507,10 +534,8 @@ void PLAYER::Player_Air_B()
     }
 }
 
-void PLAYER::Stand_Foot()
+void PLAYER::Fish_Respawn()
 {
-    //ここで足場の判定とらなくていい
-
     int fpscount = 0;
 
     //魚の出現
@@ -532,7 +557,6 @@ void PLAYER::Stand_Foot()
             }
 
         }
-        //rand = GetRand(i);
     }
     else {
         FishCnt = 0;
@@ -554,7 +578,6 @@ void PLAYER::Stand_Foot()
                     Player_Init();
                     Respawn_Anim();
                 }
-            //zanki = TRUE;
         }
     }
  }
@@ -712,7 +735,7 @@ void PLAYER::Rise_Anim_A()
     }
 }
 
-void PLAYER::Rise_Anim()
+void PLAYER::Rise_Anim_B()
 {
     if (P_Balloon_Flg == TRUE) {
 
@@ -761,6 +784,28 @@ void PLAYER::Beaten_Anim()
     }
 }
 
+void PLAYER::Struck_by_Lightning_Anim()
+{
+    if (LightningFlg == TRUE && LightningCnt < 45) {
+        if (P_FPS % 20 == 0 || P_FPS % 20 == 1 || P_FPS % 20 == 2 || P_FPS % 20 == 3 || P_FPS % 20 == 4) {
+            P_Img = P_ArrayImg[FALL_3];
+        }
+        else if (P_FPS % 20 == 5 || P_FPS % 20 == 6 || P_FPS % 20 == 7 || P_FPS % 20 == 8 || P_FPS % 20 == 9) {
+            P_Img = P_ArrayImg[FALL_0];
+        }
+        else if (P_FPS % 20 == 10 || P_FPS % 20 == 11 || P_FPS % 20 == 12 || P_FPS % 20 == 13 || P_FPS % 20 == 14) {
+            P_Img = P_ArrayImg[FALL_3];
+        }
+        else if (P_FPS % 20 == 15 || P_FPS % 20 == 16 || P_FPS % 20 == 17 || P_FPS % 20 == 18 || P_FPS % 20 == 19) {
+            P_Img = P_ArrayImg[FALL_0];
+            LightningCnt++;
+        }
+    }
+    else {
+        LightningFlg = FALSE;
+    }
+}
+
 PLAYER::~PLAYER()
 {
 
@@ -786,16 +831,16 @@ void PLAYER::Draw()const
 
         //DrawFormatString(0, 140, GetColor(255, 255, 255), " AnimCnt：%d", AnimCnt);
 
-    DrawFormatString(0, 320, GetColor(255, 255, 255), " zanki ： %d ", zanki);
-    //DrawFormatString(0, 160, GetColor(255, 255, 255), " やられ   Beaten_Flg ： %d ", Beaten_Flg);
-    DrawFormatString(0, 180, GetColor(255, 255, 255), " 風船   Balloon_Flg  ： %d ", P_Balloon_Flg);
-  
-    DrawFormatString(0, 240, GetColor(255, 255, 255), " P_YSpeed :%0.1f ", P_YSpeed);
-    DrawFormatString(0, 260, GetColor(255, 255, 255), " P_XSpeed :%0.1f ", P_XSpeed);
-    //DrawFormatString(0, 280, GetColor(255, 255, 255), " 確率 :%d", rand);
-    //DrawFormatString(0, 300, GetColor(255, 255, 255), " P_Air_R_Flg :%d", P_Air_R_Flg);
-    //DrawFormatString(0, 320, GetColor(255, 255, 255), " L_Stick :%d", P_L_Stick_Flg);
-    //DrawFormatString(0, 320, GetColor(255, 255, 255), " Fish :%d", FishFlg);
+        //DrawFormatString(0, 320, GetColor(255, 255, 255), " zanki ： %d ", zanki); 
+        //DrawFormatString(0, 160, GetColor(255, 255, 255), " やられ   Beaten_Flg ： %d ", Beaten_Flg);
+        //DrawFormatString(0, 180, GetColor(255, 255, 255), " 風船   Thunder::HitFlg  ： %d ", Thunder::HitFlg);
+
+        DrawFormatString(0, 240, GetColor(255, 255, 255), " P_YSpeed :%0.1f ", P_YSpeed);
+        DrawFormatString(0, 260, GetColor(255, 255, 255), " P_XSpeed :%0.1f ", P_XSpeed);
+        //DrawFormatString(0, 280, GetColor(255, 255, 255), " 確率 :%d", rand);
+        //DrawFormatString(0, 300, GetColor(255, 255, 255), " P_Air_R_Flg :%d", P_Air_R_Flg);
+        //DrawFormatString(0, 320, GetColor(255, 255, 255), " L_Stick :%d", P_L_Stick_Flg);
+        //DrawFormatString(0, 320, GetColor(255, 255, 255), " Fish :%d", FishFlg);
 
         //DrawLine(160, 417, 480, 417, 0xffffff, TRUE);
 
@@ -804,14 +849,14 @@ void PLAYER::Draw()const
         //DrawCircleAA(p_uc, py2 - 54.0f, 2.0f, 0xfffff0, TRUE);
 
         //プレイヤーの当たり判定
-        DrawBoxAA(location.x + 15, location.y + 15, location.x + 15 + erea.Width, location.y + 15 + erea.Height, GetColor(255, 255, 255), FALSE);
+        //DrawBoxAA(location.x + 15, location.y + 15, location.x + 15 + area.Width, location.y + 15 + area.Height, GetColor(255, 255, 255), FALSE);
         //プレイヤーの当たり判定 敵用    Playerの体
         //DrawBoxAA(location.x + 17, location.y + 37, location.x + 48, location.y + 65, GetColor(255, 255, 255), FALSE);
 
-        DrawBoxAA(location.x + 12, location.y + 37, location.x + 53, location.y + 65, GetColor(255, 255, 255), FALSE);
+        //DrawBoxAA(location.x + 12, location.y + 37, location.x + 53, location.y + 65, GetColor(255, 255, 255), FALSE);
 
         //プレイヤーの当たり判定 敵用    Playerの風船
-        DrawBoxAA(location.x + 9, location.y + 11, location.x + 55, location.y + 35, GetColor(255, 255, 255), FALSE);
+        //DrawBoxAA(location.x + 9, location.y + 11, location.x + 55, location.y + 35, GetColor(255, 255, 255), FALSE);
 
         //DrawLine(location.x + 9, location.y + 35, location.x + 60, location.y + 35, GetColor(255, 0, 0), 1);
 
@@ -831,10 +876,6 @@ void PLAYER::Draw()const
 
         ////横線
         //DrawLine(0, sy1, 640, sy1, 0xff0000);
-
-
-        // TurnFlag: 画像の左右反転を行うかのフラグ
-        //DrawRotaGraph(P_Move_X, P_Move_Y, 1, 0, P_Img, TRUE, P_TurnFlg);
 
         //最初は右向きで描画される
         if (P_TurnFlg == TRUE) {
