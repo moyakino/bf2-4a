@@ -15,12 +15,11 @@ private:
   int fy1;
   int fx2;
   int fy2;
-  /*int	F_Seconds2;*/
   int F_AnimImg ;
   int Fish_Img;
   int f_fps;
   int ChengeImg;
-  /*int FishEatP_flg;*/
+  int Fish_SE;
   //プレイヤー座標
   float PlayerX;
   float PlayerY;

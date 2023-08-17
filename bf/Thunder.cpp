@@ -4,6 +4,8 @@
 #include <math.h>
 #include <stdlib.h>
 
+int Thunder::HitFlg;
+
 Thunder::Thunder()
 {
 	//雲画像データの読み込み
@@ -33,7 +35,7 @@ Thunder::Thunder()
 	S_Seconas2 = 0;
 	S_Seconas3 = 0;
 
-	BallFlg = 0;
+	BallFlg = 2;
 	location.x = 345;
 	location.y = 105;
 	erea.Width = 32;
@@ -66,12 +68,20 @@ void Thunder::Update(float x, float y)
 	PlayerX = x;
 	PlayerY = y;
 
+	if (BallFlg == 1) {
+		BallFlg = 2;
+	}
+
 	T_Img = Thunder_Anim();
 	E_Img = Effect_Anim();
 	C_Img = Cloud_Anim();
 
-	ThunderBallInit();
+	if (BallFlg == 0) {
+		ThunderBallInit();
+	}
+	
 	MoveBall();
+	
 
 	//雷(稲光)用 FPS
 	if (S_FPS1 > 34) {
@@ -218,9 +228,9 @@ void Thunder::MoveBall()
 		T_Effect_Flg = FALSE;
 	}
 
-	//ボールをスタート状態にする
+	//ボールをスタート状態にする 雲の中心に戻す
 	if (BallFlg == 2)
-		{
+	{
 			location.x = 345;
 			location.y = 105;
 	}
@@ -236,9 +246,7 @@ void Thunder::ThunderBallInit()
 
 		//　上記の線がPlayerのBoxの範囲に入っていたら HIt!
 		HitFlg = TRUE;
-	}
-	else {
-		HitFlg = FALSE;
+		BallFlg = 1;
 	}
 }
 
@@ -437,19 +445,22 @@ void Thunder::Draw() const
 		//雷（稲光）の表示
 		DrawGraph(T_Thunder_X, T_Thunder_Y, T_Img, TRUE);
 
+	if (BallFlg == 0) {
 		//雷（雷の弾）の表示
 		DrawGraph(BallX, BallY, E_Img, TRUE);
+	}
 
-		//DrawFormatString(0, 280, GetColor(255, 255, 255), " 雷 Hit! :%d", HitFlg);
+	//DrawFormatString(0, 280, GetColor(255, 255, 255), " 雷 Hit! :%d", HitFlg);
 
-		/*DrawFormatString(0, 300, GetColor(255, 255, 255), " 雷発生 :%d", S_Seconas2);
-		DrawFormatString(0, 320, GetColor(255, 255, 255), " flg :%d", flg);*/
+	//DrawFormatString(0, 300, GetColor(255, 255, 255), " 雷発生 :%d", S_Seconas2);
+	//DrawFormatString(0, 320, GetColor(255, 255, 255), " BallFlg :%d", BallFlg);
 
-		//DrawBox(BallX + 2, BallY + 4, BallX + 28, BallY + 26, GetColor(255, 0, 0), FALSE);
+	//DrawBox(BallX + 2, BallY + 4, BallX + 28, BallY + 26, GetColor(255, 0, 0), FALSE);
 
-		DrawLine(BallX + 2, BallY + 4, BallX + 2, BallY + 26, GetColor(255, 0, 0), 1);
-		DrawLine(BallX + 28, BallY + 4, BallX + 28, BallY + 26, GetColor(255, 0, 0), 1);
-		DrawLine(BallX + 2, BallY + 4, BallX + 28, BallY + 4, GetColor(255, 255, 255), 1);
-		DrawLine(BallX + 2, BallY + 26, BallX + 28, BallY + 26, GetColor(255, 255, 255), 1);
+	/*DrawLine(BallX + 2, BallY + 4, BallX + 2, BallY + 26, GetColor(255, 0, 0), 1);
+	DrawLine(BallX + 28, BallY + 4, BallX + 28, BallY + 26, GetColor(255, 0, 0), 1);
+	DrawLine(BallX + 2, BallY + 4, BallX + 28, BallY + 4, GetColor(255, 255, 255), 1);
+	DrawLine(BallX + 2, BallY + 26, BallX + 28, BallY + 26, GetColor(255, 255, 255), 1);*/
+
 	}
 }

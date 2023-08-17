@@ -53,75 +53,60 @@
 class PLAYER :public BoxCollider
 {
 private:
-	//(仮)プレイヤー画像 分割読み込み用変数
-	int		P_ArrayImg[33];
+	
+	int		P_ArrayImg[33];		//(仮)プレイヤー画像 分割読み込み用変数
+	int		P_Img;				//(仮)プレイヤー画像 描画用変数
 
-	//(仮)プレイヤー画像 描画用変数
-	int		P_Img;
 
-	//(仮)左スティック
-	int		P_L_Stick;
-	//(仮)左スティックが倒されているか
-	int		P_L_Stick_Flg;
+	int		P_L_Stick;			//左スティック
+	int		P_Right_Btn;		//デジタル方向ボタン右
+	int		P_Left_Btn;			//デジタル方向ボタン左
+	int		P_A_Btn;			//Aボタン 単押し
+	int		P_B_Btn;			//Bボタン 長押し
+	int		P_Y_Btn;			//(仮)Yボタン 単押し
 
-	//(仮)デジタル方向ボタン右
-	int		P_Right_Btn;
-	//(仮)デジタル方向ボタン左
-	int		P_Left_Btn;
-	//(仮)Aボタン
-	int		P_A_Btn;	//単押し
+	float	P_XSpeed;			//プレイヤーの地上スピード X座標
+	float	P_YSpeed;			//プレイヤーの地上スピード Y座標
 
-	//(仮)Bボタン長押し
-	int		P_B_Btn;
+	int		P_MoveR_Flg;		//プレイヤー右移動フラグ 移動無し:0 右移動:1
+	int		P_MoveL_Flg;		//プレイヤー左移動フラグ 移動無し:0 左移動:1
+	int		P_Air_R_Flg;		//空中かつ左スティックを使いながら、右に移動しているか？
+	int		P_Air_L_Flg;		//空中かつ左スティックを使いながら、左に移動しているか？
+	int		P_Balloon_Flg;		//風船情報 TRUE:2個 FALSE:1個
+	int		Respawn_Flg;		//リスポーンした際の点滅アニメーション再生用フラグ
+	int		Y_flg;				//やられアニメーション再生時の落下用フラグ
+	int		LightningFlg;		//雷やられアニメーション用フラグ
+	int		LightningCnt;		//雷やられアニメーション用カウント
 
-	//(仮)Yボタン単押し
-	int		P_Y_Btn;
-	//(仮)やられアニメーションの再生
-	int		Beaten_Flg;
-	int		AnimCnt;
+	
+	int		Beaten_Flg;			//やられアニメーションの再生
+	int		AnimCnt;			//デバック用
+	int		MouseX;				//デバック用マウスX
+	int		MouseY;				//デバック用マウスY
 
-	//(仮)
-	int		P_A_BtnFlg;
-	int		P_Air_R_Flg;
-	int		P_Air_L_Flg;
+	int		P_FPS;				//FPSCnt
+	int		P_Seconas1;			//秒数
 
-	//プレイヤーの地上スピード X座標
-	float	P_XSpeed;
-	//プレイヤーの地上スピード Y座標
-	float	P_YSpeed;
+	int		FishCnt;			//魚用カウント
+	int		F_Seconas1;			//魚用秒数
+	int		rand;				//魚用確率
 
-	//(仮)プレイヤー右移動フラグ 移動無し:0 右移動:1
-	int		P_MoveR_Flg;
-	//(仮)プレイヤー左移動フラグ 移動無し:0 左移動:1
-	int		P_MoveL_Flg;
-	//(仮)風船情報 1:2個 0:1個
-	int		P_Balloon_Flg;
-	int		Respawn_Flg;
-
-	//FPSと秒数カウント
-	int		P_FPS;
-	int		P_Seconas1;
-	int		FishCnt;
-	int		F_Seconas1;
-	int		MouseX;
-	int		MouseY;
-
-	int rand;
-
+    int		P_Jump_SE;
+	int		P_Respawn_BGM;
+	int		Fish_SE;
+	
 public:
-	//立っている状態のフラグ
-	static int		P_Stand_Flg;
-	//Player  X座標用変数
-	static float	P_Move_X;
-	//Player  Y座標用変数
-	static float	P_Move_Y;
-	static int		FishFlg;
-	/*(仮)画像の左右反転用フラグ FALSE:普通に描画 TRUE:左右反転*/
-	static	int		P_TurnFlg;
-	static	int		F_TurnFlg;
-	static	int		zanki;
-	static	int		FishHit;
-	static	int		FishDeath;
+	
+	static int		P_Stand_Flg;	//立っている状態のフラグ
+	static float	P_Move_X;		//Player  X座標用変数
+	static float	P_Move_Y;		//Player  Y座標用変数
+	static	int		P_TurnFlg;		//画像の左右反転用フラグ FALSE:普通に描画 TRUE:左右反転
+	static	int		PlayerLife;		//Playerの残機用
+	static	int		FishHit;		//魚に当たったか？
+	static	int		FishDeath;		//魚用死亡判定
+
+	static int		FishFlg;		//魚用フラグ
+	static	int		F_TurnFlg;		//魚用画像左右反転フラグ
 
 	//コンストラクタ
 	PLAYER();
@@ -135,41 +120,44 @@ public:
 	//描画処理
 	void Draw() const;
 
-		//関数化
-	void Player_Warp();
-	void Player_Img();
-	void Player_Move();
-	void Player_Gravity();
-	void Player_Levitation_Move();
-	void Player_Air_A();
-	void Player_Air_B();
+	void Player_Warp();				//Player画面端移動関数
+	void Player_Img();				//Player画像左右反転関数
+	void Player_Move();				//Player地上移動関数
+	void Player_Gravity();			//Player重力関数
+	void Player_Levitation_Move();	//Player空中移動関数
+	void Player_Air_A();			//Aボタン単押しの際の上昇関数
+	void Player_Air_B();			//Bボタン長押しの際の上昇関数
 
-	//Player初期処理
-	void Player_Init();
-	//Playerのリスポーンアニメーション
-	void Respawn_Anim();
-	//Playerの待機状態中のアニメーション
-	void Stand_by_Anim();
-	//Playerが走っている時のアニメーション
-	void Run_Anim();
-	//Playerが滑空している時のアニメーション 
-	void Gliding_Anim();
-	//Playerが上昇している時のアニメーション
-	void Rise_Anim_A();
-	void Rise_Anim();
-	//Playerやられアニメーション
-	void Beaten_Anim();
-	//Playerが地面についているかを取る
-	void Stand_Foot();
+	void Player_Init();				//Player初期処理
 
-	void SetStandFlg(bool b) { P_Stand_Flg = b; }
+	void Respawn_Anim();			//Playerのリスポーンアニメーション
+	void Stand_by_Anim();			//Playerの待機状態中のアニメーション
+	void Run_Anim();				//Playerが走っている時のアニメーション
+	void Gliding_Anim();			//Playerが滑空している時のアニメーション 
+	void Rise_Anim_A();				//Playerが上昇している時のアニメーション Aボタン用
+	void Rise_Anim_B();				//Playerが上昇している時のアニメーション Bボタン用
+	void Beaten_Anim();				//Playerやられアニメーション
+	void Struck_by_Lightning_Anim();//Player雷やられアニメーション
 
+	void Fish_Respawn();			//魚出現関数
+
+	//下方向へ跳ね返る処理
 	void BoundPlusX();
+
+	//上方向へ跳ね返る処理
 	void BoundMinusX();
+
+	//右方向へ跳ね返る処理
 	void BoundPlusY();
+
+	//左方向へ跳ね返る処理
 	void BoundMinusY();
 
-	int CheckBound(BoxCollider* b_col);
+	//プレイヤーが跳ね返る処理
+	void CheckBound(BoxCollider* b_col);
+
+	//プレイヤーと敵の当たり判定
+	int EnemyCollider(BoxCollider* b_col);
 
 	Location GetLocation() { return location; }
 

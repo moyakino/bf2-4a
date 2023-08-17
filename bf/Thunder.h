@@ -62,6 +62,7 @@ private:
 
 public:
 
+    static int HitFlg;
     int flg;
 
     Thunder();                      //コンストラクタ

@@ -3,7 +3,8 @@
 #include"Player.h"
 #include"PadInput.h"
 #include"FPS.h"
-#include"GameMain.h"
+#include"UI.h"
+#include "GameMain.h"
 
 Bubble::Bubble()
 {
@@ -41,7 +42,7 @@ void Bubble::Update(float x, float y)
 	PlayerY = y;
 
 	if (MoveY <= -30) {
-		MoveY = 245;
+		MoveY = 420;
 	}
 
 	if (CheckHitKey(KEY_INPUT_Z)) {
@@ -49,7 +50,7 @@ void Bubble::Update(float x, float y)
 	}
 
 	if (B_flg == TRUE) {
-		//BubbleMove();
+		BubbleMove();
 		BubbleMoveAnim();
 		MoveY -= 0.5f;
 
@@ -57,6 +58,7 @@ void Bubble::Update(float x, float y)
 
 		if (H_flg == TRUE) {
 			Score();
+
 		}
 	}
 
@@ -89,10 +91,10 @@ void Bubble::Draw() const
 		}
 
 		//DrawBoxAA(MoveX - 20, MoveY - 20, MoveX + 20, MoveY + 20, GetColor(255, 255, 255), FALSE);
-		DrawLine(MoveX - 20, MoveY - 15, MoveX - 20, MoveY + 15, GetColor(255, 0, 0), 1);		//¶
-		DrawLine(MoveX + 20, MoveY - 15, MoveX + 20, MoveY + 15, GetColor(255, 0, 0), 1);		//‰E
-		DrawLine(MoveX - 20, MoveY - 15, MoveX + 20, MoveY - 15, GetColor(255, 255, 255), 1);	//ã
-		DrawLine(MoveX - 20, MoveY + 15, MoveX + 20, MoveY + 15, GetColor(255, 255, 255), 1);	//‰º
+		//DrawLine(MoveX - 20, MoveY - 15, MoveX - 20, MoveY + 15, GetColor(255, 0, 0), 1);		//¶
+		//DrawLine(MoveX + 20, MoveY - 15, MoveX + 20, MoveY + 15, GetColor(255, 0, 0), 1);		//‰E
+		//DrawLine(MoveX - 20, MoveY - 15, MoveX + 20, MoveY - 15, GetColor(255, 255, 255), 1);	//ã
+		//DrawLine(MoveX - 20, MoveY + 15, MoveX + 20, MoveY + 15, GetColor(255, 255, 255), 1);	//‰º
 
 		//DrawFormatString(0, 400, GetColor(255, 255, 255), "X : %0.1f Y : %0.1f", PlayerX, PlayerY);
 		//DrawFormatString(0, 300, GetColor(255, 255, 255), "MoveX:%0.1f MoveY:%0.1f", MoveX, MoveY);
@@ -118,7 +120,7 @@ void Bubble::Score()
 {
 	if (B_FPS > 59) {
 		seconds++;
-		if (seconds < 2) {
+		if (seconds <= 1) {
 			B_Img = BubbleImg[3];
 		}
 		else {
@@ -126,6 +128,7 @@ void Bubble::Score()
 			B_flg = FALSE;
 			H_flg = FALSE;
 			ScoreFlg = TRUE;
+			UI::TotalScore += 750;
 		}
 	}
 };
@@ -150,8 +153,8 @@ void Bubble::BubbleMoveAnim()
 
 void Bubble::BubbleMove()
 {
-	/*if (MoveX == 400) {
-		SpeedX = 0.7f;
+	if (MoveX == 400) {
+		SpeedX = 0.01f;
 	}
 	if (SpeedX <= 0) {
 		BubbleMoveflg = 1;
@@ -160,13 +163,13 @@ void Bubble::BubbleMove()
 		BubbleMoveflg = 0;
 	}
 	if (BubbleMoveflg == 1) {
-		SpeedX++;
-		MoveX++;;
+		SpeedX += 0.1f;
+		MoveX += 0.2f;
 	}
 	else {
-		SpeedX--;
-		MoveX--;
-	}*/
+		SpeedX -= 0.1f;
+		MoveX += -0.2f;
+	}
 
 	// 290 380
 

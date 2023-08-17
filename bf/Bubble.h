@@ -3,7 +3,7 @@
 #define BUBBLEMOVE2 1
 #define BUBBLEMOVE3 2
 
-class Bubble {
+class Bubble{
 private:
 	int BubbleImg[4];
 	int B_Img;
