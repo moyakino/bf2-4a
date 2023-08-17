@@ -21,6 +21,8 @@ Fish::Fish()
 	if (LoadDivGraph("images/Enemy/Enemy_FishAnimation.png", 10, 5, 2, 64, 64, Fish_ArrayImg)) {}
     ChengeImg = 0;
     FishEatP_flg = FALSE;
+    Fish_SE = LoadSoundMem("sounds / SE_Eatable.wav");
+    CheckSoundMem(Fish_SE);
    
 }
 
@@ -37,6 +39,7 @@ void Fish::Fish_NAnim()
 
 void Fish::Update(int x,int y)
 {
+   
     f_fps++;
     PlayerX =x;
     PlayerY = y;
@@ -85,7 +88,7 @@ void Fish::Update(int x,int y)
                 }
                 //player捕食
                 if (FishEatP_flg == TRUE) {
-
+                   
                     if (F_Seconds2 == 0) {
                         Fish_Img = 0;
                     }
@@ -136,12 +139,15 @@ void Fish::Draw() const
     //ポーズ画面じゃないとき描写
     if (GameMain::PauseFlg == FALSE) {
 
-       /* DrawFormatString(400, 20, 0xffffff, "F_Second2:%d", F_Seconds2);
-        DrawFormatString(400, 40, 0xffffff, "Fish_Img_:%d", Fish_Img);*/
 
+        if (FishEatP_flg == TRUE) {
+            PlaySoundMem(Fish_SE, DX_PLAYTYPE_BACK, FALSE);
+        }
 
         if (PLAYER::FishFlg == TRUE)
         {
+
+           
 
             if (PLAYER::F_TurnFlg == TRUE)
             {

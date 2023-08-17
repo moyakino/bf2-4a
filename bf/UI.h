@@ -13,13 +13,19 @@ private:
 	int GameOver;			//GameOver画像用変数
 	int TotalScore;
 	int PosX;
+	int Cnt;
+	int Respawn_Cnt;
+	int fpsCnt;
+	int byou;
+	int GameOver_Flg;
+	/*int GameOver_BGM;*/
 	int Respawn_Cnt;		//残機の描画のカウント
 	int Remaining_lives;	//Playerが死んだかどうかを返す
 	int Fish_PlayerHit;		//Playerが魚に当たり、死んだかどうかを返す
 	int GameOver_Flg;		//GameOverならTRUE
 	
 public:	
-
+	static int GameOver_BGM;
 	UI();
 	~UI();
 	void Update(int Player_zanki, int Fish_Death);

@@ -2,7 +2,7 @@
 #include "PadInput.h"
 #include "TitleScene.h"
 #include "GameMain.h"
-
+#include "UI.h"
 Title::Title()
 {
 	//メニューカーソル画像データの読み込み
@@ -18,6 +18,7 @@ Title::Title()
 	T_BalloonImg = 0;
 	g_MenuNumber = 0;
 	g_MenuY = 0;
+	CheckSoundMem(UI::GameOver_BGM);
 }
 
 Title::~Title()
@@ -29,8 +30,12 @@ Title::~Title()
 AbstractScene* Title::Update()
 {
 	T_FPS++;
-
+	
 	if (CheckHitKey(KEY_INPUT_0) || PAD_INPUT::OnButton(XINPUT_BUTTON_START) == 1) {
+		//スタートボタンを押されたらGameOver_BGMをストップ
+		if (CheckSoundMem(UI::GameOver_BGM) == 1) { 
+			StopSoundMem(UI::GameOver_BGM);	
+		}
 		return new GameMain();
 	}
 

@@ -91,7 +91,9 @@ private:
 	int		F_Seconas1;			//魚用秒数
 	int		rand;				//魚用確率
 
-
+	int rand;
+    int  P_Jump_SE;
+	int  P_Respawn_BGM;
 public:
 	
 	static int		P_Stand_Flg;	//立っている状態のフラグ

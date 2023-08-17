@@ -80,10 +80,15 @@ PLAYER::PLAYER()
     Respawn_Flg = TRUE;
 
     FishFlg = FALSE;
+    CheckSoundMem(UI::GameOver_BGM);
+    P_Jump_SE = LoadSoundMem("sounds/SE_PlayerJump.wav");
+    P_Respawn_BGM = LoadSoundMem("sounds/SE_Restart.wav");
+    
 }
 
 void PLAYER::Update()
 {
+  
     //フレーム取得
     P_FPS++;
 
@@ -243,6 +248,10 @@ void PLAYER::Update()
     else if (P_Seconas1 > 3) {
         P_Seconas1 = 0;
     }
+    //もしゲームオーバー画面に遷移したらリスポーンBGMを切る
+    if (CheckSoundMem(UI::GameOver_BGM) == 1) {
+        StopSoundMem(P_Respawn_BGM);
+    }
 }
 
 void PLAYER::Player_Init()
@@ -254,6 +263,8 @@ void PLAYER::Player_Init()
     P_TurnFlg = TRUE;
     Respawn_Flg = TRUE;
     P_Balloon_Flg = TRUE;
+    PlaySoundMem(P_Respawn_BGM, DX_PLAYTYPE_BACK, FALSE);
+    
     Y_flg = TRUE;
     Thunder::HitFlg = FALSE;
     LightningFlg = TRUE;
@@ -611,6 +622,7 @@ void PLAYER::Fish_Respawn()
     }
     //魚にあたったときリスポーン
     if (Fish::FishEatP_flg == TRUE) {
+       
         if (Fish::F_Seconds2 == 8) {
                 FishHit += 1;
                 FishDeath = TRUE;
@@ -712,7 +724,6 @@ void PLAYER::Run_Anim()
 void PLAYER::Gliding_Anim()
 {
     if (P_Balloon_Flg == TRUE) {
-
         if (P_FPS >= 0 && P_FPS < 15) {
             P_Img = P_ArrayImg[LEVITATION_BALLOON2_2];
         }
@@ -926,6 +937,9 @@ void PLAYER::Draw()const
             if (P_TurnFlg == FALSE) {
                 DrawGraphF(location.x, location.y, P_Img, TRUE);
             }
+        }
+        if (P_A_Btn == 1) {
+            PlaySoundMem(P_Jump_SE, DX_PLAYTYPE_BACK, TRUE);
         }
     }
 }

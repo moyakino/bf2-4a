@@ -4,7 +4,7 @@
 #include "Player.h"
 #include "TitleScene.h"
 #include "GameMain.h"
-
+int UI::GameOver_BGM;
 UI::UI()
 {
 	if(LoadDivGraph("images/UI/UI_NumAnimation.png",10,10,1,32,30,Number)){}
@@ -19,8 +19,10 @@ UI::UI()
 	PosX = 200;
 	Respawn_Cnt = 0;
 	GameOver_Flg = 0;
-	Remaining_lives = 0;
-	Fish_PlayerHit = 0;
+	fpsCnt = 0;
+	byou = 0;
+	GameOver_BGM = LoadSoundMem("sounds/SE_GameOver.wav");
+	CheckSoundMem(GameMain::MainBgm);
 
 	//配列の初期化
 	for (int i = 0; i < 10; i++) {
@@ -94,9 +96,14 @@ void UI::Draw() const
 		DrawGraph(165, 35, Stock2, TRUE);
 	}
 
-	if (GameOver_Flg == TRUE) {
-		DrawGraph(220, 240, GameOver, TRUE);
-	}
+		if (GameOver_Flg == TRUE) {
+			//もしGameOver画面ならMainBgmストップ
+			if (CheckSoundMem(GameMain::MainBgm) == 1) {
+				StopSoundMem(GameMain::MainBgm);
+			}
+			DrawGraph(220, 240, GameOver, TRUE);
+			PlaySoundMem(GameOver_BGM, DX_PLAYTYPE_BACK, FALSE);
+		}
 
 	//DrawFormatString(0, 200, GetColor(255, 255, 255), " Respawn_Cnt：%d", Respawn_Cnt);
 	//DrawFormatString(0, 300, GetColor(255, 255, 255), " Cnt ：%d", Cnt);
