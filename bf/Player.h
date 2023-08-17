@@ -137,12 +137,23 @@ public:
 
 	void Fish_Respawn();			//魚出現関数
 
-	void BoundPlusX();				
-	void BoundMinusX();				
-	void BoundPlusY();				
-	void BoundMinusY();				
+	//下方向へ跳ね返る処理
+	void BoundPlusX();
 
-	int CheckBound(BoxCollider* b_col);
+	//上方向へ跳ね返る処理
+	void BoundMinusX();
+
+	//右方向へ跳ね返る処理
+	void BoundPlusY();
+
+	//左方向へ跳ね返る処理
+	void BoundMinusY();
+
+	//プレイヤーが跳ね返る処理
+	void CheckBound(BoxCollider* b_col);
+
+	//プレイヤーと敵の当たり判定
+	int EnemyCollider(BoxCollider* b_col);
 
 	Location GetLocation() { return location; }
 
