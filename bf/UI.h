@@ -3,27 +3,42 @@
 
 class UI {
 private:
-	int Number[10];			//スコア用配列
-	int NowScore;			//現在の合計スコア画像用変数
-	int HiScore;			//HiScore画像用変数
-	int Stock1;				//残機画像用変数
-	int Stock2;				//残機が1つ減少すると描画一つ分をこの変数に切り替える
+	int Number[10];
+	int Score;
+	int HiScore; // 画像用変数
+	int HighScore; //処理用変数
+	int H_Score;
+	int T_Score;
+	int Stock1;
+	int Stock2;
 	int Phase;
-	int gScore;
-	int GameOver;			//GameOver画像用変数
-	int TotalScore;
+	int gScore1;
+	int gScore10;
+	int gScore100;
+	int gScore1000;
+	int gScore10000;
+	int gScore100000;
+	int GameOver;
 	int PosX;
-	int Respawn_Cnt;		//残機の描画のカウント
-	int Remaining_lives;	//Playerが死んだかどうかを返す
-	int Fish_PlayerHit;		//Playerが魚に当たり、死んだかどうかを返す
-	int GameOver_Flg;		//GameOverならTRUE
-	
-public:	
+	int Cnt;
+	int Respawn_Cnt;
+	int fpsCnt;
+	int GameOver_Flg;
+	int Score1, Score10, Score100, Score1000, Score10000, Score100000;
+	int HiScore1, HiScore10, HiScore100, HiScore1000, HiScore10000, HiScore100000;
+	int HighScore1, HighScore10, HighScore100, HighScore1000, HighScore10000, HighScore100000;
 
+
+public:	
+	static int TotalScore;
+	static int Stage;
+	static int i;
 	UI();
 	~UI();
 	void Update(int Player_zanki, int Fish_Death);
 	void Draw()const;
 	int GetGameOver()const;
+
+	void NowScore()const;
 
 };
