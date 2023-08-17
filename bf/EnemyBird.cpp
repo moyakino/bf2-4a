@@ -387,12 +387,12 @@ void EnemyBird::Draw() const
         DrawFormatString(0, 300, GetColor(255, 255, 255), " ìG Xspeed :%0.1f ", SpeedX);
         DrawFormatString(0, 320, GetColor(255, 255, 255), " ïbêî      : %d ", E_Second);
         DrawGraphF(E_Move_X, E_Move_Y, E_ArrayImg_P[0], TRUE);
-    DrawGraph(location.x, location.y, E_Img, TRUE);
+        DrawGraph(location.x, location.y, E_Img, TRUE);
 
-    //ìñÇΩÇËîªíË
-    DrawBoxAA(location.x + 15, location.y + 15, location.x + 15 + erea.Width, location.y + 15 + erea.Height, GetColor(255, 255, 255), FALSE);
-    DrawLine(location.x + 15, e_uc, location.x + 15 + erea.Width, e_uc, GetColor(255, 255, 255), 1);	//â∫
-
+        //ìñÇΩÇËîªíË
+        DrawBoxAA(location.x + 15, location.y + 15, location.x + 15 + erea.Width, location.y + 15 + erea.Height, GetColor(255, 255, 255), FALSE);
+        DrawLine(location.x + 15, e_uc, location.x + 15 + erea.Width, e_uc, GetColor(255, 255, 255), 1);	//â∫
+    }
 
     //DrawFormatString(400, 50, GetColor(255, 0, 0), "H_Flg:%d", H_Flg);
 

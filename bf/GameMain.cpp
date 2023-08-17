@@ -35,10 +35,11 @@ GameMain::GameMain()
 	{
 		Enemy[j] = new EnemyBird(Snum, j);
 	}
+
 	PauseFlg = TRUE;
 }
 
-}
+
 
 GameMain::~GameMain()
 {
@@ -456,8 +457,6 @@ void GameMain::Draw()const
 	//DrawGraph(160, 445, StageSea, TRUE);
 
 	//stage->Draw();
-	
-	DrawFormatString(0, 50, GetColor(255, 0, 0), "%d",player->EnemyCollider(Enemy[0]));
 
 
 	ui->Draw();
