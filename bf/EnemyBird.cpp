@@ -71,8 +71,6 @@ void EnemyBird::Update(float x,float y)
     Enemy_Warp();
 
     Hit();
-
-
     
     if (EnemyState == ENEMY_STATE::FLY_LEFT) {
         Fly_Anim();
@@ -142,6 +140,7 @@ void EnemyBird::Enemy_Levitation_Move_X()
     E_Move_X += SpeedX;
 }
 
+//è„Ç…îÚÇ‘ÇæÇØ
 void EnemyBird::Enemy_Levitation_Move_Y()
 {
     E_Air_Flg = TRUE;
@@ -151,9 +150,12 @@ void EnemyBird::Enemy_Levitation_Move_Y()
             if (SpeedY <= -0.2f) {
                 SpeedY = -0.2f;
             }
-
-        }
-        
+            if (E_Second > 3)
+            {
+                E_Second = 0;
+                SpeedY = 0.0f;
+           }
+        }  
     }
     E_Move_Y += SpeedY;
 }
