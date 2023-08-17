@@ -80,8 +80,8 @@ void UI::Update(int life, int Fish_Death)
 	//Ç±ÇÍÇ≈äeà ÇÃêîÇ™ãÅÇﬂÇÁÇÍÇÈ
 	//Score1Ç™àÍÇÃà 
 	//Score10Ç™è\ÇÃà 
-	if (Remaining_lives == TRUE || Fish_PlayerHit == 16 && PLAYER::FishDeath == TRUE || Fish_PlayerHit == 32 && PLAYER::FishDeath == TRUE || 
-		Fish_PlayerHit == 48 && PLAYER::FishDeath == TRUE || Fish_PlayerHit == 64 && PLAYER::FishDeath == TRUE) {
+	if (Remaining_lives == TRUE || Fish_PlayerHit == 8 && PLAYER::FishDeath == TRUE || Fish_PlayerHit == 16 && PLAYER::FishDeath == TRUE || 
+		Fish_PlayerHit == 24 && PLAYER::FishDeath == TRUE || Fish_PlayerHit == 32 && PLAYER::FishDeath == TRUE) {
 		Respawn_Cnt += 1;
 	}
 

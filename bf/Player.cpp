@@ -873,7 +873,7 @@ void PLAYER::Draw()const
 
         //DrawFormatString(0, 320, GetColor(255, 255, 255), " zanki ： %d ", zanki); 
         //DrawFormatString(0, 160, GetColor(255, 255, 255), " やられ   Beaten_Flg ： %d ", Beaten_Flg);
-        //DrawFormatString(0, 180, GetColor(255, 255, 255), " 風船   Thunder::HitFlg  ： %d ", Thunder::HitFlg);
+        DrawFormatString(0, 180, GetColor(255, 255, 255), " 風船   FishHit  ： %d ", FishHit);
 
         DrawFormatString(0, 240, GetColor(255, 255, 255), " P_YSpeed :%0.1f ", P_YSpeed);
         DrawFormatString(0, 260, GetColor(255, 255, 255), " P_XSpeed :%0.1f ", P_XSpeed);
