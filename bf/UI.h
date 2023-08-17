@@ -31,6 +31,7 @@ public:
 	static int TotalScore;
 	static int Stage;
 	static int i;
+	static int GameOver_BGM;
 	UI();
 	~UI();
 	void Update(int life, int Fish_Death);

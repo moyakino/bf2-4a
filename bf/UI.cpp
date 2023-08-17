@@ -9,6 +9,7 @@ int UI::TotalScore;
 int UI::Stage;
 int UI::i;
 
+int UI::GameOver_BGM;
 UI::UI()
 {
 	if(LoadDivGraph("images/UI/UI_NumAnimation.png",10,10,1,32,30,Number)){}
@@ -26,6 +27,10 @@ UI::UI()
 	T_Score ;
 	i = 1;
 	Stage = Number[0];
+	fpsCnt = 0;
+	byou = 0;
+	GameOver_BGM = LoadSoundMem("sounds/SE_GameOver.wav");
+	CheckSoundMem(GameMain::MainBgm);
 
 	Remaining_lives = 0;
 	Fish_PlayerHit = 0;
@@ -118,9 +123,14 @@ void UI::Draw() const
 		DrawGraph(165, 35, Stock2, TRUE);
 	}
 
-	if (GameOver_Flg == TRUE) {
-		DrawGraph(220, 240, GameOver, TRUE);
-	}
+		if (GameOver_Flg == TRUE) {
+			//もしGameOver画面ならMainBgmストップ
+			if (CheckSoundMem(GameMain::MainBgm) == 1) {
+				StopSoundMem(GameMain::MainBgm);
+			}
+			DrawGraph(220, 240, GameOver, TRUE);
+			PlaySoundMem(GameOver_BGM, DX_PLAYTYPE_BACK, FALSE);
+		}
 
 	DrawFormatString(0, 60, GetColor(255, 255, 255), " UI Cnt：%d", Respawn_Cnt);
 	//DrawFormatString(0, 40, GetColor(255, 255, 255), " GameOver：%d", GameOver_Flg);
