@@ -19,15 +19,13 @@ private:
 	int gScore10000;
 	int gScore100000;
 	int GameOver;
-	int PosX;
-	int Cnt;
 	int Respawn_Cnt;
-	int fpsCnt;
 	int GameOver_Flg;
 	int Score1, Score10, Score100, Score1000, Score10000, Score100000;
 	int HiScore1, HiScore10, HiScore100, HiScore1000, HiScore10000, HiScore100000;
 	int HighScore1, HighScore10, HighScore100, HighScore1000, HighScore10000, HighScore100000;
-
+	int Remaining_lives;
+	int Fish_PlayerHit;
 
 public:	
 	static int TotalScore;
@@ -35,7 +33,7 @@ public:
 	static int i;
 	UI();
 	~UI();
-	void Update(int Player_zanki, int Fish_Death);
+	void Update(int life, int Fish_Death);
 	void Draw()const;
 	int GetGameOver()const;
 

@@ -414,10 +414,12 @@ void GameMain::Draw()const
 			StageFoot[i]->Draw();
 		}
 
-		//“G‚Ì•`‰æ
-		for (int j = 0; j < 3; j++)
-		{
-			Enemy[j]->Draw();
+		if (DrawGameOver == FALSE) {
+			//“G‚Ì•`‰æ
+			for (int j = 0; j < 3; j++)
+			{
+				Enemy[j]->Draw();
+			}
 		}
 		break;
 		

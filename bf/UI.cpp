@@ -8,10 +8,11 @@
 int UI::TotalScore;
 int UI::Stage;
 int UI::i;
+
 UI::UI()
 {
 	if(LoadDivGraph("images/UI/UI_NumAnimation.png",10,10,1,32,30,Number)){}
-	NowScore = LoadGraph("images/UI/UI_Score.png");
+	Score = LoadGraph("images/UI/UI_Score.png");
 	HiScore = LoadGraph("images/UI/UI_HiScore.png");
 	Stock1 = LoadGraph("images/UI/UI_Stock.png");
 	Stock2 = 0;
@@ -19,15 +20,15 @@ UI::UI()
 	GameOver = LoadGraph("images/UI/UI_GameOver.png");
 	TotalScore = 0;
 	HighScore = 50000;
-	PosX = 200;
 	Respawn_Cnt = 0;
 	GameOver_Flg = 0;
-	fpsCnt = 0;
 	H_Score ;
 	T_Score ;
 	i = 1;
 	Stage = Number[0];
 
+	Remaining_lives = 0;
+	Fish_PlayerHit = 0;
 
 	////配列の初期化
 	//for (int i = 0; i < 10; i++) {
@@ -41,6 +42,10 @@ UI::~UI()
 
 void UI::Update(int life, int Fish_Death)
 {
+
+	Remaining_lives = life;
+	Fish_PlayerHit = Fish_Death;
+
 	//NowScore();
 	Score1 = TotalScore % 10;
 	Score10 = (TotalScore % 100) / 10;
@@ -75,9 +80,9 @@ void UI::Update(int life, int Fish_Death)
 	//これで各位の数が求められる
 	//Score1が一の位
 	//Score10が十の位
-	if (PLAYER::zanki == TRUE) {
-		Cnt += 1;
-		Respawn_Cnt = Respawn_Cnt + Cnt;
+	if (Remaining_lives == TRUE || Fish_PlayerHit == 16 && PLAYER::FishDeath == TRUE || Fish_PlayerHit == 32 && PLAYER::FishDeath == TRUE || 
+		Fish_PlayerHit == 48 && PLAYER::FishDeath == TRUE || Fish_PlayerHit == 64 && PLAYER::FishDeath == TRUE) {
+		Respawn_Cnt += 1;
 	}
 
 	if (Respawn_Cnt == 4) {
@@ -117,8 +122,8 @@ void UI::Draw() const
 		DrawGraph(220, 240, GameOver, TRUE);
 	}
 
-	/*DrawFormatString(0, 20, GetColor(255, 255, 255), " UI Cnt：%d", Respawn_Cnt);
-	DrawFormatString(0, 40, GetColor(255, 255, 255), " GameOver：%d", GameOver_Flg);*/
+	DrawFormatString(0, 60, GetColor(255, 255, 255), " UI Cnt：%d", Respawn_Cnt);
+	//DrawFormatString(0, 40, GetColor(255, 255, 255), " GameOver：%d", GameOver_Flg);
 	//DrawFormatString(0, 200, GetColor(255, 255, 255), "TempScore : %d", TempScore);
 
 	//スコア
@@ -168,5 +173,3 @@ void UI::NowScore()const
 	}*/
 	
 }
-
-//

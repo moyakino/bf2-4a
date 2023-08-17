@@ -4,6 +4,7 @@
 #include"PadInput.h"
 #include"FPS.h"
 #include"UI.h"
+#include "GameMain.h"
 
 Bubble::Bubble()
 {
