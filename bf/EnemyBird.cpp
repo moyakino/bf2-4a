@@ -249,11 +249,8 @@ void EnemyBird::Enemy_Levitation_Move_X()
             }
         }
 
-        E_Move_X += SpeedX;
+        location.x += SpeedX;
     }
-}
-
-    location.x += SpeedX;
 }
 
 void EnemyBird::Enemy_Levitation_Move_Y()
@@ -277,7 +274,7 @@ void EnemyBird::Enemy_Levitation_Move_Y()
         }
     }
 
-    E_Move_Y += SpeedY;
+    location.y += SpeedY;
 }
 
 void EnemyBird::Enemy_Just_Above()
@@ -381,14 +378,12 @@ void EnemyBird::Draw() const
     //ポーズ画面じゃないとき描写
     if (GameMain::PauseFlg == FALSE) {
 
-        //DrawGraphF(E_Move_X, E_Move_Y, E_ArrayImg_P[Cnt], TRUE);
+        DrawGraph(location.x, location.y, E_Img, TRUE);
 
         DrawFormatString(0, 280, GetColor(255, 255, 255), " 敵 Yspeed :%0.1f ", SpeedY);
         DrawFormatString(0, 300, GetColor(255, 255, 255), " 敵 Xspeed :%0.1f ", SpeedX);
         DrawFormatString(0, 320, GetColor(255, 255, 255), " 秒数      : %d ", E_Second);
-        DrawGraphF(E_Move_X, E_Move_Y, E_ArrayImg_P[0], TRUE);
-        DrawGraph(location.x, location.y, E_Img, TRUE);
-
+        
         //当たり判定
         DrawBoxAA(location.x + 15, location.y + 15, location.x + 15 + erea.Width, location.y + 15 + erea.Height, GetColor(255, 255, 255), FALSE);
         DrawLine(location.x + 15, e_uc, location.x + 15 + erea.Width, e_uc, GetColor(255, 255, 255), 1);	//下
@@ -396,10 +391,9 @@ void EnemyBird::Draw() const
 
     //DrawFormatString(400, 50, GetColor(255, 0, 0), "H_Flg:%d", H_Flg);
 
-
-        ////敵の当たり判定
-        DrawBox(E_Move_X, E_Move_Y - 60, E_Move_X + 60, E_Move_Y, GetColor(255, 255, 255), FALSE);
-        //DrawFormatStringF(0, 160, GetColor(255, 255, 255), " enemy座標：X座標 %0.1f Y座標 %0.1f", E_Move_X, E_Move_Y);
+    ////敵の当たり判定
+    //DrawBox(E_Move_X, E_Move_Y - 60, E_Move_X + 60, E_Move_Y, GetColor(255, 255, 255), FALSE);
+    //DrawFormatStringF(0, 160, GetColor(255, 255, 255), " enemy座標：X座標 %0.1f Y座標 %0.1f", E_Move_X, E_Move_Y);
 
     ////風船の当たり判定
     //DrawBox(E_Move_X + 15, E_Move_Y + 5, E_Move_X + 59, E_Move_Y + 37, GetColor(255, 255, 255), FALSE);
