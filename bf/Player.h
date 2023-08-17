@@ -107,7 +107,7 @@ private:
 	int		MouseY;
 
 	int rand;
-
+    int  P_Jump_SE;
 public:
 	//—§‚Á‚Ä‚¢‚éó‘Ô‚Ìƒtƒ‰ƒO
 	static int		P_Stand_Flg;

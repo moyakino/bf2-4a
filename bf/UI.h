@@ -16,8 +16,9 @@ private:
 	int fpsCnt;
 	int byou;
 	int GameOver_Flg;
+	/*int GameOver_BGM;*/
 public:	
-
+	static int GameOver_BGM;
 	UI();
 	~UI();
 	void Update();

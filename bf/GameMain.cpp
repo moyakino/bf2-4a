@@ -5,16 +5,17 @@
 #include "Player.h"
 #include "TitleScene.h"
 #include"enemybird.h"
+#include "UI.h"
 
 bool GameMain::PauseFlg;
-
+int GameMain::MainBgm;
 //コンストラクタ
 GameMain::GameMain()
 {
 	if (StageSea = LoadGraph("images/Stage/Stage_Sea01.png")) {}
 
 	MainBgm = LoadSoundMem("sounds/SE_Start.wav");
-	PlaySoundMem(MainBgm, DX_PLAYTYPE_BACK);
+	PlaySoundMem(MainBgm, DX_PLAYTYPE_BACK, TRUE);
 	ui = new UI();
 	player = new PLAYER();
 	bubble = new Bubble();
@@ -32,6 +33,8 @@ GameMain::GameMain()
 	}
 
 	PauseFlg = TRUE;
+
+	
 }
 
 GameMain::~GameMain()
@@ -54,7 +57,13 @@ AbstractScene* GameMain::Update()
 	//{
 	//	PauseFlg = !PauseFlg;
 	//}
+	
 
+	//ポーズしたらMainBgmストップ
+	if (PauseFlg == TRUE) {
+		StopSoundMem(MainBgm);
+	}
+	
 	//ポーズ中でないなら
 	if (PauseFlg == FALSE) {
 
@@ -377,13 +386,9 @@ void GameMain::Draw()const
 	//DrawFormatString(0, 50, GetColor(255, 0, 0), "GameMain");
 	//DrawFormatString(400, 50, GetColor(255, 0, 0), "Snum:%d", Snum);
 	
-	//一時停止中の描画
+	/*一時停止中の描画*/
 	if (PauseFlg == TRUE)
 	{
-	
-		/*SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);*/
 		DrawBox(0, 0, 1000, 780, 0x000000, FALSE);
-		/*SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);*/
-		DrawString(120, 70, "ポーズメニュー表示", GetColor(255, 255, 255));
-	}
+	}		
 }

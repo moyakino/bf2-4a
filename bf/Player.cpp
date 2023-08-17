@@ -74,6 +74,8 @@ PLAYER::PLAYER()
     Respawn_Flg = TRUE;
 
     FishFlg = FALSE;
+    P_Jump_SE = LoadSoundMem("sounds/SE_PlayerJump.wav");
+    
 }
 
 void PLAYER::Update()
@@ -104,6 +106,8 @@ void PLAYER::Update()
 
     P_Move_X = location.x;
     P_Move_Y = location.y;
+
+    
 
     //サカナの判定
     //Stand_Foot();
@@ -544,7 +548,7 @@ void PLAYER::Stand_Foot()
     }
     //魚にあたったときリスポーン
     if (Fish::FishEatP_flg == TRUE) {
-    
+       
         if (Fish::F_Seconds2 == 8) {
             zanki = TRUE;
             Player_Init();
@@ -644,7 +648,6 @@ void PLAYER::Run_Anim()
 void PLAYER::Gliding_Anim()
 {
     if (P_Balloon_Flg == TRUE) {
-
         if (P_FPS >= 0 && P_FPS < 15) {
             P_Img = P_ArrayImg[LEVITATION_BALLOON2_2];
         }
@@ -839,6 +842,9 @@ void PLAYER::Draw()const
             if (P_TurnFlg == FALSE) {
                 DrawGraphF(location.x, location.y, P_Img, TRUE);
             }
+        }
+        if (P_A_Btn == 1) {
+            PlaySoundMem(P_Jump_SE, DX_PLAYTYPE_BACK, TRUE);
         }
     }
 }

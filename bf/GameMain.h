@@ -19,7 +19,7 @@ private:
 	int Cnt;
 	int DrawGameOver;
 
-	int MainBgm;
+	/*int MainBgm;*/
 	int StageSea;
 
 	void CreateStage();
@@ -28,7 +28,7 @@ private:
 	//int PauseFlashTime;
 public:
 	static bool PauseFlg;
-
+	static int MainBgm;
 	int Snum;
 
 	Stage* StageFoot[10];
