@@ -27,8 +27,6 @@ UI::UI()
 	T_Score ;
 	i = 1;
 	Stage = Number[0];
-	fpsCnt = 0;
-	byou = 0;
 	GameOver_BGM = LoadSoundMem("sounds/SE_GameOver.wav");
 	CheckSoundMem(GameMain::MainBgm);
 

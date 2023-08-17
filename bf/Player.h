@@ -91,22 +91,10 @@ private:
 	int		F_Seconas1;			//魚用秒数
 	int		rand;				//魚用確率
 
-	int rand;
     int  P_Jump_SE;
 	int  P_Respawn_BGM;
+
 	
-public:
-	//立っている状態のフラグ
-	static int		P_Stand_Flg;
-	//Player  X座標用変数
-	static float	P_Move_X;
-	//Player  Y座標用変数
-	static float	P_Move_Y;
-	static int		FishFlg;
-	/*(仮)画像の左右反転用フラグ FALSE:普通に描画 TRUE:左右反転*/
-	static	int		P_TurnFlg;
-	static	int		F_TurnFlg;
-	static	int		zanki;
 public:
 	
 	static int		P_Stand_Flg;	//立っている状態のフラグ
@@ -116,6 +104,7 @@ public:
 	static	int		PlayerLife;		//Playerの残機用
 	static	int		FishHit;		//魚に当たったか？
 	static	int		FishDeath;		//魚用死亡判定
+	static	int		zanki;
 
 	static int		FishFlg;		//魚用フラグ
 	static	int		F_TurnFlg;		//魚用画像左右反転フラグ
