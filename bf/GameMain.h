@@ -19,16 +19,20 @@ private:
 	int Cnt;
 	int DrawGameOver;
 
-	int Bgm;
+	/*int MainBgm;*/
 	int StageSea;
 	int StageImg;
 	void CreateStage();
+	
+	//bool PauseFlashFlg;
+	//int PauseFlashTime;
 public:
-
-
+	static bool PauseFlg;
+	static int MainBgm;
 	int Snum;
 
-	Stage* StageFoot[10];
+	Stage* StageFoot[11];
+	EnemyBird* Enemy[10];
 
 	GameMain();
 	~GameMain();

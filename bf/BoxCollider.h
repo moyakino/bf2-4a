@@ -29,10 +29,11 @@ public:
 	float box_x1;
 	float box_x2;
 
+	//Box‚É“–‚½‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©”»’è‚·‚é
 	bool HitCollider(BoxCollider* b_col);
+
+	//Box‚Ìã‚É—§‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ğ”»’è‚·‚é
 	bool TopBoxCollider(BoxCollider* b_col);
-	bool L_SideBoxCollider(BoxCollider* b_col);
-	bool R_SideBoxCollider(BoxCollider* b_col);
 
 	int BubbleHit(BoxCollider* bubble);
 

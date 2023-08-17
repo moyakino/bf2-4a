@@ -1,4 +1,5 @@
 #pragma once
+#include "BoxCollider.h"
 #include"Player.h"
 
 //エネミー  待機中アニメーション (空気を入れる)
@@ -36,17 +37,19 @@ enum class ENEMY_STATE {
 };
 
 
-class EnemyBird {
+class EnemyBird :public BoxCollider
+{
 private:
     int Cnt;
     int CntWait;
-    int H_Flg;
     float SpeedX;
     float SpeedY;
     int E_flg;
     int E_ArrayImg_P[18];
     int E_ArrayImg_G[18];
     int E_ArrayImg_R[18];
+
+    int E_Img;
 
     //フレーム取得
     int E_FPS;
@@ -61,7 +64,6 @@ private:
     float	ex1, ey1, ex2, ey2, e_uc;
 
     //敵の座標
-    float location;
 
     float E_Move_X;
     float E_Move_Y;
@@ -87,6 +89,10 @@ private:
 
     ENEMY_STATE EnemyState;
     int x1, x2, y1, y2;
+
+    int EnemyFlyFlg;
+    int EnemyHit;
+    
     
 public:
 
@@ -95,19 +101,17 @@ public:
     ////Player  Y座標用変数
     //static float	E_Move_Y;
 
+    int H_Flg;
+    static int EnemyBoundY;
+
     //コンストラクタ
-    EnemyBird();
+    EnemyBird(int num,int i);
     // デストラクタ
     ~EnemyBird();
     // 更新処理を実装する
     void Update(float x, float y);
     // 描画処理を実装する
     void Draw() const;
-    //地面に立たせる
-    void Stand_Foot();
-
-    int  Balloon_Anim(void);
-    //空中で移動しているときのアニメーション
 
   /*  int Stand_by_Anim();*/
     void Start_Anim();
@@ -115,10 +119,20 @@ public:
 
     void Enemy_Levitation_Move_X();
     void Enemy_Levitation_Move_Y();
+    void Enemy_Just_Above();
 
-    void Enemy_Gravity();
+    //void Enemy_Gravity();
     void Enemy_Warp();
 
-    void Hit();
+    void EnemybottomHit();
+
+    //bool Hit(BoxCollider* b_col);
+
+    void BoundPlusX();
+    void BoundMinusX();
+    void BoundPlusY();
+    void BoundMinusY();
+
+    //Location GetLocation() { return location; }
 
 };

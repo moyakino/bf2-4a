@@ -1,5 +1,6 @@
 #include "DxLib.h"
 #include "FPS.h"
+#include "GameMain.h"
 #include "SceneManager.h"
 #include "AbstractScene.h"
 #include "PadInput.h"
@@ -43,10 +44,16 @@ int WINAPI WinMain(_In_ HINSTANCE ih, _In_opt_ HINSTANCE ioh, _In_ LPSTR il, _In
 		ClearDrawScreen();		// âÊñ ÇÃèâä˙âª
 		PAD_INPUT::UpdateKey();
 
-		//
+		//Ç±ÇÍåôÇ¢
 		sceneMng.Update();
 
 		sceneMng.Draw();
+
+		if (PAD_INPUT::OnButton(XINPUT_BUTTON_START))
+		{
+			GameMain::PauseFlg = !GameMain::PauseFlg;
+			
+		}
 
 		//ã≠êßèIóπ
 		if (PAD_INPUT::OnButton(XINPUT_BUTTON_BACK))

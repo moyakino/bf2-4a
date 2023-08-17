@@ -3,10 +3,13 @@
 #include "Bubble.h"
 #include "Player.h"
 #include "TitleScene.h"
+#include "GameMain.h"
 
 int UI::TotalScore;
 int UI::Stage;
 int UI::i;
+
+int UI::GameOver_BGM;
 UI::UI()
 {
 	if(LoadDivGraph("images/UI/UI_NumAnimation.png",10,10,1,32,30,Number)){}
@@ -18,16 +21,19 @@ UI::UI()
 	GameOver = LoadGraph("images/UI/UI_GameOver.png");
 	TotalScore = 0;
 	HighScore = 50000;
-	PosX = 200;
-	Cnt = 0;
 	Respawn_Cnt = 0;
 	GameOver_Flg = 0;
-	fpsCnt = 0;
 	H_Score ;
 	T_Score ;
 	i = 1;
 	Stage = Number[0];
+	fpsCnt = 0;
+	byou = 0;
+	GameOver_BGM = LoadSoundMem("sounds/SE_GameOver.wav");
+	CheckSoundMem(GameMain::MainBgm);
 
+	Remaining_lives = 0;
+	Fish_PlayerHit = 0;
 
 	////配列の初期化
 	//for (int i = 0; i < 10; i++) {
@@ -39,8 +45,12 @@ UI::~UI()
 
 }
 
-void UI::Update()
+void UI::Update(int life, int Fish_Death)
 {
+
+	Remaining_lives = life;
+	Fish_PlayerHit = Fish_Death;
+
 	//NowScore();
 	Score1 = TotalScore % 10;
 	Score10 = (TotalScore % 100) / 10;
@@ -75,12 +85,12 @@ void UI::Update()
 	//これで各位の数が求められる
 	//Score1が一の位
 	//Score10が十の位
-	if (PLAYER::zanki == TRUE) {
-		Cnt += 1;
-		Respawn_Cnt = Respawn_Cnt + Cnt;
+	if (Remaining_lives == TRUE || Fish_PlayerHit == 8 && PLAYER::FishDeath == TRUE || Fish_PlayerHit == 16 && PLAYER::FishDeath == TRUE || 
+		Fish_PlayerHit == 24 && PLAYER::FishDeath == TRUE || Fish_PlayerHit == 32 && PLAYER::FishDeath == TRUE) {
+		Respawn_Cnt += 1;
 	}
 
-	if (Respawn_Cnt > 3) {
+	if (Respawn_Cnt == 4) {
 		GameOver_Flg = TRUE;
 		if (HighScore < TotalScore) {
 			T_Score = TotalScore;
@@ -102,21 +112,28 @@ void UI::Draw() const
 		DrawGraph(145, 35, Stock1, TRUE);
 		DrawGraph(165, 35, Stock1, TRUE);
 	}
+	//残機の残り 2個
 	else if (Respawn_Cnt == 1) {
 		DrawGraph(145, 35, Stock1, TRUE);
 		DrawGraph(165, 35, Stock2, TRUE);
 	}
+	//残機の残り 1個
 	else if (Respawn_Cnt == 2) {
 		DrawGraph(145, 35, Stock2, TRUE);
 		DrawGraph(165, 35, Stock2, TRUE);
 	}
 
-	if (GameOver_Flg == TRUE) {
-		DrawGraph(220, 240, GameOver, TRUE);
-	}
+		if (GameOver_Flg == TRUE) {
+			//もしGameOver画面ならMainBgmストップ
+			if (CheckSoundMem(GameMain::MainBgm) == 1) {
+				StopSoundMem(GameMain::MainBgm);
+			}
+			DrawGraph(220, 240, GameOver, TRUE);
+			PlaySoundMem(GameOver_BGM, DX_PLAYTYPE_BACK, FALSE);
+		}
 
-	/*DrawFormatString(0, 20, GetColor(255, 255, 255), " UI Cnt：%d", Respawn_Cnt);
-	DrawFormatString(0, 40, GetColor(255, 255, 255), " GameOver：%d", GameOver_Flg);*/
+	DrawFormatString(0, 60, GetColor(255, 255, 255), " UI Cnt：%d", Respawn_Cnt);
+	//DrawFormatString(0, 40, GetColor(255, 255, 255), " GameOver：%d", GameOver_Flg);
 	//DrawFormatString(0, 200, GetColor(255, 255, 255), "TempScore : %d", TempScore);
 
 	//スコア
@@ -145,6 +162,7 @@ void UI::Draw() const
 	/*if (Cnt >= 1) {
 		DrawGraph(PosX, 30, Number[TempScore], TRUE);
 	}*/
+	
 }
 
 int UI::GetGameOver()const
@@ -165,5 +183,3 @@ void UI::NowScore()const
 	}*/
 	
 }
-
-//

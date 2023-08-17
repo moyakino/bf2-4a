@@ -5,7 +5,7 @@ bool BoxCollider::HitCollider(BoxCollider* b_col)
 {
 	int re = false;
 
-	//プレイヤー 敵
+	//プレイヤーと敵
 	float px1 = b_col->GetLocation().x +15;
 	float py1 = b_col->GetLocation().y +15;
 	float px2 = px1 + b_col->GetErea().Width;
@@ -45,30 +45,6 @@ bool BoxCollider::TopBoxCollider(BoxCollider* b_col)
 		re = true;
 	}
 
-
-	return re;
-}
-
-bool BoxCollider::L_SideBoxCollider(BoxCollider* b_col)
-{
-	int re = false;
-
-	if (static_cast<int>(stage_x1) == static_cast<int>(box_x2)) 
-	{
-		re = true;
-	}
-
-	return re;
-}
-
-bool BoxCollider::R_SideBoxCollider(BoxCollider* b_col)
-{
-	int re = false;
-
-	if (static_cast<int>(stage_x2) == static_cast<int>(box_x1))
-	{
-		re = true;
-	}
 
 	return re;
 }

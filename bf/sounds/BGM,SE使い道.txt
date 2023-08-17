@@ -28,7 +28,7 @@
 
 ボーナスステージBGM = BGM_Trip.wav
 
-（いつ使うか不明な奴）= SE_Perfect.wav
+ボーナスステージの風船全部取った時= SE_Perfect.wav
 
 
 

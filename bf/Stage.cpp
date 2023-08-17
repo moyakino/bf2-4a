@@ -43,12 +43,20 @@ Stage::Stage(int num,int i)
 			//地上　右の足場の座標
 			location.x = 480.0;
 			location.y = 418.0;
-			erea.Width = 160.0;
+			erea.Width = 180.0;
 			erea.Height = 62.0;
 			StageImg = StageLand_R[0];
 			break;
 
 		case 2:
+			//ワープ用の見えない足場
+			location.x = -50.0;
+			location.y = 418.0;
+			erea.Width = 60.0;
+			erea.Height = 62.0;
+			break;
+
+		case 3:
 			//空中の足場の座標
 			location.x = 180.0;
 			location.y = 285.0;
@@ -56,7 +64,6 @@ Stage::Stage(int num,int i)
 			erea.Height = 20.0;
 			StageImg = StageFoot[0];
 			break;
-
 		}
 		break;
 
@@ -77,12 +84,20 @@ Stage::Stage(int num,int i)
 			//地上　右の足場の座標
 			location.x = 480.0;
 			location.y = 418.0;
-			erea.Width = 160.0;
+			erea.Width = 180.0;
 			erea.Height = 62.0;
 			StageImg = StageLand_R[0];
 			break;
 
 		case 2:
+			//ワープ用の見えない足場
+			location.x = -50.0;
+			location.y = 418.0;
+			erea.Width = 60.0;
+			erea.Height = 62.0;
+			break;
+
+		case 3:
 			//空中の足場の座標
 			location.x = 180.0;
 			location.y = 285.0;
@@ -91,7 +106,7 @@ Stage::Stage(int num,int i)
 			StageImg = StageFoot[0];
 			break;
 
-		case 3:
+		case 4:
 			location.x = 100.0;
 			location.y = 165.0;
 			erea.Width = 122.0;
@@ -99,7 +114,7 @@ Stage::Stage(int num,int i)
 			StageImg = StageFoot[1];
 			break;
 
-		case 4:
+		case 5:
 			location.x = 460.0;
 			location.y = 150.0;
 			erea.Width = 122.0;
@@ -126,12 +141,20 @@ Stage::Stage(int num,int i)
 			//地上　右の足場の座標
 			location.x = 480.0;
 			location.y = 418.0;
-			erea.Width = 160.0;
+			erea.Width = 180.0;
 			erea.Height = 62.0;
 			StageImg = StageLand_R[0];
 			break;
 
 		case 2:
+			//ワープ用の見えない足場
+			location.x = -50.0;
+			location.y = 418.0;
+			erea.Width = 60.0;
+			erea.Height = 62.0;
+			break;
+
+		case 3:
 			location.x = 280.0;
 			location.y = 368.0;
 			erea.Width = 81.0;
@@ -139,7 +162,7 @@ Stage::Stage(int num,int i)
 			StageImg = StageFoot[2];
 			break;
 
-		case 3:
+		case 4:
 			location.x = 201.0;
 			location.y = 98.0;
 			erea.Width = 42.0;
@@ -148,7 +171,7 @@ Stage::Stage(int num,int i)
 			break;
 
 			
-		case 4:
+		case 5: //足場の部分
 			location.x = 160.0;
 			location.y = 268.0;
 			erea.Width = 60.0;
@@ -156,45 +179,37 @@ Stage::Stage(int num,int i)
 			StageImg = StageFoot[3];
 			break;
 
-			//I
-		case 5:
+		case 6:	//鍾乳石の部分
 			location.x = 182.0;
 			location.y = 283.0;
 			erea.Width = 18.0;
 			erea.Height = 52.0;
-			
 			break;
 
-			//T
-		case 6:
+		case 7:	//足場の部分
 			location.x = 320.0;
 			location.y = 183.0;
 			erea.Width = 60.0;
 			erea.Height = 16.0;
 			StageImg = StageFoot[3];
-
 			break;
 
-			//I
-		case 7:
+		case 8:	//鍾乳石の部分
 			location.x = 342.0;
 			location.y = 198.0;
 			erea.Width = 18.0;
 			erea.Height = 52.0;
 			break;
 
-			//T
-		case 8:
+		case 9:	//足場の部分
 			location.x = 500.0;
 			location.y = 99.0;
 			erea.Width = 60.0;
 			erea.Height = 16.0;
 			StageImg = StageFoot[3];
-
 			break;
 
-			//I
-		case 9:
+		case 10: //鍾乳石の部分
 			location.x = 522.0;
 			location.y = 114.0;
 			erea.Width = 18.0;
@@ -221,12 +236,20 @@ Stage::Stage(int num,int i)
 			//地上　右の足場の座標
 			location.x = 480.0;
 			location.y = 418.0;
-			erea.Width = 160.0;
+			erea.Width = 180.0;
 			erea.Height = 62.0;
 			StageImg = StageLand_R[1];
 			break;
 
 		case 2:
+			//ワープ用の見えない足場
+			location.x = -50.0;
+			location.y = 418.0;
+			erea.Width = 60.0;
+			erea.Height = 62.0;
+			break;
+
+		case 3:
 			location.x = 120.0;
 			location.y = 266.0;
 			erea.Width = 62.0;
@@ -234,7 +257,7 @@ Stage::Stage(int num,int i)
 			StageImg = StageFoot[5];
 			break;
 
-		case 3:
+		case 4:
 			location.x = 240.0;
 			location.y = 335.0;
 			erea.Width = 62.0;
@@ -242,7 +265,7 @@ Stage::Stage(int num,int i)
 			StageImg = StageFoot[5];
 			break;
 
-		case 4:
+		case 5:
 			location.x = 360.0;
 			location.y = 368.0;
 			erea.Width = 62.0;
@@ -251,7 +274,7 @@ Stage::Stage(int num,int i)
 
 			break;
 
-		case 5:
+		case 6:
 			location.x = 460.0;
 			location.y = 284.0;
 			erea.Width = 62.0;
@@ -260,7 +283,7 @@ Stage::Stage(int num,int i)
 
 			break;
 
-		case 6:
+		case 7:
 			location.x = 320.0;
 			location.y = 183.0;
 			erea.Width = 62.0;
@@ -288,12 +311,20 @@ Stage::Stage(int num,int i)
 			//地上　右の足場の座標
 			location.x = 480.0;
 			location.y = 418.0;
-			erea.Width = 160.0;
+			erea.Width = 180.0;
 			erea.Height = 62.0;
 			StageImg = StageLand_R[1];
 			break;
 
 		case 2:
+			//ワープ用の見えない足場
+			location.x = -50.0;
+			location.y = 418.0;
+			erea.Width = 60.0;
+			erea.Height = 62.0;
+			break;
+		
+		case 3:
 			location.x = 220.0;
 			location.y = 80.0;
 			erea.Width = 62.0;
@@ -302,7 +333,7 @@ Stage::Stage(int num,int i)
 
 			break;
 
-		case 3:
+		case 4:
 			location.x = 200.0;
 			location.y = 335.0;
 			erea.Width = 62.0;
@@ -311,7 +342,7 @@ Stage::Stage(int num,int i)
 
 			break;
 
-		case 4:
+		case 5:
 			location.x = 380.0;
 			location.y = 335.0;
 			erea.Width = 62.0;
@@ -320,7 +351,7 @@ Stage::Stage(int num,int i)
 
 			break;
 
-		case 5:
+		case 6:
 			location.x = 500.0;
 			location.y = 150.0;
 			erea.Width = 21.0;
@@ -329,7 +360,7 @@ Stage::Stage(int num,int i)
 
 			break;
 
-		case 6:
+		case 7:
 			location.x = 260.0;
 			location.y = 165.0;
 			erea.Width = 21.0;
@@ -338,7 +369,7 @@ Stage::Stage(int num,int i)
 
 			break;
 
-		case 7:
+		case 8:
 			location.x = 100.0;
 			location.y = 200.0;
 			erea.Width = 21.0;
@@ -364,9 +395,10 @@ void Stage::Update()
 
 void Stage::Draw() const
 {
-	
+	//当たり判定の描画
 	DrawBox(location.x, location.y, location.x + erea.Width, location.y + erea.Height, 0x00ff00, FALSE);
 
+	//ステージ画像の描画
 	DrawGraph(location.x, location.y, StageImg, TRUE);
 
 }
