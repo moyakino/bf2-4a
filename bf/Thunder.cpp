@@ -104,53 +104,55 @@ void Thunder::MoveBall()
 			Speed = 2;
 			ChangeAngle();
 			
-			switch (num) {
-			case 1:
-				T_Thunder_X = 290;
-				T_Thunder_Y = 100;
-				location.x = 300;
-				location.y = 40;
-				S_Seconas2 = 0;
-				BallFlg = 1;
-				BallAngle = 0.625f;  //左上
-				T_Effect_Flg = TRUE;
-				break;
-			case 2:
-				T_Thunder_X = 290;
-				T_Thunder_Y = 155;
-				location.x = 300;
-				location.y = 200;
-				S_Seconas2 = 0;
-				BallFlg = 1;
-				BallAngle = 0.375f;  //左下
-				T_Effect_Flg = TRUE;
-				break;
-			case 3:
-				location.x = 390;
-				location.y = 40;
-				S_Seconas2 = 0;
-				BallFlg = 1;
-				BallAngle = 0.875f;  //右上
-				T_Effect_Flg = TRUE;
-				break;
-			case 4:
-				location.x = 390;
-				location.y = 180;
-				S_Seconas2 = 0;
-				BallFlg = 1;
-				BallAngle = 0.125f;  //右上
-				T_Effect_Flg = TRUE;
-				break;
-			}
-			if (S_Seconas2 > 1)
+			if (S_Seconas2 > 2)
 			{
-				T_Cloud_Flg = FALSE;
-				T_Thunder_Flg = FALSE;
+				switch (num) {
+				case 1:
+					T_Thunder_X = 290;
+					T_Thunder_Y = 100;
+					location.x = 300;
+					location.y = 40;
+					S_Seconas2 = 0;
+					BallFlg = 1;
+					BallAngle = 0.625f;  //左上
+					T_Effect_Flg = TRUE;
+					break;
+				case 2:
+					T_Thunder_X = 290;
+					T_Thunder_Y = 155;
+					location.x = 300;
+					location.y = 200;
+					S_Seconas2 = 0;
+					BallFlg = 1;
+					BallAngle = 0.375f;  //左下
+					T_Effect_Flg = TRUE;
+					break;
+				case 3:
+					location.x = 390;
+					location.y = 40;
+					S_Seconas2 = 0;
+					BallFlg = 1;
+					BallAngle = 0.875f;  //右上
+					T_Effect_Flg = TRUE;
+					break;
+				case 4:
+					location.x = 390;
+					location.y = 180;
+					S_Seconas2 = 0;
+					BallFlg = 1;
+					BallAngle = 0.125f;  //右上
+					T_Effect_Flg = TRUE;
+					break;
+				}
 			}
 		}
 	}
 
-
+	if (S_Seconas2 > 1)
+	{
+		T_Cloud_Flg = FALSE;
+		T_Thunder_Flg = FALSE;
+	}
 
 	// マウス左クリックでゲームスタート
 	if (CheckHitKey(KEY_INPUT_1))
