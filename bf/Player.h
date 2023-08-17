@@ -91,7 +91,6 @@ private:
 	int		F_Seconas1;			//‹›—p•b”
 	int		rand;				//‹›—pŠm—¦
 
-	int rand;
     int  P_Jump_SE;
 	int  P_Respawn_BGM;
 public:

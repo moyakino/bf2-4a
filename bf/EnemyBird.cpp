@@ -24,6 +24,10 @@ EnemyBird::EnemyBird(int num,int i)
     {
         throw "sounds/SE_crack.wav";
     }
+
+    //âπó 
+    ChangeVolumeSoundMem(100, EnemyMoveSE);
+
     //ìGÇÃê∂ê¨
     switch (num)
     {
@@ -130,7 +134,7 @@ void EnemyBird::Update(float x,float y)
     //Hit();
     
     if (EnemyFlyFlg == TRUE) {
-        if (CheckSoundMem(EnemyMoveSE) == 0)
+        if (CheckSoundMem(GameMain::MainBgm) == 0)
         {
             PlaySoundMem(EnemyMoveSE, DX_PLAYTYPE_LOOP, FALSE);
         }
@@ -340,8 +344,6 @@ void EnemyBird::Fly_Anim()
             Cnt = 9;
         }
     }
-
-
     E_Img = E_ArrayImg_P[Cnt];
 
 }
