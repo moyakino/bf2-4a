@@ -103,10 +103,11 @@ AbstractScene* GameMain::Update()
 		if (fps % 2 == 0)
 		{
 			++Snum;
-	
+			UI::i++;
 			//ƒŠƒZƒbƒg
 			if (Snum > 4) {
 				Snum = 0;
+				UI::i = 1;
 			}
 			CreateStage();
 		}

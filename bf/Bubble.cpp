@@ -3,7 +3,7 @@
 #include"Player.h"
 #include"PadInput.h"
 #include"FPS.h"
-#include"GameMain.h"
+#include"UI.h"
 
 Bubble::Bubble()
 {
@@ -57,6 +57,7 @@ void Bubble::Update(float x, float y)
 
 		if (H_flg == TRUE) {
 			Score();
+
 		}
 	}
 
@@ -118,7 +119,7 @@ void Bubble::Score()
 {
 	if (B_FPS > 59) {
 		seconds++;
-		if (seconds < 2) {
+		if (seconds <= 1) {
 			B_Img = BubbleImg[3];
 		}
 		else {
@@ -126,6 +127,7 @@ void Bubble::Score()
 			B_flg = FALSE;
 			H_flg = FALSE;
 			ScoreFlg = TRUE;
+			UI::TotalScore += 750;
 		}
 	}
 };
