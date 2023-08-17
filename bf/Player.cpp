@@ -3,6 +3,7 @@
 #include "PadInput.h"
 #include "Stage.h"
 #include "Fish.h"
+#include "GameMain.h"
 
 #define SLIDE 15
 
@@ -11,6 +12,8 @@ int PLAYER::P_TurnFlg;
 int PLAYER::F_TurnFlg;
 int PLAYER::P_Stand_Flg;
 int PLAYER::zanki;
+int PLAYER::FishHit;
+int PLAYER::FishDeath;
 
 float PLAYER::P_Move_X;
 float PLAYER::P_Move_Y;
@@ -60,6 +63,8 @@ PLAYER::PLAYER()
     MouseX = 0;
     MouseY = 0;
     zanki = 0;
+    FishHit = 0;
+    FishDeath = 0;
 
     //サカナ
     FishCnt = 0;
@@ -134,13 +139,12 @@ void PLAYER::Update()
     //画像切り替え用
     Player_Img();
 
-    //zanki = FALSE;
+    zanki = FALSE;
+    FishDeath = FALSE;
 
     if (Beaten_Flg == FALSE) {
-        zanki = FALSE;
-
+        //zanki = FALSE;
         Stand_Foot();
-
         //ステージの足場に立っていたら地上の移動に入る
         if (P_Stand_Flg == TRUE) {
             Player_Move();
@@ -543,14 +547,16 @@ void PLAYER::Stand_Foot()
     }
     //魚にあたったときリスポーン
     if (Fish::FishEatP_flg == TRUE) {
-    
         if (Fish::F_Seconds2 == 8) {
-            zanki = TRUE;
-            Player_Init();
-            Respawn_Anim();
+                FishHit += 1;
+                FishDeath = TRUE;
+                if (FishHit < 49) {
+                    Player_Init();
+                    Respawn_Anim();
+                }
+            //zanki = TRUE;
         }
     }
-
  }
 
 void PLAYER::Respawn_Anim()
@@ -762,22 +768,25 @@ PLAYER::~PLAYER()
 
 void PLAYER::Draw()const
 {
-    //DrawFormatString(0, 20, GetColor(255, 255, 255), " FPS：%d", P_FPS); 
-        //DrawFormatString(100, 340, GetColor(255, 255, 255), " F_Seconas1：%d", F_Seconas1);
-    //Aボタン描画
-    //DrawFormatString(0, 40, GetColor(255, 255, 255), " 押された瞬間：%d 離された瞬間：%d", PAD_INPUT::OnButton(XINPUT_BUTTON_A), PAD_INPUT::OnRelease(XINPUT_BUTTON_A));
+    //ポーズ画面じゃないとき描写
+    if (GameMain::PauseFlg == FALSE) {
 
-    //DrawFormatString(0, 60, GetColor(255, 255, 255), " 左スティック：横軸値 %d 縦軸値 %d", PAD_INPUT::GetLStickX(), PAD_INPUT::GetLStickY());
+        //DrawFormatString(0, 20, GetColor(255, 255, 255), " FPS：%d", P_FPS); 
+            //DrawFormatString(100, 340, GetColor(255, 255, 255), " F_Seconas1：%d", F_Seconas1);
+        //Aボタン描画
+        //DrawFormatString(0, 40, GetColor(255, 255, 255), " 押された瞬間：%d 離された瞬間：%d", PAD_INPUT::OnButton(XINPUT_BUTTON_A), PAD_INPUT::OnRelease(XINPUT_BUTTON_A));
 
-    DrawFormatString(0, 80, GetColor(255, 255, 255), " プレイ左上：X座標 %0.1f Y座標 %0.01f", P_Move_X, P_Move_Y);
+        //DrawFormatString(0, 60, GetColor(255, 255, 255), " 左スティック：横軸値 %d 縦軸値 %d", PAD_INPUT::GetLStickX(), PAD_INPUT::GetLStickY());
 
-    //DrawFormatString(0, 100, GetColor(255, 255, 255), " 移動フラグ：左移動 %d 右移動 %d", P_MoveL_Flg, P_MoveR_Flg);
+        DrawFormatString(0, 80, GetColor(255, 255, 255), " プレイ左上：X座標 %0.1f Y座標 %0.01f", P_Move_X, P_Move_Y);
 
-    DrawFormatString(0, 120, GetColor(255, 255, 255), " マウス座標：X座標 %d Y座標 %d", MouseX, MouseY);
+        //DrawFormatString(0, 100, GetColor(255, 255, 255), " 移動フラグ：左移動 %d 右移動 %d", P_MoveL_Flg, P_MoveR_Flg);
 
-    //DrawFormatString(0, 140, GetColor(255, 255, 255), " AnimCnt：%d", AnimCnt);
+        DrawFormatString(0, 120, GetColor(255, 255, 255), " マウス座標：X座標 %d Y座標 %d", MouseX, MouseY);
 
-    DrawFormatString(0, 160, GetColor(255, 255, 255), " 残機 ： %d ", zanki);
+        //DrawFormatString(0, 140, GetColor(255, 255, 255), " AnimCnt：%d", AnimCnt);
+
+    DrawFormatString(0, 320, GetColor(255, 255, 255), " zanki ： %d ", zanki);
     //DrawFormatString(0, 160, GetColor(255, 255, 255), " やられ   Beaten_Flg ： %d ", Beaten_Flg);
     DrawFormatString(0, 180, GetColor(255, 255, 255), " 風船   Balloon_Flg  ： %d ", P_Balloon_Flg);
   
@@ -788,52 +797,53 @@ void PLAYER::Draw()const
     //DrawFormatString(0, 320, GetColor(255, 255, 255), " L_Stick :%d", P_L_Stick_Flg);
     //DrawFormatString(0, 320, GetColor(255, 255, 255), " Fish :%d", FishFlg);
 
-    //DrawLine(160, 417, 480, 417, 0xffffff, TRUE);
+        //DrawLine(160, 417, 480, 417, 0xffffff, TRUE);
 
-    //DrawCircle(p_uc, py2, 2.0f, 0xff0000, TRUE);
+        //DrawCircle(p_uc, py2, 2.0f, 0xff0000, TRUE);
 
-    //DrawCircleAA(p_uc, py2 - 54.0f, 2.0f, 0xfffff0, TRUE);
+        //DrawCircleAA(p_uc, py2 - 54.0f, 2.0f, 0xfffff0, TRUE);
 
-    //プレイヤーの当たり判定
-    DrawBoxAA(location.x + 15, location.y + 15, location.x + 15+erea.Width, location.y + 15+erea.Height, GetColor(255, 255, 255), FALSE);
-    //プレイヤーの当たり判定 敵用    Playerの体
-    //DrawBoxAA(location.x + 17, location.y + 37, location.x + 48, location.y + 65, GetColor(255, 255, 255), FALSE);
+        //プレイヤーの当たり判定
+        DrawBoxAA(location.x + 15, location.y + 15, location.x + 15 + erea.Width, location.y + 15 + erea.Height, GetColor(255, 255, 255), FALSE);
+        //プレイヤーの当たり判定 敵用    Playerの体
+        //DrawBoxAA(location.x + 17, location.y + 37, location.x + 48, location.y + 65, GetColor(255, 255, 255), FALSE);
 
-    DrawBoxAA(location.x + 12, location.y + 37, location.x + 53, location.y + 65, GetColor(255, 255, 255), FALSE);
+        DrawBoxAA(location.x + 12, location.y + 37, location.x + 53, location.y + 65, GetColor(255, 255, 255), FALSE);
 
-    //プレイヤーの当たり判定 敵用    Playerの風船
-    DrawBoxAA(location.x + 9, location.y + 11, location.x + 55, location.y + 35, GetColor(255, 255, 255), FALSE);
+        //プレイヤーの当たり判定 敵用    Playerの風船
+        DrawBoxAA(location.x + 9, location.y + 11, location.x + 55, location.y + 35, GetColor(255, 255, 255), FALSE);
 
-    //DrawLine(location.x + 9, location.y + 35, location.x + 60, location.y + 35, GetColor(255, 0, 0), 1);
+        //DrawLine(location.x + 9, location.y + 35, location.x + 60, location.y + 35, GetColor(255, 0, 0), 1);
 
-    //プレイヤー　風船を含めた当たり判定　シャボン玉用
-    //DrawBoxAA(location.x + 5, location.y + 8, location.x + 57, location.y + 68, GetColor(255, 255, 255), FALSE);
+        //プレイヤー　風船を含めた当たり判定　シャボン玉用
+        //DrawBoxAA(location.x + 5, location.y + 8, location.x + 57, location.y + 68, GetColor(255, 255, 255), FALSE);
 
-    //風船の当たり判定
-    //DrawBoxAA(location.x + 5, location.y + 10, location.x + 59, location.y + 37, GetColor(255, 255, 255), FALSE);
+        //風船の当たり判定
+        //DrawBoxAA(location.x + 5, location.y + 10, location.x + 59, location.y + 37, GetColor(255, 255, 255), FALSE);
 
-    //DrawBoxAA(px1, py1, px2, py2, GetColor(255, 0, 0), FALSE);
+        //DrawBoxAA(px1, py1, px2, py2, GetColor(255, 0, 0), FALSE);
 
-    //DrawBox(location.x, location.y, location.x + 64, location.y + 64, GetColor(255, 0, 0), FALSE);
+        //DrawBox(location.x, location.y, location.x + 64, location.y + 64, GetColor(255, 0, 0), FALSE);
 
-    ////縦線
-    //DrawLine(sx1, 0, sx1, 480, 0xff0000);
-    //DrawLine(sx2, 0, sx2, 480, 0xff0000);
+        ////縦線
+        //DrawLine(sx1, 0, sx1, 480, 0xff0000);
+        //DrawLine(sx2, 0, sx2, 480, 0xff0000);
 
-    ////横線
-    //DrawLine(0, sy1, 640, sy1, 0xff0000);
+        ////横線
+        //DrawLine(0, sy1, 640, sy1, 0xff0000);
 
 
-    // TurnFlag: 画像の左右反転を行うかのフラグ
-    //DrawRotaGraph(P_Move_X, P_Move_Y, 1, 0, P_Img, TRUE, P_TurnFlg);
+        // TurnFlag: 画像の左右反転を行うかのフラグ
+        //DrawRotaGraph(P_Move_X, P_Move_Y, 1, 0, P_Img, TRUE, P_TurnFlg);
 
-    //最初は右向きで描画される
-    if (P_TurnFlg == TRUE) {
-        DrawTurnGraphF(location.x, location.y, P_Img, TRUE);
-    }
-    else {
-        if (P_TurnFlg == FALSE) {
-            DrawGraphF(location.x, location.y, P_Img, TRUE);
+        //最初は右向きで描画される
+        if (P_TurnFlg == TRUE) {
+            DrawTurnGraphF(location.x, location.y, P_Img, TRUE);
+        }
+        else {
+            if (P_TurnFlg == FALSE) {
+                DrawGraphF(location.x, location.y, P_Img, TRUE);
+            }
         }
     }
 }

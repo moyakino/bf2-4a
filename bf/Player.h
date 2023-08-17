@@ -120,6 +120,8 @@ public:
 	static	int		P_TurnFlg;
 	static	int		F_TurnFlg;
 	static	int		zanki;
+	static	int		FishHit;
+	static	int		FishDeath;
 
 	//コンストラクタ
 	PLAYER();

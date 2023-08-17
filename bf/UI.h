@@ -1,4 +1,6 @@
 #pragma once
+#define R_Cnt 30
+
 class UI {
 private:
 	int Number[10];
@@ -13,14 +15,17 @@ private:
 	int PosX;
 	int Cnt;
 	int Respawn_Cnt;
+	int Beaten_Cnt;
 	int fpsCnt;
 	int byou;
+	int Test;
 	int GameOver_Flg;
+	
 public:	
 
 	UI();
 	~UI();
-	void Update();
+	void Update(int Player_zanki, int Fish_Death);
 	void Draw()const;
 	int GetGameOver()const;
 
