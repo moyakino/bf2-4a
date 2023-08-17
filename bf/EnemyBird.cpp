@@ -5,6 +5,8 @@
 #include"PadInput.h"
 #include<math.h>
 
+int EnemyBird::EnemyBoundY;
+
 EnemyBird::EnemyBird(int num,int i)
 {
 	if (LoadDivGraph("images/Enemy/Enemy_P_Animation.png", 18, 6, 3, 64, 64, E_ArrayImg_P)) {}
@@ -87,6 +89,8 @@ EnemyBird::EnemyBird(int num,int i)
 
     H_Flg = 0;
     EnemyFlyFlg = 0;
+    EnemyBoundY = 0;
+    EnemyHit = 0;
 }
 
 EnemyBird::~EnemyBird()
@@ -112,7 +116,7 @@ void EnemyBird::Update(float x,float y)
 
     Enemy_Warp();
 
-    //Hit();
+    EnemybottomHit();
     
     if (EnemyFlyFlg == TRUE) {
         Fly_Anim();
@@ -277,6 +281,16 @@ void EnemyBird::Enemy_Levitation_Move_Y()
     location.y += SpeedY;
 }
 
+void EnemyBird::EnemybottomHit()
+{
+    if (PlayerX + 5 < location.x - 20 && PlayerX + 57 > location.x + 20 && PlayerY + 8 < location.y - 15 && PlayerY + 68 > location.y - 15){
+        EnemyHit = TRUE;
+    }
+    else {
+        //EnemyHit = FALSE;
+    }
+}
+
 void EnemyBird::Enemy_Just_Above()
 {
 
@@ -304,8 +318,6 @@ void EnemyBird::Start_Anim()
 
     E_Img = E_ArrayImg_P[Cnt];
 }
-
-
 
 //è„è∏ÇÃÇ›
 void EnemyBird::Fly_Anim()
@@ -376,7 +388,6 @@ void EnemyBird::Fly_Anim()
 //    return re;
 //}
 
-
 void EnemyBird::Draw() const
 {
     //É|Å[ÉYâÊñ Ç∂Ç·Ç»Ç¢Ç∆Ç´ï`é 
@@ -387,6 +398,8 @@ void EnemyBird::Draw() const
         DrawFormatString(0, 280, GetColor(255, 255, 255), " ìG Yspeed :%0.1f ", SpeedY);
         DrawFormatString(0, 300, GetColor(255, 255, 255), " ìG Xspeed :%0.1f ", SpeedX);
         DrawFormatString(0, 320, GetColor(255, 255, 255), " ïbêî      : %d ", E_Second);
+        DrawFormatString(0, 340, GetColor(255, 255, 255), " PlayerÇ™ìGÇì•ÇÒÇæÇÁ : %d ", EnemyHit);
+
         
         //ìñÇΩÇËîªíË
         DrawBoxAA(location.x + 15, location.y + 15, location.x + 15 + erea.Width, location.y + 15 + erea.Height, GetColor(255, 255, 255), FALSE);

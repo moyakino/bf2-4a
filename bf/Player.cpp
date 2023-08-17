@@ -103,7 +103,7 @@ void PLAYER::Update()
     P_A_Btn = PAD_INPUT::OnButton(XINPUT_BUTTON_A);
 
     //Yボタン単押し
-    P_Y_Btn = PAD_INPUT::OnButton(XINPUT_BUTTON_Y);
+    //P_Y_Btn = PAD_INPUT::OnButton(XINPUT_BUTTON_Y);
 
     // Bボタン長押し
     P_B_Btn = PAD_INPUT::OnPressed(XINPUT_BUTTON_B);
