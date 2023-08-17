@@ -20,9 +20,6 @@ GameMain::GameMain()
 	player = new PLAYER();
 	bubble = new Bubble();
 	fish = new Fish();
-	//enemybird = new EnemyBird();
-	//bubble = new Bubble();
-	//stage = new Stage();
 	thunder = new Thunder();
 
 	Snum = 0;
@@ -59,13 +56,6 @@ GameMain::~GameMain()
 
 AbstractScene* GameMain::Update()
 {
-	////ポーズフラグ切り替え処理
-	//if (PAD_INPUT::OnButton(XINPUT_BUTTON_START))
-	//{
-	//	PauseFlg = !PauseFlg;
-	//}
-	
-
 	//ポーズしたらMainBgmストップ
 	if (PauseFlg == TRUE) {
 		StopSoundMem(MainBgm);
@@ -176,21 +166,6 @@ AbstractScene* GameMain::Update()
 
 				player->BoundMinusX();
 				Enemy[j]->BoundPlusX();
-
-				//プレイヤーが敵より上
-				/*if (player->GetLocation().y < enemybird->GetLocation().y + 25)
-				{
-					enemybird->EnemyBoundY = TRUE;
-				}
-				else {
-					enemybird->EnemyBoundY = FALSE;
-				}*/
-
-				////プレイヤーが敵より下
-				//if (player->GetLocation().y > enemybird->GetLocation().y + 25)
-				//{
-
-				//}
 
 				break;
 
@@ -470,14 +445,6 @@ void GameMain::Draw()const
 		break;
 	}
 
-
-	//海
-	//DrawBox(160, 444, 480, 480, 0x0000ff, FALSE);
-	//DrawGraph(160, 445, StageSea, TRUE);
-
-	//stage->Draw();
-
-
 	ui->Draw();
 
 	if (DrawGameOver == FALSE) {
@@ -489,9 +456,6 @@ void GameMain::Draw()const
 	}
 
 	DrawGraph(160, 445, StageSea, TRUE);
-	
-	//DrawFormatString(0, 50, GetColor(255, 0, 0), "GameMain");
-	//DrawFormatString(400, 50, GetColor(255, 0, 0), "Snum:%d", Snum);
 	
 	/*一時停止中の描画*/
 	if (PauseFlg == TRUE)

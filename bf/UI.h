@@ -37,7 +37,4 @@ public:
 	void Update(int life, int Fish_Death);
 	void Draw()const;
 	int GetGameOver()const;
-
-	void NowScore()const;
-
 };

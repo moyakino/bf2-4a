@@ -130,10 +130,6 @@ void UI::Draw() const
 			PlaySoundMem(GameOver_BGM, DX_PLAYTYPE_BACK, FALSE);
 		}
 
-	DrawFormatString(0, 60, GetColor(255, 255, 255), " UI Cnt：%d", Respawn_Cnt);
-	//DrawFormatString(0, 40, GetColor(255, 255, 255), " GameOver：%d", GameOver_Flg);
-	//DrawFormatString(0, 200, GetColor(255, 255, 255), "TempScore : %d", TempScore);
-
 	//スコア
 	DrawGraph(57, 13, Score, TRUE); //「I-」表示
 	DrawGraph(72, 8, gScore100000,TRUE);
@@ -157,27 +153,9 @@ void UI::Draw() const
 	DrawGraph(345, 25, Stage, TRUE);
 	DrawGraph(365, 25, Number[i], TRUE);
 
-	/*if (Cnt >= 1) {
-		DrawGraph(PosX, 30, Number[TempScore], TRUE);
-	}*/
-	
 }
 
 int UI::GetGameOver()const
 {
 	return GameOver_Flg;
-}
-void UI::NowScore()const 
-{/*
-	int a;
-	int y = 12;
-	int x = 100;
-	int i;
-	for(a = 6 - 1; a > 0; a--)
-	{
-		i = TotalScore % 100;
-
-		DrawGraph(x, (y * 20), Number[i], 6);
-	}*/
-	
 }

@@ -89,17 +89,6 @@ void Bubble::Draw() const
 		if (ScoreFlg == TRUE) {
 			DrawGraph(MoveX - 15, MoveY - 50, BubbleScoreImg, TRUE);
 		}
-
-		//DrawBoxAA(MoveX - 20, MoveY - 20, MoveX + 20, MoveY + 20, GetColor(255, 255, 255), FALSE);
-		//DrawLine(MoveX - 20, MoveY - 15, MoveX - 20, MoveY + 15, GetColor(255, 0, 0), 1);		//ç∂
-		//DrawLine(MoveX + 20, MoveY - 15, MoveX + 20, MoveY + 15, GetColor(255, 0, 0), 1);		//âE
-		//DrawLine(MoveX - 20, MoveY - 15, MoveX + 20, MoveY - 15, GetColor(255, 255, 255), 1);	//è„
-		//DrawLine(MoveX - 20, MoveY + 15, MoveX + 20, MoveY + 15, GetColor(255, 255, 255), 1);	//â∫
-
-		//DrawFormatString(0, 400, GetColor(255, 255, 255), "X : %0.1f Y : %0.1f", PlayerX, PlayerY);
-		//DrawFormatString(0, 300, GetColor(255, 255, 255), "MoveX:%0.1f MoveY:%0.1f", MoveX, MoveY);
-		//DrawFormatString(0, 320, GetColor(255, 255, 255), "Bubbleflg:%d", Bubbleflg);
-		//DrawFormatString(0, 340, GetColor(255, 255, 255), "Bubble Hit:%d", H_flg);
 	}
 
 }
@@ -170,8 +159,4 @@ void Bubble::BubbleMove()
 		SpeedX -= 0.1f;
 		MoveX += -0.2f;
 	}
-
-	// 290 380
-
-	//if(MoveX )
 }

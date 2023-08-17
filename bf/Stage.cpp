@@ -395,10 +395,6 @@ void Stage::Update()
 
 void Stage::Draw() const
 {
-	//当たり判定の描画
-	DrawBox(location.x, location.y, location.x + erea.Width, location.y + erea.Height, 0x00ff00, FALSE);
-
 	//ステージ画像の描画
 	DrawGraph(location.x, location.y, StageImg, TRUE);
-
 }

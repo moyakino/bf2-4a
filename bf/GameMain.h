@@ -19,13 +19,10 @@ private:
 	int Cnt;
 	int DrawGameOver;
 
-	/*int MainBgm;*/
 	int StageSea;
 	int StageImg;
 	void CreateStage();
 	
-	//bool PauseFlashFlg;
-	//int PauseFlashTime;
 public:
 	static bool PauseFlg;
 	static int MainBgm;

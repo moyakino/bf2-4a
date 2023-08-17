@@ -151,12 +151,10 @@ void Fish::Draw() const
             if (PLAYER::F_TurnFlg == TRUE)
             {
                 DrawGraph(PlayerX, 390, Fish_ArrayImg[Fish_Img], TRUE);
-                //DrawBoxAA(fx1, 410, fx2, 500, GetColor(255, 255, 255), FALSE);
             }
             else {
                 if (PLAYER::F_TurnFlg == FALSE) {
                     DrawTurnGraph(PlayerX, 390, Fish_ArrayImg[Fish_Img], TRUE);
-                    //DrawBoxAA(fx1, 410, fx2, 500, GetColor(255, 255, 255), FALSE);
                 }
             }
 

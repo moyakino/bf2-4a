@@ -96,11 +96,6 @@ private:
     
 public:
 
-    ////Player  X座標用変数
-    //static float	E_Move_X;
-    ////Player  Y座標用変数
-    //static float	E_Move_Y;
-
     int H_Flg;
     static int EnemyBoundY;
 
@@ -113,7 +108,6 @@ public:
     // 描画処理を実装する
     void Draw() const;
 
-  /*  int Stand_by_Anim();*/
     void Start_Anim();
     void Fly_Anim();
 
@@ -121,18 +115,12 @@ public:
     void Enemy_Levitation_Move_Y();
     void Enemy_Just_Above();
 
-    //void Enemy_Gravity();
     void Enemy_Warp();
 
     void EnemybottomHit();
-
-    //bool Hit(BoxCollider* b_col);
 
     void BoundPlusX();
     void BoundMinusX();
     void BoundPlusY();
     void BoundMinusY();
-
-    //Location GetLocation() { return location; }
-
 };

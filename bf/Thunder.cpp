@@ -151,35 +151,21 @@ void Thunder::MoveBall()
 		}
 	}
 
-
-	//if (S_Seconas2 > 30)
+	// マウス左クリックでゲームスタート
+	//if (CheckHitKey(KEY_INPUT_1))
 	//{
-	//	S_Seconas2 = 0;
 	//	BallFlg = 1;
 	//	Speed = 2;
-	//	BallAngle = 0.625f;  //左上
+	//	BallAngle = 0.655f;  //左上
 	//	//BallAngle = 0.375f;  //左下
 	//	//BallAngle = 0.875f;  //右上
 	//	//BallAngle = 0.125f;  //右上
 	//	T_Effect_Flg = TRUE;
 	//	ChangeAngle();
 	//}
-
-	// マウス左クリックでゲームスタート
-	if (CheckHitKey(KEY_INPUT_1))
-	{
-		BallFlg = 1;
-		Speed = 2;
-		BallAngle = 0.655f;  //左上
-		//BallAngle = 0.375f;  //左下
-		//BallAngle = 0.875f;  //右上
-		//BallAngle = 0.125f;  //右上
-		T_Effect_Flg = TRUE;
-		ChangeAngle();
-	}
 	
 	// 2でリセット
-	if(CheckHitKey(KEY_INPUT_2))BallFlg = 2;
+	//if(CheckHitKey(KEY_INPUT_2))BallFlg = 2;
 		
 	//ボールの移動処理
 	if (BallFlg != 2) 
@@ -273,33 +259,9 @@ bool Thunder::StageHit(BoxCollider* b_col)
 	//当たり判定
 	if ((tx1 < sx2) && (sx1 < tx2) && (ty1 < sy2) && (ty2 > sy1))
 	{
-		////左
-		//if ((tx1 < sx2) && (sx1 > tx2 - (erea.Width / 4))) 
-		//{
-		//	BallAngle = (1 - BallAngle) + 0.5f;
-		//	if (BallAngle > 1) BallAngle -= 1.0f;
-		//	ChangeAngle();
-		//}
-
-		////右
-		//if((sx1 < tx2) && (sx2 < tx2 + (erea.Width / 4)))
-		//{
-		//	BallAngle = (1 - BallAngle) + 0.5f;
-		//	if (BallAngle > 1) BallAngle -= 1.0f;
-		//	ChangeAngle();
-		//}
-
 		BallAngle = (1 - BallAngle) + 0.5f;
 		if (BallAngle > 1) BallAngle -= 1.0f;
 		ChangeAngle();
-
-		////下
-		//if ((sy2 > ty1) && (sy2 < ty2 + (erea.Height / 4)))
-		//{
-		//	BallAngle = (1 - BallAngle)+0.5f;
-
-		//	ChangeAngle();
-		//}
 
 		//上
 		if ((sy1 < ty2) && (sy1 > sy1 - (erea.Height / 4)))
@@ -317,28 +279,6 @@ bool Thunder::StageHit(BoxCollider* b_col)
 int Thunder::Thunder_Anim()
 {
 	int T_AnimImg = 0;
-
-	// 0 から 5 秒
-	/*if (T_Thunder_Flg == TRUE) {
-		if (S_Seconas2 == 0) {
-			T_AnimImg = ThunderImg[THUNDER_ANIM1_0];
-		}
-		else if (S_Seconas2 > 0 && S_Seconas2 < 2) {
-			T_AnimImg = ThunderImg[THUNDER_ANIM1_1];
-		}
-		else if (S_Seconas2 > 1 && S_Seconas2 < 3) {
-			T_AnimImg = ThunderImg[THUNDER_ANIM1_2];
-		}
-		else if (S_Seconas2 > 2 && S_Seconas2 < 4) {
-			T_AnimImg = ThunderImg[THUNDER_ANIM1_3];
-		}
-		else if (S_Seconas2 > 3 && S_Seconas2 < 5) {
-			T_AnimImg = ThunderImg[THUNDER_ANIM1_4];
-		}
-		else if (S_Seconas2 > 4 && S_Seconas2 < 6) {
-			T_AnimImg = ThunderImg[THUNDER_ANIM1_5];
-		}
-	}*/
 
 	if (T_Thunder_Flg == TRUE) {
 
@@ -369,19 +309,6 @@ int Thunder::Effect_Anim()
 {
 	int E_AnimImg = 0;
 
-	//if (T_Effect_Flg == TRUE) {
-	//	// 5フレーム
-	//	if (S_FPS1 % 20 == 0 || S_FPS1 % 20 == 1 || S_FPS1 % 20 == 2 || S_FPS1 % 20 == 3 || S_FPS1 % 20 == 4) {
-	//		E_AnimImg = EffectImg[EFFECT_ANIM1_0];
-	//	}
-	//	else if (S_FPS1 % 20 == 5 || S_FPS1 % 20 == 6 || S_FPS1 % 20 == 7 || S_FPS1 % 20 == 8 || S_FPS1 % 20 == 9) {
-	//		E_AnimImg = EffectImg[EFFECT_ANIM1_1];
-	//	}
-	//	else if (S_FPS1 % 20 == 10 || S_FPS1 % 20 == 11 || S_FPS1 % 20 == 12 || S_FPS1 % 20 == 13 || S_FPS1 % 20 == 14) {
-	//		E_AnimImg = EffectImg[EFFECT_ANIM1_2];
-	//	}
-	//}
-
 	if (T_Effect_Flg == TRUE) {
 
 		if (S_FPS1 >= 0 && S_FPS1 < 10) {
@@ -401,17 +328,6 @@ int Thunder::Effect_Anim()
 int Thunder::Cloud_Anim()
 {
 	int C_AnimImg = 0;
-
-	// 0 から 3 秒
-	/*if (S_Seconas2 == 0) {
-		C_AnimImg = Cloud_AnimImg[CLOUD_ANIM1_0];
-	}
-	else if (S_Seconas2 > 0 && S_Seconas1 < 2) {
-		C_AnimImg = Cloud_AnimImg[CLOUD_ANIM1_1];
-	}
-	else if (S_Seconas2 > 1 && S_Seconas1 < 3) {
-		C_AnimImg = Cloud_AnimImg[CLOUD_ANIM1_2];
-	}*/
 
 	if (T_Cloud_Flg == TRUE) {
 
@@ -437,25 +353,11 @@ void Thunder::Draw() const
 
 	//ポーズ画面じゃないとき描写
 	if (GameMain::PauseFlg == FALSE) {
-	//雷（稲光）の表示
-	DrawGraph(400, 100, T_Img, TRUE);
 
-	if (BallFlg == 0) {
+		if (BallFlg == 0) {
 		//雷（雷の弾）の表示
 		DrawGraph(BallX, BallY, E_Img, TRUE);
-	}
-
-	//DrawFormatString(0, 280, GetColor(255, 255, 255), " 雷 Hit! :%d", HitFlg);
-
-	//DrawFormatString(0, 300, GetColor(255, 255, 255), " 雷発生 :%d", S_Seconas2);
-	//DrawFormatString(0, 320, GetColor(255, 255, 255), " BallFlg :%d", BallFlg);
-
-	//DrawBox(BallX + 2, BallY + 4, BallX + 28, BallY + 26, GetColor(255, 0, 0), FALSE);
-
-	/*DrawLine(BallX + 2, BallY + 4, BallX + 2, BallY + 26, GetColor(255, 0, 0), 1);
-	DrawLine(BallX + 28, BallY + 4, BallX + 28, BallY + 26, GetColor(255, 0, 0), 1);
-	DrawLine(BallX + 2, BallY + 4, BallX + 28, BallY + 4, GetColor(255, 255, 255), 1);
-	DrawLine(BallX + 2, BallY + 26, BallX + 28, BallY + 26, GetColor(255, 255, 255), 1);*/
+		}
 
 	}
 }
