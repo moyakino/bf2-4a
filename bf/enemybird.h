@@ -91,6 +91,12 @@ private:
     int x1, x2, y1, y2;
 
     int EnemyFlyFlg;
+
+    //SE
+    int EnemyMoveSE;
+    int ParachuteSE;
+    int CrackSE;
+    
     int EnemyHit;
     
     

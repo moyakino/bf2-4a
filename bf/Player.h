@@ -91,9 +91,9 @@ private:
 	int		F_Seconas1;			//魚用秒数
 	int		rand;				//魚用確率
 
-    int		P_Jump_SE;
-	int		P_Respawn_BGM;
-	int		Fish_SE;
+    int  P_Jump_SE;
+	int  P_Respawn_BGM;
+
 	
 public:
 	
@@ -104,6 +104,7 @@ public:
 	static	int		PlayerLife;		//Playerの残機用
 	static	int		FishHit;		//魚に当たったか？
 	static	int		FishDeath;		//魚用死亡判定
+	static	int		zanki;
 
 	static int		FishFlg;		//魚用フラグ
 	static	int		F_TurnFlg;		//魚用画像左右反転フラグ

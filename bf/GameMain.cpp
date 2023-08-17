@@ -102,8 +102,7 @@ AbstractScene* GameMain::Update()
 
 	for (int j = 0; j < 3; j++){
 		Enemy[j]->Update(player->GetLocation().x, player->GetLocation().y);
-	}
-	
+	}	
 
 	// Xƒ{ƒ^ƒ“’P‰Ÿ‚µ
 	int X_Btn = PAD_INPUT::OnButton(XINPUT_BUTTON_X);

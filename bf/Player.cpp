@@ -83,7 +83,7 @@ PLAYER::PLAYER()
     CheckSoundMem(UI::GameOver_BGM);
     P_Jump_SE = LoadSoundMem("sounds/SE_PlayerJump.wav");
     P_Respawn_BGM = LoadSoundMem("sounds/SE_Restart.wav");
-    Fish_SE = LoadSoundMem("sounds / SE_Eatable.wav");
+   
 }
 
 void PLAYER::Update()
