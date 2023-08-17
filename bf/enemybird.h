@@ -97,6 +97,9 @@ private:
     int ParachuteSE;
     int CrackSE;
     
+    int EnemyHit;
+    
+    
 public:
 
     ////Player  X座標用変数
@@ -105,7 +108,7 @@ public:
     //static float	E_Move_Y;
 
     int H_Flg;
-
+    static int EnemyBoundY;
 
     //コンストラクタ
     EnemyBird(int num,int i);
@@ -115,11 +118,6 @@ public:
     void Update(float x, float y);
     // 描画処理を実装する
     void Draw() const;
-    //地面に立たせる
-    void Stand_Foot();
-
-    int  Balloon_Anim(void);
-    //空中で移動しているときのアニメーション
 
   /*  int Stand_by_Anim();*/
     void Start_Anim();
@@ -129,8 +127,10 @@ public:
     void Enemy_Levitation_Move_Y();
     void Enemy_Just_Above();
 
-    void Enemy_Gravity();
+    //void Enemy_Gravity();
     void Enemy_Warp();
+
+    void EnemybottomHit();
 
     //bool Hit(BoxCollider* b_col);
 
@@ -139,5 +139,6 @@ public:
     void BoundPlusY();
     void BoundMinusY();
 
+    //Location GetLocation() { return location; }
 
 };

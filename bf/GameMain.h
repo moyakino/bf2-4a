@@ -21,7 +21,7 @@ private:
 
 	/*int MainBgm;*/
 	int StageSea;
-
+	int StageImg;
 	void CreateStage();
 	
 	//bool PauseFlashFlg;

@@ -83,12 +83,12 @@ PLAYER::PLAYER()
     CheckSoundMem(UI::GameOver_BGM);
     P_Jump_SE = LoadSoundMem("sounds/SE_PlayerJump.wav");
     P_Respawn_BGM = LoadSoundMem("sounds/SE_Restart.wav");
-    
+    Fish_SE = LoadSoundMem("sounds / SE_Eatable.wav");
 }
 
 void PLAYER::Update()
 {
-  
+    
     //フレーム取得
     P_FPS++;
 
@@ -108,7 +108,7 @@ void PLAYER::Update()
     P_A_Btn = PAD_INPUT::OnButton(XINPUT_BUTTON_A);
 
     //Yボタン単押し
-    P_Y_Btn = PAD_INPUT::OnButton(XINPUT_BUTTON_Y);
+    //P_Y_Btn = PAD_INPUT::OnButton(XINPUT_BUTTON_Y);
 
     // Bボタン長押し
     P_B_Btn = PAD_INPUT::OnPressed(XINPUT_BUTTON_B);
@@ -622,7 +622,6 @@ void PLAYER::Fish_Respawn()
     }
     //魚にあたったときリスポーン
     if (Fish::FishEatP_flg == TRUE) {
-       
         if (Fish::F_Seconds2 == 8) {
                 FishHit += 1;
                 FishDeath = TRUE;
@@ -884,7 +883,7 @@ void PLAYER::Draw()const
 
         //DrawFormatString(0, 320, GetColor(255, 255, 255), " zanki ： %d ", zanki); 
         //DrawFormatString(0, 160, GetColor(255, 255, 255), " やられ   Beaten_Flg ： %d ", Beaten_Flg);
-        //DrawFormatString(0, 180, GetColor(255, 255, 255), " 風船   Thunder::HitFlg  ： %d ", Thunder::HitFlg);
+        DrawFormatString(0, 180, GetColor(255, 255, 255), " 風船   FishHit  ： %d ", FishHit);
 
         DrawFormatString(0, 240, GetColor(255, 255, 255), " P_YSpeed :%0.1f ", P_YSpeed);
         DrawFormatString(0, 260, GetColor(255, 255, 255), " P_XSpeed :%0.1f ", P_XSpeed);

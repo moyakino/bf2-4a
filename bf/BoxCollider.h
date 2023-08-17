@@ -35,6 +35,7 @@ public:
 	//Box‚Ìã‚É—§‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ğ”»’è‚·‚é
 	bool TopBoxCollider(BoxCollider* b_col);
 
+	int BubbleHit(BoxCollider* bubble);
 
 	Location GetLocation();
 	Erea GetErea();

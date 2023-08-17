@@ -1,4 +1,5 @@
 #include "BoxCollider.h"
+#include "Player.h"
 
 bool BoxCollider::HitCollider(BoxCollider* b_col)
 {
@@ -21,7 +22,8 @@ bool BoxCollider::HitCollider(BoxCollider* b_col)
 	{
 		re = true;
 	}
-
+	
+	//ステージ
 	stage_x1 = sx1;
 	box_x1 = px1;
 
@@ -46,6 +48,18 @@ bool BoxCollider::TopBoxCollider(BoxCollider* b_col)
 
 	return re;
 }
+
+//int BoxCollider::BubbleHit(BoxCollider* bubble) {
+//
+//	bool Hit = false;
+//
+//	float px1 = PLAYER::P_Move_X;
+//	float px2 = PLAYER::P_Move_X + 64;
+//	/*float py1 = PLAYER::P_Move_Y;*/
+//	float py2 = PLAYER::P_Move_Y + 64;
+//
+//	float p_uc = (px1 + px2) / 2;
+//}
 
 Location BoxCollider::GetLocation()
 {

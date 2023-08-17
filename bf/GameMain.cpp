@@ -89,6 +89,8 @@ AbstractScene* GameMain::Update()
 			}
 		}
 
+	}
+
 	//stage->Update();
 	player->Update();
 	fish->Update(player->GetLocation().x, player->GetLocation().y);
@@ -109,10 +111,11 @@ AbstractScene* GameMain::Update()
 		if (fps % 2 == 0)
 		{
 			++Snum;
-	
+			UI::i++;
 			//ƒŠƒZƒbƒg
 			if (Snum > 4) {
 				Snum = 0;
+				UI::i = 1;
 			}
 			CreateStage();
 		}
@@ -173,11 +176,14 @@ AbstractScene* GameMain::Update()
 				player->BoundMinusX();
 				Enemy[j]->BoundPlusX();
 
-				////ƒvƒŒƒCƒ„[‚ª“G‚æ‚èã
-				//if (player->GetLocation().y < enemybird->GetLocation().y + 25)
-				//{
-
-				//}
+				//ƒvƒŒƒCƒ„[‚ª“G‚æ‚èã
+				/*if (player->GetLocation().y < enemybird->GetLocation().y + 25)
+				{
+					enemybird->EnemyBoundY = TRUE;
+				}
+				else {
+					enemybird->EnemyBoundY = FALSE;
+				}*/
 
 				////ƒvƒŒƒCƒ„[‚ª“G‚æ‚è‰º
 				//if (player->GetLocation().y > enemybird->GetLocation().y + 25)
@@ -335,14 +341,14 @@ AbstractScene* GameMain::Update()
 		break;
 	}
 
-		if (fps > 59) {
-			fps = 0;
-		}
-
+	if (fps > 59) {
+		fps = 0;
 	}
+
 	return this;
-	
 }
+	
+	
 
 //“GEƒXƒe[ƒW‚Ì¶¬
 void GameMain::CreateStage()
@@ -416,10 +422,12 @@ void GameMain::Draw()const
 			StageFoot[i]->Draw();
 		}
 
-		//“G‚Ì•`‰æ
-		for (int j = 0; j < 3; j++)
-		{
-			Enemy[j]->Draw();
+		if (DrawGameOver == FALSE) {
+			//“G‚Ì•`‰æ
+			for (int j = 0; j < 3; j++)
+			{
+				Enemy[j]->Draw();
+			}
 		}
 		break;
 		

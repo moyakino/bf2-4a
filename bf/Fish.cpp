@@ -21,8 +21,7 @@ Fish::Fish()
 	if (LoadDivGraph("images/Enemy/Enemy_FishAnimation.png", 10, 5, 2, 64, 64, Fish_ArrayImg)) {}
     ChengeImg = 0;
     FishEatP_flg = FALSE;
-    Fish_SE = LoadSoundMem("sounds / SE_Eatable.wav");
-    CheckSoundMem(Fish_SE);
+    
    
 }
 
@@ -88,7 +87,7 @@ void Fish::Update(int x,int y)
                 }
                 //playerïﬂêH
                 if (FishEatP_flg == TRUE) {
-                   
+                    
                     if (F_Seconds2 == 0) {
                         Fish_Img = 0;
                     }
