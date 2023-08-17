@@ -11,6 +11,19 @@ EnemyBird::EnemyBird(int num,int i)
 	if (LoadDivGraph("images/Enemy/Enemy_G_Animation.png", 18, 6, 3, 64, 64, E_ArrayImg_G)) {}
 	if (LoadDivGraph("images/Enemy/Enemy_R_Animation.png", 18, 6, 3, 64, 64, E_ArrayImg_R)) {}
 
+    //SE‚Ì“Çž
+    if ((EnemyMoveSE = LoadSoundMem("sounds/SE_EnemyMove.wav")) == -1)
+    {
+        throw "sounds/SE_EnemyMove.wav";
+    }
+    if ((ParachuteSE = LoadSoundMem("sounds/SE_parachute.wav")) == -1)
+    {
+        throw "sounds/SE_parachute.wav";
+    }
+    if ((CrackSE = LoadSoundMem("sounds/SE_crack.wav")) == -1)
+    {
+        throw "sounds/SE_crack.wav";
+    }
     //“G‚Ì¶¬
     switch (num)
     {
@@ -91,6 +104,7 @@ EnemyBird::EnemyBird(int num,int i)
 
 EnemyBird::~EnemyBird()
 {
+    StopSoundMem(EnemyMoveSE);
 
 }
 
@@ -98,6 +112,7 @@ void EnemyBird::Update(float x,float y)
 {
     E_FPS++;
 
+  
     /*if (E_Second == 12) {
         PlayerX = x;
         PlayerY = y;
@@ -115,6 +130,10 @@ void EnemyBird::Update(float x,float y)
     //Hit();
     
     if (EnemyFlyFlg == TRUE) {
+        if (CheckSoundMem(EnemyMoveSE) == 0)
+        {
+            PlaySoundMem(EnemyMoveSE, DX_PLAYTYPE_LOOP, FALSE);
+        }
         Fly_Anim();
         Enemy_Levitation_Move_Y();
         Enemy_Levitation_Move_X();
@@ -247,6 +266,7 @@ void EnemyBird::Enemy_Levitation_Move_X()
                 }
                 EnemyState = ENEMY_STATE::FLY_RIGHT;
             }
+      
         }
 
         location.x += SpeedX;
@@ -256,6 +276,7 @@ void EnemyBird::Enemy_Levitation_Move_X()
 //ã‚É”ò‚Ô‚¾‚¯
 void EnemyBird::Enemy_Levitation_Move_Y()
 {
+    
     //Player‚ª“G‚æ‚èã‚É‚¢‚é‚Æ‚«‚Íã¸‚µA‰º‚É‚¢‚é‚Æ‚«‚Íã¸‚ð‚â‚ß‚é ã¸‚ð‚â‚ß‚é‚Ì‚Íd—Í‚ª‚©‚©‚é‚Á‚Ä‚±‚ÆH
     if (location.y >  PlayerY) {
         if (E_FPS % 10 == 0) {
@@ -319,6 +340,7 @@ void EnemyBird::Fly_Anim()
             Cnt = 9;
         }
     }
+
 
     E_Img = E_ArrayImg_P[Cnt];
 
