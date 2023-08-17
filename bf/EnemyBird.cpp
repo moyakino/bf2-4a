@@ -207,43 +207,48 @@ void EnemyBird::Hit()
 
 void EnemyBird::Draw() const
 {
-    DrawGraphF(E_Move_X, E_Move_Y, E_ArrayImg_P[0], TRUE);
+    //ポーズ画面じゃないとき描写
+    if (GameMain::PauseFlg == FALSE) {
 
-    ////敵の当たり判定
-    //DrawBox(E_Move_X + 30, E_Move_Y + 37, E_Move_X + 35, E_Move_Y + 65, GetColor(255, 255, 255), FALSE);
-    //DrawFormatStringF(0, 160, GetColor(255, 255, 255), " enemy座標：X座標 %0.1f Y座標 %0.1f", E_Move_X, E_Move_Y);
+        DrawGraphF(E_Move_X, E_Move_Y, E_ArrayImg_P[0], TRUE);
 
-    ////風船の当たり判定
-    //DrawBox(E_Move_X + 15, E_Move_Y + 5, E_Move_X + 59, E_Move_Y + 37, GetColor(255, 255, 255), FALSE);
-    //DrawBox(ex1, ey1, ex2, ey2, GetColor(255, 0, 0), FALSE);
-    // 
-    //敵の当たり判定
-    DrawLine(E_Move_X + 10, E_Move_Y + 35, E_Move_X + 10, E_Move_Y + 65, GetColor(255, 0, 0), 1);		//左
-    DrawLine(E_Move_X + 55, E_Move_Y + 35, E_Move_X + 55, E_Move_Y + 65, GetColor(255, 0, 0), 1);		//右
-    DrawLine(E_Move_X + 10, E_Move_Y + 35, E_Move_X + 55, E_Move_Y + 35, GetColor(255, 255, 255), 1);	//上
-    DrawLine(E_Move_X + 15, E_Move_Y + 65, E_Move_X + 50, E_Move_Y + 65, GetColor(255, 255, 255), 1);	//下
-    //風船の当たり判定
-    DrawLine(E_Move_X + 15, E_Move_Y + 10, E_Move_X +15, E_Move_Y + 35, GetColor(255, 255, 0), 1);		//左
-    DrawLine(E_Move_X + 50, E_Move_Y + 10, E_Move_X + 50, E_Move_Y + 35, GetColor(255, 255, 0), 1);		//右
-    DrawLine(E_Move_X + 5, E_Move_Y + 10, E_Move_X + 60, E_Move_Y + 10, GetColor(255, 255, 255), 1);	//上
-    DrawLine(E_Move_X + 5, E_Move_Y + 68, E_Move_X + 60, E_Move_Y + 68, GetColor(255, 255, 255), 1);	//下
+        ////敵の当たり判定
+        //DrawBox(E_Move_X + 30, E_Move_Y + 37, E_Move_X + 35, E_Move_Y + 65, GetColor(255, 255, 255), FALSE);
+        //DrawFormatStringF(0, 160, GetColor(255, 255, 255), " enemy座標：X座標 %0.1f Y座標 %0.1f", E_Move_X, E_Move_Y);
 
-    switch (EnemyState)
-    {
-    case  ENEMY_STATE::START:
-        DrawGraphF(E_Move_X, E_Move_Y, E_ArrayImg_P[Cnt], TRUE);
-        break;
-    case  ENEMY_STATE::FLY_LEFT:
-        DrawGraphF(E_Move_X, E_Move_Y, E_ArrayImg_P[Cnt], TRUE);
-        break;
-    case  ENEMY_STATE::FLY_RIGHT:
-        DrawGraphF(E_Move_X, E_Move_Y, E_ArrayImg_P[Cnt], TRUE);
-        break;
-    case  ENEMY_STATE::FALL:
-        DrawGraphF(E_Move_X, E_Move_Y, E_ArrayImg_P[Cnt], TRUE);
-        break;
-    case  ENEMY_STATE::WAIT:
-        DrawGraphF(E_Move_X, E_Move_Y, E_ArrayImg_P[Cnt], TRUE);
-        break;
+        ////風船の当たり判定
+        //DrawBox(E_Move_X + 15, E_Move_Y + 5, E_Move_X + 59, E_Move_Y + 37, GetColor(255, 255, 255), FALSE);
+        //DrawBox(ex1, ey1, ex2, ey2, GetColor(255, 0, 0), FALSE);
+        // 
+        //敵の当たり判定
+        DrawLine(E_Move_X + 10, E_Move_Y + 35, E_Move_X + 10, E_Move_Y + 65, GetColor(255, 0, 0), 1);		//左
+        DrawLine(E_Move_X + 55, E_Move_Y + 35, E_Move_X + 55, E_Move_Y + 65, GetColor(255, 0, 0), 1);		//右
+        DrawLine(E_Move_X + 10, E_Move_Y + 35, E_Move_X + 55, E_Move_Y + 35, GetColor(255, 255, 255), 1);	//上
+        DrawLine(E_Move_X + 15, E_Move_Y + 65, E_Move_X + 50, E_Move_Y + 65, GetColor(255, 255, 255), 1);	//下
+        //風船の当たり判定
+        DrawLine(E_Move_X + 15, E_Move_Y + 10, E_Move_X + 15, E_Move_Y + 35, GetColor(255, 255, 0), 1);		//左
+        DrawLine(E_Move_X + 50, E_Move_Y + 10, E_Move_X + 50, E_Move_Y + 35, GetColor(255, 255, 0), 1);		//右
+        DrawLine(E_Move_X + 5, E_Move_Y + 10, E_Move_X + 60, E_Move_Y + 10, GetColor(255, 255, 255), 1);	//上
+        DrawLine(E_Move_X + 5, E_Move_Y + 68, E_Move_X + 60, E_Move_Y + 68, GetColor(255, 255, 255), 1);	//下
+
+
+        switch (EnemyState)
+        {
+        case  ENEMY_STATE::START:
+            DrawGraphF(E_Move_X, E_Move_Y, E_ArrayImg_P[Cnt], TRUE);
+            break;
+        case  ENEMY_STATE::FLY_LEFT:
+            DrawGraphF(E_Move_X, E_Move_Y, E_ArrayImg_P[Cnt], TRUE);
+            break;
+        case  ENEMY_STATE::FLY_RIGHT:
+            DrawGraphF(E_Move_X, E_Move_Y, E_ArrayImg_P[Cnt], TRUE);
+            break;
+        case  ENEMY_STATE::FALL:
+            DrawGraphF(E_Move_X, E_Move_Y, E_ArrayImg_P[Cnt], TRUE);
+            break;
+        case  ENEMY_STATE::WAIT:
+            DrawGraphF(E_Move_X, E_Move_Y, E_ArrayImg_P[Cnt], TRUE);
+            break;
+        }
     }
 }
