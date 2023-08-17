@@ -17,16 +17,21 @@ GameMain::GameMain()
 	player = new PLAYER();
 	bubble = new Bubble();
 	fish = new Fish();
-	enemybird = new EnemyBird();
+	//enemybird = new EnemyBird();
 	//bubble = new Bubble();
 	//stage = new Stage();
 	thunder = new Thunder();
 
 	Snum = 0;
 
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		StageFoot[i] = new Stage(Snum, i);
+	}
+
+	for (int j = 0; j < 3; j++)
+	{
+		Enemy[j] = new EnemyBird(Snum, j);
 	}
 
 }
@@ -66,7 +71,7 @@ AbstractScene* GameMain::Update()
 	ui->Update();
 	bubble->Update(player->GetLocation().x, player->GetLocation().y);
 	fish->Update(player->GetLocation().x , player->GetLocation().y);
-	enemybird->Update(player->GetLocation().x, player->GetLocation().y);
+	//enemybird->Update(player->GetLocation().x, player->GetLocation().y);
 	thunder->Update(player->GetLocation().x, player->GetLocation().y);
 
 
@@ -94,8 +99,11 @@ AbstractScene* GameMain::Update()
 	//当たり判定
 	switch (Snum)
 	{
-	case 0:
-		for (int i = 0; i < 3; i++){
+	case 0:	//1面
+
+		//足場の当たり判定
+		for (int i = 0; i < 4; i++)
+		{
 			//プレイヤーが足場に当たっているか
 			if (StageFoot[i]->HitCollider(player) == true){
 				//かつ、足場の上に立っているかどうか
@@ -105,25 +113,72 @@ AbstractScene* GameMain::Update()
 				}
 			}
 
-			//跳ね返りの判定
+			//プレイヤーの跳ね返りの判定
 			if (StageFoot[i]->TopBoxCollider(player) != true){
 				player->CheckBound(StageFoot[i]);
 			}
 		}
 
-		if (TouchFlg == true)
-		{
+		//足場の上に立っていたらStandFlgをTRUEにする
+		if (TouchFlg == true){
 			player->P_Stand_Flg = TRUE;
-		}	
-		if (TouchFlg == false)
-		{
+		}
+
+		//足場の上に立っていなかったらStandFlgをFALSEにする
+		if (TouchFlg == false){
 			player->P_Stand_Flg = FALSE;
+		}
+
+		//敵の当たり判定
+		for (int j = 0; j < 3; j++)
+		{
+			switch (player->EnemyCollider(Enemy[j]))
+			{
+			case 1://左にあたったとき
+
+				//敵が待機状態以外の時は跳ね返るif文を書く
+
+				player->BoundMinusX();
+				Enemy[j]->BoundPlusX();
+
+				////プレイヤーが敵より上
+				//if (player->GetLocation().y < enemybird->GetLocation().y + 25)
+				//{
+
+				//}
+
+				////プレイヤーが敵より下
+				//if (player->GetLocation().y > enemybird->GetLocation().y + 25)
+				//{
+
+				//}
+
+				break;
+
+			case 2://右にあたったとき
+				player->BoundPlusX();
+				Enemy[j]->BoundMinusX();
+				break;
+
+			case 3://上にあたったとき
+				player->BoundMinusY();
+				Enemy[j]->BoundPlusY();
+				break;
+
+			case 4://下にあたったとき
+				player->BoundPlusY();
+				Enemy[j]->BoundMinusY();
+				break;
+			}
 		}
 
 		break;
 
-	case 1:
-		for (int i = 0; i < 5; i++) {
+	case 1:	//2面
+
+		//足場の当たり判定
+		for (int i = 0; i < 6; i++) 
+		{
 			//プレイヤーが足場に当たっているか
 			if (StageFoot[i]->HitCollider(player) == true) {
 				//かつ、足場の上に立っているかどうか
@@ -133,25 +188,29 @@ AbstractScene* GameMain::Update()
 				}
 			}
 
-			//跳ね返りの判定
+			//プレイヤーの跳ね返りの判定
 			if (StageFoot[i]->TopBoxCollider(player) != true) {
 				player->CheckBound(StageFoot[i]);
 			}
 		}
 
-		if (TouchFlg == true)
-		{
+		//足場の上に立っていたらStandFlgをTRUEにする
+		if (TouchFlg == true){
 			player->P_Stand_Flg = TRUE;
 		}
-		if (TouchFlg == false)
-		{
+
+		//足場の上に立っていなかったらStandFlgをFALSEにする
+		if (TouchFlg == false){
 			player->P_Stand_Flg = FALSE;
 		}
 
 		break;
 
-	case 2:
-		for (int i = 0; i < 10; i++) {
+	case 2:	//3面
+
+		//足場の当たり判定
+		for (int i = 0; i < 11; i++) 
+		{
 			//プレイヤーが足場に当たっているか
 			if (StageFoot[i]->HitCollider(player) == true) {
 				//かつ、足場の上に立っているかどうか
@@ -161,25 +220,29 @@ AbstractScene* GameMain::Update()
 				}
 			}
 
-			//跳ね返りの判定
+			//プレイヤーの跳ね返りの判定
 			if (StageFoot[i]->TopBoxCollider(player) != true) {
 				player->CheckBound(StageFoot[i]);
 			}
 		}
 
-		if (TouchFlg == true)
-		{
+		//足場の上に立っていたらStandFlgをTRUEにする
+		if (TouchFlg == true){
 			player->P_Stand_Flg = TRUE;
 		}
-		if (TouchFlg == false)
-		{
+
+		//足場の上に立っていなかったらStandFlgをFALSEにする
+		if (TouchFlg == false){
 			player->P_Stand_Flg = FALSE;
 		}
 
 		break;
 
-	case 3:
-		for (int i = 0; i < 7; i++) {
+	case 3:	//4面
+
+		//足場の当たり判定
+		for (int i = 0; i < 8; i++) 
+		{
 			//プレイヤーが足場に当たっているか
 			if (StageFoot[i]->HitCollider(player) == true) {
 				//かつ、足場の上に立っているかどうか
@@ -189,25 +252,29 @@ AbstractScene* GameMain::Update()
 				}
 			}
 
-			//跳ね返りの判定
+			//プレイヤーの跳ね返りの判定
 			if (StageFoot[i]->TopBoxCollider(player) != true) {
 				player->CheckBound(StageFoot[i]);
 			}
 		}
 
-		if (TouchFlg == true)
-		{
+		//足場の上に立っていたらStandFlgをTRUEにする
+		if (TouchFlg == true){
 			player->P_Stand_Flg = TRUE;
 		}
-		if (TouchFlg == false)
-		{
+
+		//足場の上に立っていなかったらStandFlgをFALSEにする
+		if (TouchFlg == false){
 			player->P_Stand_Flg = FALSE;
 		}
 
 		break;
 
-	case 4:
-		for (int i = 0; i < 8; i++) {
+	case 4:	//5面
+
+		//足場の当たり判定
+		for (int i = 0; i < 9; i++) 
+		{
 			//プレイヤーが足場に当たっているか
 			if (StageFoot[i]->HitCollider(player) == true) {
 				//かつ、足場の上に立っているかどうか
@@ -217,18 +284,19 @@ AbstractScene* GameMain::Update()
 				}
 			}
 
-			//跳ね返りの判定
+			//プレイヤーの跳ね返りの判定
 			if (StageFoot[i]->TopBoxCollider(player) != true) {
 				player->CheckBound(StageFoot[i]);
 			}
 		}
 
-		if (TouchFlg == true)
-		{
+		//足場の上に立っていたらStandFlgをTRUEにする
+		if (TouchFlg == true){
 			player->P_Stand_Flg = TRUE;
 		}
-		if (TouchFlg == false)
-		{
+
+		//足場の上に立っていなかったらStandFlgをFALSEにする
+		if (TouchFlg == false){
 			player->P_Stand_Flg = FALSE;
 		}
 		break;
@@ -242,41 +310,58 @@ AbstractScene* GameMain::Update()
 	return this;
 }
 
+//敵・ステージの生成
 void GameMain::CreateStage()
 {
-	//ステージの生成
 	switch (Snum)
 	{
-	case 0:
-		for (int i = 0; i < 3; i++)
+	case 0:	//1面
+
+		//ステージの生成
+		for (int i = 0; i < 4; i++)
+		{
+			StageFoot[i] = new Stage(Snum, i);
+		}
+
+		//敵の生成
+		for (int j = 0; j < 3; j++)
+		{
+			Enemy[j] = new EnemyBird(Snum, j);
+		}
+
+		break;
+
+	case 1:	//2面
+
+		//ステージの生成
+		for (int i = 0; i < 6; i++)
 		{
 			StageFoot[i] = new Stage(Snum, i);
 		}
 		break;
 
-	case 1:
-		for (int i = 0; i < 5; i++)
+	case 2:	//3面
+
+		//ステージの生成
+		for (int i = 0; i < 11; i++)
 		{
 			StageFoot[i] = new Stage(Snum, i);
 		}
 		break;
 
-	case 2:
-		for (int i = 0; i < 10; i++)
-		{
-			StageFoot[i] = new Stage(Snum, i);
-		}
-		break;
+	case 3:	//4面
 
-	case 3:
-		for (int i = 0; i < 7; i++)
-		{
-			StageFoot[i] = new Stage(Snum, i);
-		}
-		break;
-
-	case 4:
+		//ステージの生成
 		for (int i = 0; i < 8; i++)
+		{
+			StageFoot[i] = new Stage(Snum, i);
+		}
+		break;
+
+	case 4:	//5面
+
+		//ステージの生成
+		for (int i = 0; i < 9; i++)
 		{
 			StageFoot[i] = new Stage(Snum, i);
 		}
@@ -286,39 +371,55 @@ void GameMain::CreateStage()
 
 void GameMain::Draw()const
 {
-	//ステージの描画
+	//描画
 	switch (Snum)
 	{
-	case 0:
-		for (int i = 0; i < 3; i++)
+	case 0:	//1面
+
+		//ステージの描画
+		for (int i = 0; i < 4; i++)
 		{
 			StageFoot[i]->Draw();
+		}
+
+		//敵の描画
+		for (int j = 0; j < 3; j++)
+		{
+			Enemy[j]->Draw();
 		}
 		break;
 		
-	case 1:
-		for (int i = 0; i < 5; i++)
+	case 1:	//2面
+
+		//ステージの描画
+		for (int i = 0; i < 6; i++)
 		{
 			StageFoot[i]->Draw();
 		}
 		break;
 
-	case 2:
-		for (int i = 0; i < 10; i++)
+	case 2:	//3面
+
+		//ステージの描画
+		for (int i = 0; i < 11; i++)
 		{
 			StageFoot[i]->Draw();
 		}
 		break;
 
-	case 3:
-		for (int i = 0; i < 7; i++)
-		{
-			StageFoot[i]->Draw();
-		}
-		break;
+	case 3:	//4面
 
-	case 4:
+		//ステージの描画
 		for (int i = 0; i < 8; i++)
+		{
+			StageFoot[i]->Draw();
+		}
+		break;
+
+	case 4:	//5面
+
+		//ステージの描画
+		for (int i = 0; i < 9; i++)
 		{
 			StageFoot[i]->Draw();
 
@@ -333,10 +434,13 @@ void GameMain::Draw()const
 
 	//stage->Draw();
 	
+	DrawFormatString(0, 50, GetColor(255, 0, 0), "%d",player->EnemyCollider(Enemy[0]));
+
+
 	ui->Draw();
 
 	if (DrawGameOver == FALSE) {
-		enemybird->Draw();
+		//enemybird->Draw();
 		bubble->Draw();
 		thunder->Draw();
 		player->Draw();

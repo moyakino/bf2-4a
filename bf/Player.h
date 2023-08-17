@@ -160,14 +160,24 @@ public:
 	//Playerが地面についているかを取る
 	void Stand_Foot();
 
-	void SetStandFlg(bool b) { P_Stand_Flg = b; }
 
+	//下方向へ跳ね返る処理
 	void BoundPlusX();
+
+	//上方向へ跳ね返る処理
 	void BoundMinusX();
+
+	//右方向へ跳ね返る処理
 	void BoundPlusY();
+
+	//左方向へ跳ね返る処理
 	void BoundMinusY();
 
-	int CheckBound(BoxCollider* b_col);
+	//プレイヤーが跳ね返る処理
+	void CheckBound(BoxCollider* b_col);
+
+	//プレイヤーと敵の当たり判定
+	int EnemyCollider(BoxCollider* b_col);
 
 	Location GetLocation() { return location; }
 

@@ -5,16 +5,51 @@
 #include"PadInput.h"
 #include<math.h>
 
-EnemyBird::EnemyBird()
-
+EnemyBird::EnemyBird(int num,int i)
 {
 	if (LoadDivGraph("images/Enemy/Enemy_P_Animation.png", 18, 6, 3, 64, 64, E_ArrayImg_P)) {}
 	if (LoadDivGraph("images/Enemy/Enemy_G_Animation.png", 18, 6, 3, 64, 64, E_ArrayImg_G)) {}
 	if (LoadDivGraph("images/Enemy/Enemy_R_Animation.png", 18, 6, 3, 64, 64, E_ArrayImg_R)) {}
 
+    //敵の生成
+    switch (num)
+    {
+    case 0:
+        switch (i)
+        {
+        case 0:
+            location.x = 200.0f;
+            location.y = 220.0f;
+            erea.Width = 35;
+            erea.Height = 50;
+            E_Img = E_ArrayImg_P[0];
+            break;
+
+        case 1:
+            location.x = 280.0f;
+            location.y = 220.0f;
+            erea.Width = 35;
+            erea.Height = 50;
+            E_Img = E_ArrayImg_P[0];
+            break;
+
+        case 2:
+            location.x = 360.0f;
+            location.y = 220.0f;
+            erea.Width = 35;
+            erea.Height = 50;
+            E_Img = E_ArrayImg_P[0];
+            break;
+        }
+
+        break;
+
+    case 1:
+        break;
+    }
+
     E_AnimImg = 0;
-    E_Move_X = 200.0f;
-    E_Move_Y = 220.0f;
+
 
     E_Balloon_Flg = 1;
   /*  E_TurnFlg = TRUE;*/
@@ -48,11 +83,11 @@ EnemyBird::EnemyBird()
     E_Balloon_Flg = 0;
     EnemyState = ENEMY_STATE::START;
 
-    location = 0;
-
     PlayerX = 0, PlayerY = 0;
 
     H_Flg = 0;
+
+   
 
 }
 
@@ -70,9 +105,12 @@ void EnemyBird::Update(float x,float y)
     PlayerX = x;
     PlayerY = y;
 
+    E_Move_X = location.x;
+    E_Move_Y = location.y;
+
     Enemy_Warp();
 
-    Hit();
+    //Hit();
     
     if (EnemyState == ENEMY_STATE::FLY_LEFT) {
         Fly_Anim();
@@ -98,12 +136,12 @@ void EnemyBird::Update(float x,float y)
 void EnemyBird::Enemy_Warp()
 {
     //左ワープ
-    if (E_Move_X <= -53) {
-        E_Move_X = 700;
+    if (location.x <= -53) {
+        location.x = 700;
     }
     //右ワープ
-    else if (E_Move_X >= 700) {
-        E_Move_X = -53;
+    else if (location.x >= 700) {
+        location.x = -53;
     }
 
     ////天井
@@ -111,11 +149,59 @@ void EnemyBird::Enemy_Warp()
     //    E_Move_Y = 250;
     //}
 
-    if (E_Move_Y <= -25) {
-        E_Move_Y = -20;
+    if (location.y <= -25) {
+        location.y = -20;
         if (SpeedY < 0) {
             SpeedY = SpeedY * -0.8f;
         }
+    }
+}
+
+void EnemyBird::BoundPlusX()
+{
+    if (location.x != location.x + 5)
+    {
+        location.x += 0.1f;
+    }
+
+    if (E_XSpeed < 0) {
+        E_XSpeed = (E_XSpeed * -1) * 0.8f;
+    }
+}
+
+void EnemyBird::BoundMinusX()
+{
+    if (location.x != location.x - 5)
+    {
+        location.x -= 0.1f;
+    }
+
+    if (E_XSpeed > 0) {
+        E_XSpeed = (E_XSpeed * -1) * 0.8f;
+    }
+}
+
+void EnemyBird::BoundPlusY()
+{
+    if (location.y != location.y + 5)
+    {
+        location.y += 0.1f;
+    }
+
+    if (E_YSpeed < 0) {
+        E_YSpeed = (E_YSpeed * -1) * 0.8f;
+    }
+}
+
+void EnemyBird::BoundMinusY()
+{
+    if (location.y != location.y - 5)
+    {
+        location.y -= 0.1f;
+    }
+
+    if (E_YSpeed > 0) {
+        E_YSpeed = (E_YSpeed * -1) * 0.8f;
     }
 }
 
@@ -126,7 +212,7 @@ void EnemyBird::Enemy_Levitation_Move_X()
    // E_Move_X + 10, E_Move_Y + 37, E_Move_X + 50, E_Move_Y + 65,
 
     if (E_Stand_Flg == FALSE) {
-        if (E_Move_X + 10 <= PLAYER::P_Move_X && E_Move_Y + 37 <= PLAYER::P_Move_X + 10) {
+        if (location.x + 10 <= PLAYER::P_Move_X && location.y + 37 <= PLAYER::P_Move_X + 10) {
             SpeedX -= 0.01f;
             SpeedY -= 0.01f;
             EnemyState = ENEMY_STATE::FLY_LEFT;
@@ -134,7 +220,7 @@ void EnemyBird::Enemy_Levitation_Move_X()
         else {
 
         }
-        if (E_Move_X + 50 <= PLAYER::P_Move_X && E_Move_Y + 37 <= PLAYER::P_Move_Y + 37) {
+        if (location.x + 50 <= PLAYER::P_Move_X && location.y + 37 <= PLAYER::P_Move_Y + 37) {
             SpeedX += 0.01f;
             EnemyState = ENEMY_STATE::FLY_RIGHT;
         }
@@ -154,14 +240,14 @@ void EnemyBird::Enemy_Levitation_Move_X()
         }
     }
 
-    E_Move_X += SpeedX;
+    location.x += SpeedX;
 }
 
 void EnemyBird::Enemy_Levitation_Move_Y()
 {
     E_Air_Flg = TRUE;
     if (E_Stand_Flg == FALSE) {
-        if (E_Move_Y <= PLAYER::P_Move_Y) {
+        if (location.y <= PLAYER::P_Move_Y) {
             SpeedY -= 0.01f;
 
         }
@@ -176,7 +262,7 @@ void EnemyBird::Enemy_Levitation_Move_Y()
             SpeedY = 0.05f;
         }*/
     }
-    E_Move_Y += SpeedY;
+    location.y += SpeedY;
 }
 
 
@@ -213,21 +299,71 @@ void EnemyBird::Fly_Anim()
     }
 }
 
-void EnemyBird::Hit()
-{
-    if (PlayerX + 5 < E_Move_X - 20 && PlayerX + 57 > E_Move_X - 20 && PlayerY + 8 < E_Move_Y - 15 && PlayerY + 68 > E_Move_Y + 15 || //左
-        PlayerX + 5 < E_Move_X + 20 && PlayerX + 57 > E_Move_X - 20 && PlayerY + 8 < E_Move_Y - 15 && PlayerY + 68 > E_Move_Y + 15 || //右
-        PlayerX + 5 < E_Move_X - 20 && PlayerX + 57 > E_Move_X + 20 && PlayerY + 8 < E_Move_Y - 15 && PlayerY + 68 > E_Move_Y - 15 || //上
-        PlayerX + 5 < E_Move_X - 20 && PlayerX + 57 > E_Move_X + 20 && PlayerY + 8 < E_Move_Y + 15 && PlayerY + 68 > E_Move_Y + 15) { //下
+//bool EnemyBird::Hit(BoxCollider* b_col)
+//{
+//
+//    int re = false;
+//
+//    //if (PlayerX + 5 < E_Move_X - 20 && PlayerX + 57 > E_Move_X - 20 && PlayerY + 8 < E_Move_Y - 15 && PlayerY + 68 > E_Move_Y + 15 || //左
+//    //    PlayerX + 5 < E_Move_X + 20 && PlayerX + 57 > E_Move_X - 20 && PlayerY + 8 < E_Move_Y - 15 && PlayerY + 68 > E_Move_Y + 15 || //右
+//    //    PlayerX + 5 < E_Move_X - 20 && PlayerX + 57 > E_Move_X + 20 && PlayerY + 8 < E_Move_Y - 15 && PlayerY + 68 > E_Move_Y - 15 || //上
+//    //    PlayerX + 5 < E_Move_X - 20 && PlayerX + 57 > E_Move_X + 20 && PlayerY + 8 < E_Move_Y + 15 && PlayerY + 68 > E_Move_Y + 15) { //下
+//
+//    //    //　上記の線がPlayerのBoxの範囲に入っていたら Hit!
+//    //    H_Flg = TRUE;
+//    //}
+//
+//     //プレイヤー
+//    float px1 = b_col->GetLocation().x + 15;
+//    float py1 = b_col->GetLocation().y + 15;
+//    float px2 = px1 + b_col->GetErea().Width;
+//    float py2 = py1 + b_col->GetErea().Height;
+//
+//    //敵
+//    float ex1 = location.x + 15;
+//    float ex2 = ex1 + erea.Width;
+//    float ey1 = location.y + 15;
+//    float ey2 = ey1 + erea.Height;
+//
+//    e_uc = (ey1 + ey2) / 2;
+//
+//    //当たり判定
+//    if ((ex1 < px2) && (px1 < ex2) && (ey1 < py2) && (ey2 > py1))
+//    {
+//        if (((ey1 + ey2) / 2) > py2 && ey1 > ((py1 + py2) / 2))
+//        {
+//        
+//            
+//        }
+//        if (((ey1 + ey2) / 2) < py2 && ((py1 + py2) / 2) > ey2) 
+//        {
+//            re = true;
+//        }
+//
+//        if (((ey1 + ey2) / 2) == ((py1 + py2) / 2)) 
+//        {
+//
+//        }
+//
+//    }
+//
+// 
+//
+//    return re;
+//}
 
-        //　上記の線がPlayerのBoxの範囲に入っていたら Hit!
-        H_Flg = TRUE;
-    }
-}
 
 void EnemyBird::Draw() const
 {
-    DrawGraphF(E_Move_X, E_Move_Y, E_ArrayImg_P[0], TRUE);
+    DrawGraph(location.x, location.y, E_Img, TRUE);
+
+    //当たり判定
+    DrawBoxAA(location.x + 15, location.y + 15, location.x + 15 + erea.Width, location.y + 15 + erea.Height, GetColor(255, 255, 255), FALSE);
+    DrawLine(location.x + 15, e_uc, location.x + 15 + erea.Width, e_uc, GetColor(255, 255, 255), 1);	//下
+
+
+    //DrawFormatString(400, 50, GetColor(255, 0, 0), "H_Flg:%d", H_Flg);
+
 
     ////敵の当たり判定
     //DrawBox(E_Move_X + 30, E_Move_Y + 37, E_Move_X + 35, E_Move_Y + 65, GetColor(255, 255, 255), FALSE);
@@ -237,33 +373,35 @@ void EnemyBird::Draw() const
     //DrawBox(E_Move_X + 15, E_Move_Y + 5, E_Move_X + 59, E_Move_Y + 37, GetColor(255, 255, 255), FALSE);
     //DrawBox(ex1, ey1, ex2, ey2, GetColor(255, 0, 0), FALSE);
     // 
-    //敵の当たり判定
-    DrawLine(E_Move_X + 10, E_Move_Y + 35, E_Move_X + 10, E_Move_Y + 65, GetColor(255, 0, 0), 1);		//左
-    DrawLine(E_Move_X + 55, E_Move_Y + 35, E_Move_X + 55, E_Move_Y + 65, GetColor(255, 0, 0), 1);		//右
-    DrawLine(E_Move_X + 10, E_Move_Y + 35, E_Move_X + 55, E_Move_Y + 35, GetColor(255, 255, 255), 1);	//上
-    DrawLine(E_Move_X + 15, E_Move_Y + 65, E_Move_X + 50, E_Move_Y + 65, GetColor(255, 255, 255), 1);	//下
-    //風船の当たり判定
-    DrawLine(E_Move_X + 15, E_Move_Y + 10, E_Move_X +15, E_Move_Y + 35, GetColor(255, 255, 0), 1);		//左
-    DrawLine(E_Move_X + 50, E_Move_Y + 10, E_Move_X + 50, E_Move_Y + 35, GetColor(255, 255, 0), 1);		//右
-    DrawLine(E_Move_X + 5, E_Move_Y + 10, E_Move_X + 60, E_Move_Y + 10, GetColor(255, 255, 255), 1);	//上
-    DrawLine(E_Move_X + 5, E_Move_Y + 68, E_Move_X + 60, E_Move_Y + 68, GetColor(255, 255, 255), 1);	//下
+    ////敵の当たり判定
+    //DrawLine(E_Move_X + 10, E_Move_Y + 35, E_Move_X + 10, E_Move_Y + 65, GetColor(255, 0, 0), 1);		//左
+    //DrawLine(E_Move_X + 55, E_Move_Y + 35, E_Move_X + 55, E_Move_Y + 65, GetColor(255, 0, 0), 1);		//右
+    //DrawLine(E_Move_X + 10, E_Move_Y + 35, E_Move_X + 55, E_Move_Y + 35, GetColor(255, 255, 255), 1);	//上
+    //DrawLine(E_Move_X + 15, E_Move_Y + 65, E_Move_X + 50, E_Move_Y + 65, GetColor(255, 255, 255), 1);	//下
+    ////風船の当たり判定
+    //DrawLine(E_Move_X + 15, E_Move_Y + 10, E_Move_X +15, E_Move_Y + 35, GetColor(255, 255, 0), 1);		//左
+    //DrawLine(E_Move_X + 50, E_Move_Y + 10, E_Move_X + 50, E_Move_Y + 35, GetColor(255, 255, 0), 1);		//右
+    //DrawLine(E_Move_X + 5, E_Move_Y + 10, E_Move_X + 60, E_Move_Y + 10, GetColor(255, 255, 255), 1);	//上
+    //DrawLine(E_Move_X + 5, E_Move_Y + 68, E_Move_X + 60, E_Move_Y + 68, GetColor(255, 255, 255), 1);	//下
 
-    switch (EnemyState)
-    {
-    case  ENEMY_STATE::START:
-        DrawGraphF(E_Move_X, E_Move_Y, E_ArrayImg_P[Cnt], TRUE);
-        break;
-    case  ENEMY_STATE::FLY_LEFT:
-        DrawGraphF(E_Move_X, E_Move_Y, E_ArrayImg_P[Cnt], TRUE);
-        break;
-    case  ENEMY_STATE::FLY_RIGHT:
-        DrawGraphF(E_Move_X, E_Move_Y, E_ArrayImg_P[Cnt], TRUE);
-        break;
-    case  ENEMY_STATE::FALL:
-        DrawGraphF(E_Move_X, E_Move_Y, E_ArrayImg_P[Cnt], TRUE);
-        break;
-    case  ENEMY_STATE::WAIT:
-        DrawGraphF(E_Move_X, E_Move_Y, E_ArrayImg_P[Cnt], TRUE);
-        break;
-    }
+
+
+    //switch (EnemyState)
+    //{
+    //case  ENEMY_STATE::START:
+    //    DrawGraphF(location.x, location.y, E_ArrayImg_P[Cnt], TRUE);
+    //    break;
+    //case  ENEMY_STATE::FLY_LEFT:
+    //    DrawGraphF(location.x, location.y, E_ArrayImg_P[Cnt], TRUE);
+    //    break;
+    //case  ENEMY_STATE::FLY_RIGHT:
+    //    DrawGraphF(location.x, location.y, E_ArrayImg_P[Cnt], TRUE);
+    //    break;
+    //case  ENEMY_STATE::FALL:
+    //    DrawGraphF(location.x, location.y, E_ArrayImg_P[Cnt], TRUE);
+    //    break;
+    //case  ENEMY_STATE::WAIT:
+    //    DrawGraphF(location.x, location.y, E_ArrayImg_P[Cnt], TRUE);
+    //    break;
+    //}
 }

@@ -22,13 +22,14 @@ private:
 	int Bgm;
 	int StageSea;
 
-	void CreateStage();
 public:
 
+	void CreateStage();
 
 	int Snum;
 
-	Stage* StageFoot[10];
+	Stage* StageFoot[11];
+	EnemyBird* Enemy[10];
 
 	GameMain();
 	~GameMain();
