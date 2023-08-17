@@ -10,7 +10,7 @@
 GameMain::GameMain()
 {
 	if (StageSea = LoadGraph("images/Stage/Stage_Sea01.png")) {}
-
+	StageImg = LoadGraph("images/StageSample/Stage_1.png");
 	/*Bgm = LoadSoundMem("sounds/SE_Start.wav");
 	PlaySoundMem(Bgm, DX_PLAYTYPE_BACK);*/
 	ui = new UI();
@@ -68,7 +68,7 @@ AbstractScene* GameMain::Update()
 	enemybird->Update(player->GetLocation().x, player->GetLocation().y);
 	thunder->Update(player->GetLocation().x, player->GetLocation().y);
 
-
+	//DrawGraph(0, 0, StageImg, TRUE);
 	
 	
 
@@ -79,10 +79,11 @@ AbstractScene* GameMain::Update()
 		if (fps % 2 == 0)
 		{
 			++Snum;
-	
+			UI::i++;
 			//ƒŠƒZƒbƒg
 			if (Snum > 4) {
 				Snum = 0;
+				UI::i = 1;
 			}
 			CreateStage();
 		}

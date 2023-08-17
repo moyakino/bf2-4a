@@ -1,6 +1,5 @@
 #include "DxLib.h"
 #include "Stage.h"
-
 Stage::Stage(int num,int i)
 {
 	/*‰æ‘œ‚Ì“Ç‚İ‚İ*/
@@ -30,6 +29,7 @@ Stage::Stage(int num,int i)
 	
 		switch (i)
 		{
+
 		case 0:
 			//’nã@¶‚Ì‘«ê‚ÌÀ•W
 			location.x = 0.0;
@@ -61,7 +61,7 @@ Stage::Stage(int num,int i)
 		break;
 
 	case 1://2–Ê
-		
+	
 		switch (i)
 		{
 		case 0:
@@ -110,7 +110,7 @@ Stage::Stage(int num,int i)
 		break;
 
 	case 2://3–Ê
-		
+	
 		switch (i)
 		{
 		case 0:

@@ -21,7 +21,7 @@ private:
 
 	int Bgm;
 	int StageSea;
-
+	int StageImg;
 	void CreateStage();
 public:
 

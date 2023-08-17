@@ -34,8 +34,8 @@ public:
 	}
 
 	void Draw() {
-		DrawFormatString(0, 0, GetColor(255, 255, 255), "fps : %.1f", mFps);
-	}
+		/*DrawFormatString(0, 0, GetColor(255, 255, 255), "fps : %.1f", mFps);
+	*/}
 
 	void Wait() {
 		int tookTime = GetNowCount() - mStartTime;	//‚©‚©‚Á‚½ŽžŠÔ
